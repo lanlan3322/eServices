@@ -1,0 +1,197 @@
+<!--
+reportheaderinfo.html - maintain fleet info in a user record
+Copyright (C) 2007 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Report Info Editor</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void fillForm()">
+<big><big>
+
+<p><h1>Report Header Information</h1></p>
+
+<form method="post" action="edit/SubmitEdit.jsp" onSubmit="return updateValues()">
+  <input type="hidden" name="screenname" value> 
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="RP_STAT" value>
+  <table border="0" width="100%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="1" cellpadding="0">
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Central Reference #:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="VOUCHER" class="ProtectedField" readOnly=true size="16"></script></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Personnel #:</td>
+      <td width="75%"><input type="text" name="PERS_NUM" class="ProtectedField" readOnly=true size="16"></script></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Name:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="NAME" class="ProtectedField" readOnly=true size="26"></td>
+    </tr>
+
+    <tr>
+      <td width="39%" class="ExpenseTag">Report Status:</td>
+      <td width="61%"><select name="reportStatus" nosave="yes" size="1"></select></td>
+    </tr>
+
+    <tr>
+      <td width="39%" class="ExpenseTagOffset">Admin 1:</td>
+      <td width="61%" class="offsetColor">
+      <input type="text" name="ADMIN1" class="ProtectedField" readOnly=true size="16">&nbsp;&nbsp;
+      <input type="text" name="AD1_DATE" class="ProtectedField" readOnly=true size="10">
+      <a HREF="javascript:doNothing()" tabindex="2" onClick="markField(document.forms[0].ADMIN1)"><small>Mark field for overwrite</small></a>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="39%" class="ExpenseTag">Admin 2:</td>
+      <td width="61%">
+      <input type="text" name="ADMIN2" class="ProtectedField" readOnly=true size="16">&nbsp;&nbsp;
+      <input type="text" name="AD2_DATE" class="ProtectedField" readOnly=true size="10">
+      <a HREF="javascript:doNothing()" tabindex="2" onClick="markField(document.forms[0].ADMIN2)"><small>Mark field for overwrite</small></a>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="39%" class="ExpenseTagOffset">Sign 1:</td>
+      <td width="61%" class="offsetColor">
+      <input type="text" name="SIGN1" class="ProtectedField" readOnly=true size="16">&nbsp;&nbsp;
+      <input type="text" name="SG1_DATE" class="ProtectedField" readOnly=true size="10">
+      <a HREF="javascript:doNothing()" tabindex="2" onClick="markField(document.forms[0].SIGN1)"><small>Mark field for overwrite</small></a>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="39%" class="ExpenseTag">Sign 2:</td>
+      <td width="61%">
+      <input type="text" name="SIGN2" class="ProtectedField" readOnly=true size="16">&nbsp;&nbsp;
+      <input type="text" name="SG2_DATE" class="ProtectedField" readOnly=true size="10">
+      <a HREF="javascript:doNothing()" tabindex="2" onClick="markField(document.forms[0].SIGN2)"><small>Mark field for overwrite</small></a>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="39%" class="ExpenseTagOffset">Sign 3:</td>
+      <td width="61%" class="offsetColor">
+      <input type="text" name="SIGN3" class="ProtectedField" readOnly=true size="16">&nbsp;&nbsp;
+      <input type="text" name="AUD_DATE" class="ProtectedField" readOnly=true size="10">
+      <a HREF="javascript:doNothing()" tabindex="2" onClick="markField(document.forms[0].SIGN3)"><small>Mark field for overwrite</small></a>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="39%" class="ExpenseTag">Sign 4:</td>
+      <td width="61%">
+      <input type="text" name="SIGN4" class="ProtectedField" readOnly=true size="16">&nbsp;&nbsp;
+      <input type="text" name="UP_DATE" class="ProtectedField" readOnly=true size="10">
+      <a HREF="javascript:doNothing()" tabindex="2" onClick="markField(document.forms[0].SIGN4)"><small>Mark field for overwrite</small></a>
+      </td>
+    </tr>
+
+  </table>
+  <p><input type="submit" value="OK - Accept any Changes" name="btn"></p>
+</form>
+
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void history.go(-1)">Return to previous screen</a></p>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script language="Javascript">
+
+function fillForm() {
+  parent.contents.setListWithValue(document.forms[0].reportStatus, parent.contents.getStatusTable(),1,0);
+  if (parent.contents.isNew())
+  {
+    document.forms[0].xaction.value = "NONE";
+    document.forms[1].searchstring.focus();
+  } else {
+    parent.contents.setTransaction(document.forms[0]);
+    parent.contents.setListDfltWVal(document.forms[0].reportStatus,document.forms[0].RP_STAT.value);
+    document.forms[0].xaction.value = "UPDATE";
+    parent.contents.ListBuffer.length = 0;
+    document.forms[0].reportStatus.focus();
+  }
+  
+  document.forms[0].action = parent.contents.defaultApps + "edit/SubmitEdit.jsp";
+  document.forms[1].action = parent.contents.defaultApps + "edit/EditListNoRemove.jsp";
+
+}
+
+
+function updateValues() {
+  if (checkAllFields(document.forms[0]))
+  {
+     with (document.forms[0]) {
+       if (xaction.value == "UPDATE") {
+         var x = reportStatus.options[reportStatus.selectedIndex].value;
+         if (x != RP_STAT.value) {
+            screenname.value = "reportheader";
+            email.value = parent.contents.getNameValue(parent.Header, "email");
+            database.value = parent.database;
+            ccode.value = parent.CCode;
+            RP_STAT.value = x;
+            return true;
+         } else {
+            alert("You must change the status to use this screen.\nSelect option on left to procedd without\nchanging the status.");
+         }
+       } else {
+         alert("You can only update existing reports with this screen.\nPlease select a report.");
+       }
+     }
+  }
+  return false;
+}
+
+function markField(fld) {
+  var x = fld.value;
+  var y = "_";
+  if (x != null && x != "" && x.substring(0,1) != y) fld.value = y + x;
+}
+
+</script>
+
+  <form method="POST" action="edit/EditListNoRemove.jsp" onSubmit="return SubmitSearch()">
+    <h2>Central Reference: <input type="text" name="searchstring" size="8" value="">
+    <input type="submit" value= "Show list based on central reference #" name="Search"></h2>
+    <input type="hidden" name="screenname" value> 
+    <input type="hidden" name="email" value>
+    <input type="hidden" name="ccode" value>
+    <input type="hidden" name="database" value>
+  </form>
+  <script language="JavaScript">
+  function SubmitSearch() {
+   with(document.forms[1]) {
+    if (searchstring.value.length >= 5) {
+      screenname.value = "reportheader";
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      return true; 
+    } else {
+      alert("You must limit the search to at least five characters/numerals");
+      return false;
+    }
+   }
+  }
+  </script>
+
+</body>
+</html>

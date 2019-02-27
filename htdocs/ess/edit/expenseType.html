@@ -1,0 +1,300 @@
+<!--
+expenseType.html - edit expense types
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Expense Type Editor</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void fillForm()">
+<big><big>
+
+<p><h1>Expense Type Editor</h1></p>
+
+<form method="post" action="edit/SubmitEdit.jsp" onSubmit="return updateValues()">
+  <input type="hidden" name="screenname" value> 
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="companyCheck" essType="String" essRequired="No" maxLength="8"value>
+  
+  <table border="0" width="100%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="1" cellpadding="0">
+    <tr>
+      <td width="25%"><div class="ExpenseTag">Expense Type:</div></td>
+      <td width="75%"><script>parent.main.document.write("<input type=\"text\" name=\"EXPENSE\" size=\"20\"" + parent.contents.setKeyField("ProtectedField")  + " essType=\"String\" essRequired=\"yes\" maxLength=\"20\" essTitle=\"Expense Type\">")</script></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Description:</td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor"><input type="text" name="DESCRIP" size="30" maxLength="30"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Guideline Category:</td>
+      <td width="75%"><select name="CATEGORY" size="1" essType="List" maxLength="16" essTitle="Guideline Category"></select></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Show in dropdown:</td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor">
+      <select name="SHOW" size="1">
+            <option selected>Yes</option>
+            <option>No</option> 
+      </select>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="25%" class="ExpenseTag">Merchant Required:</td>
+      <td width="75%">
+      <select name="MERCHANT" size="1">
+            <option>Yes</option>
+            <option selected>No</option> 
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Attendees Required:</td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor">
+      <select name="ATTENDEE" size="1">
+            <option>Yes</option>
+            <option selected>No</option> 
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Comment Required:</td>
+      <td width="75%">
+      <select name="EXPLAIN" size="1">
+            <option>Yes</option>
+            <option selected>No</option> 
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Omit Depart G/L Code:</td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor">
+      <select name="OMITDEPT" size="1">
+            <option>Yes</option>
+            <option selected>No</option> 
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Omit Special Employee Code:</td>
+      <td width="75%">
+      <select name="OMITEMP" size="1">
+            <option selected>Yes</option>
+            <option>No</option> 
+      </select>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Show Category 1:</td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor">
+      <select name="SHOW1" size="1">
+            <option selected>Yes</option>
+            <option>No</option> 
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Show Category 2:</td>
+      <td width="75%">
+      <select name="SHOW2" size="1">
+            <option selected>Yes</option>
+            <option>No</option> 
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Show Category 3/Fleet:</td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor">
+      <select name="SHOW3" size="1">
+            <option selected>Yes</option>
+            <option>No</option> 
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Show to auditor:</td>
+      <td width="75%">
+      <select name="SHOW4" size="1">
+            <option selected>Yes</option>
+            <option>No</option> 
+      </select>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Receipt Required at:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="LIMIT" size="10" essType="Currency" essRequired="No" essMinimum="0" essMaximum="1000" essTitle="Receipt Required Limit"></td>
+    </tr>
+
+    <tr>
+      <td width="25%" class="ExpenseTag">Order in List:</td>
+      <td width="75%">
+      <select name="SHOWLIST" size="1">
+            <option selected>1</option>
+            <option>2</option> 
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Department:</td>
+      <td width="75%" class="offsetColor">
+      <script>parent.main.document.write("<input type=\"text\" name=\"DEPART\" size=\"16\""+ parent.contents.setKeyField("ProtectedField")  + " essType=\"String\" essRequired=\"No\" maxLength=\"26\" essTitle=\"Department\" onChange=\"departMapping(DEPART, departname, companyCheck)\">")</script>
+      <a class="ExpenseLink" href="javascript:doNothing()"
+      onClick="setDepartObj(document.forms[0].DEPART,document.forms[0].departname,'CompanyDepartSelect',900,300,document.forms[0].companyCheck);MerchantType = 'depart'">&nbsp;&nbsp;<sm><em>Lookup!</em></sm></a>
+      &nbsp;&nbsp;<input type="text" name="departname" size="24" tabindex="-1" readOnly="yes"> 
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">G/L Account:</td>
+      <td width="75%"><input type="text" name="GEN_ACCT" size="16" essType="String" essRequired="Yes" maxLength="16" essTitle="G/L Account"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Dedicated Payment Method:</td>
+      <td width="75%"class="offsetColor"><select name="CHARGE" size="1" essType="List" maxLength="10" essTitle="Dedicated Payment Method"></select></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Special Handling:</td>
+      <td width="75%">
+      <select name="SPECIAL" size="1">
+            <option selected></option>
+            <option>HOTEL</option> 
+            <option>NOSPLIT</option>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Company Code:</td>
+      <td width="75%" class="offsetColor"><select name="COMPANY" size="1" essTitle="Company" essType="List" ></select></td>
+    </tr>
+
+
+  </table>
+  <p><input type="submit" value="OK - Accept any Changes" name="btn"></p>
+</form>
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void history.go(-1)">Return to previous screen</a></p>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../adddepart.js"></script>
+<script language="Javascript">
+
+function doNothing() {
+}
+
+function fillForm() {
+  parent.contents.setList(document.forms[0].CATEGORY, parent.contents.getGuideCategories());
+  parent.contents.setList(document.forms[0].CHARGE, parent.contents.getPaymentTypes("2"));
+  parent.contents.setList(document.forms[0].COMPANY, parent.contents.getCompanies());
+  if (parent.contents.isNew())
+  {
+    document.forms[0].xaction.value = "INSERT";
+  } else {
+    parent.contents.setTransaction(document.forms[0]);
+    document.forms[0].xaction.value = "UPDATE";
+    parent.contents.ListBuffer.length = 0;
+  }
+  if (document.forms[0].COMPANY.selectedIndex > 0)
+  {
+     document.forms[0].companyCheck.value = document.forms[0].COMPANY.options[document.forms[0].COMPANY.selectedIndex].text
+     departMapping(document.forms[0].DEPART, document.forms[0].departname, document.forms[0].companyCheck);
+  }
+  document.forms[0].EXPENSE.focus();
+  document.forms[0].action = parent.contents.defaultApps + "edit/SubmitEdit.jsp";
+  document.forms[1].action = parent.contents.defaultApps + "edit/EditList.jsp";
+}
+
+function HandleReset() {
+  loadValues();
+  return false;
+}
+
+function updateValues() {
+  if (checkAllFields(document.forms[0]))
+  {
+    document.forms[0].screenname.value = "expensetype";
+    document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+    document.forms[0].database.value = parent.database;
+    document.forms[0].ccode.value = parent.CCode;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function setMyList(FormObj,xvalue) {
+   var k;        //location of m in string
+   var n;        // recover value
+   var m = ": "; //delimiter for recover values
+   var j = 0;
+   var z = true;
+   do {
+     if (FormObj.options[j].text == xvalue) {
+         FormObj.selectedIndex = j;
+         z = false;
+     }
+     j = j + 1;
+   } while (z && j < FormObj.length); 
+   if (z) {  
+     FormObj.length = j + 1; 
+     FormObj.options[j].text = xvalue;
+     n = xvalue;
+     k = n.indexOf(m);
+     if (k > 0) n = n.substring(0,k);
+     FormObj.options[j].value = n;
+     FormObj.selectedIndex = j;
+   }
+}      
+
+</script>
+
+  <form method="POST" action="edit/EditList.jsp" onSubmit="SubmitSearch()">
+    <h2>Access the central database for:&nbsp;
+    <input type="submit" value= "Expense Types" name="Search"></h2>
+    <input type="hidden" name="screenname" value> 
+    <input type="hidden" name="email" value>
+    <input type="hidden" name="ccode" value>
+    <input type="hidden" name="database" value>
+  </form>
+  <script language="JavaScript">
+  function SubmitSearch() {
+    with(document.forms[1]) {
+       screenname.value = "expensetype";
+       email.value = parent.contents.getNameValue(parent.Header, "email");
+       database.value = parent.database;
+       ccode.value = parent.CCode;
+       return true;  
+    }
+  }
+  </script>
+
+
+
+
+</body>
+</html>

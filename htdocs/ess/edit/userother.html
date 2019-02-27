@@ -1,0 +1,246 @@
+<!--
+userother.html - maintain misc info in a user record
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>User Payment Info Editor</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void fillForm()">
+<big><big>
+
+<p><h1>User - Misc. Information</h1></p>
+
+<form method="post" action="edit/SubmitEdit.jsp" onSubmit="return updateValues()">
+  <input type="hidden" name="screenname" value> 
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="LANGUAGE" value>
+  <input type="hidden" name="COUNTRY" value>
+  <table border="0" width="100%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="1" cellpadding="0">
+    <tr>
+      <td width="25%"><div class="ExpenseTag">Personnel #:</div></td>
+      <td width="75%"><input type="text" name="PERS_NUM" class="ProtectedField" readOnly=true size="16"></script></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Last Name:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="LNAME" class="ProtectedField" readOnly=true size="26"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">First Name:</td>
+      <td width="75%"><input type="text" name="FNAME" class="ProtectedField" readOnly=true size="26"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Reimbursement Method:</td>
+      <td width="75%" class="offsetColor">
+      <select name="CASH" size="1">
+            <option selected>A/P</option> 
+            <option>CHECK</option>
+            <option>PAYROLL</option>
+            <option>FGNWIRE</option>
+            <option>OTHER</option>
+            <option>HOLD</option>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%"class="ExpenseTag">Mileage Rate:</td>
+      <td width="75%"><input type="text" name="MILEAGE" size="20" maxLength="9" essMinimum="0" essMaximum="2.00" essType="Numeric"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Mileage Type:</td>
+      <td width="75%"><select name="MILES_TYPE" size="1" essTitle="Unit List" essType="List" >
+        <option selected></option>
+        <option>Miles</option>
+        <option>Kilometers</option>
+        <option>Cost</option>
+        <option>Pers_Miles</option>
+        <option>Pers_Kms</option>
+        <option>Gallons</option>
+      </select></td>
+      </tr>
+    <tr>
+    	<td width="25%" class="ExpenseTag">Entry Screen:</td>
+    	<td width="75%"><select name="APPLICATION" size="1" essTitle="Entry Screen List" essType="List"></select></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Extra 1:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="EXTRA1" size="20" maxLength="20" essType="String"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Extra 2 Number:</td>
+      <td width="75%"><input type="text" name="EXTRA2" size="10" essType="Numeric"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Extra 3:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="EXTRA3" size="20" maxLength="20" essType="String"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Home Currency:</td>
+      <td width="75%"><select name="CURRENCY" size="1"></select></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Language:</td>
+      <td width="75%" class="offsetColor">
+      <select name="languagename" size="1">
+            <option value = "en" selected>English</option> 
+            <option value = "fr" >French</option>
+            <option value = "pt" >Portuguese</option>
+            <option value = "es" >Spanish</option>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Country:</td>
+      <td width="75%">
+      <select name="countryname" size="1">
+            <option value = "US" selected>USA</option> 
+            <option value = "CA" >Canada</option>
+            <option value = "GB" >UK</option>
+            <option value = "AU" >Australia</option>
+            <option value = "BR" >Brazil</option>
+            <option value = "AR" >Argentina</option>
+            <option value = "MX" >Mexico</option>
+            <option value = "CH" >Chile</option>
+            <option value = "" >Other</option>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Date Format:</td>
+      <td width="75%" class="offsetColor">
+      <select name="DATEFORMAT" size="1">
+            <option selected>MM/dd/yyyy</option> 
+            <option>dd/MM/yyyy</option>
+            <option>yyyy-MM-dd</option>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Decimal Indicator:</td>
+      <td width="75%">
+      <select name="NUMBERFORMAT" size="1">
+            <option selected>period</option> 
+            <option>comma</option>
+      </select>
+      </td>
+    </tr>
+    
+
+  </table>
+  <p><input type="submit" value="OK - Accept any Changes" name="btn"></p>
+</form>
+
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void history.go(-1)">Return to previous screen</a></p>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script language="Javascript">
+
+function fillForm() {
+  parent.contents.setList(document.forms[0].CURRENCY, parent.contents.getCurrencies("1"));
+  parent.contents.setList(document.forms[0].APPLICATION,parent.contents.getEntryScreens());
+  if (parent.contents.isNew())
+  {
+    document.forms[0].xaction.value = "NONE";
+  } else {
+    parent.contents.setTransaction(document.forms[0]);
+    parent.contents.setListDfltWVal(document.forms[0].languagename,document.forms[0].LANGUAGE.value);
+    parent.contents.setListDfltWVal(document.forms[0].countryname,document.forms[0].COUNTRY.value);
+    document.forms[0].xaction.value = "UPDATE";
+    parent.contents.ListBuffer.length = 0;
+  }
+  document.forms[0].PERS_NUM.focus();
+  document.forms[0].action = parent.contents.defaultApps + "edit/SubmitEdit.jsp";
+  document.forms[1].action = parent.contents.defaultApps + "edit/EditList.jsp";
+  document.forms[2].action = parent.contents.defaultApps + "edit/EditList.jsp";
+}
+
+
+function updateValues() {
+  if (checkAllFields(document.forms[0]))
+  {
+     if (document.forms[0].xaction.value == "UPDATE") {
+        document.forms[0].screenname.value = "userother_lname";
+        document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+        document.forms[0].database.value = parent.database;
+        document.forms[0].ccode.value = parent.CCode;
+        document.forms[0].LANGUAGE.value = document.forms[0].languagename.options[document.forms[0].languagename.selectedIndex].value;
+        document.forms[0].COUNTRY.value = document.forms[0].countryname.options[document.forms[0].countryname.selectedIndex].value;
+        return true;
+     } else {
+        alert("You can only update existing user records with this screen.\nPlease select a user record.");
+        return false;
+     }
+  }
+}
+
+</script>
+
+  <form method="POST" action="edit/EditList.jsp" onSubmit="return SubmitSearch()">
+    <h2>Last name: <input type="text" name="searchstring" size="16" value="">
+    <input type="submit" value= "Show list based on last name string" name="Search"></h2>
+    <input type="hidden" name="screenname" value> 
+    <input type="hidden" name="email" value>
+    <input type="hidden" name="ccode" value>
+    <input type="hidden" name="database" value>
+  </form>
+  <script language="JavaScript">
+  function SubmitSearch() {
+   with(document.forms[1]) {
+    if (searchstring.value.length >= 1 && searchstring.value.substr(0,1) != "%") {
+      screenname.value = "userother_lname";
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      return true; 
+    } else {
+      alert("You must limit the search to at least one alphabetic letter");
+      return false;
+    }
+   }
+  }
+  </script>
+  <form method="POST" action="edit/EditList.jsp" onSubmit="return SubmitSearch2()">
+    <h2>Personnel number: <input type="text" name="searchstring" size="16" value="">
+    <input type="submit" value= "Show list based on personnel number string" name="Search2"></h2>
+    <input type="hidden" name="screenname" value> 
+    <input type="hidden" name="email" value>
+    <input type="hidden" name="ccode" value>
+    <input type="hidden" name="database" value>
+  </form>
+  <script language="JavaScript">
+  function SubmitSearch2() {
+   with(document.forms[2]) {
+    if (searchstring.value.length >= 1 && searchstring.value.substr(0,1) != "%") {
+      screenname.value = "userother_persnum";
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      return true; 
+    } else {
+      alert("You must limit the search to at least one alpha/numeric letter");
+      return false;
+    }
+   }
+  }
+  </script>
+</body>
+</html>

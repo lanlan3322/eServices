@@ -1,0 +1,254 @@
+<!--
+useradminNew.html - edit the user table. This allows create of the record.
+Copyright (C) 2004,2014 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Expense Type Editor</title>
+<link rel="stylesheet" href="../expense.css" type="text/css">
+</head>
+
+<body onLoad="javascript: void fillForm()">
+<big><big>
+
+<h1>User - Primary Information</h1>
+
+<form method="post" action="edit/SubmitUserERaaS.jsp" onSubmit="return updateValues()">
+  <input type="hidden" name="screenname" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="LoadPage" value="true">
+  <input type="hidden" name="LANGUAGE" value>  
+  <input type="hidden" name="PASSWORD" value size="16" essType="String" essMinimum="4" maxLength="16" >
+  <table border="0" width="100%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="1" cellpadding="0">
+        <tr>
+      <td width="25%"><div class="ExpenseTag"><p>Personnel #:</p>
+      </div></td>
+      <td width="75%"><input type="text" name="PERS_NUM" size="12" class="ProtectedField" readOnly="true" essType="String" maxLength="12" essTitle="Personnel Number">&nbsp;<small><small>(blank for new user, supplied automatically)</small></small></td>
+    </tr>
+
+     <tr>
+      <td width="25%" class="ExpenseTagOffset">Last Name:</td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF"
+      class="offsetColor"><input type="text" name="LNAME" size="20" essType="String"
+      essRequired="Yes" essTitle="Last Name" maxLength="20"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">First Name:</td>
+      <td width="75%"><input type="text" name="FNAME" size="18" essType="String"
+      essRequired="Yes" essTitle="First Name" maxLength="18"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Location/Grouping:</td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF"
+      class="offsetColor"><input type="text" name="LOCATION" size="30" essType="String"
+      essRequired="Yes" essTitle="Location" maxLength="30"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Phone:</td>
+      <td width="75%"><input type="text" name="PHONE" size="24" essType="String"
+      essRequired="Yes" essTitle="Phone" maxLength="24"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">E-Mail:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="EMAIL" size="30"
+      essType="String" essRequired="Yes" essTitle="E-mail" maxLength="60"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Department:</td>
+      <td width="75%"><input type="text" name="DEPART" size="26" essType="String"
+      essRequired="Yes" essTitle="Department" maxLength="20"  class="ProtectedField" readOnly="true"> 
+      <a class="ExpenseLink" href="javascript:doNothing()"
+      onClick="setDepartObj(document.forms[0].DEPART,document.forms[0].departname,'CompanyDepartSelect',900,300,document.forms[0].COMPANY,document.forms[0].GUIDE);MerchantType = 'depart'"><sm><em>Lookup!</em></sm></a>
+      &nbsp;&nbsp;<input type="text" name="departname" size="24" tabindex="-1" readOnly="yes"> </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Employee Tracking Code:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="EMPCODE" size="12"
+      maxLength="12"><span class="ExpenseTagOffset">&nbsp;&nbsp;Company:&nbsp;&nbsp;</span><input type="text" name="COMPANY" size="8" tabindex="-1" readOnly="yes" essType="String" essRequired="Yes" essTitle="Company" maxLength="8"  class="ProtectedField" readOnly="true" value></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Bill Expenses:</td>
+      <td width="75%"><select name="BILLEXP" size="1">
+        <option selected>Yes</option>
+        <option>No</option>
+      </select> </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Menu Display:</td>
+      <td width="75%" class="offsetColor"><select name="LEVEL" size="1">
+        <option selected>a</option>
+        <option>1</option>
+        <option>2</option>
+      </select>
+      &nbsp;&nbsp;&nbsp;
+      <span class="ExpenseTagOffset">Primary Function:&nbsp;</span><select name="FUNCTION" size="1">
+        <option selected>Reporter</option>
+        <option>Approver</option>
+        <option></option>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Approval Limit:</td>
+      <td width="75%"><input type="text" name="LIMIT" size="12" maxLength="12"
+      essType="Currency" essMinimum="0" essMaximum="100000"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Guideline Group:</td>
+      <td width="75%" class="offsetColor"><select name="GUIDE" size="1" essType="List"
+      essRequired="Yes" essTitle="Guideline" maxLength="12">
+      </select><script>parent.contents.setList(document.forms[0].GUIDE, parent.contents.getGuidelineGroups());
+      </script></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Reimbursement Method:</td>
+      <td width="75%"><select name="CASH" size="1">
+        <option selected>A/P</option>
+        <option>CHECK</option>
+        <option>PAYROLL</option>
+        <option>FGNWIRE</option>
+        <option>OTHER</option>
+        <option>HOLD</option>
+      </select> </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Show Expense Categories:</td>
+      <td width="75%" class="offsetColor"><select name="SHOWGRP" size="1">
+        <option selected>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select> 
+      &nbsp;&nbsp;&nbsp;
+      <span class="ExpenseTagOffset">Language:&nbsp;</span>
+      <select name="languagename" size="1">
+        <option value = "en" selected>English</option> 
+        <option value = "fr" >French</option>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Profile Active:</td>
+      <td width="75%"><select name="ACTIVE" size="1">
+        <option selected>Yes</option>
+        <option>No</option>
+      </select>&nbsp;&nbsp;&nbsp;<span class="ExpenseTag">Password Last Changed:</span>&nbsp;<input type="text" name="PSWD_DATE" size="10" class="ProtectedField"
+      readOnly="true"> </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Password:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="newpassword" size="16" onChange="PASSWORD.value = newpassword.value">
+      &nbsp;<small><small>(current password not displayed)</small></small></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Manager's #:</td>
+      <td width="75%" ><input type="text" name="MANAGER" size="12"
+      essType="String" essRequired="Yes" essMinimum="2" maxLength="12"> <a class="ExpenseLink"
+      href="javascript:doNothing()"
+      onClick="setLocalJsp(document.forms[0].MANAGER,'UserPersNum',900,300);MerchantType = 'user'"><sm><em>Lookup!</em></sm></a>
+      </td>
+    </tr>
+  </table>
+  <p><input type="submit" value="OK - Accept any Changes" name="btn"></p>
+</form>
+
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void history.go(-1)">Return
+to previous screen</a></p>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../adddepart.js"></script>
+<script language="Javascript">
+
+var oldPassword;
+function fillForm() {
+  if (document.forms[0].LoadPage.value == "true") {
+    if (parent.contents.isNew())
+    {
+      document.forms[0].xaction.value = "INSERT";
+      oldPassword = "";
+    } else {
+      parent.contents.setTransaction(document.forms[0]);
+      document.forms[0].xaction.value = "UPDATE";
+      parent.contents.ListBuffer.length = 0;
+      parent.contents.setListDfltWVal(document.forms[0].languagename,document.forms[0].LANGUAGE.value);
+      oldPassword = document.forms[0].PASSWORD.value;
+    }
+  }  
+  departMapping(document.forms[0].DEPART, document.forms[0].departname, document.forms[0].COMPANY);
+  document.forms[0].PERS_NUM.focus();
+  document.forms[0].action = parent.contents.defaultApps + "edit/SubmitUserERaaS.jsp";
+  document.forms[1].action = parent.contents.defaultApps + "edit/EditList.jsp";
+  document.forms[0].LoadPage.value = "false";
+}
+
+function notSameUser()
+{
+ retVal = true;
+ if (parent.contents.alltrim(document.forms[0].PERS_NUM.value) == parent.contents.getNameValue(parent.Header, "persnum"))
+ {
+    retVal = false;
+    alert("Cannot create or modify your own profile.");
+ }
+ return retVal;
+}
+
+function updateValues() {
+  if (notSameUser() && checkAllFields(document.forms[0]))
+  {
+    document.forms[0].LANGUAGE.value = document.forms[0].languagename.options[document.forms[0].languagename.selectedIndex].value;
+    document.forms[0].screenname.value = "useradmin";
+    document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+    document.forms[0].database.value = parent.database;
+    document.forms[0].ccode.value = parent.CCode;
+    document.forms[0].PASSWORD.value = document.forms[0].PASSWORD.value.toUpperCase()
+    if (document.forms[0].PASSWORD.value != oldPassword) parent.contents.setDefaultDate(document.forms[0].PSWD_DATE,0);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+</script>
+
+
+<form method="POST" action="edit/EditList.jsp" onSubmit="return SubmitSearch()">
+  <input type="hidden" name="screenname" value><input type="hidden" name="email" value><input
+  type="hidden" name="ccode" value><input type="hidden" name="database" value>
+  <input type="hidden" name="searchstring" size="16" value=""> <input type="submit"
+  value="Show all users" name="Search">
+</form>
+<script language="JavaScript">
+  function SubmitSearch() {
+   with(document.forms[1]) {
+      screenname.value = "useradmin";
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      return true; 
+   }
+  }
+  </script>
+
+
+
+
+</body>
+</html>

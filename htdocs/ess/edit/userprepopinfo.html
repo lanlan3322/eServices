@@ -1,0 +1,164 @@
+<!--
+userpropopinfo.html - maintain user's prepop (e.g., credit card) links in the user record
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>User Prepop Info Editor</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void fillForm()">
+<big><big>
+
+<p><h1>User - Pre-populated Items Information</h1></p>
+
+<form method="post" action="edit/SubmitEdit.jsp" onSubmit="return updateValues()">
+  <input type="hidden" name="screenname" value> 
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="database" value>
+  <table border="0" width="100%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="1" cellpadding="0">
+    <tr>
+      <td width="25%"><div class="ExpenseTag">Personnel #:</div></td>
+      <td width="75%"><input type="text" name="PERS_NUM" class="ProtectedField" readOnly=true size="16"></script></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Last Name:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="LNAME" class="ProtectedField" readOnly=true size="26"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">First Name:</td>
+      <td width="75%"><input type="text" name="FNAME" class="ProtectedField" readOnly=true size="26"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Payment Method 1:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="CHARGE1" size="10" maxLength="10"></td>
+    </tr>
+    <tr>
+      <td width="25%"class="ExpenseTag">Card/User #:</td>
+      <td width="75%"><input type="text" name="CARD1" size="30" maxLength="30"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Payment Method 2:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="CHARGE2" size="10" maxLength="10"></td>
+    </tr>
+    <tr>
+      <td width="25%"class="ExpenseTag">Card/User #:</td>
+      <td width="75%"><input type="text" name="CARD2" size="30" maxLength="30"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Payment Method 3:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="CHARGE3" size="10" maxLength="10"></td>
+    </tr>
+    <tr>
+      <td width="25%"class="ExpenseTag">Card/User #:</td>
+      <td width="75%"><input type="text" name="CARD3" size="30" maxLength="30"></td>
+    </tr>
+  </table>
+  <p><input type="submit" value="OK - Accept any Changes" name="btn"></p>
+</form>
+
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void history.go(-1)">Return to previous screen</a></p>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script language="Javascript">
+
+function fillForm() {
+  if (parent.contents.isNew())
+  {
+    document.forms[0].xaction.value = "NONE";
+  } else {
+    parent.contents.setTransaction(document.forms[0]);
+    document.forms[0].xaction.value = "UPDATE";
+    parent.contents.ListBuffer.length = 0;
+  }
+  document.forms[0].PERS_NUM.focus();
+  document.forms[0].action = parent.contents.defaultApps + "edit/SubmitEdit.jsp";
+  document.forms[1].action = parent.contents.defaultApps + "edit/EditList.jsp";
+  document.forms[2].action = parent.contents.defaultApps + "edit/EditList.jsp";
+}
+
+
+function updateValues() {
+  if (checkAllFields(document.forms[0]))
+  {
+    if (document.forms[0].xaction.value == "UPDATE") {
+      document.forms[0].screenname.value = "userprepopinfo_lname";
+      document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+      document.forms[0].database.value = parent.database;
+      document.forms[0].ccode.value = parent.CCode;
+      return true;
+    } else {
+      alert("You can only update existing user records with this screen.\nPlease select a user record.");
+      return false;
+    }
+  }
+}
+
+</script>
+
+  <form method="POST" action="edit/EditList.jsp" onSubmit="return SubmitSearch()">
+    <h2>Last name: <input type="text" name="searchstring" size="16" value="">
+    <input type="submit" value= "Show list based on last name string" name="Search"></h2>
+    <input type="hidden" name="screenname" value> 
+    <input type="hidden" name="email" value>
+    <input type="hidden" name="ccode" value>
+    <input type="hidden" name="database" value>
+  </form>
+  <script language="JavaScript">
+  function SubmitSearch() {
+   with(document.forms[1]) {
+    if (searchstring.value.length >= 1 && searchstring.value.substr(0,1) != "%") {
+      screenname.value = "userprepopinfo_lname";
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      return true; 
+    } else {
+      alert("You must limit the search to at least one alphabetic letter");
+      return false;
+    }
+   }
+  }
+  </script>
+  <form method="POST" action="edit/EditList.jsp" onSubmit="return SubmitSearch2()">
+    <h2>Personnel number: <input type="text" name="searchstring" size="16" value="">
+    <input type="submit" value= "Show list based on personnel number string" name="Search2"></h2>
+    <input type="hidden" name="screenname" value> 
+    <input type="hidden" name="email" value>
+    <input type="hidden" name="ccode" value>
+    <input type="hidden" name="database" value>
+  </form>
+  <script language="JavaScript">
+  function SubmitSearch2() {
+   with(document.forms[2]) {
+    if (searchstring.value.length >= 1 && searchstring.value.substr(0,1) != "%") {
+      screenname.value = "userprepopinfo_persnum";
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      return true; 
+    } else {
+      alert("You must limit the search to at least one alpha/numeric letter");
+      return false;
+    }
+   }
+  }
+  </script>
+</body>
+</html>
