@@ -1,0 +1,121 @@
+<!--
+trans12fxn.html - flexible hotel, fx, no billing with protected purpose
+Copyright (C) 2004, 2010 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+
+<!--<div align="right"><a href="javascript: void parent.helpWindow('htrans12fx.html')"><span class="ExpenseLink">Ajuda?</span></a></div>-->
+
+<p class="alignRight"><a href="javascript: void setCancelRequest();parent.loadHTMLScreenAJAX(parent.entryScreen)"><span class="ExpenseReturnLink">Voltar ao Relat&oacute;rio</span></a></p>
+
+<div id="hotelReceipt" class="reportSection">
+<span class="titleForm">Comprovande de Hospedagem</span>
+
+<form>
+  <input type="hidden" name="expense_2_attendeelist" value="[]" subtype="nosave">
+  <input type="hidden" name="expense_2_persplit" value subtype="nosave">
+  <input type="hidden" name="expense_1_expensetype" value>
+  <input type="hidden" name="expense_1_expdate" value>
+  <input type="hidden" name="expense_1_recamt" value>
+  <input type="hidden" name="rcptdate" value>
+  <input type="hidden" name="ratetype" value>
+  <input type="hidden" name="xsource" value>
+  <input type="hidden" name="xrate" value>
+  <input type="hidden" name="xdate" value>
+  <input type="hidden" name="expense_1_billtype" value="No">
+  <input type="hidden" name="expense_2_billtype" value="No" subtype="nosave">
+  <input type="hidden" name="subtype" value="1">
+  <input type="hidden" name="charge" value>
+  <input type="hidden" name="purpose" value>
+  <input type="hidden" name="xref" value>
+   
+        <div class="col1of2">
+
+            <div class="size1of2">
+                <label for="begdate">check in <span>*</span></label>
+                <input type="text" name="begdate" value maxlength="10" mysubst="1">
+                <a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[formStartNumber].begdate);"><img SRC="/ess/calendar.gif"></a>
+            </div>
+            <div class="size1of2">
+                <label for="enddate">check out <span>*</span></label>
+                <input type="text" name="enddate" value maxlength="10" mysubst="3" onChange="doubleChk(this.form.enddate)">
+                <a HREF="javascript:doNothing()" mysubst="4" onClick="setDateField(document.forms[formStartNumber].enddate);"> <img SRC="/ess/calendar.gif"></a>
+                <!--<span class="ExpenseBody">(dates must fit actual stay)</span>-->
+        	</div>
+            <label for="amount">amount</label>
+			<input type="text" name="amount" value="0.00" mysubst="5" onChange="calcLodging(document.forms[formStartNumber])">
+
+			<label for="units">Moeda</label>
+            <input type="text" name="units" id="units" readOnly="yes">
+            <a class="ExpenseLink" href="javascript:doNothing()" mysubst="7" onClick="setFgnLocalVars(document.forms[formStartNumber].recamt,document.forms[formStartNumber].amount);"><img SRC="/ess/images/currency.gif" /></a>
+            <label for="recamt">Valor em Moeda Estrangeira</label>
+            <input type="text" name="recamt" value mysubst="6" onChange="FXConvert();fgnLodging(document.forms[formStartNumber])" readOnly="yes">
+            <label for="location">Local<span>*</span></label>
+            <select name="locationname" xref="location"></select>
+        </div>
+		<div class="col1of2">
+            <label for="expense_1_persplit">No. Pessoas</label>
+            <input type="text" name="expense_1_persplit"maxlength="8" mysubst="8">
+            <!--<br /><span class="ExpenseBody">(insira o nome de h&oacute;spedes adicionais na caixa de coment&aacute;rio abaixo)</span>-->
+            <label for="merchant">Nome do Hotel</label>
+            <select name="merchant" mysubst="9"></select>
+            <a class="ExpenseLink" href="javascript:doNothing()" mysubst="11" onClick="setLocalObj(document.forms[formStartNumber].merchant);"><img id="newHotel" src="/ess/images/hotel.gif" title="New Hotel" /></a>
+            <label for="expense_1_comment">Coment&aacute;rio</label>
+            <input type="text" name="expense_1_comment" cols="38" mysubst="10">
+            <label for="expense_1_amount">Gastos com Acomoda&ccedil;&atilde;o</label>
+            <input type="text" name="expense_1_amount" readonly="yes">
+            <label for="project">Ordem Interna</label>
+            <select id="project" name="refername" xref="refer"></select>
+		</div>
+
+		<!--<small><strong>Insira as demais despesas n&atilde;o inclu&iacute;das nas di&aacute;rias abaixo. Clique no bot&atilde;o &quot;Atualizar despesas extra-di&aacute;rias&quot; para gravar o lan&ccedil;amento. Tais despesas aparecer&atilde;o no sum&aacute;rio localizado &agrave; direita. </strong></small>-->
+        <div class="col1of1">
+			<fieldset>
+    	    <legend>Despesas Extra-Di&aacute;rias</legend>
+                <div class="col1of2">
+                    <label for="expense_2_expdate">Data da Despesa<span>*</span></label>
+                    <input type="text" name="expense_2_expdate" align="left" mysubst="12" onChange="checkdate(this.form.expense_2_expdate)" subtype="nosave"><a HREF="javascript:doNothing()" mysubst="13" onClick="setDateField(document.forms[formStartNumber].expense_2_expdate);" subtype="nosave"><img SRC="/ess/calendar.gif"></a>
+                    <label for="expense_2_amount">Valor</label>
+                    <input type="text" name="expense_2_amount" align="left" value="0.00" mysubst="14" onChange="calcLodging(this.form)" subtype="nosave">
+                    <label for="expense_2_recamt">Montante em Moeda Estrangeira</label>
+                    <input type="text" name="expense_2_recamt" readonly="yes" align="left" value="0.00" subtype="nosave" mysubst="18" onChange="FXConvert('expense_2_recamt', 'expense_2_amount');fgnLodging(document.forms[formStartNumber])">
+                </div>
+                <div class="col1of2">
+                    <label for="expense_2_expensetype">Tipo da Despesa<span>*</span></label>
+                    <select name="expense_2_expensetype" mysubst="15" subtype="nosave"></select>
+                    <label for="expense_2_comment">Coment&aacute;rio</label>
+                    <input type="text" name="expense_2_comment" mysubst="17" subtype="nosave" >
+                    <a class="ExpenseLink" href="javascript:doNothing()" mysubst="30" onClick="launchAttendees()"><img SRC="/ess/images/attendees.gif"></a>
+                    <input type="button" id="btUpdate" value="Atualizar despesas extra-di&aacute;rias" name="updateExpense" onClick="javascript: void addExpense()">
+                </div>
+                <div>
+					<label for="expenselist">Despesas extra-di&aacute;rias</label>
+					<select class="expenselist" name="expenselist" subtype="list" softtype="list" size="7" onChange="loadExpense()"></select>
+					<input type="button" id="btRemove" value="Remover" name="RemoveExpense" onClick="javascript: void removeExpense()">
+					<input type="button" id="btNew" value="New" name="clearExpense" onClick="javascript: void newExpense()">
+				</div>
+        	</fieldset>
+        </div>
+        <div>
+        <input type="button" id="btSave" value="Salvar este Comprovante" name=" " mysubst="42" onClick="Javascript: void parent.loadHTMLScreenAJAX(parent.entryScreen)" onDblClick="parent.dupFlagOK = false">
+		</div>
+</form>
+
+    </div>
+<!--Control buttons - Save and Add another expense, Save expense, Clear and add another, Cancel expense input -->
+
+
+<span language="javascript" id="script" file="en/trans12fxnj.js" load="screenLoad()" unload="screenUnload()" />
+

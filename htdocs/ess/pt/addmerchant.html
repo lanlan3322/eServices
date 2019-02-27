@@ -1,0 +1,73 @@
+<!--
+addmerchant.html - add merchant to screen and personal database    
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Adicionar &agrave; lista...</title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+<link rel="stylesheet" href="../expenseLinko_02.css" type="text/css">
+<!--[if IE 7]> <link rel="stylesheet" href="../expenseLinko_02_ie7.css" type="text/css" media="screen" /> <![endif]-->
+</head>
+
+<body onLoad="FormInit()">
+	<div id="merchantSection">
+		<h2>Add to your list:</h2>
+		<form>
+			<label for="merchant">hotel</label>
+            <input type="text" name="merchant" />
+			<input type="button" value="Adicionar &agrave; lista" name="OK" onClick="JavaScript: void addMerchant()">
+			<input type="button" value="Cancelar" name="Cancel" onClick="window.close()"></p>
+    	</form>
+	</div>
+<script LANGUAGE="JavaScript">
+function addMerchant(){
+  if ( opener.parent.alltrim(document.forms[0].merchant.value) > "") {
+    window.opener.setLocalMerchant(document.forms[0].merchant.value);
+    window.close();
+  }
+}
+
+function FormInit(){
+  window.focus();
+  window.onresize = hdleResize;
+  document.forms[0].merchant.focus();  
+}
+
+function hdleResize() {
+//  note that ns6 also supports : body.clientWidth/Height 
+  var x = 0;
+  var y = 0;
+  if (document.documentElement.clientWidth && document.documentElement.clientWidth != 0) {
+    x = document.documentElement.clientWidth;  //IE 6 standard
+    y = document.documentElement.clientHeight;
+  } else if (document.body.clientWidth && document.body.clientWidth != 0) {
+    x = document.body.clientWidth;  // IE quirkie mode
+    y = document.body.clientHeight;
+  } else if (window.innerWidth && window.innerWidth != 0) {
+    x = window.innerWidth;  // NS
+    y = window.innerHeight;
+  }
+  
+  if(opener.parent.MerWinSize && opener.parent.MerWinSize != null) { 
+    opener.parent.MerWinSize(x,y);
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!--
+trans1afx.html - generic reciept with fx and billing (this is the basic expense entry)
+Copyright (C) 2010 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<div align="right"><a href="javascript: void parent.helpWindow('htrans1afx.html')"><span class="ExpenseLink">Ajuda?</span></a></div>
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0" class="offsetColor">
+  <tr>
+    <td width="50%"><h1>Receipt</h1></em></td>
+  </tr>
+</table>
+
+<form id="trans1afx" name="trans1afx">
+  <input type="hidden" name="rcpttype" value="3">
+  <input type="hidden" name="expense_1_attendeelist" value="[]">
+  <input type="hidden" name="ratetype" value>
+  <input type="hidden" name="xsource" value>
+  <input type="hidden" name="xrate" value>
+  <input type="hidden" name="xdate" value>
+  <input type="hidden" name="expense_1_amount" value> 
+  <input type="hidden" name="expense_1_persplit" value>
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="16%" class="offsetColor"><div class="ExpenseTag">Data do Comprovante:</div></td>
+      <td width="20%" class="offsetColor"><input type="text" name="rcptdate" size="13" tabindex="1"><a HREF="javascript:doNothing()" tabindex="2" onClick="setDateField(document.forms[0].rcptdate)"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+      <td width="11%" class="offsetColor"><div class="ExpenseTag">Moeda:</div></td>
+      <td width="25%" class="offsetColor"><input type="text" name="units" size="16" readOnly="yes">
+      <a class="ExpenseLink" href="javascript:doNothing()" tabindex="3" onClick="setFgnLocalVars(document.forms[0].recamt,document.forms[0].amount)">
+      Select Currency</a></td>
+    </tr>
+    <tr>
+      <td width="16%"><div class="ExpenseTag"><script>document.write(parent.getCurrencyLabel())</script>:</div></td>
+      <td width="20%"><input type="text" name="amount" size="12" value="0.00" tabindex="4" onChange="CheckAmount(this.form.amount)"></td>
+      <td width="11%"><div class="ExpenseTag">Valor em Moeda Estrangeira:</div></td>
+      <td width="25%"><input type="text" name="recamt" size="9" value tabindex="5" onChange="FXConvert()" readOnly="yes"></td>
+    </tr>
+    <tr>
+      <td width="16%" class="offsetColor"><div class="ExpenseTag">Tipo de Despesa: </div></td>
+      <td width="20%" class="offsetColor"><select name="expense_1_expensetype" size="1" tabindex="6" onChange="applyExp()">
+      </select></td>
+      <td width="11%" class="offsetColor"><div class="ExpenseTag">Fornecedor:</div></td>
+      <td width="25%" class="offsetColor"><select name="expense_1_merchant" size="1" tabindex="7"></select> 
+      <a class="ExpenseLink" href="javascript:doNothing()" tabindex="8" onClick="setLocalObj(document.forms[0].expense_1_merchant)">Novo Fornecedor</a> </td>
+    </tr>
+  </table>
+  <table border="0" cellspacing="0" width="100%" cellpadding="0">
+    <tr>
+      <td width="22%"><div class="ExpenseTag">Coment&aacute;rio:</div> </td>
+      <td width="84%"><input type="text" name="expense_1_comment" size="36" tabindex="9" onChange="CheckComment(this.form.expense_1_comment, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)">
+      <a class="ExpenseLink" href="javascript:doNothing()" tabindex="10" onClick="initAttendeeList(document.forms[0].expense_1_attendeelist, document.forms[0].expense_1_persplit); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=580, height=540, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')">Attendee List</a></td>
+    </tr>
+    <tr>
+      <td width="22%" class="offsetColor"><div class="ExpenseTag">Prop&oacute;sito:</div> </td>
+      <td width="84%" class="offsetColor"><select name="expense_1_purpose" size="1" tabindex="11" xref="expense_1_xref" onChange="cBillLoad()">
+      </select></td>
+    </tr>
+    <tr>
+      <td width="22%"><div class="ExpenseTag">Pago por:</div></td>
+      <td width="84%"><select name="charge" size="1" tabindex="12">
+      </select></td>
+    </tr>
+    <tr>
+      <td width="22%" class="offsetColor"><div class="ExpenseTag">Fatur&aacute;vel:</div></td>
+      <td width="84%" class="offsetColor"><select name="expense_1_billtype" size="1" tabindex="13">
+        <option value="Yes">Sim</option>
+        <option selected value="No">N&atilde;o</option>
+      </select></td>
+    </tr>
+  </table>
+  <div align="center"><center><p><input type="button" value="Atualizar Relat&oacute;rio com este Comprovante" name=" " tabindex="15" onClick="Javascript: void SubmitRec()" onDblClick="parent.dupFlagOK = false"></p>
+  </center></div>
+</form>
+
+<p align="center"><a class="ExpenseReturnLink" href="javascript: void parent.ListDelay()" tabindex="16">Voltar ao Relat&oacute;rio</a></p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<script language="javascript" id="script" file="en/trans1afx.js">
+

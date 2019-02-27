@@ -1,0 +1,150 @@
+<!--
+addclient.html - Add clients to purpose and personnal data    
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Adicionar Cliente</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body onLoad="FormInit()">
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%" class="bannerColor"><p align="center"><div class="ExpenseTag">Adicionar &agrave; lista:</div></td>
+  </tr>
+  <tr>
+    <td width="100%" align="center"><form>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" height="299">
+        <tr>
+          <td width="10%" height="25"><strong>Cliente No.: </strong></td>
+          <td width="90%" height="25"><input type="text" name="clientno" size="9"></td>
+        </tr>
+        <tr>
+          <td class="offsetColor" width="10%" height="25"><strong>Nome:</strong></td>
+          <td class="offsetColor" width="90%" height="25"><input type="text" name="client" size="25"></td>
+        </tr>
+        <tr>
+          <td width="10%" height="26"><strong>Local:</strong></td>
+          <td width="90%" height="26"><select name="location" size="1" tabindex>
+          </select><a href="javascript:doNothing()" onClick="PopUp()"><span class="ExpenseLink">&nbsp;New Location</span></a></td>
+        </tr>
+        <tr>
+          <td width="10%" class="offsetColor" height="25"><strong>Telefone:</strong></td>
+          <td width="90%" class="offsetColor" height="25"><input type="text" name="phone" size="25"></td>
+        </tr>
+        <tr>
+          <td width="10%" height="25"><strong>Contato:</strong></td>
+          <td width="90%" height="25"><input type="text" name="contact" size="25"></td>
+        </tr>
+        <tr>
+          <td width="10%" class="offsetColor" height="25"><strong>Coment&aacute;rio:</strong></td>
+          <td width="90%" class="offsetColor" height="25"><input type="text" name="comment" size="25"></td>
+        </tr>
+        <tr>
+          <td width="10%" height="97"><strong>Observa&ccedil;&otilde;es:</strong></td>
+          <td width="90%" height="97"><textarea rows="4" name="remarks" cols="32"></textarea></td>
+        </tr>
+        <tr>
+          <td width="10%" class="offsetColor" height="26"><strong>Despesas Fatur&aacute;veis:</strong></td>
+          <td width="90%" class="offsetColor" height="26"><select name="billexp" size="1" tabindex>
+            <option selected value></option>
+            <option value="Yes">Sim</option>
+            <option value="No">Não</option>
+          </select></td>
+        </tr>
+        <tr>
+          <td width="10%" height="25"><strong>Empresa:</strong></td>
+          <td width="90%" height="25"><input type="text" name="company" size="25"></td>
+        </tr>
+      </table>
+      <p><input type="button" value="Adicionar/Alterar Lista" name="OK" onClick="JavaScript: void addItem()"> <input type="button" value="Cancelar" name="Cancel" onClick="window.close()"></p>
+    </form>
+    </td>
+  </tr>
+</table>
+<script LANGUAGE="JavaScript" SRC="addmerchant.js"></script>
+<script LANGUAGE="JavaScript">
+function addItem(){
+  if (document.forms[0].clientno.value > " ") {
+    var theinfo = new Array(9);
+    theinfo[0] = ["clientno",document.forms[0].clientno.value];
+    theinfo[1] = ["client",document.forms[0].client.value];
+    if (document.forms[0].location.selectedIndex >= 0) {
+      theinfo[2] = ["location",document.forms[0].location.options[document.forms[0].location.selectedIndex].text];
+    } else {
+      theinfo[2] = ["location",""]; 
+    }
+    theinfo[3] = ["phone",document.forms[0].phone.value];
+    theinfo[4] = ["contact",document.forms[0].contact.value];
+    theinfo[5] = ["comment",document.forms[0].comment.value];
+    theinfo[6] = ["remarks",document.forms[0].remarks.value];
+    if (document.forms[0].billexp.selectedIndex >= 0) {
+      theinfo[7] = ["billexp",document.forms[0].billexp.options[document.forms[0].billexp.selectedIndex].text];
+    } else {
+      theinfo[7] = ["billexp",""];   
+    }    
+    theinfo[8] = ["company",document.forms[0].company.value];
+    window.opener.setLocalMerchant(document.forms[0].client.value,theinfo,document.forms[0].clientno.value);
+    window.close();
+  } else {
+    alert("Client number is required");
+    document.forms[0].clientno.focus();  
+  }
+}
+function FormInit(){
+  CCode = window.opener.parent;  //located in addMerchant.js
+  PersDataArea = window.opener.parent;
+  MerchantType = "location";
+  CCode.setListWithPers(document.forms[0].location, CCode.getLocations("1"),MerchantType);
+  //window.resizeTo(400,450);
+  window.focus();
+  window.onresize = hdleResize;
+}
+
+function PopUp() {
+setLocalObj(document.forms[0].location); 
+top.newWin2 = window.open('/ess/' + opener.parent.language + 'addmerchant.html', 'location', 'dependent=yes, width=200, height=150, screenX=100, screenY=100, titlebar=no, menubar=no, status=no')
+}
+
+function doNothing() {
+}
+
+function hdleResize() {
+//  note that ns6 also supports : body.clientWidth/Height 
+  var x = 0;
+  var y = 0;
+  if (document.documentElement.clientWidth && document.documentElement.clientWidth != 0) {
+    x = document.documentElement.clientWidth;  //IE 6 standard
+    y = document.documentElement.clientHeight;
+  } else if (document.body.clientWidth && document.body.clientWidth != 0) {
+    x = document.body.clientWidth;  // IE quirkie mode
+    y = document.body.clientHeight;
+  } else if (window.innerWidth && window.innerWidth != 0) {
+    x = window.innerWidth;  // NS
+    y = window.innerHeight;
+  }
+  
+  if(opener.parent.MerWinSize && opener.parent.main.MerWinSize != null) { 
+    opener.parent.MerWinSize(x,y,"addclient");
+  }
+}
+
+</script>
+
+</body>
+</html>

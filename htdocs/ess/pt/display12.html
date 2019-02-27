@@ -1,0 +1,83 @@
+<!--
+display8.html - returned for audit screen
+Copyright (C) 2007 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Valores Devolvidos</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="Javascript: void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('htrans8.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0" class="offsetColor">
+  <tr>
+    <td width="50%"><h1>Valores Devolvidos</h1></td>
+  </tr>
+</table>
+
+<form>
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+  <input type="hidden" name="RCPTTYPE" value>
+  <input type="hidden" name="VOUCHER" value>
+  <input type="hidden" name="RECEIPT" value>
+  <input type="hidden" name="CHARGE" value> 
+  <input type="hidden" name="XRATE" value>
+  <input type="hidden" name="XDATE" value>
+  <input type="hidden" name="RATETYPE" value>
+  <input type="hidden" name="XSOURCE" value>
+
+  <input type="hidden" name="CRE_DATE" value>  
+  <input type="hidden" name="persistance" value="none">
+    <tr>
+      <td class="ExpenseTagOffset" width="20%" class="offsetColor">Data:</td>
+      <td width="30%" class="offsetColor"><input type="text" name="REC_DATE" readonly="yes" tabindex="1" size="13"></td>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Moeda:</div></td>
+      <td width="30%" class="offsetColor"><input type="text" name="UNITS" readonly="yes" size="16" readOnly="yes"></td>
+    </tr>
+    <tr>
+      <td class="ExpenseTag" width="20%">Valor Devolvido:</td>
+      <td width="30%"><input type="text" name="AMOUNT" readonly="yes" size="9" value="0.00" tabindex="3" onChange="CheckAmount(this.form.AMOUNT)"></td>
+      <td width="20%"><div class="ExpenseTag">Valor em Moeda Estrangeira:</div></td>
+      <td width="30%"><input type="text" name="REC_AMT" readonly="yes" size="9" value tabindex="5"></td>
+    </tr>
+    <tr>
+      <td class="ExpenseTagOffset" width="20%" class="offsetColor">Check #:</td>
+      <td width="30%" class="offsetColor"><input type="text" name="REFER" readonly="yes" tabindex="4" size="15" onChange="CheckRequired(this.form.REFER,'&Eacute; necess&aacute;rio informar o n&uacute;mero de refer&e&circ;ncia do Adiantamente neste campo')"></td>
+      <td width="20%" class="offsetColor">
+      <td width="30%" class="offsetColor">
+    </tr>
+  </table>
+</form>
+
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void history.go(-2)" tabindex="6">Retornar ao Relat&oacute;rio</a></p>
+
+<p align="center">&nbsp;</p>
+</body>
+<script LANGUAGE="JavaScript">
+
+function FillForm() {
+   parent.contents.setTransaction(document.forms[0]);
+    parent.contents.NewReport();  //JH 20070430 - Compensating for display only.
+    parent.contents.ProcessHeader(parent.Header);  //JH 20070430 - Compensating for display only.
+   document.forms[0].REC_DATE.focus();
+   parent.contents.DirectEdit = false;
+}
+
+
+</script>
+
+</html>

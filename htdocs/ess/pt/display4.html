@@ -1,0 +1,88 @@
+<!--
+display4.html - mileage for audit
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Quilometragem</title>
+<script language="JavaScript">
+
+
+function FillForm() {
+   window.opener.parent.setTransaction(document.forms[0]);
+    window.opener.parent.NewReport();  //JH 20070430 - Compensating for display only.
+    window.opener.parent.ProcessHeader(window.opener.parent.Header);  //JH 20070430 - Compensating for display only.
+   with (document.forms[0]) {
+      expense_1_PURPOSE.value = window.opener.parent.getStringFmHeadWhere("PURPOSE", expense_1_PURPOSE.value, [["PURPOSE",0],["BEG_DATE",0],["END_DATE",0],["COMMENT",15]]);
+      expense_1_BILLTYPE.value = window.opener.parent.getBillXlate(expense_1_BILLTYPE.value);
+   }
+   window.opener.parent.DirectEdit = false;
+}
+
+
+</script>
+<link rel="stylesheet" href="../expenseLinko_02.css" type="text/css">
+<!--[if IE 7]> <link rel="stylesheet" href="../expenseLinko_02_ie7.css" type="text/css" media="screen" /> <![endif]-->
+</head>
+
+<body onLoad="javascript:void FillForm()">
+
+<div id="mileageSection">
+<h2>Reembolso de Quilometragem</h2>
+
+<form name="mileage">
+  <input type="hidden" name="RCPTTYPE" value>
+  <input type="hidden" name="VOUCHER" value>
+  <input type="hidden" name="RECEIPT" value>
+  <input type="hidden" name="CRE_DATE" value>
+  <input type="hidden" name="expense_1_CRE_DATE" value>
+  <input type="hidden" name="expense_1_EXP_DATE" value>  
+  <input type="hidden" name="expense_1_RECEIPT" value>
+  <input type="hidden" name="expense_1_LINEITEM" value>  
+  <input type="hidden" name="expense_1_EXPENSE" value>
+
+  <input type="hidden" name="expense_1_AMOUNT" value>
+  <input type="hidden" name="expense_1_REC_AMT" value>
+
+  <input type="hidden" name="CHARGE" value> 
+  <input type="hidden" name="UNITS" value>
+  <input type="hidden" name="persistance" value="none">
+  <input type="hidden" name="expense_1_persistance" value="none">
+  
+	<div class="col1of2">
+		<label for="REC_DATE">Data</label>
+		<input type="text" name="REC_DATE" size="10" readonly="yes" tabindex="1" />
+		<label for="REC_AMT"><script>document.write(window.opener.parent.getDistanceLabel())</script></label>
+		<input type="text" name="REC_AMT"input type="text" readonly="yes" size="8" tabindex="3" />
+		<label for="XRATE">Taxa</label>
+		<input type="text" name="XRATE" readonly="yes" size="8" tabindex="4" onChange="checkXRate(mileage)" />
+		<label for="AMOUNT">Valor</label>
+		<input type="text" name="AMOUNT" size="8" readonly="yes" />
+    </div>
+    <div class="col1of2">
+		<label for="expense_1_PURPOSE">Prop&oacute;sito</label>
+		<input type="text" name="expense_1_PURPOSE" tabindex="5"size="45" />
+		<label for="expense_1_BILLTYPE"><script>document.write(window.opener.parent.getBillableLabel())</script></label>
+		<input type="text" name="expense_1_BILLTYPE" size="8" tabindex="6" listtype="value-in" />
+		<label for="XSOURCE">De:</label>
+		<input type="text" name="XSOURCE" size="25" tabindex="7" />
+		<label for="expense_1_COMMENT">Para:</label>
+		<input type="text" name="expense_1_COMMENT" size="25" tabindex="8" />
+    </div>
+</form>
+</div>
+</body>
+</html>

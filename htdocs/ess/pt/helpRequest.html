@@ -1,0 +1,101 @@
+<!--
+helpRequest.html - Contact and utilities for support
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<h1>Começando:</h1>
+
+<ol>
+  <li class="TableData">Clicar em &quot;Novow&quot;</li>
+  <li class="TableData">Insira o prop&oacute;sito do Relat&oacute; no campo &quot;Prop&oacute;sito&quot;. 
+    Você pode tamb&eacute; inserir informa&ccedil;&otilde;es acerca de um cliente ou um projeto, se neces&aacute;rio, clicando nos links correspondentes 
+    no canto superior-direito.</li>
+  <li class="TableData">Você está pronto para lançar seus Comprovantes.&nbsp; Escolha o tipo de despesa e insira as informa&ccedil;&otilde;es.</li>
+  <li class="TableData">Quando todos os Comprovantes tiverem sido lan&ccedil;ados, clique em &quot;Submeter&quot; para submeter o Relat&oacute;rio para aprova&ccedil;&atilde;o e pagamento.</li>
+</ol>
+
+<h1>Solu&ccedil;&atilde;o de Problemas:</h1>
+
+<ul>
+  <li class="TableData" class="TableData">Se voc&ecirc; necessitar de suporte, por favor, preencha o formul&aacute; abaixo e clique em Submeter. Um
+      e-mail ser&aacute; encaminhado ao Suporte T&eacute;cnico:</li>
+</ul>
+
+<form method="POST" action="SubmitForm.jsp">
+  <table border="4" cellpadding="0" width="69%" class="offsetColor" cellspacing="0">
+  <input type="hidden" name="appName" value>
+  <input type="hidden" name="appVersion" value>
+  <input type="hidden" name="userAgent" value>
+  <input type="hidden" name="platform" value>
+  <input type="hidden" name="cookieEnabled" value>
+  <input type="hidden" name="rcpt2" value>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" class="offsetColor" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong><big>Help
+      / Support Request</big></strong></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" class="offsetColor" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" class="offsetColor" style="border: medium none rgb(255,255,0)"><strong>Data:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input type="text" name="FormDate" size="30" readOnly="yes"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" class="offsetColor" style="border: medium none rgb(255,255,0)"><strong>Name: </strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input type="text" name="Nome" size="38"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong>Company:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input type="text" name="Empresa" size="38"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong>Phone:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input type="text" name="Telefone" size="20"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong>Email
+      Address:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input type="text" name="E-mail" size="38"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong>Problem/Issue/Coment&aacute;rio:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><textarea rows="4" name="Text" cols="62"></textarea></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input type="submit" value="Submeter" name="Submit"></td>
+    </tr>
+  </table>
+  <div align="left"><p>&nbsp;</p>
+  </div>
+</form>
+
+<p>&nbsp;</p>
+
+<p align="center"><a class="ExpenseLink" href="javascript: void parent.SetLocal(); parent.ListMemory()">Save to cookie</a>
+&nbsp;&nbsp;&nbsp; <a class="ExpenseLink" href="javascript: void parent.GetLocal(); parent.ListMemory()">Recovery from cookie</a>
+&nbsp;&nbsp;&nbsp; <a class="ExpenseLink" href="javascript: void parent.Log.display()">Display log</a>
+</p>
+
+
+<p align="center">******</p>
+<script language="JavaScript" id="script" file="shared/helpRequest.js">
+

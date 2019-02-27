@@ -1,0 +1,92 @@
+<!--
+XLogin.html - Reporter login screen
+Copyright (C) 2004,2011 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Bem-vindo ao ESS!</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" href="../expenseLinko.css" type="text/css">
+<!--[if IE 7]> <link rel="stylesheet" href="../expenseLinko_ie7.css" type="text/css" media="screen" /> <![endif]-->
+<!--[if IE 8]> <link rel="stylesheet" href="../expenseLinko_ie8.css" type="text/css" media="screen" /> <![endif]-->
+<!--[if IE 9]> <link rel="stylesheet" href="../expenseLinko_ie8.css" type="text/css" media="screen" /> <![endif]-->
+<style type="text/css">
+.adminLink
+{
+  line-height:10px;
+  float:right;
+}  
+</style>
+
+
+</head>
+
+<body onLoad="init()">
+<div id="loginLogo" class="ESSName"><span class="adminLink"><a href="/ess/ess/Audit.html">Admin</a></span>
+</div>
+<div id="infoLogin">
+
+<br><label for="email">Bem-vindo ao ESS&trade;</label>
+<br>
+  <form method="Post" action="Login.jsp">
+      <input type="hidden" name="company" value="ess"><input type="hidden" name="database" value>     
+       
+      <label for="email">e-mail</label>
+      <input id="email" type="text" name="email" />
+      <label for="password">senha</label>
+      <input id="password" type="password" name="password" />
+      <input id="btEnter" type="submit" value="Login" name="B1">
+  </form>
+
+</div>
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+<script>
+function init() {
+  document.forms[0].action = "/ess-app/ajax/" + "XLogin.jsp";
+  document.forms[0].email.value = "";
+  document.forms[0].password.value = "";
+}
+</script>
+</body>
+</html>
