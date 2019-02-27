@@ -1,0 +1,80 @@
+<!--
+display6.html - advance screen for the audit
+Copyright (C) 2007 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Advance accounting</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="Javascript: void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('htrans7.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0" class="offsetColor">
+  <tr>
+    <td><h1>Advance</h1></td>
+  </tr>
+</table>
+
+<form>
+  <input type="hidden" name="RCPTTYPE" value>
+  <input type="hidden" name="VOUCHER" value>
+  <input type="hidden" name="RECEIPT" value>
+  <input type="hidden" name="CHARGE" value> 
+  <input type="hidden" name="XRATE" value>
+  <input type="hidden" name="XDATE" value>
+  <input type="hidden" name="RATETYPE" value>
+  <input type="hidden" name="XSOURCE" value>
+
+  <input type="hidden" name="CRE_DATE" value>
+  <input type="hidden" name="persistance" value="none">
+  <table width="100%">
+    <tr>
+      <td class="ExpenseTagOffset" width="20%" class="offsetColor">Advance&nbsp;Issue&nbsp;Date:</td>
+      <td width="30%" class="offsetColor"><input type="text" name="REC_DATE" readonly="yes" size="13" tabindex="1"></td>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Currency:</div></td>
+      <td width="30%" class="offsetColor"><input type="text" name="UNITS" readonly="yes" size="16" readOnly="yes"></td>
+    </tr>
+    <tr>
+      <td class="ExpenseTag" width="20%">Advance Amount:</td>
+      <td width="30%"><input type="text" name="AMOUNT" readonly="yes" size="9" value="0.00" tabindex="3"></td>
+      <td width="20%"><div class="ExpenseTag">Foreign Amount:</div></td>
+      <td width="30%"><input type="text" name="REC_AMT" readonly="yes" size="9" value tabindex="5"></td>
+    </tr>
+    <tr>
+      <td class="ExpenseTagOffset" width="20%" class="offsetColor">Advance Reference #:</td>
+      <td width="30%" class="offsetColor"><input type="text" name="REFER" readonly="yes" size="15" tabindex="4"></td>
+      <td width="20%" class="offsetColor">
+      <td width="30%" class="offsetColor">
+    </tr>
+  </table>
+</form>
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void history.go(-2)" tabindex="6">Return to report display</a></p>
+</body>
+
+<script LANGUAGE="JavaScript">
+
+
+function FillForm() {
+   parent.contents.setTransaction(document.forms[0]);
+    parent.contents.NewReport();  //JH 20070430 - Compensating for display only.
+    parent.contents.ProcessHeader(parent.Header);  //JH 20070430 - Compensating for display only.
+   document.forms[0].REC_DATE.focus();
+   parent.contents.DirectEdit = false;
+}
+</script>
+
+</html>

@@ -1,0 +1,38 @@
+<!--
+saveXMLFile.html - initiate a save to the XMLR file 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<form method="post" action="SaveXML_leave.jsp">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="report" value>
+  <input type="hidden" name="status" value>
+  <input type="hidden" name="reference" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="comment" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="database" value>
+		<input type="hidden" name="newLeaveType" value>
+		<input type="hidden" name="newLeaveFrom" value>
+		<input type="hidden" name="newLeaveFromAMPM" value>
+		<input type="hidden" name="newLeaveTo" value>      
+		<input type="hidden" name="newLeaveToAMPM" value>
+		<input type="hidden" name="newLeaveTotal" value>
+		<input type="hidden" name="newLeaveReason" value>
+	<div id="submitSection">
+		<span>Saving... ...</span>
+	</div>  
+</form>
+<span language="javascript" id="script" file="en/saveXMLFile_leave.js"/>

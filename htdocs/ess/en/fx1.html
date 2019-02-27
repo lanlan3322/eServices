@@ -1,0 +1,267 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>FX Popup</title>
+<link rel="stylesheet" href="../expenseLinko_02.css" type="text/css">
+<!--[if IE 7]> <link rel="stylesheet" href="../expenseLinko_02_ie7.css" type="text/css" media="screen" /> <![endif]-->
+</head>
+
+<body onLoad="FillForm(document.forms[0])">
+<div id="currencySection">
+<h2>Currency Info Screen</h2>
+<form>
+	<input type="hidden" name="ratetype" value="0">
+    <div class="col1of2">
+        <label for="units">Currency</label>
+        <select name="units" tabindex="1" onChange="switchCurrency()"></select>
+        <label for="xrate">Rate</label>
+        <input type="text" name="xrate" value tabindex="2" onChange="makeRate(document.forms[0].xrate)"> (ensure rate is current)
+        <label for="ratetype">Rate type</label>
+        <select name="ratedivisor" xref="ratetype" subtype="exclude" tabindex="3">
+            <option value="0">Divide for home currency</option>
+            <option selected value="1">Multiply for Home currency</option>
+        </select>
+    </div>
+    <div class="col1of2">
+	    <label for="xdate">Rate date</label>
+    	<input type="text" name="xdate" size="13" tabindex="4">
+        <a HREF="javascript:window.opener.doNothing()" onClick="parent.setDateField(document.forms[0].xdate)"><img SRC="../calendar.gif" tabindex="5" /></a>
+    	<label for="xsource">Source</label>
+    	<input type="text" name="xsource" tabindex="6">
+    </div>
+    <div class="col1of1">
+		<p>If your receipts are in a foreign currency, enter the information on this screen. This information will be used to calculate home currency amounts. Leave blank for non-foreign currency transactions.</p>
+    	<input type="button" id="btSave" value="OK - Add to receipt" name="OK" onClick="JavaScript: void FXSubmit(document.forms[0])" tabindex="10">
+    	<input type="button" id="cancelReport" value="Cancel" name="Cancel" onClick="window.close()" tabindex="11">
+    </div>
+</form>
+<p>&nbsp;</p>
+</div>
+
+<script LANGUAGE="JavaScript">
+var mesParents = window.opener.parent;
+var normalNames = ["units","xrate","ratetype","xdate","xsource","recamt","amount"]; //matches mesParents list
+var parentForm = window.opener.fxFormObj;
+
+var dateFormat  = window.opener.parent.dateFormat;
+var language = window.opener.parent.language;
+
+var DBCCode = window.opener.parent;  //This is reset in the FillForm function below
+var CalPDArea = window.opener.parent;
+
+function FXSubmit(thisForm) {
+  var NumVal;
+  var newUnits = thisForm.units.selectedIndex;
+  if (newUnits != 0
+      && (!window.opener.isNumber(thisForm.xrate.value)
+         || !window.opener.checkdate(thisForm.xdate) 
+         || !window.opener.doDateChkToday(thisForm.xdate)
+         || !checkLength(thisForm.xrate, "Rate", 0)
+         || !checkLength(thisForm.xsource, "Source", 2)) ) {  //add amount parameter to divorce from exact location  
+    if (thisForm.xrate.value != ""){
+      alert("Invalid data in the currency convertor"); 
+    }  
+  } else {
+    var currList = new Array(5);
+    if (newUnits > 0) {
+      currList[0] = [mesParents.FXFormNames[0],thisForm.units.options[newUnits].value]; //units
+      currList[1] = [mesParents.FXFormNames[1],thisForm.xrate.value]; //xrate
+      currList[2] = [mesParents.FXFormNames[2],thisForm.ratedivisor.options[thisForm.ratedivisor.selectedIndex].value]; //ratetype
+      currList[3] = [mesParents.FXFormNames[3],thisForm.xdate.value]; //xdate
+      currList[4] = [mesParents.FXFormNames[4],thisForm.xsource.value];  //xsource
+      window.opener.setDBPair(window.opener.parent.PersDBase,"currency",currList);
+    } else {
+      currList[0] = [mesParents.FXFormNames[0],""];  //units
+      currList[1] = [mesParents.FXFormNames[1],""];  //xrate
+      currList[2] = [mesParents.FXFormNames[2],""];  //ratetype
+      currList[3] = [mesParents.FXFormNames[3],""];  //xdate
+      currList[4] = [mesParents.FXFormNames[4],""];  //xsource
+    }
+
+    window.opener.setFGN(currList);
+    window.opener.setDBPair(window.opener.parent.PersDBase,"last_currency",currList[0][1]);
+    window.opener.setDBPair(window.opener.parent.WorkDBase,"last_currency",currList[0][1]);
+    if (window.opener.fxCleanUp != null) window.opener.fxCleanUp(parentForm);
+    window.close(); 
+  }
+}
+
+function lTest(x){
+  alert("Check " + x + " is complete.");
+  return false;
+}
+
+
+function checkLength(object, fname, nchars) {
+        var check = rtrim(object.value);
+        if (check.length > nchars) {
+                return true;
+        } else
+        alert(fname + " must greater than " + nchars + " characters");
+        object.focus();
+        object.select();
+}
+
+function rtrim(arg) {
+  var trimvalue = "";
+  var arglen = arg.length;
+  if (arglen < 1) return trimvalue;
+  var lastpos = -1;
+  var i = arglen;
+  while (i >= 0) {
+    if (arg.charCodeAt(i) != 32 && !isNaN(arg.charCodeAt(i))) {
+      lastpos = i;
+      break;
+    }
+    i--;
+  }
+  trimvalue = arg.substring(0,lastpos+1);
+  return trimvalue;
+}
+
+function FillForm(thisForm) {
+    window.focus();
+    document.forms[0].ratedivisor.subtype = "exclude";
+    //Gets a simple list found in personal.js
+    window.opener.setList(thisForm.units,window.opener.getCurrencies("1"),"",true);  //,,true
+    //Sets the default dates
+    window.opener.setDefaultDate(thisForm.xdate,-1);
+    // var parentForm = window.opener.document.forms[window.opener.FormNumber];
+    parentForm = window.opener.getFXFormObj();
+    if (parentForm.elements[mesParents.FXFormNames[1]].value) {
+      setPullDownList(thisForm,"units",parentForm.elements[mesParents.FXFormNames[0]].value);
+      thisForm.xrate.value = parentForm.elements[mesParents.FXFormNames[1]].value;
+      setPullDownRateType(thisForm,"ratedivisor",parentForm.elements[mesParents.FXFormNames[2]].value);
+      thisForm.xdate.value = parentForm.elements[mesParents.FXFormNames[3]].value;
+      thisForm.xsource.value = parentForm.elements[mesParents.FXFormNames[4]].value;
+    } else {
+      var ResultItem = window.opener.getDBSingle(window.opener.parent.PersDBase,"last_currency");
+      if (ResultItem.length > 0) {
+         setCurrency(thisForm,ResultItem[0]);
+      }
+    } 
+    
+    DBCCode = window.opener.parent;
+    CalPDArea = window.opener.parent;
+    
+    // document.forms[0].units.focus();
+}
+
+function switchCurrency() {
+  var newUnits = document.forms[0].units.selectedIndex;
+  setCurrency(document.forms[0],document.forms[0].units.options[newUnits].text); 
+}
+
+function setCurrency(thisForm,x){
+  var ResultSet = new Array(0);
+  var DolList = window.opener.getHomeCurrencyList();
+  if (DolList.indexOf(";" + x + ";") > -1) {  //Home current check
+     document.forms[0].units.selectedIndex = 0;
+  } else {
+     ResultSet = window.opener.getDBSingle(window.opener.parent.PersDBase,"currency",mesParents.FXFormNames[0],x);
+  }
+  if (ResultSet.length > 0) {
+  var ptrString;
+    for (var i = 0; i < ResultSet[0].length; i++) {
+      ptrString = normalNames[arrayIndex(mesParents.FXFormNames, ResultSet[0][i][0])]; 
+      if (ptrString != normalNames[0]) {
+         thisForm.elements[ptrString].value = ResultSet[0][i][1];
+      } else {
+         setPullDownList(thisForm,ptrString,ResultSet[0][i][1]);  
+      }  
+    }
+  }else{
+    thisForm.xrate.value = "";
+    thisForm.ratetype.value = "0";
+    thisForm.xdate.value = "";
+    thisForm.xsource.value = "";
+  }
+  document.forms[0].ratedivisor.selectedIndex = document.forms[0].ratetype.value; 
+}
+
+function arrayIndex(xArray, yString) {
+  var k = -1;
+  for (i = 0; i < xArray.length; i++) {
+    if (xArray[i] == yString) {
+        k = i;
+        i = xArray.length;
+    }
+  }
+  return k;
+}
+
+function setPullDownList(TheForm, Tag, Value) {
+     j = 0;
+     var x;  // is list text
+     var y = Value.length;
+     do {
+       x = TheForm.elements[Tag].options[j].value;
+       if (x.length > y) x = x.substring(0,y);
+       if (x == Value) {
+          TheForm.elements[Tag].selectedIndex = j;
+          j = TheForm.elements[Tag].length;
+       }
+       j = j + 1;
+     } while (j < TheForm.elements[Tag].length); 
+}
+
+function setPullDownRateType(TheForm, Tag, Value) {
+     j = 0;
+     do {
+       if (TheForm.elements[Tag].options[j].value == Value) {
+          TheForm.elements[Tag].selectedIndex = j;
+       }
+       j = j + 1;
+     } while (j < TheForm.elements[Tag].length); 
+}
+
+//These functions format numbers
+function format (expr, decplaces) {
+  var sign = "";
+  var str;
+  var numx = parseFloat(expr); 
+  if (numx < 0 ) {
+    sign = "-";
+    str = "" + Math.round(-1 * numx * Math.pow(10,decplaces));
+  } else {
+    str = "" + Math.round(numx * Math.pow(10,decplaces));
+  }
+  while (str.length <= decplaces) {
+    str = "0" + str;
+  }
+  var decpoint = str.length - decplaces;
+  return sign + str.substring(0,decpoint) + opener.decimal + str.substring(decpoint,str.length);
+}
+function makeCurrency (obj) {
+  if (!isNaN(obj.value) && !isEmpty(obj.value)) {
+    obj.value = format(obj.value,2);
+  }
+}
+function isEmpty(x) {
+  if (x == null || x == "") {
+    return true;
+  } else {
+    return false;
+  }
+}  
+ 
+function makeRate (obj) {
+  if (!isNaN(obj.value) && !isEmpty(obj.value)) {
+    obj.value = format(obj.value,4);
+  }
+}
+
+function getJSX(x) {
+  return window.opener.getJSX(x);
+}
+  
+</script>
+<script LANGUAGE="JavaScript" SRC="/ess/shared/calendar.js"></script>
+
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+</body>
+</html>

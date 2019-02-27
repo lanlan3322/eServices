@@ -1,0 +1,413 @@
+<!--
+attendee3b.html - Add attendees to report/manage list unlimited attendees    
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Attendee List 3b</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body onLoad="getForm()">
+
+<form>
+  <table border="0" cellspacing="0" width="520" height="514" cellpadding="0">
+    <tr>
+      <td width="500" height="48" class="bannerColor"><strong><em><big><big><big><font face="Times New Roman">Attendee List </font></big></big></big></em></strong></td>
+    </tr>
+    <tr>
+      <td width="500" height="182"><table border="0" cellspacing="0" width="100%" height="85" cellpadding="0">
+        <tr>
+          <td width="25%" height="1"><div class="ExpenseTag">Location:</div></td>
+          <td width="75%" height="1"><input type="text" name="location" size="20"></td>
+        </tr>
+        <tr>
+          <td width="25%" height="83" class="offsetColor"><div class="ExpenseTag">Discussion:</div></td>
+          <td width="75%" height="83" class="offsetColor"><textarea rows="3" name="comment" cols="45"></textarea></td>
+        </tr>
+        <tr>
+          <td width="25%" height="19"><div class="ExpenseTag">Total Attendees: </div></td>
+          <td width="75%" height="19"><table border="0" cellspacing="0" width="100%" cellpadding="0">
+            <tr>
+              <td width="20%"><input type="text" name="number" size="6"></td>
+              <td width="80%"><em><strong><font face="Arial"><small>Enter an attendee 
+              into fields below and use &quot;Add Attendee&quot; button to add to list.&nbsp; 
+              &quot;Use List&quot; is optional and will allow you to populate the form with persons from
+              permanent lists. Use the &quot;Save these attendees to report&quot; when all 
+              attendees have been entered.</small></font></strong></em></td>
+            </tr>
+          </table>
+          </td>
+        </tr>
+      </table>
+      </td>
+    </tr>
+    <tr>
+      <td width="500"><table border="0" cellspacing="0" width="100%" cellpadding="0">
+        <tr>
+          <td width="58%">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+              <td width="37%"><strong>List Name:</strong></td>
+              <td width="63%"><input type="text" name="listname" size="13"></td>
+            </tr>
+            </table></td>
+          <td width="37%" align="center" height="42"></td>
+          <td width="72%" align="center" height="42"></td>
+        </tr>
+        <tr>
+          <td width="58%" class="offsetColor" align="center" height="24"><u><div class="ExpenseTag">Person</div></u></td>
+          <td width="37%" class="offsetColor" align="center" height="24"><u><div class="ExpenseTag">Title</div></u></td>
+          <td width="72%" class="offsetColor" align="center" height="24"><u><div class="ExpenseTag">Company</div></u></td>
+        </tr>
+        <tr align="center">
+          <td width="58%" height="25" align="center"><input type="text" name="attendee_1_name" size="21"></td>
+          <td width="37%" height="25" align="center"><input type="text" name="attendee_1_title" size="11"></td>
+          <td width="72%" height="25" align="center"><input type="text" name="attendee_1_company" size="21"></td>
+        </tr>
+        <tr align="center">
+          <td width="58%" height="25"></td>
+          <td width="37%" height="25"></td>
+          <td width="72%" height="25" align="right"><input type="button" value="Add Attendee" name="SavePerson" onClick="javascript: void savePerson()"></td>
+        </tr>
+      </table>
+      </td>
+    </tr>
+    <tr align="center">
+      <td width="500">
+      <table border="0" cellspacing="0" width="100%" cellpadding="0">
+        <tr>
+          <td width="20%" class="offsetColor" align="right"><strong>Attendees:&nbsp; </strong></td>
+          <td width="65%" class="offsetColor" height="26" align="center">
+          <select name="attendee" size="7" tabindex="2" width="40" subtype="list">
+          </select></td>
+          <td width="15%" class="offsetColor" align="center"><input type="button" value="Remove" name="RemovePerson" onClick="javascript: void removePerson()"></td>
+        </tr>
+      </table>
+      </td>
+    </tr>
+    <tr align="center">
+      <td width="500" height="25"><input type="button" value="Save attendees to report/Save List" name="SaveButton" onClick="javascript: void saveForm()"></td>
+    </tr>
+  </table>
+</form>
+<script>
+
+function newList() {
+  window.opener.parent.setDBPair(window.opener.parent.WorkDBase,"peoplelist",setVarString());
+  window.location = "attendee2b.html"
+}
+
+function saveForm() {
+  if (CheckLocation(document.forms[0].location)
+   && CheckDiscussion(document.forms[0].comment)
+   && CheckNumber(document.forms[0].number)
+   && CheckPerson(document.forms[0].attendee)) {
+    if (document.forms[0].listname.value > " ") {
+      window.opener.setAttendeeList(setSpecialStr(), document.forms[0].number.value);
+      window.opener.setPeopleList("peoplelist","listname",document.forms[0].listname.value,setPersonalStr());
+      window.close();
+    } else {
+      alert("A list name between 1 and 16 characters is required");
+      document.forms[0].listname.focus(); 
+    }
+  }
+}
+
+function savePerson() {
+//Later make this a generalized and move to common.js     
+ with (document.forms[0]) {
+  if (attendee_1_name.value != null && attendee_1_name.value != ""
+   && CheckComplete(attendee_1_name,attendee_1_title,attendee_1_company)) {
+    var xStr = strAttendee("name",window.opener.parent.getNormalizeText(attendee_1_name.value),
+                           "title",window.opener.parent.getNormalizeText(attendee_1_title.value),
+                           "company",window.opener.parent.getNormalizeText(attendee_1_company.value));
+    j = attendee.length;
+    attendee.length = j + 1;
+    attendee.options[j].value = xStr;
+    xStr = attendee_1_name.value + ", " + attendee_1_title.value + ", " + attendee_1_company.value;
+    attendee.options[j].text = xStr;
+    attendee_1_name.value = "";
+    attendee_1_title.value = "";
+    attendee_1_company.value = "";
+  } else {
+    if (attendee_1_name.value == null || attendee_1_name.value == "") {
+       alert("Invalid attendee name!");
+    }
+  }
+ }
+}
+
+function CheckComplete(x,y,z) {
+
+  var titleReq = true;
+  if (window.opener.parent.getRequiredItem) titleReq = window.opener.parent.getRequiredItem("title");
+
+  retVal = true;
+  if (x == null)
+  {
+    with (document.forms[0]) {
+      retVal = retVal && CheckComplete(attendee_1_name,attendee_1_title,attendee_1_company);
+      //Have taken out the other references for this version, but we can have them.
+    }
+  } else {
+    var cName = opener.parent.alltrim(x.value);
+    var cTitle = opener.parent.alltrim(y.value);
+    var cCompany = opener.parent.alltrim(z.value);
+    if (cName.length > 0 && ((cTitle.length == 0 && titleReq) || cCompany.length == 0)) {
+      retVal = false;
+      alert("Attendee information not complete for " + cName);
+      x.focus();
+    }
+  }
+  return retVal;
+}
+
+
+function strAttendee(x1,x2,y1,y2,z1,z2,w) {
+ var xStr = "";
+ var delimit = "";
+ if (w != null) delimit = w;
+ if (x2 != "") {
+   xStr += delimit + O + Q + "attendee" + Q + D + O 
+   xStr += strPair(x1, x2) + D;
+   xStr += strPair(y1, y2) + D; 
+   xStr += strPair(z1, z2);
+   xStr += C + C;
+ }
+ return xStr;
+}
+function strPair(x,y) {
+  return O + Q + correctStr(x) + Q + D + Q + correctStr(y) + Q + C; 
+}
+
+function removePerson() {
+ with (document.forms[0]) {
+  var y = attendee.length;
+  if (attendee.selectedIndex >= 0) {
+    for (var i = attendee.selectedIndex; i < y; i++) { 
+      if (i < y - 1) {
+        attendee.options[i].text = attendee.options[i + 1].text;
+        attendee.options[i].value = attendee.options[i + 1].value;
+      }
+    }
+    attendee.length = y - 1;
+  }
+ }
+}
+
+function CheckDiscussion(tag) {
+  if (!window.opener.AttendRequired) return true;
+  return CheckRequired(tag,10,"Need to state the discussion that took place");
+}
+function CheckLocation(tag) {
+  if (!window.opener.AttendRequired) return true;
+  return CheckRequired(tag,5,"Need to provide location of the event");
+}
+function CheckPerson(tag) {
+  if (tag.length > 0) {
+    return true;
+  } else {
+    alert("Need to provide name of an individual");
+    return false;
+  }
+}
+function CheckNumber(tag) {
+  var retVal = true;
+  var xStr = tag.value;
+  var x = Number(xStr);
+
+  if (isNaN(x) || x < 1 || xStr.indexOf(".") > -1) {
+     if (isNaN(x) && x != "") {
+       alert("Invalid number in Total Attendees field.");
+     } else if (xStr.indexOf(".") > -1 && x != "") {
+       alert("Must have an integer in Total Attendees field.  Decimal point is not allowed.");
+     } else {
+       alert("Need to provide positive number in Total Attendees field.");
+     }
+     tag.select();
+     retVal = false;
+//  } else {
+//     if (x > document.forms[0].attendee.length + 1) {
+//       alert("Number in Total Attendees field is too large.")
+//       tag.select();
+//       retVal = false;
+//     }  
+  }
+  return retVal;
+}
+function CheckRequired(tag, minichars, msgtext) {
+  var Check = tag.value;
+  if (Check.length < minichars) {
+     alert(msgtext + " of at least " + minichars + " characters." );
+     tag.focus();
+     tag.select();
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function setPeopleList() {
+  if (document.forms[0].listname.selectedIndex > 0) {      
+    with (document.forms[0]) {
+      attendee_1_name.value = "";
+      attendee_1_title.value = "";
+      attendee_1_company.value = "";
+      var x = document.forms[0].listname.options[document.forms[0].listname.selectedIndex].text;
+    }  
+    var y = window.opener.parent.getDBWhere(window.opener.parent.PersDBase,"peoplelist","listname",x); 
+    if (y.length > 0) {
+      setTransaction(y[0]);
+    }
+  }  
+}    
+
+
+var O = "["; //These are the standard delimiters,etc.
+var C = "]"; //and they are used below for formatting.
+var D = ",";
+var Q = "'";
+
+function setPersonalStr() {
+ var xStr = "";
+ with (document.forms[0]) {
+   xStr += O + strPair("listname", listname.value);
+   for (var k = 0; k < attendee.length; k++) {
+      xStr += setAttendee(attendee.options[k].value);
+   }
+   xStr += C;
+ }
+ return xStr;
+}
+
+function setSpecialStr() {
+ var xStr = "";
+ with (document.forms[0]) {
+   xStr += O + strPair("location", correctStr(location.value));
+   xStr += D + strPair("comment", correctStr(comment.value));
+   xStr += D + strPair("number", correctStr(number.value));
+   xStr += D + strPair("listname", correctStr(listname.value));
+   for (var k = 0; k < attendee.length; k++) {
+      xStr += setAttendee(attendee.options[k].value);
+   }
+   xStr += C;
+ }
+ return xStr;
+}
+
+function setAttendee(x) {
+ var xStr = "";
+ if (x != "") {
+   xStr += D + x;
+ }
+ return xStr;
+}
+
+function correctStr(processStr) {  //similar function in common.js
+  var regexp ;
+  regexp = /'/g ;
+  processStr = processStr.replace(regexp,"");
+  regexp = /\n/g ;
+  processStr = processStr.replace(regexp,"\\n");
+  regexp = /\r/g ;
+  processStr = processStr.replace(regexp,"");
+  regexp = /\]/g ;
+  processStr = processStr.replace(regexp,")");
+  regexp = /\[/g ;
+  processStr = processStr.replace(regexp,"(");
+  regexp = /"/g ;
+  processStr = processStr.replace(regexp,"");
+  return processStr;
+}
+
+function setTransaction(ListBuffer) {
+  var j;
+  var SelectObj;
+  var wObj;
+  var xStr;
+  var delimit;
+  var SubType;
+
+  for (var i = 0; i < ListBuffer.length; i++) {
+    if (document.forms[0].elements[ListBuffer[i][0]]) {
+      if (document.forms[0].elements[ListBuffer[i][0]].subtype){
+        SubType = document.forms[0].elements[ListBuffer[i][0]].subtype;
+      } else {
+        SubType = document.forms[0].elements[ListBuffer[i][0]].type;
+      } 
+      switch (SubType) {
+        case "list":  
+           SelectObj = document.forms[0].elements[ListBuffer[i][0]];
+           delimit = "";
+           xStr = "";
+           for (var k = 0; k < ListBuffer[i][1].length; k++) {
+              xStr +=  delimit + ListBuffer[i][1][k][1];
+              delimit = ", ";
+           }
+           j = SelectObj.length;
+           SelectObj.length = j + 1;
+           SelectObj.options[j].text = xStr;
+           delimit = "";
+           xStr = O + Q + "attendee" + Q + D + O;
+           for (var k = 0; k < ListBuffer[i][1].length; k++) {            
+               xStr += delimit + strPair(ListBuffer[i][1][k][0],ListBuffer[i][1][k][1]);
+               delimit = D;
+           }              
+           xStr += C + C;      
+           SelectObj.options[j].value = xStr;
+           break;
+        case "text":  
+           document.forms[0].elements[ListBuffer[i][0]].value = ListBuffer[i][1];
+           break;    
+        case "textarea":  
+           document.forms[0].elements[ListBuffer[i][0]].value = ListBuffer[i][1];
+           break;    
+        case "select-one":
+           for (var j = 0;j < document.forms[0].elements[ListBuffer[i][0]].length; j++)  {
+             if (document.forms[0].elements[ListBuffer[i][0]].options[j].text == ListBuffer[i][1]) {
+               document.forms[0].elements[ListBuffer[i][0]].selectedIndex = j;
+               j = document.forms[0].elements[ListBuffer[i][0]].length;
+             }
+           } 
+           break;
+        case "hidden": 
+           document.forms[0].elements[ListBuffer[i][0]].value = ListBuffer[i][1];
+           break; 
+        default:
+          alert("Form: cannot load " + ListBuffer[i][0] + ", type:" + ListBuffer[i].type + ", value:" + ListBuffer[i].value);
+      }  //need to add the other types eventually
+    }
+  }
+}
+function getForm() {
+   Y = 600;
+   if (screen.height < 600) Y = screen.height - 10;
+   window.resizeTo(580, Y);
+   var XList = [["",""]]; 
+   var TList;
+   window.opener.parent.setListWValueWPers(document.forms[0].listname, XList,"peoplelist","listname","listname");
+   document.forms[0].attendee.subtype = "list";
+   document.forms[0].listname.selectedIndex = 0;
+   eval("TList = " + window.opener.parent.getDBValue(window.opener.parent.WorkDBase,"peoplelist")); 
+   setTransaction(TList);
+   window.focus();
+}
+
+</script>
+
+</body>
+</html>
