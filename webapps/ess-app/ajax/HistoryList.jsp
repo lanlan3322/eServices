@@ -261,12 +261,12 @@ if(true)//PersFile.depart.equalsIgnoreCase("TEST") || PersFile.depart.equalsIgno
 			 <td class="ExpenseTag" width="5%" <%=backcolor%>>&nbsp;</td>
              <td class="ExpenseTag" width="10%" <%=backcolor%>>Name</td>
              <td class="ExpenseTag" width="10%" <%=backcolor%>>Category</td>
-             <td class="ExpenseTag" width="60%" <%=backcolor%>>Description</td>
+             <td class="ExpenseTag" width="55%" <%=backcolor%>>Description</td>
              <td class="ExpenseTag" width="5%" <%=backcolor%>>Amount</td>
 	<%	if(OPERATION_STATUS.equalsIgnoreCase("Delivered") && OPERATION_TYPE.equalsIgnoreCase("Request")){
 	%>
-             <td class="ExpenseTag" width="10%" <%=backcolor%>>
-				<span>Returned<input id="btShow" type="button" name="B1" value="?"  onClick="Javascript: void returnItems('<%=OPERATION_ID%>')"></span>
+             <td class="ExpenseTag" width="15%" <%=backcolor%>>
+				<span>Returned <input id="btInfo" type="button" name="B1" value="?"  onClick="Javascript: void returnItems('<%=OPERATION_ID%>')"></span>
 			</td>
 	<%	}
 	%>
@@ -299,11 +299,11 @@ if(true)//PersFile.depart.equalsIgnoreCase("TEST") || PersFile.depart.equalsIgno
 			<td width="5%" <%=backcolor%>>&nbsp;</td>
             <td width="10%" <%=backcolor%>><%= sName%></td>
             <td width="10%" <%=backcolor%>><%= sCat%></td>
-            <td width="60%" <%=backcolor%>><%= sDesc%></td>
+            <td width="55%" <%=backcolor%>><%= sDesc%></td>
             <td width="5%"  <%=backcolor%>><%= sAmount%></td>
 	<%	if(OPERATION_STATUS.equalsIgnoreCase("Delivered") && OPERATION_TYPE.equalsIgnoreCase("Request")){
 	%>
-            <td width="10%"  <%=backcolor%>><%= sReturned%></td>
+            <td width="15%"  <%=backcolor%>><%= sReturned%></td>
 	<%	}
 	%>
             </tr>
