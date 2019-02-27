@@ -1,0 +1,41 @@
+#Userdata, #Serverdata { visibility:hidden; display: none;}
+
+* {margin: 0; padding: 0; border:none; text-align:left;}
+
+body{ font-size : 10px; font-family : arial, Helvetica, sans-serif; color : #333; font-weight : normal; position : relative; left : 0px; line-height:10px; text-align:center;}
+	
+#wrapper{ height:auto !important; margin:0 auto 0; min-height:100%; outline:0 none; padding:0 12px 12px 12px; vertical-align:baseline; width:985px;
+	background-position:top;}
+
+div#main{ margin: 125px 0 0 0; }
+	
+a { color : #333366; font-size : 12px; text-decoration : none; font-weight : bold; font-family: Helvetica, Arial, sans-serif; max-height : 28;}
+
+h1{ margin:40px 0 10px 0; font-size:18px;}
+h2{ margin:40px 0 10px 0; font-size:16px;}
+
+table { border:1px solid #bdc2dc; width:98%; background-color:#FFF;}
+td { padding: 9px 3px 1px 9px;}
+.TableData{ padding: 5px 3px 1px 5px;  vertical-align:top;}
+th { padding: 0 3px 0 9px; text-align:left; font-size:14px; font-weight:bold; height: 25px;}
+
+#bannerLogo{ float:left; margin: 3px 0 0 12px;}
+#bannerLogo img { width: 80px; height: 90px;}
+
+#menu{ float:left; margin: 0 14px 0 14px; height:44px;}
+ul#essmenu{ list-style:none outside none; margin:0; padding:0; position:relative; float:left;}
+#essmenu li{ float:left; margin:0; padding:0; position:relative;}
+#essmenu li a { color:#333366; font-size:16px; text-decoration:none; font-weight:bold;font-family:Helvetica, Arial, sans-serif; padding:16px 12px 6px 12px; margin:0; text-shadow:1px 1px 0 #ffffcc; vertical-align:middle; display:block;}
+#essmenu li a:hover { text-shadow:1px 1px 0 #FFFFFF; background-image:url(images/img_menuHover.png); background-repeat:repeat-x; background-position:bottom;}
+
+
+#MenuOptions{ float:right; color:#FFF; margin-right:2px; display:block;}
+#MenuOptions a{ float:right; color : #333366; font-size : 16px; text-decoration : none; font-weight : bold; font-family: Helvetica, Arial, sans-serif; margin: 14px 0 10px 0; text-shadow:1px 1px 0 #ffffcc;}
+#MenuOptions p{float:right; margin:-5px 0 0 0; padding:0;}
+
+td.offsetColor{ background-color:#EEE;}
+
+big { font-size:12px; line-height:14px; font-weight:bold;}
+
+table {page-break-inside:avoid}
+.pageBreakInside {page-break-inside:avoid}

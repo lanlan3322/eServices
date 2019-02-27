@@ -1,0 +1,81 @@
+<!--
+reportAudit.html - load a report for Audit module
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Report Audit List Selection</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body onLoad="init()">
+
+<p align="left"><big><em><strong><font face="Arial">Report requiring audit being selected...</font></strong></em></big></p>
+
+<form method="POST" action="ReportList.jsp">
+
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="action" value>
+  <input type="hidden" name="database" value>
+
+  <input type="hidden" name="reportclass" value="reportlist">
+  <input type="hidden" name="reporttype" value="audit">
+
+  <input type="hidden" name="persnum" value>
+  <input type="hidden" name="company" value>
+  <input type="hidden" name="voucher" value>
+  <input type="hidden" name="pvoucher" value>
+  <input type="hidden" name="reference" value>
+  <input type="hidden" name="xref" value>
+  <input type="hidden" name="status" value>
+
+  <input type="hidden" name="begdate" value>
+  <input type="hidden" name="enddate" value>
+
+</form>
+
+<p>&nbsp;</p>
+<script LANGUAGE="JavaScript" SRC="calendar.js"></script>
+
+<script LANGUAGE="JavaScript">
+
+function init() {
+  document.forms[0].action = parent.contents.defaultApps + "ReportList.jsp";
+  if (parent.contents.setDefaultDate) {
+    parent.contents.setDefaultDate(document.forms[0].begdate,-720);  //put some kind of Pers search
+    parent.contents.setDefaultDate(document.forms[0].enddate,0);
+    submitReport();
+  } else {
+    setTimeout("init()",1000);
+  }
+}
+
+function submitReport() {
+  if (checkdate(document.forms[0].begdate) 
+   && checkdate(document.forms[0].enddate)) {
+
+      document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+      document.forms[0].database.value = parent.database;
+      document.forms[0].ccode.value = parent.CCode;
+      document.forms[0].action.value = "List";
+      document.forms[0].submit();
+  }
+}
+
+</script>
+</body>
+</html>

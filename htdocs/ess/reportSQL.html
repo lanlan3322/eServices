@@ -1,0 +1,85 @@
+<!--
+reportSQL.html - Ad Hoc SQL selection
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Report SQL Selection for Audit Usage</title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+</head>
+
+<body onLoad="init()">
+
+<p align="center"><big><em><strong><font face="Arial">Expense Report SQL-Select List</font></strong></em></big></p>
+
+<form method="POST" name="form1" action="SQLGenerator.jsp">
+  <input type="hidden" name="email" value><input type="hidden" name="ccode" value><input
+  type="hidden" name="xaction" value><input type="hidden" name="database" value><input
+  type="hidden" name="performchecks" value><input type="hidden" name="reportclass"
+  value="form"><div align="center"><center><table border="0" cellpadding="0" cellspacing="0"
+  width="90%">
+    <tr>
+      <td width="25%" align="right"><em><strong><font face="Arial">SQL Select: </font></strong></em></td>
+      <td width="75%"><textarea rows="6" name="reporttype" cols="62">SELECT * FROM SYSTEM
+      </textarea> </td>
+    </tr>
+  </table>
+  </center></div><div align="center"><center><p><input type="button" value="Display List"
+  name="B1" onClick="submitReport()"></p>
+  </center></div>
+</form>
+
+<p>&nbsp;</p>
+
+<p><big>Instructions:&nbsp; </big>
+
+<ul>
+  <li>Enter result set producing SQL.</li>
+  <li>Click on the &quot;Display List&quot; button</li>
+</ul>
+
+<p>&nbsp;</p>
+<script LANGUAGE="JavaScript" SRC="calendar.js"></script>
+<script LANGUAGE="JavaScript">
+
+function init() {
+}
+
+function submitReport() {
+  with(document.forms[0]) {
+    if (reporttype.value.substr(0,6) == "SELECT" || reporttype.value.substr(0,6) == "select"
+     || reporttype.value.substr(0,8) == "DESCRIBE" || reporttype.value.substr(0,8) == "describe"
+     || reporttype.value.substr(0,5) == "DESC " || reporttype.value.substr(0,5) == "desc "
+     || reporttype.value.substr(0,4) == "SHOW" || reporttype.value.substr(0,4) == "show"  )
+    { 
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      xaction.value = "List";
+      performchecks.value = "No";
+      document.forms[0].action = parent.contents.defaultApps + "SQLGenerator.jsp";
+      document.forms[0].submit();
+    } else {
+      alert("You can only issue a SELECT SQL command with this screen.");
+    }
+  }
+}
+
+</script>
+
+</body>
+</html>

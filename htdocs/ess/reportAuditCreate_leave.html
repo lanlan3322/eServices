@@ -1,0 +1,255 @@
+<html>
+<!--
+reportGeneral.html - Create list for audit selection
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Create new pending leave</title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+	<style>
+	td {
+		padding: 10px;
+	}
+	</style>
+	</head>
+
+<body onLoad="init()">
+
+<p><big><em><strong><font face="Arial">Create new pending leave</font></strong></em></big></p>
+
+<form method="POST" action="ReportAuditList_leave.jsp" onSubmit="return submitReport()">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="reporttype" value="">
+		<input type="hidden" name="newLeavePer" value>
+		<input type="hidden" name="newLeaveType" value>
+		<input type="hidden" name="newLeaveFrom" value>
+		<input type="hidden" name="newLeaveFromAMPM" value>
+		<input type="hidden" name="newLeaveTo" value>      
+		<input type="hidden" name="newLeaveToAMPM" value>
+		<input type="hidden" name="newLeaveTotal" value>
+		<input type="hidden" name="newLeaveReason" value>
+
+  <div>
+  <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="5%" align="right"><em><strong><font face="Arial"><span id="userId">User ID</span>: </font></strong></em></td>
+      <td width="95%" align="left"><input type="text" name="persnum" onBlur="setDatesBlank(document.forms[0].persnum)">
+      <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalJsp(document.forms[0].persnum,'UserPersNum',900,900);MerchantType = 'user'"><sm><em><span id="lookUp">Search</span></em></sm></a>
+      </td>
+    </tr>
+    <tr>
+      <td width="5%" align="right"><em><strong><font face="Arial"><span id="fromDate">From Date</span>: </font></strong></em></td>
+      <td width="95%" align="left"><input type="text" name="dateFrom" 
+      onChange="printTotalsLeave()" onBlur="printTotalsLeave()"><a HREF="javascript:doNothing()"
+      mysubst="2"
+      onClick="setDateField(document.forms[0].dateFrom); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+      SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a>
+	  	<select name="dateFromAMPM" value="" onChange="printTotalsLeave()">
+			<option value="AM">AM</option>
+			<option value="PM">PM</option>
+		</select>
+	  </td>
+    </tr>
+    <tr>
+      <td width="5%" align="right"><em><strong><font face="Arial"><span id="toDate">To Date</span>: </font></strong></em></td>
+      <td width="95%" align="left"><input type="text" name="dateTo" onChange="printTotalsLeave()" onBlur="printTotalsLeave()"><a HREF="javascript:doNothing()"
+      mysubst="2"
+      onClick="setDateField(document.forms[0].dateTo); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+      SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a>
+	  	<select name="dateToAMPM" value="" onChange="printTotalsLeave()">
+			<option value="AM">AM</option>
+			<option value="PM">PM</option>
+		</select>
+	  </td>
+    </tr>
+    <tr>
+      <td width="5%" align="right"><em><strong><font face="Arial"><span id="type">Type</span>: </font></strong></em></td>
+	  <td width="95%" align="left"><select name="leavetype" xref="leavetype" onChange=" printTotalsLeave()"></select></td>
+    </tr>
+    <tr>
+      <td width="5%" align="right"><em><strong><font face="Arial"><span id="comments">Total</span>: </font></strong></em></td>
+      <td width="95%" align="left"><input type="text" readonly="readonly" id="leaveTotal" name="leaveTotal" value="0"></td>
+    </tr>
+    <tr>
+      <td width="5%" align="right"><em><strong><font face="Arial"><span id="comments">Comments</span>: </font></strong></em></td>
+      <td width="95%" align="left"><input type="text" name="leaveReason" onBlur="setDatesBlank(document.forms[0].comments)"></td>
+    </tr>
+    <tr>
+		<td width="5%"/>
+		<td  width="95%" align="left"><input id="butLeaveCreate" type="submit" value="Create" name="B1"></td>
+    </tr>
+  </table>
+  </div>
+</form>
+
+<script LANGUAGE="JavaScript" SRC="calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="shared\xshared2.js"></script>
+<script LANGUAGE="JavaScript" SRC="shared\screen_leave.js"></script>
+<script LANGUAGE="JavaScript">
+
+function init() {
+  if (parent.contents.statusTable && parent.contents.setDefaultDate && parent.contents.getJSX) {
+    document.forms[0].action = parent.contents.defaultApps + "ReportAuditList_leave.jsp";
+
+    parent.contents.setListWithValue(document.forms[0].leavetype,parent.contents.getLeaveTypes("1"),0,1,true,true,1);
+    document.forms[0].leavetype.selectedIndex = 4;
+    parent.contents.setDefaultDate(document.forms[0].dateFrom,0);
+    parent.contents.setDefaultDate(document.forms[0].dateTo,0);
+    document.forms[0].dateToAMPM.selectedIndex = 1;
+	printTotalsLeave();
+    document.forms[0].persnum.focus();
+	} else {
+    setTimeout("init()", 200);
+  }
+}
+function printTotalsLeave() {
+	var mStart = 2;     //Set to 3 if returned funds, set to two if returned funds are commented out
+	var dateFrom = document.forms[0].dateFrom.value;
+	var dateTo = document.forms[0].dateTo.value;
+    var monthValue1 = parseInt(getMonth(dateFrom),10) - 1;
+    var dayValue1 = parseInt(getDate(dateFrom),10);
+    var yearValue1 = parseInt(getYear(dateFrom,10));
+    var monthValue2 = parseInt(getMonth(dateTo),10) - 1;
+    var dayValue2 = parseInt(getDate(dateTo),10);
+    var yearValue2 = parseInt(getYear(dateTo,10));
+	
+	var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+	var utc1 = Date.UTC(yearValue1, monthValue1, dayValue1);
+	var utc2 = Date.UTC(yearValue2, monthValue2, dayValue2);
+	var dateDiff = Math.floor((utc2 - utc1) / _MS_PER_DAY);
+	var halfDay = 0;
+	var toAMPM = document.forms[0].dateToAMPM.value;
+	var fromAMPM = document.forms[0].dateFromAMPM.value;
+	if(utc2 < utc1)
+	{
+		//alert("End date is earlier than start date!");
+	}
+	else if(utc2 == utc1)
+	{
+		if((toAMPM == "AM" && fromAMPM == "AM") || (toAMPM == "PM" && fromAMPM == "PM"))
+		{
+			halfDay = -0.5;
+		}
+		else if(toAMPM == "AM" && fromAMPM == "PM")
+		{
+			alert("Same date may not apply from PM to AM!");
+		}
+	}
+	else
+	{
+		dateDiff = dateDiff + 1;
+		if((toAMPM == "AM" && fromAMPM == "AM") || (toAMPM == "PM" && fromAMPM == "PM"))
+		{
+			halfDay = -0.5;
+		}
+	}
+	//var finalDiff = dateDiff + halfDay;
+	//calc business days
+	var daysWorking = dateDifference(new Date(utc1), new Date(utc2));
+	var type = document.forms[0].leavetype;
+	if(type.options[type.selectedIndex].text == "Hospitalisation"){
+		//daysWorking = dateDiff;
+	}
+	var finalDiff = daysWorking + halfDay;
+
+	finalDiff = returnMyNumFormat(finalDiff);
+	var htmlReportTotal = format(finalDiff,1);
+	document.getElementById("leaveTotal").value = htmlReportTotal;
+	if(finalDiff > 0)
+	{
+		//setRepChgd_leave();
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+function dateDifference(start, end) {
+
+  // Copy date objects so don't modify originals
+  var s = new Date(+start);
+  var e = new Date(+end);
+
+  // Set time to midday to avoid dalight saving and browser quirks
+  //s.setHours(12,0,0,0);
+  //e.setHours(12,0,0,0);
+
+  // Get the difference in whole days
+  var totalDays = Math.round((e - s) / 8.64e7) + 1;
+	var type = document.forms[0].leavetype;
+
+  // If not even number of weeks, calc remaining weekend days
+  while (s <= e) {
+      // If day isn't a Sunday or Saturday, add to business days
+		if (s.getDay() == 0 || s.getDay() == 6) {
+			totalDays--;
+		}
+		//If holiday
+		else if (isHoliday(s) && type.options[type.selectedIndex].text != "Maternity") {
+			totalDays--;
+		}
+		s.setDate(s.getDate() + 1);
+  }
+  return totalDays;
+}
+
+function isHoliday(day)
+{
+	var newDateStr = formatDate(day);
+	var find = false;
+	var holidays = parent.contents.getLeaveHolidays();
+	for(var i = 0; i < holidays.length; i++) {
+		if(newDateStr == holidays[i][1] || newDateStr == holidays[i][2]){
+			find = true;
+		}
+	}
+	return find;
+}
+
+function submitReport() {
+  with(document.forms[0]) {
+    if (printTotalsLeave()) {
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      xaction.value = "List";
+
+	  newLeavePer.value = persnum.value;
+	  newLeaveType.value = leavetype.options[leavetype.selectedIndex].text;
+	  newLeaveFrom.value = dateFrom.value;
+	  newLeaveFromAMPM.value = dateFromAMPM.options[dateFromAMPM.selectedIndex].text;
+	  newLeaveTo.value = dateTo.value;
+	  newLeaveToAMPM.value = dateToAMPM.options[dateToAMPM.selectedIndex].text;
+	  newLeaveTotal.value = leaveTotal.value;
+	  newLeaveReason.value = leaveReason.value;
+
+      return true;
+    } else {
+      return false;
+    } 
+  }
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<html>
+<!--
+reportGeneral.html - Create list for audit selection
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Create holidays</title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+	<style>
+	td {
+		padding: 10px;
+	}
+	</style>
+	</head>
+
+<body onLoad="init()">
+
+<p><big><em><strong><font face="Arial">Create holidays</font></strong></em></big></p>
+
+<form method="POST" action="ReportCreateHoliday_leave.jsp" onSubmit="return submitReport()">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="reporttype" value="">
+		<input type="hidden" name="newLeavePer" value>
+		<input type="hidden" name="newLeaveFrom" value>
+		<input type="hidden" name="newLeaveTo" value>      
+		<input type="hidden" name="newLeaveTotal" value>
+		<input type="hidden" name="newLeaveReason" value>
+		<input type="hidden" name="newLeaveLocation" value>
+
+  <div>
+  <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="15%" align="right"><em><strong><font face="Arial"><span id="userId">Location</span>: </font></strong></em></td>
+      <td width="85%" align="left">	  	
+		<select name="location" value="1" onchange="switchHoliday(this.value);">
+			<option value="SG">Singapore</option>
+			<option value="MY">Malaysia</option>
+		</select>
+      </td>
+    </tr>
+    <tr>
+      <td width="15%" align="right"><em><strong><font face="Arial"><span id="userId">Holiday name</span>: </font></strong></em></td>
+      <td width="85%" align="left"><input type="text" name="persnum" onBlur="setDatesBlank(document.forms[0].persnum)">
+      </td>
+    </tr>
+    <tr>
+      <td width="5%" align="right"><em><strong><font face="Arial"><span id="fromDate">From Date</span>: </font></strong></em></td>
+      <td width="95%" align="left"><input type="text" name="dateFrom" 
+      onBlur="printTotalsLeave()" onfocus="printTotalsLeave()"><a HREF="javascript:doNothing()"
+      mysubst="2"
+      onClick="setDateField(document.forms[0].dateFrom); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+      SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a>
+	  </td>
+    </tr>
+    <tr>
+      <td width="5%" align="right"><em><strong><font face="Arial"><span id="toDate">To Date</span>: </font></strong></em></td>
+      <td width="95%" align="left"><input type="text" name="dateTo" onBlur="printTotalsLeave()" onfocus="printTotalsLeave()"><a HREF="javascript:doNothing()"
+      mysubst="2"
+      onClick="setDateField(document.forms[0].dateTo); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+      SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a>
+	  </td>
+    </tr>
+    <tr>
+      <td width="5%" align="right"><em><strong><font face="Arial"><span id="comments">Total</span>: </font></strong></em></td>
+      <td width="95%" align="left"><input type="text" readonly="readonly" id="leaveTotal" name="leaveTotal" value="0"></td>
+    </tr>
+    <tr>
+      <td width="5%" align="right"><em><strong><font face="Arial"><span id="comments">Comments</span>: </font></strong></em></td>
+      <td width="95%" align="left"><input type="text" name="leaveReason" onBlur="setDatesBlank(document.forms[0].comments)"></td>
+    </tr>
+    <tr>
+		<td width="5%"/>
+		<td  width="95%" align="left"><input id="butLeaveCreate" type="submit" value="Create" name="B1"></td>
+    </tr>
+  </table>
+  </div>
+</form>
+<div id="holidays">
+      <table>
+      <thead>
+		<tr>
+        	<th>Public Holidays:</th>
+			<!--<th>Non Reimbursables/Advances</th>
+			<th>Returned Funds</th>
+           	<th class="tdLast">Due Employee</th>-->
+      	</tr>
+      </thead>
+	  <tbody>
+		<tr>
+        	<td>holidayname</td>
+        	<td>holidayfrom</td>
+        	<td>holidayto</td>
+        	<td>holidaytotal</td>
+        	<td>holidaycomments</td>
+      	</tr>
+      </tbody>
+    </table>
+</div>
+<script LANGUAGE="JavaScript" SRC="calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="shared\xshared2.js"></script>
+<script LANGUAGE="JavaScript" SRC="shared\screen_leave.js"></script>
+<script LANGUAGE="JavaScript">
+
+function init() {
+  if (parent.contents.statusTable && parent.contents.setDefaultDate && parent.contents.getJSX) {
+    document.forms[0].action = parent.contents.defaultApps + "ReportCreateHoliday_leave.jsp";
+    parent.contents.setDefaultDate(document.forms[0].dateFrom,0);
+    parent.contents.setDefaultDate(document.forms[0].dateTo,0);
+	document.getElementById("leaveTotal").value = 1;
+    document.forms[0].persnum.focus();
+	addHolidays(parent.contents.getLeaveHolidays());
+	} else {
+    setTimeout("init()", 200);
+  }
+}
+function printTotalsLeave() {
+	var mStart = 2;     //Set to 3 if returned funds, set to two if returned funds are commented out
+	var dateFrom = document.forms[0].dateFrom.value;
+	var dateTo = document.forms[0].dateTo.value;
+    var monthValue1 = parseInt(getMonth(dateFrom),10) - 1;
+    var dayValue1 = parseInt(getDate(dateFrom),10);
+    var yearValue1 = parseInt(getYear(dateFrom,10));
+    var monthValue2 = parseInt(getMonth(dateTo),10) - 1;
+    var dayValue2 = parseInt(getDate(dateTo),10);
+    var yearValue2 = parseInt(getYear(dateTo,10));
+	
+	var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+	var utc1 = Date.UTC(yearValue1, monthValue1, dayValue1);
+	var utc2 = Date.UTC(yearValue2, monthValue2, dayValue2);
+	var dateDiff = Math.floor((utc2 - utc1) / _MS_PER_DAY);
+	if(utc2 < utc1)
+	{
+		alert("End date is earlier than start date!");
+	}
+	else if(utc2 == utc1)
+	{
+		dateDiff = 1;
+	}
+	else
+	{
+		dateDiff = dateDiff + 1;
+	}
+	var finalDiff = dateDiff;
+	finalDiff = returnMyNumFormat(finalDiff);
+	var htmlReportTotal = format(finalDiff,1);
+	document.getElementById("leaveTotal").value = htmlReportTotal;
+	if(finalDiff > 0)
+	{
+		//setRepChgd_leave();
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function submitReport() {
+  with(document.forms[0]) {
+    if (printTotalsLeave()) {
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      xaction.value = "List";
+
+	  newLeavePer.value = persnum.value;
+	  newLeaveFrom.value = dateFrom.value;
+	  newLeaveTo.value = dateTo.value;
+	  newLeaveTotal.value = leaveTotal.value;
+	  newLeaveReason.value = leaveReason.value;
+	  if(location.selectedIndex == 0){
+		newLeaveLocation.value = "001";
+	  }
+	  else{
+		newLeaveLocation.value = "002";
+	  }
+
+      return true;
+    } else {
+      return false;
+    } 
+  }
+}
+
+function switchHoliday(value){
+	if(value == "SG"){
+		addHolidays(parent.contents.getLeaveHolidaysSG());
+	}
+	else{
+		addHolidays(parent.contents.getLeaveHolidaysMY());
+	}
+}
+
+</script>
+
+</body>
+</html>

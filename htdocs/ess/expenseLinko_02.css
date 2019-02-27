@@ -1,0 +1,66 @@
+#Userdata, #Serverdata { visibility:hidden; display: none;}
+
+* {margin: 0; padding: 0; border:none;}
+
+body{ font-size : 9pt; font-family : arial, Helvetica, sans-serif; color : #333; font-weight : bold; position : relative; left : 0px; line-height:1.5; background-color:#f1f1f1;;}
+
+a { color : #333366; font-size : 12px; text-decoration : none; font-weight : bold; font-family: Helvetica, Arial, sans-serif; max-height : 28;}
+
+h1{ margin:40px 0 10px 0; font-size:18px;}
+h2{ margin:12px 0 12px 0; font-size:16px;}
+
+
+
+/* ========================================= Currency Page ============================================== */
+/* ===================== form options ========================== */
+#currencySection{background-color:#FFF; border:1px solid #DDDDDD; padding:12px 12px 12px 12px; margin:0; background-image:url(images/img_background_form.gif); background-position:bottom; background-repeat:repeat-x; margin: 12px 12px 12px 12px; width: 600px; height:400px;}
+label{ color:#333; display:block; font-size:14px; font-weight:bold; margin-top:10px;}
+label span{ color:#900;}
+.star { color:#900;}
+input{ background-color:#FFFFFF; border:2px solid #333366; width:95%; height:29px;}
+input.readonly{ border:none;}
+select{ background-color:#FFFFFF; border:2px solid #333366; width:85%; height:29px; line-height:29px;}
+textarea{ background-color:#FFFFFF; border:2px solid #333366; width:95%;}
+input, textarea, select { -moz-border-radius:4px; border-radius:4px; color:#000000; border-radius:4px; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:12px; font-weight:normal; padding:5px; }
+
+.size1of2{margin-right:4.75%; width:45%; float:left; overflow:hidden; height: 70px;}
+.col1of1{ width:100%; float:left; clear:left; margin-top:24px;}
+.col1of2{ width:49%; float:left;}
+.col1of3{ width:32%; float:left;}
+
+form a img{ position:absolute; margin:7px 0 0 -25px;}
+
+.formOptions{background-color:#FFF; border:1px solid #DDDDDD; padding:21px 14px 7px 14px; border-top-color:#333366; height:30px;}
+.formOptions span {float:right; font-size:12px; font-weight:normal; margin-left:25px;}
+.formOptions span a {font-size:14px; font-weight:bold;}
+
+/* ===================== buttons ========================== */
+#btSave{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:13px; letter-spacing:1px; font-weight: normal; padding:5px 5px 7px 5px; background-color:#333366; border: none; width:45%; margin: 36px 0 18px 12px; cursor:pointer; text-align:center; float:left;}
+#btSave:hover { background-color:#333399;}
+#cancelReport{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:13px; letter-spacing:1px; font-weight:normal; padding:5px 5px 7px 5px; background-color:#333333; border: none; width:25%; margin: 36px 12px 18px 0; cursor:pointer; text-align:center; float:right;}
+#cancelReport:hover { background-color:#000000;}
+
+
+
+/* ========================================= Attendee Page ============================================== */
+#attendeeSection {background-color:#FFF; border:1px solid #DDDDDD; padding:12px 12px 12px 12px; margin:0; background-image:url(images/img_background_form.gif); background-position:bottom; background-repeat:repeat-x; margin: 12px 12px 12px 12px; width: 600px; height:625px;}
+fieldset{clear:left; margin: 0px; border:1px solid #bdc2dc; width:95%; padding:0 12px 12px 12px; background-color:#FFF; background-image:url(images/img_background_fieldset.gif); background-position:top; background-repeat:repeat-x;}
+select#attendee {height:100px;}
+select#listname {visibility:hidden; display:none;}
+
+/* ===================== buttons ========================== */
+fieldset #btSavePerson{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:12px; letter-spacing:1px; font-weight: normal; padding:3px 5px 5px 5px; background-color:#333366; border: none; width:160px; margin: 24px 12px 0 0; cursor:pointer; float:right; height:25px;}
+fieldset #btSavePerson:hover { background-color:#333399;}
+fieldset #btRemovePerson{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:12px; letter-spacing:1px; font-weight:normal; padding:3px 5px 5px 5px; background-color:#333333; border: none; width:150px; margin:  24px 12px 18px 0;float:right; cursor:pointer; height:25px;}
+fieldset #btRemovePerson:hover { background-color:#000000;}
+#btSaveButton{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:13px; letter-spacing:1px; font-weight: normal; padding:5px 5px 7px 5px; background-color:#333366; border: none; width:45%; margin: 24px 0 18px 12px; cursor:pointer; float:left;}
+#btSaveButton:hover { background-color:#333399;}
+
+/* ========================================= Previous View Page ============================================== */
+#receiptSection {background-color:#FFF; border:1px solid #DDDDDD; padding:12px 12px 12px 12px; margin:0; background-image:url(images/img_background_form.gif); background-position:bottom; background-repeat:repeat-x; margin: 12px 12px 12px 12px; width: 600px; height:730px;}
+select[name="displaylist"] { height:100px;}
+#mileageSection {background-color:#FFF; border:1px solid #DDDDDD; padding:12px 12px 12px 12px; margin:0; background-image:url(images/img_background_form.gif); background-position:bottom; background-repeat:repeat-x; margin: 12px 12px 12px 12px; width: 600px; height:350px;}
+
+
+/* ========================================= Merchant Page ============================================== */
+#merchantSection {background-color:#FFF; border:1px solid #DDDDDD; padding:12px 12px 12px 12px; margin:0 12px 0 0; background-image:url(images/img_background_form.gif); background-position:bottom; background-repeat:repeat-x; margin: 12px 12px 12px 12px; width: 400px; height:200;}

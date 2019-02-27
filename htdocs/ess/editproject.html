@@ -1,0 +1,166 @@
+<!--
+editproject.html - maintain personal project lists 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Edit title</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body onLoad="FormInit()">
+
+<h1>Edit existing <script>parent.main.document.write(parent.contents.getFieldName("PROJECT"))</script>: </h1>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%" align="center">
+    <form method="post" action="SavePersXML.jsp">
+    <input type="hidden" name="email" value>
+    <input type="hidden" name="persdbase" value>
+    <input type="hidden" name="database" value>
+    <input type="hidden" name="ccode" value>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td width="30%" class="offsetColor"><div class="ExpenseTag"><script>parent.main.document.write(parent.contents.getFieldName("PROJECT"))</script>: </div></td>
+          <td width="70%" class="offsetColor" height="26"><select name="project" size="1" mysubst="2" onChange="populatetitle()">
+          </select>&nbsp;&nbsp;<a href="javascript:doNothing()" onClick="setLocalObj(document.forms[0].project,'addproject1',360,300); LocalReturn = 'populatetitle()'; MerchantType = 'file'; top.newWin = window.open('addproject1.html', 'merchant', 'dependent=yes, width=360, height=200 screenX=100, screenY=100, titlebar=yes, menubar=no, status=no')">
+          <span class="ExpenseLink"><small>New<script>parent.main.document.write(parent.contents.getFieldName("PROJECT"))</script></small></span></a></td>
+        </tr>
+        <tr>
+          <td width="30%"><div class="ExpenseTag">Title:</div></td>
+          <td width="70%"><input type="text" name="title" size="25"></td>
+        </tr>
+        <tr>
+          <td width="30%" class="offsetColor"><div class="ExpenseTag">Client #:</div></td>
+          <td width="7-%" class="offsetColor"><input type="text" name="clientno" size="12"></td>
+        </tr>
+        </tr>
+      </table>
+      <p>
+      <input type="button" value="Save Changes" name="OK" onClick="JavaScript: void addItem()">
+      <input type="button" value="Delete this item" name="Delete" onClick="JavaScript: void removeItem()">
+      </p>
+    </form>
+    </td>
+  </tr>
+</table>
+<p align="center"><a href="javascript: void parent.contents.ListDelay()" mysubst="16"><span class="ExpenseReturnLink">Return
+to receipt display</span></a></p>
+<script LANGUAGE="JavaScript" SRC="addmerchant.js"></script>
+<script LANGUAGE="JavaScript">
+function addItem() {
+  if (document.forms[0].project.selectedIndex > 0) {
+    var theinfo = new Array(3);
+    theinfo[0] = ["project",document.forms[0].project.options[document.forms[0].project.selectedIndex].text];
+    theinfo[1] = ["title",document.forms[0].title.value];
+    theinfo[2] = ["clientno",document.forms[0].clientno.value];
+    parent.contents.setDBPair(PersDataArea.PersDBase,"file",theinfo);
+    save2server();
+  } else {
+    alert("Cannot save empty title number record - pls create a new title record");
+  }
+}
+
+function save2server() {
+  var DateObj = new Date();
+  parent.contents.setDBPair(parent.PersDBase,"last_save",DateObj.toString());
+  document.forms[0].persdbase.value = parent.contents.CreatePersDBXML(parent.PersDBase);
+  document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+  document.forms[0].database.value = parent.database;
+  document.forms[0].ccode.value = parent.CCode;
+  initFields();
+  document.forms[0].submit();
+}
+
+function removeItem(){
+  if (document.forms[0].project.length > 0 && document.forms[0].project.selectedIndex > 0) {
+    if (confirm("Do you really want to delete this item?")) {
+      var theinfo = new Array(1);  //need to establish the key
+      theinfo[0] = ["project",document.forms[0].project.options[document.forms[0].project.selectedIndex].text];
+      var k = parent.contents.removeDBPair(PersDataArea.PersDBase,"file",theinfo);
+      document.forms[0].project.length = 0;
+      FormInit();
+      save2server();
+    }
+  } else {
+    if (document.forms[0].project.length == 0) {
+      alert("List is already empty");
+    } else {
+      alert("Cannot delete a blank record");  
+    }    
+  }
+}
+
+
+function FormInit(){
+  document.forms[0].action = parent.contents.defaultApps + "SavePersXML.jsp";
+  CCode = parent.contents;  //located in addMerchant.js
+  PersDataArea = parent;
+  var t = new Array();
+  CCode.setListWValWPersWBlank(document.forms[0].project, t,"file","project","title");
+  MerchantType = "location";
+  document.forms[0].project.selectedIndex = 0;
+  //populatetitle();
+  window.focus();
+}
+
+function PopUp() {
+setLocalObj(document.forms[0].location); 
+MerchantType = 'location';
+}
+
+function doNothing() {
+
+}
+
+function populatetitle() {
+  initFields();
+  if (document.forms[0].project.length > 0 && document.forms[0].project.selectedIndex > 0) {
+    var X = parent.contents.getDBSingle(parent.PersDBase,"file","project",document.forms[0].project.options[document.forms[0].project.selectedIndex].text);
+    var Y;
+    for (var i = 0; i < X[0].length; i++) {
+      Y = X[0][i][0];
+      if (Y == "project") {
+      // 
+      } else {
+        document.forms[0].elements[Y].value = X[0][i][1];
+      }
+    }
+  }
+}
+
+function setList(TheSelect, xValue) {
+  j = 0;
+  do {
+    if (TheSelect.options[j].text == xValue) {
+       TheSelect.selectedIndex = j;
+    }
+    j = j + 1;
+  } while (j < TheSelect.length); 
+}
+
+function initFields() {
+  with (document.forms[0]) {
+    title.value = "";
+    clientno.value = "";
+  }
+}
+
+</script>
+
+</body>
+</html>

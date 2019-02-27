@@ -1,0 +1,120 @@
+<!--
+historyList.html - History report select (report from central database) 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Report History Selection</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body onLoad="init()">
+
+<p align="center"><big><em><strong><font face="Arial">Expense History List</font></strong></em></big></p>
+
+<form method="POST" action="HistoryList.jsp">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="database" value>
+
+  <div align="center"><center><table border="0" cellpadding="0" cellspacing="0" width="80%">
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">Include in list: </font></strong></em></td>
+      <td width="51%"><select name="reporttype" size="1" onChange="javascript: void levelReadOnly(document.forms[0].reporttype)">
+        <option selected value="reporter">My personal reports</option>
+        <option value="approver">Reports that I approved</option>
+        <option value="admin">Reports that I entered/submitted</option>
+        <option value="subordinates">Reports for my subordinates</option>
+      </select></td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">Levels to view: </font></strong></em></td>
+      <td width="51%"><input type="text" name="level" size="3"></td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">Beginning Date: </font></strong></em></td>
+      <td width="51%"><input type="text" name="begdate" size="11" onChange="checkdate(document.forms[0].begdate)"><a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].begdate); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">Ending Date: </font></strong></em></td>
+      <td width="51%"><input type="text" name="enddate" size="11" onChange="checkdate(document.forms[0].enddate)"><a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].enddate); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+    </tr>
+  </table>
+  </center></div><div align="center"><center><p><input type="button" value="Display List" name="B1" onClick="submitReport()"></p>
+  </center></div>
+</form>
+
+<p><big>&nbsp;</big></p>
+
+<p><big>Instructions:&nbsp; </big>
+
+<ul>
+  <li>Select the type of list you want with the &quot;Include in list&quot; pulldown</li>
+  <li>For a &quot;Reports for my subordinates&quot; list, adjust the number of levels that you
+    want to drill down.&nbsp; This option does not apply to the other types of lists.</li>
+  <li>Enter the submit date range values in mm/dd/yyyy format or use the calendar to select a submit date
+    range</li>
+  <li>Click on the &quot;Display List&quot; button</li>
+</ul>
+
+<p>&nbsp;</p>
+<script LANGUAGE="JavaScript" SRC="calendar.js"></script>
+<script LANGUAGE="JavaScript">
+
+
+function init() {
+  if (parent.contents.setDefaultDate)
+  {
+     init2();
+  } else {
+     setTimeOut("init()",1000);
+  }
+}
+
+
+function init2() {
+  document.forms[0].action = parent.contents.defaultApps + "HistoryList.jsp";
+  parent.contents.setDefaultDate(document.forms[0].begdate,-30);
+  parent.contents.setDefaultDate(document.forms[0].enddate,0);
+  document.forms[0].level.value = "0";
+  document.forms[0].level.readOnly = true;
+}
+
+function levelReadOnly(x) {
+  if(x.selectedIndex > 2) {
+    document.forms[0].level.readOnly = false;
+    document.forms[0].level.value = "3"
+  } else {
+    document.forms[0].level.readOnly = true;
+  }
+}
+
+function submitReport() {
+  if (checkdate(document.forms[0].begdate) 
+   && checkdate(document.forms[0].enddate)) {
+
+      document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+      document.forms[0].database.value = parent.database;
+      document.forms[0].ccode.value = parent.CCode;
+      document.forms[0].xaction.value = "List";
+      document.forms[0].submit();
+  }
+}
+
+</script>
+</body>
+</html>

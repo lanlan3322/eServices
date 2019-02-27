@@ -1,0 +1,10 @@
+#infoLogin input { line-height:24px; height:29px; padding: 0 5px 5px 5px;}
+select.limited-width {width: 100px; position:static;}
+select.expanded-width { width: auto; position:absolute; margin:-15px 0 0 0;}
+body{ font-size:10px; line-height: 12px;}
+.TableData {
+    padding: 5px 3px 1px 5px;
+    vertical-align: top;
+}
+table{page-break-inside:avoid;}
+.pageBreakInside {page-break-inside:avoid}

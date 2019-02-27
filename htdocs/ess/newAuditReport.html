@@ -1,0 +1,59 @@
+<html>
+
+<head>
+<!--
+newAuditReport.html - creates a new report
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Submit XML Test </title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body onLoad="newReport()">
+
+<p>Creating a new report...</p>
+
+<script language="JavaScript">
+
+function newReport() {
+  var y;
+  parent.contents.NewReport();
+
+  parent.contents.Header = new Array();
+  parent.contents.Header.length = 1;
+  parent.contents.Header[0] = new parent.contents.TransCell("persistance", "insert");
+
+  y = parent.contents.setNameValue(parent.contents.Header, "PERS_NUM", parent.contents.getNameValue(parent.Header, "persnum"));
+  y = parent.contents.setNameValue(parent.contents.Header, "NAME", parent.contents.getNameValue(parent.Header, "name"));
+  y = parent.contents.setNameValue(parent.contents.Header, "PHONE", parent.contents.getNameValue(parent.Header, "phone"));
+  y = parent.contents.setNameValue(parent.contents.Header, "LOCATION", parent.contents.getNameValue(parent.Header, "location"));
+  y = parent.contents.setNameValue(parent.contents.Header, "DEPART", parent.contents.getNameValue(parent.Header, "depart"));
+  y = parent.contents.setNameValue(parent.contents.Header, "CRE_DATE", parent.contents.getNameValue(parent.Header, "credate"));
+  y = parent.contents.setNameValue(parent.contents.Header, "CRE_TIME", parent.contents.getNameValue(parent.Header, "cretime"));
+  y = parent.contents.setNameValue(parent.contents.Header, "CLERK", parent.contents.getNameValue(parent.Header, "admin1"));
+  y = parent.contents.setNameValue(parent.contents.Header, "EMAIL", parent.contents.getNameValue(parent.Header, "email"));
+
+  y = parent.contents.setNameValue(parent.contents.Header, "RP_STAT", "A0");
+
+  var x = setTimeout("XNew()",2000);
+}
+
+function XNew() {
+  parent.contents.ListDelay();
+}
+</script>
+
+</body>
+</html>

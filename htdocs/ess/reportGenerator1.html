@@ -1,0 +1,104 @@
+<!--
+reportGenerator1.html - Runs a simple report (MIS) 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Generic Simple Data Inquiry</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body onLoad="init()">
+
+<p align="center"><big><em><strong><font face="Arial">Simple Data Inquiry</font></strong></em></big></p>
+
+<form method="POST" action="ReportGenerator.jsp">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="field1" value>
+  <input type="hidden" name="field2" value>
+  <input type="hidden" name="field3" value>
+  <input type="hidden" name="field4" value>
+  <input type="hidden" name="reportclass" value>
+  <div align="center"><center><table border="0" cellpadding="0" cellspacing="0" width="80%">
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">Report to run: </font></strong></em></td>
+      <td width="51%"><select name="reporttype" size="1">
+        <option value="broken_cards">Broken pre-populated items (new)</option>
+        <option selected value="broken_pre-populated_items">Broken pre-populated items (old)</option>
+        <option value="prenotes">List of prenoted items for period</option>
+        <option value="projects_ready_to_pay">List of purposes with projects - ready to pay</option>
+        <option value="projects_already_paid">List of purposes with projects - enter batch upload date in first date</option>
+        <option value="reports_processed">Reports processed - enter beginning &amp; ending upload dates</option>
+        <option value="report_count">Reports processed count - enter beginning &amp; ending upload dates</option>
+      </select></td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">First Date: </font></strong></em></td>
+      <td width="51%"><input type="text" name="begdate" size="11" onChange="checkdate(document.forms[0].begdate)"><a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].begdate); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">Second Date: </font></strong></em></td>
+      <td width="51%"><input type="text" name="enddate" size="11" onChange="checkdate(document.forms[0].enddate)"><a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].enddate); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+    </tr>
+  </table>
+  </center></div><div align="center"><center><p><input type="button" value="Display List" name="B1" onClick="submitReport()"></p>
+  </center></div>
+</form>
+
+<p><big>&nbsp;</big></p>
+
+<p><big>Instructions:&nbsp; </big>
+
+<ul>
+  <li>Select the type of report you want with the &quot;Report to run&quot; pulldown</li>
+  <li>Enter the required date values in mm/dd/yyyy format or use the calendar to select a date
+    range.  Usually the first date is the beginning date and the second date is the ending date, 
+    but this may vary from report to report.</li>
+  <li>Click on the &quot;Display List&quot; button</li>
+</ul>
+
+<p>&nbsp;</p>
+<script LANGUAGE="JavaScript" SRC="calendar.js"></script>
+<script LANGUAGE="JavaScript">
+
+function init() {
+  document.forms[0].action = parent.contents.defaultApps + "ReportGenerator.jsp";
+  parent.contents.setDefaultDate(document.forms[0].begdate,-30);
+  parent.contents.setDefaultDate(document.forms[0].enddate,0);
+}
+
+
+function submitReport() {
+  if (checkdate(document.forms[0].begdate) 
+   && checkdate(document.forms[0].enddate)) {
+
+      document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+      document.forms[0].database.value = parent.database;
+      document.forms[0].ccode.value = parent.CCode;
+      document.forms[0].reportclass.value = "simplereports";
+      document.forms[0].field1.value = "";
+      document.forms[0].field2.value = "";
+      document.forms[0].field3.value = "";
+      document.forms[0].field4.value = "";
+      document.forms[0].submit();
+  }
+}
+
+</script>
+</body>
+</html>

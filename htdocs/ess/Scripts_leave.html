@@ -1,0 +1,304 @@
+<html>
+<!--
+reportGeneral.html - Create list for audit selection
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Leave Scripts</title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+</head>
+
+<body onLoad="init()">
+
+<p><big><em><strong><font face="Arial"><span id="expenseRepSelList">Leave Scripts</span></font></strong></em></big></p>
+
+<form method="POST" action="Scripts_leave.jsp" onSubmit="return submitReport()">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="database" value>
+
+  <input type="hidden" name="reportclass" value="form">
+  <input type="hidden" name="reporttype" value="">
+  <input type="hidden" name="taskToRun" value="">
+  <input type="hidden" name="daysToRun" value="">
+  <input type="hidden" name="usersToRun" value="">
+  <input type="hidden" name="departToRun" value="">
+
+  <div>
+	<table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span>Scripts to run</span>: </font></strong></em></td>
+      <td><select name="task" size="1" onChange="switchDisplay();">
+      </select></td>
+    </tr>
+	</table>
+  </div>
+  <div id="criteria" style="display:none">
+  <p><big><em><strong><font face="Arial">Create Report based on the following conditions:&nbsp;</span></font></strong></em></big></p>
+  <br/>
+  <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="15%" align="right"><em><strong><font face="Arial"><span id="personnelNum">Personnel #</span>: </font></strong></em></td>
+      <td width="85%"><input type="text" name="persnum" size="11">
+      <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalJsp(document.forms[0].persnum,'UserPersNum',900,300);MerchantType = 'user'"><sm><em><span id="lookUp">Lookup!</span></em></sm></a>
+      </td>
+    </tr>
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="reportStatus">Status</span>: </font></strong></em></td>
+      <td><select name="rpstat" size="1">
+      </select></td>
+    </tr>
+    <tr style="display:none">
+      <td align="right"><em><strong><font face="Arial"><span id="centralRefNum">Reference #</span>: </font></strong></em></td>
+      <td><input type="text" name="voucher" size="11" onBlur="setDatesBlank(document.forms[0].voucher)"></td>
+    </tr>
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="companyCode">Department</span>: </font></strong></em></td>
+      <td><select name="company" size="1"></select></td>
+    </tr>
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="type">Type</span>: </font></strong></em></td>
+      <td><select name="type" size="1"></select></td>
+    </tr>
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="beginningDate">From Date</span>: </font></strong></em></td>
+      <td><input type="text" name="begdate" size="11"><a HREF="javascript:doNothing()"
+      mysubst="2"
+      onClick="setDateField(document.forms[0].begdate); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+      SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1"></td>
+    </tr>
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="endingDate">To Date</span>: </font></strong></em></td>
+      <td><input type="text" name="enddate" size="11""><a HREF="javascript:doNothing()"
+      mysubst="2"
+      onClick="setDateField(document.forms[0].enddate); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+      SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+    </tr>
+
+
+    <tr style="display:none">
+      <td align="right"><em><strong><font face="Arial"><span id="orderBy">Order by</span>: </font></strong></em></td>
+      <td><select name="rporder" size="1">
+        <option id="selectCentralRef" value="LEAVE_NUM ASC">Reference</option>
+        <option id="selectSubmissionDateAsc" value="LEAVE_CREATED ASC">Submission Date (ascending)</option>
+        <option id="selectSubmissionDateDes" selected value="LEAVE_CREATED DESC">Submission Date (descending)</option>
+        <option id="selectReportStatus" value="LEAVE_STATUS ASC">Report Status</option>
+        <option id="selectPersnum" value="PERS_NUM ASC">Personnel Number</option>
+      </select></td>
+    </tr>
+
+
+  </table></div>
+  <div id="group" style="display:none">
+  <p><big><em><strong><font face="Arial">Add/Deduct leaves for users:&nbsp;</span></font></strong></em></big></p>
+	<p><big><span id="instructions">Note: this Add/Deduction will create a leave record as Approved status and update annual leave balance.</span></big>
+  <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="companyCode">Department</span>: </font></strong></em></td>
+      <td><select name="department" size="1" ></select></td>
+    </tr>
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="daysNum">No. of days</span>: </font></strong></em></td>
+      <td><input type="text" name="days" size="11"></td>
+    </tr>
+  </table></div>
+  <p><input id="butDisplayList" type="submit" value="Run Scripts" name="B1"></p>
+</form>
+
+<p>&nbsp;</p>
+
+<p><big><span id="instructions">Instructions:&nbsp;</span></big>
+
+<ul>
+  <li><span>Select desired scripts from the list.</span></li>
+  <li><span>Click on the &quot;Run Scripts&quot; button to run.</span></li>
+  <li><span>---Daily scripts: update pending leave and new staff's balance calculation</span></li>
+  <li><span>---Yearly scripts: set default leave balance for all users </span></li>
+  <li><span>---Half year scripts: reset bring forward to default</span></li>
+  <li><span>---Add/Deduct for group: leaves operation for group</span></li>
+  <li><span>---Bring forward usage: report on bring forward leaves</span></li>
+  <li><span>---Create Report: report on selected conditions</span></li>
+</ul>
+
+<p>&nbsp;</p>
+<script LANGUAGE="JavaScript">
+
+function init() {
+  if (parent.contents.statusTable && parent.contents.setDefaultDate && parent.contents.getJSX) {
+    document.forms[0].action = parent.contents.defaultApps + "Scripts_leave.jsp";
+    document.forms[0].task.length = 6;
+    document.forms[0].task.options[0].text = "Daily scripts"; 
+    document.forms[0].task.options[0].value = "Daily scripts";
+    document.forms[0].task.options[1].text = "Yearly scripts"; 
+    document.forms[0].task.options[1].value = "Yearly scripts";
+    document.forms[0].task.options[2].text = "Half year scripts"; 
+    document.forms[0].task.options[2].value = "Half year scripts";
+    document.forms[0].task.options[3].text = "Add/Deduct for group"; 
+    document.forms[0].task.options[3].value = "Add/Deduct for group";
+    document.forms[0].task.options[4].text = "Bring forward usage"; 
+    document.forms[0].task.options[4].value = "Bring forward usage";
+    document.forms[0].task.options[5].text = "Create Report"; 
+    document.forms[0].task.options[5].value = "Create Report";
+    document.forms[0].task.selectedIndex = 0;
+
+    document.forms[0].rpstat.focus();
+    document.forms[0].rpstat.length = 9;
+    document.forms[0].rpstat.options[1].text = "New"; 
+    document.forms[0].rpstat.options[1].value = "New";
+    document.forms[0].rpstat.options[2].text = "Verified"; 
+    document.forms[0].rpstat.options[2].value = "Verified";
+    document.forms[0].rpstat.options[3].text = "Approved"; 
+    document.forms[0].rpstat.options[3].value = "Approved";
+    document.forms[0].rpstat.options[4].text = "Rejected"; 
+    document.forms[0].rpstat.options[4].value = "Rejected";
+    document.forms[0].rpstat.options[5].text = "Pending"; 
+    document.forms[0].rpstat.options[5].value = "Pending";
+    document.forms[0].rpstat.options[6].text = "Deducted"; 
+    document.forms[0].rpstat.options[6].value = "Deducted";
+    document.forms[0].rpstat.options[7].text = "Credit"; 
+    document.forms[0].rpstat.options[7].value = "Credit";
+    document.forms[0].rpstat.options[8].text = "Offset"; 
+    document.forms[0].rpstat.options[8].value = "Offset";
+    document.forms[0].rpstat.options[0].text = "All"; 
+    document.forms[0].rpstat.options[0].value = "All";
+    document.forms[0].rpstat.selectedIndex = 0;
+
+    parent.contents.setListWithValue(document.forms[0].company,parent.contents.getDepartments());
+    document.forms[0].company.options[0].text = parent.contents.getJSX("All"); 
+    document.forms[0].company.options[0].value = "All";
+    document.forms[0].company.selectedIndex = 0;
+
+    parent.contents.setListWithValue(document.forms[0].type,parent.contents.getLeaveTypes());
+    document.forms[0].type.options[0].text = parent.contents.getJSX("All"); 
+    document.forms[0].type.options[0].value = "All";
+    document.forms[0].type.selectedIndex = 0;
+
+    parent.contents.setDefaultDate(document.forms[0].begdate,-7);
+    parent.contents.setDefaultDate(document.forms[0].enddate,0);
+
+    document.forms[0].begdate.value = parent.contents.getDBString(parent.PersDBase, "reportBegDate", document.forms[0].begdate.value);
+    document.forms[0].enddate.value = parent.contents.getDBString(parent.PersDBase, "reportEndDate", document.forms[0].enddate.value);
+	
+    parent.contents.setListWithValue(document.forms[0].department,parent.contents.getDepartments());
+    document.forms[0].department.options[0].text = parent.contents.getJSX("All"); 
+    document.forms[0].department.options[0].value = "All";
+    document.forms[0].department.selectedIndex = 0;
+
+	} else {
+    setTimeout("init()", 200);
+  }
+}
+
+function setDatesBlankIfStat()
+{
+  with (document.forms[0])
+  {
+     var xStr = rpstat.options[rpstat.selectedIndex].text;
+     if (xStr != "All" && xStr.substring(0,4) != "Paid") 
+     {
+        document.forms[0].begdate.value = "";
+        document.forms[0].enddate.value = "";
+     }
+  }
+}
+
+function setDatesBlank(obj)
+{
+
+  if (obj.value != null && obj.value != "")
+  {
+     document.forms[0].begdate.value = "";
+     document.forms[0].enddate.value = "";
+  }
+}
+function switchDisplay()
+{
+  document.getElementById("criteria").style.display = "none";
+  document.getElementById("group").style.display = "none";
+  if (document.forms[0].task.selectedIndex == 5)
+  {
+     document.getElementById("criteria").style.display = "block";
+  }
+  else if (document.forms[0].task.selectedIndex == 3)
+  {
+     document.getElementById("group").style.display = "block";
+  }
+}
+function submitReport() {
+  with(document.forms[0]) {
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      xaction.value = "List";
+      reporttype.value = "SELECT * FROM LEAVERECORD WHERE";
+      var middlevar = " ";
+      var skipDates = false;
+      if (rpstat.options[rpstat.selectedIndex].value != "All") {
+        reporttype.value = reporttype.value + middlevar + "LEAVE_STATUS = '" + rpstat.options[rpstat.selectedIndex].value + "'";
+        middlevar = " AND "
+      }
+      /*if (voucher.value != null && voucher.value != "") {
+        reporttype.value = reporttype.value + middlevar + "LEAVE_NUM = '" + voucher.value + "'";
+        middlevar = " AND "
+        skipDates = true;
+      }*/
+      if (persnum.value != null && persnum.value != "") {
+        reporttype.value = reporttype.value + middlevar + "PERS_NUM = '" + persnum.value + "'";
+        middlevar = " AND "
+      }
+      var selCompany = company.options[company.selectedIndex].text;
+      if (selCompany != null && selCompany != "" && selCompany != "All") {
+        reporttype.value = reporttype.value + middlevar + "DEPART = '" + selCompany + "'";
+        middlevar = " AND "
+      }
+      var selType = type.options[type.selectedIndex].text;
+      if (selType != null && selType != "" && selType != "All") {
+        reporttype.value = reporttype.value + middlevar + "LEAVE_TYPE = '" + selType + "'";
+        middlevar = " AND "
+      }
+     
+      //later transfer date logic to the JSP
+      if (!skipDates) {
+         if (begdate.value != null && begdate.value != "") {
+           reporttype.value = reporttype.value + middlevar + "(LEAVE_TO BETWEEN '$begdate$' AND '$enddate$'";
+           middlevar = " OR "
+         }
+         if (enddate.value != null && enddate.value != "") {
+           reporttype.value = reporttype.value + middlevar + "LEAVE_FROM BETWEEN '$begdate$' AND '$enddate$')";
+         }
+      }
+      //reporttype.value = reporttype.value + " ORDER BY " + rporder.options[rporder.selectedIndex].value;
+      
+      parent.contents.setDBPair(parent.PersDBase,"reportBegDate",begdate.value);
+      parent.contents.setDBPair(parent.PersDBase,"reportEndDate",enddate.value);
+	  
+      taskToRun.value = task.options[task.selectedIndex].value;
+      daysToRun.value = days.value;
+	  departToRun.value = department.options[department.selectedIndex].value;
+      var selUsers = users.options[users.selectedIndex].text;
+	  usersToRun.value = selUsers;
+
+      return true;
+
+  }
+}
+
+</script>
+
+</body>
+</html>

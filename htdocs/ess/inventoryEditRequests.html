@@ -1,0 +1,242 @@
+<html>
+<!--
+reportGeneral.html - Create list for audit selection
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Inventory Request Enquiry</title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+	<style>
+	td {
+		padding: 10px;
+	}
+	</style>
+	</head>
+
+<body onLoad="init()">
+
+<p><big><em><strong><font face="Arial"><span id="expenseRepSelList">Inventory Request Enquiry</span></font></strong></em></big></p>
+
+<form method="POST" action="ReportAuditList_leave.jsp" onSubmit="return submitReport()">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="database" value>
+
+  <input type="hidden" name="reportclass" value="form">
+  <input type="hidden" name="reporttype" value="SELECT * FROM REPORT WHERE">
+
+  <div><table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="15%" align="right"><em><strong><font face="Arial"><span id="personnelNum" class="MenuLink">Personnel #</span>: </font></strong></em></td>
+      <td width="85%"><input type="text" name="persnum" size="11">
+      <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalJsp(document.forms[0].persnum,'UserPersNum',900,300);MerchantType = 'user'"><sm><em><span id="lookUp">Lookup!</span></em></sm></a>
+      </td>
+    </tr>
+    <tr style="display:none">
+      <td align="right"><em><strong><font face="Arial"><span id="companyCode" class="MenuLink">Department</span>: </font></strong></em></td>
+      <td><select name="company" size="1"></select></td>
+    </tr>
+    <tr style="display:none">
+      <td align="right"><em><strong><font face="Arial"><span id="reportStatus" class="MenuLink">Status</span>: </font></strong></em></td>
+      <td><select name="rpstat" size="1">
+      </select></td>
+    </tr>
+    <tr style="display:none">
+      <td align="right"><em><strong><font face="Arial"><span id="centralRefNum">Reference #</span>: </font></strong></em></td>
+      <td><input type="text" name="voucher" size="11"</td>
+    </tr>
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="type" class="MenuLink">Type</span>: </font></strong></em></td>
+      <td><select name="type" size="1"></select></td>
+    </tr>
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="beginningDate" class="MenuLink">From Date</span>: </font></strong></em></td>
+      <td><input type="text" name="begdate" size="11"><a HREF="javascript:doNothing()"
+      mysubst="2"
+      onClick="setDateField(document.forms[0].begdate); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+      SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1"></td>
+    </tr>
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="endingDate" class="MenuLink">To Date</span>: </font></strong></em></td>
+      <td><input type="text" name="enddate" size="11""><a HREF="javascript:doNothing()"
+      mysubst="2"
+      onClick="setDateField(document.forms[0].enddate); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+      SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+    </tr>
+
+
+    <tr style="display:none">
+      <td align="right"><em><strong><font face="Arial"><span id="orderBy">Order by</span>: </font></strong></em></td>
+      <td><select name="rporder" size="1">
+        <option id="selectCentralRef" value="LEAVE_NUM ASC">Reference</option>
+        <option id="selectSubmissionDateAsc" value="LEAVE_CREATED ASC">Submission Date (ascending)</option>
+        <option id="selectSubmissionDateDes" selected value="LEAVE_CREATED DESC">Submission Date (descending)</option>
+        <option id="selectReportStatus" value="LEAVE_STATUS ASC">Report Status</option>
+        <option id="selectPersnum" value="PERS_NUM ASC">Personnel Number</option>
+      </select></td>
+    </tr>
+
+
+  </table></div>
+  <p><input id="butDisplayList" type="submit" value="Display List" name="B1"></p>
+</form>
+
+<p>&nbsp;</p>
+
+<p style="display:none"><big><span id="instructions">Instructions:&nbsp;</span></big>
+
+<ul style="display:none">
+  <li><span id="selectStat">Select desired Status or &quot;All&quot; for all.</span></li>
+  <li><span id="enterPerNum">Enter the personnel number or leave blank for all.</span></li>
+  <li><span id="enterDatVal">Enter the date range values in dd/mm/yyyy format or use the calendar to select a date range.  Date checked is last submission date.</span></li>
+  <li><span id="clickDisBut">Click on the &quot;Display List&quot; button</span></li>
+</ul>
+
+<p>&nbsp;</p>
+<script LANGUAGE="JavaScript" SRC="calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="addmerchant.js"></script>
+<script LANGUAGE="JavaScript">
+
+function init() {
+  if (parent.contents.statusTable && parent.contents.setDefaultDate && parent.contents.getJSX) {
+    document.forms[0].action = parent.contents.defaultApps + "ReportInventoryEdit.jsp";
+/*
+    document.forms[0].rpstat.focus();
+    document.forms[0].rpstat.length = 6;
+    document.forms[0].rpstat.options[1].text = "Submitted"; 
+    document.forms[0].rpstat.options[1].value = "Submitted";
+    document.forms[0].rpstat.options[2].text = "Prepared"; 
+    document.forms[0].rpstat.options[2].value = "Prepared";
+    document.forms[0].rpstat.options[3].text = "Rejected"; 
+    document.forms[0].rpstat.options[3].value = "Rejected";
+    document.forms[0].rpstat.options[4].text = "Signed"; 
+    document.forms[0].rpstat.options[4].value = "Signed";
+    document.forms[0].rpstat.options[5].text = "Delivered"; 
+    document.forms[0].rpstat.options[5].value = "Delivered";
+    document.forms[0].rpstat.options[0].text = "All"; 
+    document.forms[0].rpstat.options[0].value = "All";
+    document.forms[0].rpstat.selectedIndex = 0;
+
+    parent.contents.setListWithValue(document.forms[0].company,parent.contents.getDepartments());
+    document.forms[0].company.options[0].text = parent.contents.getJSX("All"); 
+    document.forms[0].company.options[0].value = "All";
+    document.forms[0].company.length++;
+	document.forms[0].company.options[document.forms[0].company.length-1].text = parent.contents.getJSX("ELCS"); 
+    document.forms[0].company.options[document.forms[0].company.length-1].value = "ELCS";
+    document.forms[0].company.selectedIndex = 0;*/
+
+    //parent.contents.setListWithValue(document.forms[0].type,parent.contents.getLeaveTypes());
+    //document.forms[0].type.options[0].text = parent.contents.getJSX("All"); 
+    //document.forms[0].type.options[0].value = "All";
+    //document.forms[0].type.selectedIndex = 0;
+    document.forms[0].type.length = 4;
+    document.forms[0].type.options[1].text = "Request"; 
+    document.forms[0].type.options[1].value = "Request";
+    document.forms[0].type.options[2].text = "Update"; 
+    document.forms[0].type.options[2].value = "Update";
+    document.forms[0].type.options[3].text = "Return"; 
+    document.forms[0].type.options[3].value = "Return";
+    document.forms[0].type.options[0].text = "All"; 
+    document.forms[0].type.options[0].value = "All";
+	document.forms[0].type.selectedIndex = 0;
+
+    parent.contents.setDefaultDate(document.forms[0].begdate,-7);
+    parent.contents.setDefaultDate(document.forms[0].enddate,0);
+
+    document.forms[0].begdate.value = "1/1/2018";//parent.contents.getDBString(parent.PersDBase, "reportBegDate", document.forms[0].begdate.value);
+    document.forms[0].enddate.value = "31/12/2018";//parent.contents.getDBString(parent.PersDBase, "reportEndDate", document.forms[0].enddate.value);
+	
+    //parent.contents.setListWithValue(document.forms[0].department,parent.contents.getDepartments());
+    //document.forms[0].department.options[0].text = parent.contents.getJSX("All"); 
+    //document.forms[0].department.options[0].value = "All";
+    //document.forms[0].department.selectedIndex = 0;
+
+	} else {
+    setTimeout("init()", 200);
+  }
+}
+
+function submitReport() {
+  with(document.forms[0]) {
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      xaction.value = "List";
+      reporttype.value = "SELECT * FROM DB_OPERATION WHERE";
+      var middlevar = " ";
+      var skipDates = false;
+        reporttype.value = reporttype.value + middlevar + "OPERATION_STATUS = 'Submitted'";
+        middlevar = " AND "
+      /*if (rpstat.options[rpstat.selectedIndex].value != "All") {
+        reporttype.value = reporttype.value + middlevar + "OPERATION_STATUS = '" + rpstat.options[rpstat.selectedIndex].value + "'";
+        middlevar = " AND "
+      }
+      if (voucher.value != null && voucher.value != "") {
+        reporttype.value = reporttype.value + middlevar + "LEAVE_NUM = '" + voucher.value + "'";
+        middlevar = " AND "
+        skipDates = true;
+      }*/
+      if (persnum.value != null && persnum.value != "") {
+        reporttype.value = reporttype.value + middlevar + "OPERATION_BY = '" + persnum.value + "'";
+        middlevar = " AND "
+      }
+      /*var selCompany = company.options[company.selectedIndex].text;
+      if (selCompany != null && selCompany != "" && selCompany != "All") {
+        reporttype.value = reporttype.value + middlevar + "DEPART = '" + selCompany + "'";
+        middlevar = " AND "
+      }*/
+      var selType = type.options[type.selectedIndex].text;
+      if (selType != null && selType != "" && selType != "All") {
+        reporttype.value = reporttype.value + middlevar + "OPERATION_TYPE = '" + selType + "'";
+        middlevar = " AND "
+      }
+     
+      //later transfer date logic to the JSP
+      /*if (!skipDates) {
+         if (begdate.value != null && begdate.value != "") {
+           reporttype.value = reporttype.value + middlevar + "(LEAVE_FROM BETWEEN '$begdate$' AND '$enddate$'";
+           middlevar = " OR "
+         }
+         if (enddate.value != null && enddate.value != "") {
+           reporttype.value = reporttype.value + middlevar + "LEAVE_TO BETWEEN '$begdate$' AND '$enddate$')";
+         }
+      }*/
+	  reporttype.value = reporttype.value + middlevar + "(OPERATION_CREATED BETWEEN '$begdate$' AND '$enddate$') ORDER BY OPERATION_CREATED DESC";
+
+      //reporttype.value = reporttype.value + " AND LEAVE_STATUS <> 'Cancelled' AND LEAVE_STATUS <> 'Rejected' AND LEAVE_STATUS <> 'Credit' AND LEAVE_STATUS <> 'Offset'";
+      
+      parent.contents.setDBPair(parent.PersDBase,"reportBegDate",begdate.value);
+      parent.contents.setDBPair(parent.PersDBase,"reportEndDate",enddate.value);
+	  
+	  //departToRun.value = company.options[company.selectedIndex].text;
+	  typeToRun.value = type.options[type.selectedIndex].text;
+	  person.value = persnum.value;
+	  //statusToRun.value = rpstat.options[rpstat.selectedIndex].text;
+	  statusToRun.value = "Submitted";//rpstat.options[rpstat.selectedIndex].text;
+
+		
+      return true;
+
+  }
+}
+
+
+</script>
+
+</body>
+</html>

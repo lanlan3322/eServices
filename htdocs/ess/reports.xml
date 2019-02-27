@@ -1,0 +1,264 @@
+<reports>
+
+<report_signoffs>
+  <title>Report Signoffs</title>
+  <pulldown>Report Signoffs - enter beginning &amp; ending upload dates</pulldown>
+  <sql>
+  SELECT CUR_DATE, VOUCHER, NAME, RE_AMT, ADMIN1 '1st', SIGN1 '2nd', SIGN2 '3rd', ADMIN2 'CEO', MANAGER 'ROUTED' FROM REPORT WHERE CUR_DATE &gt;= $begdate$ AND CUR_DATE &lt;= $enddate$ ORDER BY VOUCHER;
+  </sql>
+  <sqlcheck1plus></sqlcheck1plus> 
+  <sqlcheck2plus></sqlcheck2plus> 
+  <sqlcheck3plus></sqlcheck3plus> 
+  <sqlcheck1minus></sqlcheck1minus> 
+  <sqlcheck2minus></sqlcheck2minus> 
+  <sqlcheck3minus></sqlcheck3minus> 
+  <encrypteditems>NAME</encrypteditems>
+  <ignoredaterange>no</ignoredaterange>
+  <datetypeoverride></datetypeoverride>
+  <users>;AUDITOR;</users>
+  <myworldcheck>no</myworldcheck>
+</report_signoffs>
+
+<myregister>
+  <title>List of My Register Items</title>
+  <pulldown>List of My Register Items</pulldown>
+  <sql>
+  SELECT REPDATE, RTRIM(REFERENCE) ,RTRIM(OWNER), RTRIM(STATUS), REPDATE FROM REGISTER WHERE UPPER(OWNER) = UPPER('$email$');
+  </sql>
+  <check/>
+  <field1name/>
+  <field2name/>
+  <field3name/>
+  <field4name/>
+  <sqlcheck1plus></sqlcheck1plus> 
+  <sqlcheck2plus></sqlcheck2plus> 
+  <sqlcheck3plus></sqlcheck3plus> 
+  <sqlcheck1minus></sqlcheck1minus> 
+  <sqlcheck2minus></sqlcheck2minus> 
+  <sqlcheck3minus></sqlcheck3minus> 
+  <encrypteditems></encrypteditems>
+  <ignoredaterange>No</ignoredaterange>
+  <datetypeoverride>WEB</datetypeoverride>
+  <users>;AUDITOR;APPROVER;REPORTER;ADMIN;</users>
+  <secondary1title></secondary1title>
+  <secondary2title></secondary2title>
+</myregister>
+<summary1>^M
+  <title>Expense Summary by Reporter for submission date period</title>
+  <pulldown>Expense Summary by Reporter</pulldown>
+  <sql>
+     SELECT REPORT.PERS_NUM, EXPENSE, REPORT.NAME, AMOUNT FROM EXPENSE JOIN REPORT ON EXPENSE.VOUCHER = REPORT.VOUCHER WHERE REPORT.CUR_DATE &gt;= $begdate$ AND REPORT.CUR_DATE &lt;= $enddate$ ORDER BY EXPENSE
+  </sql>
+  <myworldcheck></myworldcheck>
+  <field1name></field1name>
+  <sqlcheck1plus></sqlcheck1plus> 
+  <sqlcheck2plus></sqlcheck2plus>
+  <sqlcheck3plus></sqlcheck3plus>
+  <sqlcheck1minus></sqlcheck1minus>
+  <sqlcheck2minus></sqlcheck2minus>
+  <sqlcheck3minus></sqlcheck3minus>
+  <encrypteditems></encrypteditems>
+  <ignoredaterange>Yes</ignoredaterange>
+  <datetypeoverride></datetypeoverride>
+  <users>;AUDITOR;APPROVER;REPORTER;ADMIN;</users>
+  <summaryreport>yes</summaryreport>
+  <primarytitle>Pers #<primarytitle>
+  <amounttitle>Amount</amounttitle>
+  <secondary1title>Expense</secondary1title>
+  <secondary2title>Name</secondary2title>
+</summary1>
+
+<summary1select>
+  <title>Selected Expense Summary by Reporter for submission date period</title>
+  <pulldown>Expense Summary by Reporter - Selected Expense Type</pulldown>
+  <sql>
+     SELECT REPORT.PERS_NUM, EXPENSE, REPORT.NAME, AMOUNT FROM EXPENSE JOIN REPORT ON EXPENSE.VOUCHER = REPORT.VOUCHER WHERE EXPENSE = '$field1$' AND REPORT.CUR_DATE &gt;= $begdate$ AND REPORT.CUR_DATE &lt;= $enddate$ ORDER BY EXPENSE
+  </sql>
+  <myworldcheck></myworldcheck>
+  <field1name>Expense Type</field1name>
+  <sqlcheck1plus></sqlcheck1plus> 
+  <sqlcheck2plus></sqlcheck2plus> 
+  <sqlcheck3plus></sqlcheck3plus> 
+  <sqlcheck1minus></sqlcheck1minus> 
+  <sqlcheck2minus></sqlcheck2minus> 
+  <sqlcheck3minus></sqlcheck3minus> 
+  <encrypteditems></encrypteditems>
+  <ignoredaterange>Yes</ignoredaterange>
+  <datetypeoverride></datetypeoverride>
+  <users>;AUDITOR;APPROVER;REPORTER;ADMIN;</users>
+  <summaryreport>yes</summaryreport>
+  <primarytitle></primarytitle>
+  <amounttitle>Amount</amounttitle>
+  <secondary1title></secondary1title>
+  <secondary2title></secondary2title>
+</summary1select>
+
+<summary2>
+  <title>Expenses - Summarized</title>
+  <pulldown>Expenses - Summarized</pulldown>
+  <sql>
+  SELECT EXPENSE, SUM(REC_AMT), SUM(AMOUNT) FROM EXPENSE JOIN REPORT ON EXPENSE.VOUCHER = REPORT.VOUCHER GROUP BY EXPENSE ORDER BY EXPENSE;
+  </sql>
+  <myworldcolumn>no</myworldcolumn>
+  <field1name></field1name>
+  <sqlcheck1plus></sqlcheck1plus> 
+  <sqlcheck2plus></sqlcheck2plus> 
+  <sqlcheck3plus></sqlcheck3plus> 
+  <sqlcheck1minus></sqlcheck1minus> 
+  <sqlcheck2minus></sqlcheck2minus> 
+  <sqlcheck3minus></sqlcheck3minus> 
+  <encrypteditems></encrypteditems>
+  <ignoredaterange>Yes</ignoredaterange>
+  <datetypeoverride></datetypeoverride>
+  <users>;AUDITOR;APPROVER;REPORTER;ADMIN;</users>
+  <secondary1title></secondary1title>
+  <secondary2title></secondary2title>
+</summary2>
+
+<individual1>
+  <title>Individual User - Summarized</title>
+  <pulldown>Individual User - Summarized</pulldown>
+  <sql>
+  SELECT REPORT.SUB_DATE, EXPENSE, SUM(REC_AMT), SUM(AMOUNT) FROM EXPENSE JOIN REPORT ON EXPENSE.VOUCHER = REPORT.VOUCHER WHERE REPORT.PERS_NUM = '$field1$' GROUP BY EXPENSE ORDER BY EXPENSE;
+  </sql>
+  <myworldcolumn>no</myworldcolumn>
+  <field1name>Personnel #</field1name>
+  <sqlcheck1plus></sqlcheck1plus> 
+  <sqlcheck2plus></sqlcheck2plus> 
+  <sqlcheck3plus></sqlcheck3plus> 
+  <sqlcheck1minus></sqlcheck1minus> 
+  <sqlcheck2minus></sqlcheck2minus> 
+  <sqlcheck3minus></sqlcheck3minus> 
+  <encrypteditems></encrypteditems>
+  <ignoredaterange>No</ignoredaterange>
+  <datetypeoverride></datetypeoverride>
+  <users>;AUDITOR;</users>
+  <secondary1title></secondary1title>
+  <secondary2title></secondary2title>
+</individual1>
+
+<register>
+  <title>List of Register Items</title>
+  <pulldown>List of register items</pulldown>
+  <sql>
+  SELECT REPDATE, RTRIM(REFERENCE) "Ref #" ,RTRIM(OWNER) "Owner", RTRIM(STATUS) "Status", REPDATE "Date" FROM REGISTER ORDER BY REFERENCE;
+  </sql>
+  <sqlcheck1plus></sqlcheck1plus> 
+  <sqlcheck2plus></sqlcheck2plus> 
+  <sqlcheck3plus></sqlcheck3plus> 
+  <sqlcheck1minus></sqlcheck1minus> 
+  <sqlcheck2minus></sqlcheck2minus> 
+  <sqlcheck3minus></sqlcheck3minus> 
+  <encrypteditems></encrypteditems>
+  <ignoredaterange>No</ignoredaterange>
+  <datetypeoverride>WEB</datetypeoverride>
+  <users>;AUDITOR;</users>
+  <myworldcheck>no</myworldcheck>
+</register>
+
+<userlist>
+  <title>Users</title>
+  <pulldown>List of users</pulldown>
+  <sql>
+  SELECT PERS_NUM,LNAME,FNAME,EMAIL,MANAGER,PSWD_DATE FROM USER ORDER BY PERS_NUM;
+  </sql>
+  <_sql>
+  SELECT PERS_NUM "Pers #" ,LNAME "Last", FNAME "First", EMAIL "E-mail", MANAGER "Mgr #" FROM USER ORDER BY PERS_NUM;
+  </_sql>
+  <sqlcheck1plus></sqlcheck1plus> 
+  <sqlcheck2plus></sqlcheck2plus> 
+  <sqlcheck3plus></sqlcheck3plus> 
+  <sqlcheck1minus></sqlcheck1minus> 
+  <sqlcheck2minus></sqlcheck2minus> 
+  <sqlcheck3minus></sqlcheck3minus> 
+  <encrypteditems></encrypteditems>
+  <ignoredaterange>Yes</ignoredaterange>
+  <datetypeoverride></datetypeoverride>
+  <users>;AUDITOR;</users>
+  <myworldcheck>no</myworldcheck>
+</userlist>
+
+<broken_cards>
+  <title>Broken Pre-populated Links</title>
+  <pulldown>Broken pre-populated links</pulldown>
+  <xsql>
+  SELECT DISTINCT SDATE, CHARGE, CARD, EMPLOYEE, SDATE FROM STATEMNT WHERE RTRIM(STATUS) = "" OR STATUS = "NU" ORDER BY CHARGE ASC, CARD ASC;
+  </xsql>
+  <sql>
+  SELECT DISTINCT SDATE, CHARGE, CARD, EMPLOYEE, SDATE FROM STATEMNT WHERE RTRIM(STATUS) = "" OR VND_STAT = "NU"  AND SDATE &gt;= $begdate$ AND SDATE &lt;= $enddate$ ORDER BY CHARGE ASC, CARD ASC;
+  </sql>
+  <sqlcheck1plus></sqlcheck1plus> 
+  <sqlcheck2plus></sqlcheck2plus> 
+  <sqlcheck3plus></sqlcheck3plus> 
+  <sqlcheck1minus> 
+  SELECT PERS_NUM FROM CARD WHERE CHARGE = '$column2$' AND CARD = '$column3$';
+  </sqlcheck1minus>
+  <sqlcheck2minus></sqlcheck2minus> 
+  <sqlcheck3minus></sqlcheck3minus> 
+  <encrypteditems></encrypteditems>
+  <ignoredaterange>no</ignoredaterange>
+  <datetypeoverride></datetypeoverride>
+  <users>;AUDITOR;</users>
+  <myworldcheck>no</myworldcheck>
+</broken_cards>
+
+<prenotes>
+  <title>List of Prenoted Items</title>
+  <pulldown>List of prenoted items for period</pulldown>
+  <sql>
+  SELECT PRE_DATE, LNAME, FNAME, BANKCODE, BANKACCT, SAVINGS, PRE_DATE FROM USER WHERE PRE_DATE &gt;= $begdate$ AND PRE_DATE &lt;= $enddate$ ORDER BY LNAME  ASC;
+  </sql>
+  <xsql>
+  SELECT PRE_DATE, LNAME, FNAME, BANKCODE, SUBSTR(BANKACCT,1,3)+'*****', SAVINGS, PRE_DATE FROM USER WHERE PRE_DATE &gt;= $begdate$ AND PRE_DATE &lt;= $enddate$ ORDER BY LNAME  ASC;
+  </xsql>
+  <sqlcheck1plus></sqlcheck1plus> 
+  <sqlcheck2plus></sqlcheck2plus> 
+  <sqlcheck3plus></sqlcheck3plus> 
+  <sqlcheck1minus></sqlcheck1minus> 
+  <sqlcheck2minus></sqlcheck2minus> 
+  <sqlcheck3minus></sqlcheck3minus> 
+  <encrypteditems></encrypteditems>
+  <ignoredaterange>no</ignoredaterange>
+  <datetypeoverride></datetypeoverride>
+  <users>;AUDITOR;</users>
+  <myworldcheck>no</myworldcheck>
+</prenotes>
+
+<reports_processed>
+  <title>Reports processed over the time period</title>
+  <pulldown>Reports processed - enter beginning &amp; ending upload dates</pulldown>
+  <sql>
+  SELECT UP_DATE, VOUCHER, NAME, RE_AMT, UP_DATE FROM REPORT WHERE REPORT.RP_STAT = 'H4' AND UP_DATE &gt;= $begdate$ AND UP_DATE &lt;= $enddate$ ORDER BY VOUCHER;
+  </sql>
+  <sqlcheck1plus></sqlcheck1plus> 
+  <sqlcheck2plus></sqlcheck2plus> 
+  <sqlcheck3plus></sqlcheck3plus> 
+  <sqlcheck1minus></sqlcheck1minus> 
+  <sqlcheck2minus></sqlcheck2minus> 
+  <sqlcheck3minus></sqlcheck3minus> 
+  <encrypteditems>NAME</encrypteditems>
+  <ignoredaterange>no</ignoredaterange>
+  <datetypeoverride></datetypeoverride>
+  <users>;AUDITOR;</users>
+  <myworldcheck>no</myworldcheck>
+</reports_processed>
+
+<report_count>
+  <title>Count reports processed for a period</title>
+  <pulldown>Reports processed count - enter beginning &amp; ending upload dates</pulldown>
+  <sql>
+  SELECT $enddate$, COUNT(*) FROM REPORT WHERE REPORT.RP_STAT = 'H4' AND UP_DATE &gt;= $begdate$ AND UP_DATE &lt;= $enddate$;
+  </sql>
+  <sqlcheck1plus></sqlcheck1plus> 
+  <sqlcheck2plus></sqlcheck2plus> 
+  <sqlcheck3plus></sqlcheck3plus> 
+  <sqlcheck1minus></sqlcheck1minus> 
+  <sqlcheck2minus></sqlcheck2minus> 
+  <sqlcheck3minus></sqlcheck3minus> 
+  <encrypteditems></encrypteditems>
+  <ignoredaterange>no</ignoredaterange>
+  <users>;AUDITOR;</users>
+  <myworldcheck>no</myworldcheck>
+</report_count>
+
+</reports>

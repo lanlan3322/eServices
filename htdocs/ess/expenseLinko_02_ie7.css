@@ -1,0 +1,4 @@
+select{background-color:#FFFFFF; border:2px solid #333366; width:85%; height:29px; line-height:29px; margin-bottom:10px;}
+.size1of2{margin-right:4.75%; width:45%; float:left; overflow:hidden; height: 60px;}
+.col1of1{ width:100%; float:left; clear:left; margin-top:36px;}
+fieldset{clear:left; margin: 0px; border:1px solid #bdc2dc; width:95%; padding:0 12px 12px 12px; background-color:#FFF; background-image:url(images/img_background_fieldset.gif); background-position:0px 8px; background-repeat:repeat-x;}

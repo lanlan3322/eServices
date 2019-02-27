@@ -1,0 +1,236 @@
+<html>
+<!--
+reportGeneral.html - Create list for audit selection
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Edit leave balance</title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+</head>
+<body onLoad="init()">
+
+<p><big><em><strong><font face="Arial">Edit leave balance</font></strong></em></big></p>
+
+<form method="POST" action="ReportAuditEdit_leave.jsp" onSubmit="return submitReport()">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="database" value>
+		<input type="hidden" name="newLeavePer" value>
+		<input type="hidden" name="ANNUAL_BAL" value>
+		<input type="hidden" name="ANNUAL_ENT" value>
+		<input type="hidden" name="MARRIAGE_BAL" value>
+		<input type="hidden" name="MARRIAGE_ENT" value>
+		<input type="hidden" name="CHILDCARE_BAL" value>      
+		<input type="hidden" name="CHILDCARE_ENT" value>
+		<input type="hidden" name="MEDICAL_BAL" value>
+		<input type="hidden" name="MEDICAL_ENT" value>
+		<input type="hidden" name="HOSPITAL_BAL" value>
+		<input type="hidden" name="HOSPITAL_ENT" value>
+		<input type="hidden" name="PATERNITY_BAL" value>
+		<input type="hidden" name="PATERNITY_ENT" value>
+		<input type="hidden" name="MATERNITY_BAL" value>
+		<input type="hidden" name="MATERNITY_ENT" value>
+		<input type="hidden" name="COMP_BAL" value>
+		<input type="hidden" name="COMP_ENT" value>
+		<input type="hidden" name="COMP_NEXTOFKIN_BAL" value>
+		<input type="hidden" name="COMP_NEXTOFKIN_ENT" value>
+		<input type="hidden" name="OFINLIEU_BAL" value>
+		<input type="hidden" name="OFINLIEU_ENT" value>
+		<input type="hidden" name="RESERVIST_BAL" value>
+		<input type="hidden" name="RESERVIST_ENT" value>
+		<input type="hidden" name="UNPAID_BAL" value>
+		<input type="hidden" name="UNPAID_ENT" value>
+		<input type="hidden" name="BRING_FORWARD" value>
+		<input type="hidden" name="ADVANCE_LEAVE" value>
+		<input type="hidden" name="ADD_ON" value>
+  <div>
+  <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="userId">User ID</span>: </font></strong></em></td>
+      <td align="left"><input type="text" name="persnum" onBlur="setDatesBlank(document.forms[0].persnum)"/>
+      <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalJsp(document.forms[0].persnum,'UserPersNum',900,900);MerchantType = 'user'"><sm><em><span id="lookUp">Search</span></em></sm></a>
+      </td>
+    </tr>
+  </table>
+  <br/>
+		<input id="butResetInput" type="button" value="Reset Input" onclick="init()">
+  <br/>
+  <br/>
+  <table border="1">
+	<tr bgcolor="#E6E6FA">
+		<th width="20%" align="left">Type of leave</th>
+		<th align="left">Balance</th>
+		<th width="80%" align="left">Entitlement</th>
+	</tr>
+    <tr>
+      <td><em><strong><font face="Arial"><span>Annual</span>: </font></strong></em></td>
+      <td><input type="text" name="bal_annual" id="bal_annual"/></td>
+      <td><input type="text" name="ent_annual" /></td>
+    </tr>
+    <tr bgcolor="#E6E6FA">
+      <td><em><strong><font face="Arial"><span>Marriage</span>: </font></strong></em></td>
+      <td><input type="text" name="bal_marriage"/></td>
+      <td><input type="text" name="ent_marriage"/></td>
+    </tr>
+    <tr>
+      <td><em><strong><font face="Arial"><span>Childcare</span>: </font></strong></em></td>
+      <td><input type="text" name="bal_childcare"/></td>
+      <td><input type="text" name="ent_childcare"/></td>
+    </tr>
+    <tr bgcolor="#E6E6FA">
+      <td><em><strong><font face="Arial"><span>Medical</span>: </font></strong></em></td>
+      <td><input type="text" name="bal_medical"/></td>
+      <td><input type="text" name="ent_medical"/></td>
+    </tr>
+    <tr>
+      <td><em><strong><font face="Arial"><span>Hospitalisation</span>: </font></strong></em></td>
+      <td><input type="text" name="bal_hospitalisation"/></td>
+      <td><input type="text" name="ent_hospitalisation"/></td>
+    </tr>
+    <tr bgcolor="#E6E6FA">
+      <td><em><strong><font face="Arial"><span>Paternity</span>: </font></strong></em></td>
+      <td><input type="text" name="bal_paternity"/></td>
+      <td><input type="text" name="ent_paternity"/></td>
+    </tr>
+    <tr>
+      <td><em><strong><font face="Arial"><span>Maternity</span>: </font></strong></em></td>
+      <td><input type="text" name="bal_maternity"/></td>
+      <td><input type="text" name="ent_maternity"/></td>
+    </tr>
+    <tr bgcolor="#E6E6FA">
+      <td><em><strong><font face="Arial"><span>Compassionate<br/>Next-of-kin</span>: </font></strong></em></td>
+      <td><input type="text" name="bal_compnext"/></td>
+      <td><input type="text" name="ent_compnext"/></td>
+    </tr>
+    <tr>
+      <td><em><strong><font face="Arial"><span>Compassionate</span>: </font></strong></em></td>
+      <td><input type="text" name="bal_comp"/></td>
+      <td><input type="text" name="ent_comp"/></td>
+    </tr>
+    <tr bgcolor="#E6E6FA">
+      <td><em><strong><font face="Arial"><span>Off In Lieu</span>: </font></strong></em></td>
+      <td><input type="text" name="bal_offinlieu"/></td>
+      <td><input type="text" name="ent_offinlieu"/></td>
+    </tr>    
+	<tr>
+      <td><em><strong><font face="Arial"><span>Reservist</span>: </font></strong></em></td>
+      <td><input type="text" name="bal_reservist"/></td>
+      <td><input type="text" name="ent_reservist"/></td>
+    </tr>    
+	<tr bgcolor="#E6E6FA">
+      <td><em><strong><font face="Arial"><span>Unpaid</span>: </font></strong></em></td>
+      <td><input type="text" name="bal_unpaid"/></td>
+      <td><input type="text" name="ent_unpaid"/></td>
+    </tr>
+	<tr>
+      <td><em><strong><font face="Arial"><span>Bring forward</span>: </font></strong></em></td>
+      <td><input type="text" name="bringforward"/></td>
+      <td>NA</td>
+    </tr>
+	<tr bgcolor="#E6E6FA">
+      <td><em><strong><font face="Arial"><span>Advance</span>: </font></strong></em></td>
+      <td><input type="text" name="advance"/></td>
+      <td>NA</td>
+    </tr>
+	<tr>
+      <td><em><strong><font face="Arial"><span>Add on</span>: </font></strong></em></td>
+      <td><input type="text" name="addon"/></td>
+      <td>NA</td>
+    </tr>
+  </table>
+  </div>
+  <br/>
+	<input id="butLeaveCreate" type="submit" value="Update" name="B1">
+</form>
+<script LANGUAGE="JavaScript" SRC="calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="shared\xshared2.js"></script>
+<script LANGUAGE="JavaScript">
+function init() {
+	document.forms[0].action = parent.contents.defaultApps + "ReportAuditEdit_leave.jsp";
+    document.forms[0].persnum.focus();
+	document.forms[0].bal_annual.value = "14";
+	document.forms[0].ent_annual.value = "14";
+	document.forms[0].bal_marriage.value = "0";
+	document.forms[0].ent_marriage.value = "0";
+	document.forms[0].bal_childcare.value = "0";
+	document.forms[0].ent_childcare.value = "0";
+	document.forms[0].bal_medical.value = "14";
+	document.forms[0].ent_medical.value = "14";
+	document.forms[0].bal_hospitalisation.value = "0";
+	document.forms[0].ent_hospitalisation.value = "0";
+	document.forms[0].bal_paternity.value = "0";
+	document.forms[0].ent_paternity.value = "0";
+	document.forms[0].bal_maternity.value = "0";
+	document.forms[0].ent_maternity.value = "0";
+	document.forms[0].bal_comp.value = "0";
+	document.forms[0].ent_comp.value = "0";
+	document.forms[0].bal_compnext.value = "0";
+	document.forms[0].ent_compnext.value = "0";
+	document.forms[0].bal_offinlieu.value = "0";
+	document.forms[0].ent_offinlieu.value = "0";
+	document.forms[0].bal_reservist.value = "0";
+	document.forms[0].ent_reservist.value = "0";
+	document.forms[0].bal_unpaid.value = "0";
+	document.forms[0].ent_unpaid.value = "0";
+	document.forms[0].bringforward.value = "0";
+	document.forms[0].advance.value = "0";
+	document.forms[0].addon.value = "0";
+}
+
+function submitReport() {
+  with(document.forms[0]) {
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      xaction.value = "List";
+
+	  newLeavePer.value = persnum.value;
+	  ANNUAL_BAL.value = bal_annual.value;
+	  ANNUAL_ENT.value = ent_annual.value;
+	  MARRIAGE_BAL.value = bal_marriage.value;
+	  MARRIAGE_ENT.value = ent_marriage.value;
+	  CHILDCARE_BAL.value = bal_childcare.value;
+	  CHILDCARE_ENT.value = ent_childcare.value;
+	  MEDICAL_BAL.value = bal_medical.value;
+	  MEDICAL_ENT.value = ent_medical.value;
+	  HOSPITAL_BAL.value = bal_hospitalisation.value;
+	  HOSPITAL_ENT.value = ent_hospitalisation.value;
+	  PATERNITY_BAL.value = bal_paternity.value;
+	  PATERNITY_ENT.value = ent_paternity.value;
+	  MATERNITY_BAL.value = bal_maternity.value;
+	  MATERNITY_ENT.value = ent_maternity.value;
+	  COMP_BAL.value = bal_comp.value;
+	  COMP_ENT.value = ent_comp.value;
+	  COMP_NEXTOFKIN_BAL.value = bal_compnext.value;
+	  COMP_NEXTOFKIN_ENT.value = ent_compnext.value;
+	  OFINLIEU_BAL.value = bal_offinlieu.value;
+	  OFINLIEU_ENT.value = ent_offinlieu.value;
+	  RESERVIST_BAL.value = bal_reservist.value;
+	  RESERVIST_ENT.value = ent_reservist.value;
+	  UNPAID_BAL.value = bal_unpaid.value;
+	  UNPAID_ENT.value = ent_unpaid.value;
+	  BRING_FORWARD.value = bringforward.value;
+	  ADVANCE_LEAVE.value = advance.value;
+	  ADD_ON.value = addon.value;
+  }
+}
+
+</script>
+</body>
+</html>

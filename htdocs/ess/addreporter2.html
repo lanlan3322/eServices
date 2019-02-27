@@ -1,0 +1,155 @@
+<!--
+addreporter2.html - change reporter in header and add to personal database    
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Add Client</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body onLoad="FormInit()">
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%" class="bannerColor"><p align="center"><div class="ExpenseTag"><em>Add to your list:</em></div></td>
+  </tr>
+  <tr>
+    <td width="100%" align="center">
+    <form>
+      <input type="hidden" name="departname" value>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td width="40%"><strong>Personnel #: </strong></td>
+          <td width="60%"><input type="text" name="persnum" size="14"></td>
+        </tr>
+        <tr>
+          <td class="offsetColor" width="40%"><strong>Name:</strong></td>
+          <td class="offsetColor" width="60%"><input type="text" name="name" size="25"></td>
+        </tr>
+        <tr>
+          <td width="40%"><strong>Phone:</strong></td>
+          <td width="60%"><input type="text" name="phone" size="25"></td>
+        </tr>
+        <tr>
+          <td class="offsetColor" width="40%"><strong><script>document.write(window.opener.parent.contents.getFieldName("Location"));</script>:</strong></td>
+          <td class="offsetColor" width="60%"><input type="text" name="location" size="25"></td>
+        </tr>
+        <tr>
+          <td width="40%" class="offsetColor"><div class="ExpenseTag">Department:</div></td>
+          <td width="60%" class="offsetColor"><input type="text" name="depart" size="20" onChange="departMapping(document.forms[0].depart, document.forms[0].departname)">
+          </td>
+        </tr>
+      </table>
+      <p><input type="button" value="Add/Change list" name="OK" onClick="JavaScript: void addItem()"> <input type="button" value="Cancel" name="Cancel" onClick="window.close()"></p>
+    </form>
+    </td>
+  </tr>
+</table>
+<script LANGUAGE="JavaScript" SRC="addmerchant.js"></script>
+<script LANGUAGE="JavaScript">
+function addItem(){
+  if (document.forms[0].persnum.value > " "
+    && document.forms[0].name.value > " "
+    && document.forms[0].phone.value > " "
+    && document.forms[0].location.value > " "
+    && document.forms[0].depart.value > " "
+    && (deptNotValid(document.forms[0].departname) == false)) {
+    var theinfo = new Array(5);
+    theinfo[0] = ["persnum",document.forms[0].persnum.value];
+    theinfo[1] = ["name",document.forms[0].name.value];
+    theinfo[2] = ["phone",document.forms[0].phone.value];
+    theinfo[3] = ["location",document.forms[0].location.value];
+    theinfo[4] = ["depart",document.forms[0].depart.value];
+    window.opener.MerchantType = "reporter";
+    window.opener.setLocalMerchant(document.forms[0].persnum.value,theinfo,document.forms[0].persnum.value);
+    setOtherText();
+    window.close();
+  } else {
+    alert("Form must be completed!");
+    document.forms[0].persnum.focus();  
+  }
+}
+
+function setOtherText() {
+  var CCode = window.opener.document.forms[0];  
+  var XCode = window.opener.parent.contents;  
+  CCode.name.value = document.forms[0].name.value;
+  CCode.phone.value = document.forms[0].phone.value;
+  CCode.location.value = document.forms[0].location.value;
+  CCode.document.forms[0].depart.value = document.forms[0].depart.value;
+}
+
+function FormInit(){
+  var CCode = window.opener.parent.contents;  //located in addMerchant.js
+  var PersDataArea = window.opener.parent;
+  var MerchantType = "reporter";
+  document.forms[0].depart.value = CCode.getNameValue(CCode.Header, "depart");
+  window.opener.parent.main.departMapping(document.forms[0].depart, document.forms[0].departname);
+  CCode.setListWithPers(document.forms[0].location, CCode.getLocations("1"),MerchantType);
+  window.focus();
+  window.onresize = hdleResize;
+}
+
+function doNothing() {
+}
+
+function hdleResize() {
+//  note that ns6 also supports : body.clientWidth/Height 
+  var x = 0;
+  var y = 0;
+  if (document.documentElement.clientWidth && document.documentElement.clientWidth != 0) {
+    x = document.documentElement.clientWidth;  //IE 6 standard
+    y = document.documentElement.clientHeight;
+  } else if (document.body.clientWidth && document.body.clientWidth != 0) {
+    x = document.body.clientWidth;  // IE quirkie mode
+    y = document.body.clientHeight;
+  } else if (window.innerWidth && window.innerWidth != 0) {
+    x = window.innerWidth;  // NS
+    y = window.innerHeight;
+  }
+  
+  if(opener.parent.main.MerWinSize && opener.parent.main.MerWinSize != null) { 
+    opener.parent.main.MerWinSize(x,y,"addreporter");
+  }
+}
+
+function departMapping(obj1, obj2) {
+  if (obj1.value <= "    ") {
+    obj1.value = "";
+    obj2.value = "";
+  } else {
+    var DepartName = window.opener.parent.contents.getDBString(window.opener.parent.main.departList,obj1.value,"Not Valid");
+    obj2.value = DepartName;
+    var x = deptNotValid(obj2)
+  }
+}
+
+function deptNotValid(obj) {
+  if (obj.value == "Not Valid") {
+    alert("Invalid department number - please correct");
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+</script>
+
+</body>
+</html>

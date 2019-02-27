@@ -1,0 +1,262 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>FX Popup</title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+</head>
+
+<body onLoad="FillForm(document.forms[0])">
+
+<form>
+  <input type="hidden" name="ratetype" value="0"><table border="0" cellspacing="0" width="494" height="272" cellpadding="0">
+    <tr>
+      <td width="576" height="85" class="bannerColor"><div align="center"><center><p><strong><em><big><big><big><font face="Times New Roman">Currency Info Screen</font></big></big></big></em></strong></td>
+    </tr>
+    <tr align="center">
+      <td width="576" class="offsetColor" height="155"><table border="0" cellspacing="0" width="100%" cellpadding="0">
+        <tr>
+          <td width="11%"><strong>Currency:</strong></td>
+          <td width="30%"><select name="units" size="1" tabindex="1" onChange="switchCurrency()">
+          </select></td>
+        </tr>
+        <tr>
+          <td width="11%"><strong>Rate:</strong></td>
+          <td width="30%"><input type="text" name="xrate" size="9" value tabindex="2" onChange="makeRate(document.forms[0].xrate)"> (ensure rate is current)</td>
+        </tr>
+        <tr>
+          <td width="11%"><strong>Rate Type:</strong></td>
+          <td width="30%"><select name="ratedivisor" size="1" xref="ratetype" subtype="exclude" tabindex="3">
+            <option selected value="0">Divide for home currency</option>
+            <option value="1">Multiply for Home currency</option>
+          </select></td>
+        </tr>
+        <tr>
+          <td width="11%"><strong>Rate Date:</strong></td>
+          <td width="30%"><input type="text" name="xdate" size="13" tabindex="4"><a HREF="javascript:doNothing()" onClick="setDateField(document.forms[0].xdate,'calendar.html')"><img SRC="calendar.gif" BORDER="0" tabindex="5" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+        </tr>
+        <tr>
+          <td width="11%"><strong>Source:</strong></td>
+          <td width="30%"><input type="text" name="xsource" size="36" tabindex="6"></td>
+        </tr>
+      </table>
+      </td>
+    </tr>
+    <tr align="center">
+      <td width="576" height="32"><font size="3"><div align="center"><center><p>If your receipts
+      are in a foreign currency, enter the information on this screen. This information will be
+      used to calculate home currency amounts. Leave blank for non-foreign currency
+      transactions.</font> </p>
+      </center></div><div align="center"><center><p><input type="button" value="OK - Add to receipt" name="OK" onClick="JavaScript: void FXSubmit(document.forms[0])" tabindex="10"><input type="button" value="Cancel" name="Cancel" onClick="window.close()" tabindex="11"></td>
+    </tr>
+  </table>
+</form>
+<script LANGUAGE="JavaScript" SRC="calendar.js"></script>
+<script LANGUAGE="JavaScript">
+var mesParents = window.opener.parent.main;
+var normalNames = ["units","xrate","ratetype","xdate","xsource","recamt","amount"]; //matches mesParents list
+
+function FXSubmit(thisForm) {
+  var NumVal;
+  var newUnits = thisForm.units.selectedIndex
+  if (newUnits != 0
+      && (isNaN(thisForm.xrate.value) 
+         || !checkdate(thisForm.xdate) 
+         || !doDateChkToday(thisForm.xdate)
+         || !checkLength(thisForm.xrate, "Rate", 0) 
+         || !checkLength(thisForm.xsource, "Source", 2)) ) {  //add amount parameter to divorce from exact location  
+    if (thisForm.xrate.value != ""){
+      alert("Invalid data in the currency convertor"); 
+    }  
+  } else {
+    var currList = new Array(5);
+    if (newUnits > 0) {
+      currList[0] = [mesParents.FXFormNames[0],thisForm.units.options[newUnits].text]; //units
+      currList[1] = [mesParents.FXFormNames[1],thisForm.xrate.value]; //xrate
+      currList[2] = [mesParents.FXFormNames[2],thisForm.ratedivisor.options[thisForm.ratedivisor.selectedIndex].value]; //ratetype
+      currList[3] = [mesParents.FXFormNames[3],thisForm.xdate.value]; //xdate
+      currList[4] = [mesParents.FXFormNames[4],thisForm.xsource.value];  //xsource
+      window.opener.parent.contents.setDBPair(window.opener.parent.PersDBase,"currency",currList);
+    
+    } else {
+      currList[0] = [mesParents.FXFormNames[0],""];  //units
+      currList[1] = [mesParents.FXFormNames[1],""];  //xrate
+      currList[2] = [mesParents.FXFormNames[2],""];  //ratetype
+      currList[3] = [mesParents.FXFormNames[3],""];  //xdate
+      currList[4] = [mesParents.FXFormNames[4],""];  //xsource
+    }
+
+    window.opener.setFGN(currList);
+    window.opener.parent.contents.setDBPair(window.opener.parent.PersDBase,"last_currency",currList[0][1]);
+    window.opener.parent.contents.setDBPair(window.opener.parent.WorkDBase,"last_currency",currList[0][1]);
+    if (window.opener.fxCleanUp != null) window.opener.fxCleanUp();
+    window.close(); 
+  }
+}
+
+function checkLength(object, fname, nchars) {
+        var check = rtrim(object.value);
+        if (check.length > nchars) {
+                return true;
+        } else
+        alert(fname + " must greater than " + nchars + " characters");
+        object.focus();
+        object.select();
+}
+
+function rtrim(arg) {
+  var trimvalue = "";
+  var arglen = arg.length;
+  if (arglen < 1) return trimvalue;
+  var lastpos = -1;
+  var i = arglen;
+  while (i >= 0) {
+    if (arg.charCodeAt(i) != 32 && !isNaN(arg.charCodeAt(i))) {
+      lastpos = i;
+      break;
+    }
+    i--;
+  }
+  trimvalue = arg.substring(0,lastpos+1);
+  return trimvalue;
+}
+
+function FillForm(thisForm) {
+    window.focus();
+    document.forms[0].ratedivisor.subtype = "exclude";
+    //Gets a simple list found in personal.js
+    window.opener.parent.contents.setList(thisForm.units, window.opener.parent.contents.getCurrencies("1"));
+    //Sets the default dates
+    window.opener.parent.contents.setDefaultDate(thisForm.xdate,-1);
+    var parentForm = window.opener.document.forms[window.opener.FormNumber];
+    if (parentForm.elements[mesParents.FXFormNames[1]].value) {
+      setPullDownList(thisForm,"units",parentForm.elements[mesParents.FXFormNames[0]].value);
+      thisForm.xrate.value = parentForm.elements[mesParents.FXFormNames[1]].value;
+      setPullDownRateType(thisForm,"ratedivisor",parentForm.elements[mesParents.FXFormNames[2]].value);
+      thisForm.xdate.value = parentForm.elements[mesParents.FXFormNames[3]].value;
+      thisForm.xsource.value = parentForm.elements[mesParents.FXFormNames[4]].value;
+    } else {
+      var ResultItem = window.opener.parent.contents.getDBSingle(window.opener.parent.PersDBase,"last_currency");
+      if (ResultItem.length > 0) {
+         setCurrency(thisForm,ResultItem[0]);
+      }
+    } 
+    DBCCode = window.opener.parent.contents;   //found in calendar.js
+    CalPDArea = window.opener.parent; 
+    calDateFormat = window.opener.parent.dateFormat;
+    document.forms[0].units.focus();
+}
+
+function switchCurrency() {
+  var newUnits = document.forms[0].units.selectedIndex;
+  setCurrency(document.forms[0],document.forms[0].units.options[newUnits].text); 
+}
+
+function setCurrency(thisForm,x){
+  var ResultSet = new Array(0);
+  // var DolList = window.opener.parent.contents.getHomeCurrencyList();
+  // if (DolList.indexOf(";" + x + ";") > -1) {  //Home current check
+  var DolList = window.opener.parent.contents.getNameValue(window.opener.parent.contents.Header,"currency");
+  if (DolList == x) {  //Reporter Currency Check
+     document.forms[0].units.selectedIndex = 0;
+  } else {
+     ResultSet = window.opener.parent.contents.getDBSingle(window.opener.parent.PersDBase,"currency",mesParents.FXFormNames[0],x);
+  }
+  if (ResultSet.length > 0) {
+  var ptrString;
+    for (var i = 0; i < ResultSet[0].length; i++) {
+      ptrString = normalNames[arrayIndex(mesParents.FXFormNames, ResultSet[0][i][0])]; 
+      if (ptrString != normalNames[0]) {
+         thisForm.elements[ptrString].value = ResultSet[0][i][1];
+      } else {
+         setPullDownList(thisForm,ptrString,ResultSet[0][i][1]);  
+      }  
+    }
+  }else{
+    thisForm.xrate.value = "";
+    thisForm.ratetype.value = "0";
+    thisForm.xdate.value = "";
+    thisForm.xsource.value = "";
+  }
+  document.forms[0].ratedivisor.selectedIndex = document.forms[0].ratetype.value; 
+}
+
+function arrayIndex(xArray, yString) {
+  var k = -1;
+  for (i = 0; i < xArray.length; i++) {
+    if (xArray[i] == yString) {
+        k = i;
+        i = xArray.length;
+    }
+  }
+  return k;
+}
+
+function setPullDownList(TheForm, Tag, Value) {
+     j = 0;
+     var x;  // is list text
+     var y = Value.length;
+     do {
+       x = TheForm.elements[Tag].options[j].text;
+       if (x.length > y) x = x.substring(0,y);
+       if (x == Value) {
+          TheForm.elements[Tag].selectedIndex = j;
+          j = TheForm.elements[Tag].length;
+       }
+       j = j + 1;
+     } while (j < TheForm.elements[Tag].length); 
+}
+
+function setPullDownRateType(TheForm, Tag, Value) {
+     j = 0;
+     do {
+       if (TheForm.elements[Tag].options[j].value == Value) {
+          TheForm.elements[Tag].selectedIndex = j;
+       }
+       j = j + 1;
+     } while (j < TheForm.elements[Tag].length); 
+}
+
+//These functions format numbers
+function format (expr, decplaces) {
+  var sign = "";
+  var str;
+  var numx = parseFloat(expr); 
+  if (numx < 0 ) {
+    sign = "-";
+    str = "" + Math.round(-1 * numx * Math.pow(10,decplaces));
+  } else {
+    str = "" + Math.round(numx * Math.pow(10,decplaces));
+  }
+  while (str.length <= decplaces) {
+    str = "0" + str;
+  }
+  var decpoint = str.length - decplaces;
+  return sign + str.substring(0,decpoint) + "." + str.substring(decpoint,str.length);
+}
+function makeCurrency (obj) {
+  if (!isNaN(obj.value) && !isEmpty(obj.value)) {
+    obj.value = format(obj.value,2);
+  }
+}
+function isEmpty(x) {
+  if (x == null || x == "") {
+    return true;
+  } else {
+    return false;
+  }
+}  
+ 
+function makeRate (obj) {
+  if (!isNaN(obj.value) && !isEmpty(obj.value)) {
+    obj.value = format(obj.value,4);
+  }
+}
+</script>
+
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+</body>
+</html>

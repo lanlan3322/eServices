@@ -1,0 +1,259 @@
+#Userdata, #Serverdata { visibility:hidden; display: none;}
+
+* {margin: 0; padding: 0; border:none; text-align:left;}
+
+body{ font-size : 9pt; font-family : arial, Helvetica, sans-serif; color : #333; font-weight : bold; position : relative; left : 0px; line-height:1.5;
+	background-color:#f1f1f1; background-position:top; text-align:center;}
+	
+#wrapper{ height:auto !important; margin:0 auto 0; min-height:100%; outline:0 none;vertical-align:baseline; width:985px;
+	background-image:url(images/img_backgroundWrapper_top.png); background-repeat:repeat-x; background-position:top;}
+
+div#main{ margin: 125px 0 0 0; }
+	
+a { color : #333366; font-size : 12px; text-decoration : none; font-weight : bold; font-family: Helvetica, Arial, sans-serif; max-height : 28;}
+
+h1{ margin:40px 0 10px 0; font-size:18px;}
+h2{ margin:40px 0 10px 0; font-size:16px;}
+
+table { border:1px solid #bdc2dc; width:98%; background-color:#FFF;}
+td { padding: 1px 3px 1px 9px;}
+.TableData{ padding: 9px 3px 1px 9px;  vertical-align:top;}
+th { padding: 0 3px 0 9px; text-align:left; font-size:14px; font-weight:bold; height: 25px;}
+
+#bannerLogo{ float:left; margin: 3px 0 0 12px;}
+/* #bannerLogo img { width: 80px; height: 90px;} */
+
+#menu{ float:right; margin: 134px 0 0 0; height:38px; width:985px; background-image:url(images/img_background_top.png);}
+ul#essmenu{ list-style:none outside none; margin:0; padding:0; position:relative; float:left;}
+#essmenu li{ float:left; margin:0; padding:0; position:relative;}
+#essmenu li a { color:#333366; font-size:14px; text-decoration:none; font-weight:bold;font-family:Helvetica, Arial, sans-serif; margin:0; text-shadow:1px 1px 0 #fff; vertical-align:middle; display:block;}
+#essmenu li a:hover { text-shadow:1px 1px 0 #FFFFFF; background-image:url(images/img_menuHover.png); background-repeat:repeat-x; background-position:bottom;}
+
+
+#MenuOptions{ float:right; color:#666; margin-right:0; display:block;}
+#MenuOptions a{ float:right; color : #333366; font-size : 14px; text-decoration : none; font-weight : bold; font-family: Helvetica, Arial, sans-serif;}
+#MenuOptions p{float:right; margin:8px 80px 0 0; padding:0;}
+
+
+
+
+/* ========================================= Login Page ============================================== */
+#infoLogin{ height:auto !important; margin:45px auto 0; min-height:25%; outline:0 none; border:1px solid #DDDDDD; padding:12px 12px 72px 12px; vertical-align:baseline; width:400px;
+	background-image:url(images/img_background_form.gif); background-position:bottom; background-repeat:repeat-x; background-color:#FFF;}
+#btEnter{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:13px; letter-spacing:1px; font-weight:bold; padding:5px 5px 7px 5px; background-color:#333366; border: none; width:25%; margin:  24px 12px 18px 0;float:right; cursor:pointer; text-align:center; height:29px;}
+#btEnter:hover { background-color:#333399;}
+#loginLogo {height:auto !important; margin:5px auto 0; width:400px;}
+#btEnter2{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:13px; letter-spacing:1px; font-weight:bold; padding:5px 5px 7px 5px; background-color:#333366; border: none; width:50%; margin:  24px 12px 18px 0;float:right; cursor:pointer; text-align:center; height:29px;}
+#btEnter2:hover { background-color:#333399;}
+
+
+/* ========================================= Report Page ============================================== */
+/* ===================== form options ========================== */
+.reportSection{background-color:#FFF; border:1px solid #DDDDDD; padding:24px 12px 24px 12px; background-image:url(images/img_background_form.gif); background-position:bottom; background-repeat:repeat-x; margin: 40px 0 0 0; width:961px;}
+.titleForm{ background-color:#FFFFFF; border:1px solid #CCCCCC; color:#333366; font-size:14px; font-weight:bold; margin:0; padding:6px 15px 4px 15px; position:absolute; margin-top:-44px;}
+label{ color:#333; display:block; font-size:14px; font-weight:bold; margin-top:10px;}
+label span{ color:#900;}
+.star { color:#900;}
+input{ background-color:#FFFFFF; border:2px solid #333366; width:85%; height:15px;}
+input.readonly{ border:none;}
+input.readonlyHeader{ border:none;color:#f8f8f8;}
+select{ background-color:#FFFFFF; border:2px solid #333366; width:85%; height:29px; line-height:29px;}
+textarea{ background-color:#FFFFFF; border:2px solid #333366; width:95%;}
+input, textarea, select { -moz-border-radius:4px; border-radius:4px; color:#000000; border-radius:4px; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:12px; font-weight:normal; padding:5px; }
+
+.size1of2{margin-right:4.75%; width:45%; float:left; overflow:hidden; height: 70px;}
+.col1of1{ width:100%; float:left; clear:left; margin-top:24px;}
+.col1of2{ width:49%; float:left;}
+.col1of3{ width:32%; float:left;}
+
+form a img{ position:absolute; margin:7px 0 0 -25px;}
+
+.formOptions{background-color:#FFF; border:1px solid #DDDDDD; padding:18px 14px 16px 14px; border-top-color:#333366; height:24px; width:957px;}
+.formOptions span {float:right; font-size:12px; font-weight:normal; margin-left:25px;}
+.formOptions span a {font-size:14px; font-weight:bold;}
+
+
+/* ===================== expense report section ========================== */
+
+#expenseReport{}
+#expenseReportHidden{ padding:6px 0 6px 0; background-image:none; width:960px; margin:0;}
+#expenseReportHidden div{ text-align:center;}
+#expenseReportHidden span{ color:#000; font-weight:normal;}
+#expenseReportHidden .titleForm{ background-color:#FFFFFF; border:1px solid #CCCCCC; color:#333366; font-size:14px; font-weight:bold; padding:6px 15px 4px 15px; position:absolute; margin:-26px 0 0 12px;}
+
+#screenPurpose{ height: 150px;}
+#advanceEntry{ height: 75px;}
+#returnEntry{height: 75px;}
+
+/* ===================== mileage section ========================== */
+#mileageLabel{}
+#mileageSection th , #mileageSection td {width:12%;}
+#mileageSection td img{ position:absolute; margin:7px 0 0 -25px;}
+#defaultMileage table { border-top:none;}
+#extraMileage table { border-top:none;}
+#addMileage{ float:right;}
+
+#mileageSectionOptionsHidden{visibility:hidden; display: none; }
+#mileageSectionHidden{ padding:6px 0 6px 0; background-image:none; width:960px;}
+#mileageSectionHidden div{ text-align:center;}
+#mileageSectionHidden span{ color:#000; font-weight:normal;}
+#mileageSectionHidden .titleForm{ background-color:#FFFFFF; border:1px solid #CCCCCC; color:#333366; font-size:14px; font-weight:bold; padding:6px 15px 4px 15px; position:absolute; margin:-26px 0 0 12px;}
+
+#mileageSection th.mileageDate ,#mileageSection td.mileageDate {width:12%;}
+#mileageSection th.mileageLabel ,#mileageSection td.mileageLabel {width:11%;}
+#mileageSection th.mileageRate ,#mileageSection td.mileageRate {width:8%;}
+#mileageSection th.mileageAmount ,#mileageSection td.mileageAmount {width:8%;}
+#mileageSection th.mileageProject ,#mileageSection td.mileageProject {width:11%;}
+#mileageSection th.mileageLocation ,#mileageSection td.mileageLocation {width:11%;}
+#mileageSection th.mileageFrom ,#mileageSection td.mileageFrom {width:11%;}
+#mileageSection th.mileageComment ,#mileageSection td.mileageComment {width:17%;}
+#mileageSection th.mileageDelete ,#mileageSection td.mileageDelete {width:11%;}
+
+/* ===================== receipt section ========================== */
+#receiptSection th.receiptDate , #receiptSection td.receiptDate{width:12%;}
+#receiptSection th.amount , #receiptSection td.amount {width:9%;}
+#receiptSection th.foreignAmount , #receiptSection td.foreignAmount {width:13%;}
+#receiptSection th.expenseType , #receiptSection td.expenseType {width:15%;}
+#receiptSection th.receiptProject , #receiptSection td.receiptProject {width:12%;}
+#receiptSection th.location , #receiptSection td.location {width:12%;}
+#receiptSection th.comment , #receiptSection td.comment {width:18%;}
+#receiptSection th.delete , #receiptSection td.delete{width:9%;}
+
+#receiptSection tr.hotelReceipt td.receiptDate{width:12%;}
+#receiptSection tr.hotelReceipt td.amount {width:9%;}
+#receiptSection tr.hotelReceipt td.foreignAmount {width:13%;}
+#receiptSection tr.hotelReceipt td.expenseType {width:15%;}
+#receiptSection tr.hotelReceipt td.receiptProject {width:12%;}
+#receiptSection tr.hotelReceipt td.location {width:12%;}
+#receiptSection tr.hotelReceipt td.comment {width:10%;}
+#receiptSection tr.hotelReceipt td.edit {width:8%;}
+#receiptSection tr.hotelReceipt td.delete{width:9%;}
+
+#receiptSection td img{ position:absolute; margin:7px 0 0 -25px;}
+#defaultReceipt table { border-top:none;}
+#extraReceipt table { border-top:none;}
+
+#receiptSectionOptionsHidden{visibility:hidden; display: none; }
+#receiptSectionHidden{ padding:6px 0 6px 0; background-image:none; width:960px;}
+#receiptSectionHidden div{ text-align:center;}
+#receiptSectionHidden span{ color:#000; font-weight:normal;}
+#receiptSectionHidden .titleForm{ background-color:#FFFFFF; border:1px solid #CCCCCC; color:#333366; font-size:14px; font-weight:bold; padding:6px 15px 4px 15px; position:absolute; margin:-26px 0 0 12px;}
+
+/* ===================== plane section ========================== */
+#planeSectionOptionsHidden{visibility:hidden; display: none; }
+#planeSectionHidden{ padding:6px 0 6px 0; background-image:none; width:960px;}
+#planeSectionHidden div{ text-align:center;}
+#planeSectionHidden span{ color:#000; font-weight:normal;}
+#planeSectionHidden .titleForm{ background-color:#FFFFFF; border:1px solid #CCCCCC; color:#333366; font-size:14px; font-weight:bold; padding:6px 15px 4px 15px; position:absolute; margin:-26px 0 0 12px;}
+
+#planeSection th.planeDate ,#planeSection td.planeDate {width:12%;}
+#planeSection th.planeAmount ,#planeSection td.planeAmount {width:12%;}
+#planeSection th.planeForeignAmount ,#planeSection td.planeForeignAmount {width:12%;}
+#planeSection th.planeExpenseType ,#planeSection td.planeExpenseType {width:12%;}
+#planeSection th.planeProject ,#planeSection td.planeProject {width:12%;}
+#planeSection th.planeLocation1 ,#planeSection td.planeLocation1 {width:14%;}
+#planeSection th.planeLocation2 ,#planeSection td.planeLocation2 {width:14%;}
+#planeSection th.planeDelete ,#planeSection td.planeDelete {width:12%;}
+
+/* ===================== hotel section ========================== */
+#hotelWizard{ padding:6px 6px 6px 12px; background-image:none;}
+#hotelWizard div{ text-align:center;}
+#hotelWizard span{ color:#000; font-weight:normal;}
+#hotelWizard .titleForm{ background-image:url(images/img_background_form.gif); background-position:bottom; background-repeat:repeat-x; border:1px solid #CCCCCC; color:#666666; font-size:14px; font-weight:bold; margin:0; padding:5px 15px; position:absolute; margin:0 0 0 12px;}
+select[name="merchant"] {width:85%;}
+form a #newHotel{ margin:6px 0 0 12px;}
+p.alignRight{text-align: right;}
+
+/* ===================== buttons ========================== */
+#btSave{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:13px; letter-spacing:1px; font-weight: normal; padding:5px 5px 7px 5px; background-color:#333366; border: none; width:25%; margin: 36px 0 18px 12px; cursor:pointer; text-align:center; float:left; height:29px;}
+#btSave:hover { background-color:#333399;}
+#btSaveSubmit{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:13px; letter-spacing:1px; font-weight:normal; padding:5px 5px 7px 5px;; background-color:#333366; border: none; width:25%; margin: 36px 0 18px 24px; cursor:pointer; text-align:center; float:left; height:29px;}
+#btSaveSubmit:hover { background-color:#333399;}
+#cancelReport{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:13px; letter-spacing:1px; font-weight:normal; padding:5px 5px 7px 5px; background-color:#333333; border: none; width:25%; margin: 36px 12px 18px 0; cursor:pointer; text-align:center; float:right; height:29px;}
+#cancelReport:hover { background-color:#000000;}
+
+/* ===================== total display ========================== */
+#totalDisplay table{ width:100%; margin: 12px 0 24px 0; clear:left;}
+#totalDisplay td, #totalDisplay th{ width:25%; border-right:1px solid #bdc2dc; text-align:center;}
+#totalDisplay .tdLast{ border:none;}
+
+
+
+/* ========================================= Hotel Page ============================================== */
+fieldset{clear:left; margin: 0px; border:1px solid #bdc2dc; width:95%; padding:0 12px 12px 12px; background-color:#FFF; background-image:url(images/img_background_fieldset.gif); background-position:top; background-repeat:repeat-x;}
+select.expenselist { height:100px;}
+#hotelReceipt{ margin: 12px 0 12px 0; padding-bottom:0; height:825px;}
+
+
+
+/* ===================== buttons ========================== */
+fieldset #btUpdate{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:12px; letter-spacing:1px; font-weight:normal; padding:3px 5px 5px 5px; background-color:#333366; border: none; width:375px; margin:  36px 12px 18px 0;float:left; cursor:pointer; text-align:center; height:25px;}
+fieldset #btUpdate:hover { background-color:#333399;}
+fieldset #btRemove{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:12px; letter-spacing:1px; font-weight:normal; padding:3px 5px 5px 5px; background-color:#333333; border: none; width:130px; margin:  24px 12px 18px 0; cursor:pointer; text-align:center; height:25px;}
+fieldset #btRemove:hover { background-color:#000000;}
+fieldset #btNew{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:12px; letter-spacing:1px; font-weight:normal; padding:3px 5px 5px 5px; background-color:#333366; border: none; width:130px; margin:  24px 12px 18px 0;float:left; cursor:pointer; text-align:center; height:25px;}
+fieldset #btNew:hover { background-color:#333399;}
+
+
+/* ========================================= Processing Page ============================================== */
+
+/* ===================== buttons ========================== */
+#btRemove{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:13px; letter-spacing:1px; font-weight:normal; padding:5px 5px 7px 5px;; background-color:#333333; border: none; width:25%; margin:  24px 12px 18px 0;float:left; cursor:pointer; text-align:center; height:29px;}
+#btRemove:hover { background-color:#000000;}
+#processingTable input{ border:none; height:18px;}
+
+/* ===================== tables ========================== */
+#processingTable td{border-top:1px solid #bdc2dc; font-size:14px; height:30px; font-weight:normal;}
+#processingTable tbody tr:hover{ background-color:#fdd953;}
+#processingTable tbody tr:hover td{ background-color:#fdd953;}
+
+
+
+/* ========================================= Approve Page ============================================== */
+
+input.downlevel { width:25%; margin: 0 15px 0 0;}
+#approveSection{background-color:#FFF; border:1px solid #DDDDDD; padding:24px 12px 24px 12px; margin:0; background-image:url(images/img_background_form.gif); background-position:bottom; background-repeat:repeat-x; margin: 40px 0 0 0; width:98%; height:200px;}
+input.actiontype { width:25px; height:15px; border:none;}
+
+/* ===================== buttons ========================== */
+#btShow{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:13px; letter-spacing:1px; font-weight:normal; padding:5px 5px 7px 5px; background-color:#333366; border: none; width:25%; margin:  0 12px 0 0; cursor:pointer; text-align:center; height:29px;}
+#btShow:hover { background-color:#333399;}
+
+#btApprove{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:13px; letter-spacing:1px; font-weight:normal; padding:5px 5px 7px 5px; background-color:#333366; border: none; width:425px; cursor:pointer; text-align:center; height:29px;}
+#btApprove:hover { background-color:#333399;}
+
+/* ===================== tables ========================== */
+#approveTable tbody tr td {border-top:1px solid #bdc2dc; font-size:14px; height:30px; font-weight:normal;}
+#approveTable tbody tr:hover td {background-color:#fdd953;}
+#approveTable tbody tr:hover {background-color:#fdd953;}
+
+
+/* ========================================= Previous Page ============================================== */
+
+/* ===================== tables ========================== */
+#previousTable td{border-top:1px solid #bdc2dc; font-size:14px; height:30px; font-weight:normal;}
+#previousTable tbody tr:hover td {background-color:#fdd953;}
+#previousTable tbody tr:hover{ background-color:#fdd953;}
+
+big table{border:1px solid #000000;}
+big td{font-size:14px; height:30px; font-weight:normal;}
+big u{ padding: 0 3px 0 0; text-align:center; font-size:14px; font-weight:bold; height: 25px; text-decoration:none; text-align:left}
+
+#btPrint{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:13px; letter-spacing:1px; font-weight:normal; margin:12px 0 0 0; padding:5px 5px 7px 5px; background-color:#333366; border: none; width:225px; cursor:pointer; float:right; text-align:center; height:15px; line-height:15px;}
+#btPrint:hover { background-color:#333399;}
+#btPrint a{color:#FFF;}
+#btPrint big a span {color :#FFF;}
+
+/* ========================================= Submit Page ============================================== */
+
+#submitSection{margin:0; min-height:25%; outline:0 none; background-color:#FFF; border:1px solid #DDDDDD; padding:12px 12px 12px 12px; background-image:url(images/img_background_form.gif); background-position:bottom; background-repeat:repeat-x; width: 700px;}
+#submitSection ol{ margin-left:25px;}
+
+#btSubmit{-moz-border-radius:8px; border-radius:8px; color:#FFFFFF; font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif; font-size:13px; letter-spacing:1px; font-weight: normal; padding:5px 5px 7px 5px; background-color:#333366; border: none; width:55%; margin: 24px 0 18px 12px; cursor:pointer; float:left; text-align:center; height:29px;}
+#btSubmit:hover { background-color:#333399;}
+
+
+td.offsetColor{ background-color:#EEE;}
+
+td.magnify{width:6%; vertical-align:top;}
+th.magnify{width:6%; vertical-align:top;}

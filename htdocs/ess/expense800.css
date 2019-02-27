@@ -1,0 +1,228 @@
+.CategoryHeader
+{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 10px;
+	font-weight : bold;
+	line-height : 10px;
+	color : #999999;
+	max-height : 30;
+}
+
+.BodyHeader
+{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 12pt;
+	font-weight : normal;
+	position : relative;
+	left : 8px;
+	color : #003366;
+}
+
+.BodySubHeader
+{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 10pt;
+	font-weight : bold;
+	position : relative;
+	left : 8px;
+	color : #003366;
+}
+
+.BodyCopy
+{
+	font-size : 10px;
+	font-family : arial, Helvetica, sans-serif;
+	color : Black;
+	position : relative;
+	left : 8px;
+	
+}
+
+.TableData	
+{
+	font-size : 10px;
+	font-family : arial, Helvetica, sans-serif;
+	color : Black;
+}
+
+.MenuLink
+{
+	color : #003366;
+	font-size : 10px;
+	line-height : 10px;
+	text-decoration : none;
+	font-weight : bold;
+	font-family: Arial, Helvetica, sans-serif;
+	max-height : 28;
+}
+
+.SubMenuLink
+{
+	font-size : 8px;
+	font-family : Arial, Helvetica, sans-serif;
+	color : #003366;
+	text-decoration : none;
+	line-height : 10px;
+}
+
+.SuperMenuLink
+{
+	font-size : 10px;
+	line-height : 10px;
+	font-family : Arial, Helvetica, sans-serif;
+	color : #003366;
+	text-decoration : none;
+        font-weight : bold;
+	max-height : 28;
+}
+
+.SuperMenuLink:hover
+{
+	background-color : #FFFFA4;
+	width:100%;
+}
+
+.SubMenuLink:hover
+{
+	background-color : #FFFFA4;
+	width:100%;
+}
+
+h1
+{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 12pt;
+	font-weight : bold;
+	position : relative;
+	left : 0px;
+	color : #003366;
+}
+
+h2
+{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 8pt;
+	font-weight : bold;
+	position : relative;
+	left : 0px;
+	color : #003366;
+}
+
+body
+{
+	font-size : 10px;
+	font-family : arial, Helvetica, sans-serif;
+	color : Black;
+        font-weight : bold;
+	position : relative;
+	left : 0px;
+}
+
+.ExpenseBody
+{
+	font-size : 10px;
+	font-family : arial, Helvetica, sans-serif;
+	color : Black;
+        font-weight : bold;
+	position : relative;
+	left : 0px;
+}
+
+.ExpenseTag
+{
+	font-size : 10px;
+	font-family : arial, Helvetica, sans-serif;
+	color : Black;
+        font-weight : bold;
+	position : relative;
+	left : 0px;
+	
+}
+
+.ExpenseTagOffset
+{
+	font-size : 10px;
+	font-family : arial, Helvetica, sans-serif;
+	color : Black;
+        font-weight : bold;
+	position : relative;
+	left : 0px;
+        background-color:#EAEAEA;
+}
+
+.ExpenseLink
+{
+	color : #003366;
+	font-size : 9px;
+	line-height : 9px;
+	text-decoration : none;
+	font-weight : bold;
+	font-family: Arial, Helvetica, sans-serif;
+	max-height : 28;
+	
+}
+
+.ExpenseReturnLink
+{
+	color : #003366;
+	font-size : 10px;
+	line-height : 10px;
+	font-weight : bold;
+	font-family: Arial, Helvetica, sans-serif;
+	max-height : 28;
+}
+
+.ExpenseTinyLink
+{
+	color : #003366;
+	font-size : 6px;
+	line-height : 9px;
+	text-decoration : none;
+	font-weight : bold;
+	font-family: Arial, Helvetica, sans-serif;
+	max-height : 28;
+}
+
+.ExpenseError
+{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 10px;
+	font-weight : bold;
+	position : relative;
+	left : 0px;
+	color : #003366;
+}
+
+.ESSName
+{
+	font-family : Times, serif;
+	font-size : 12px;
+        font-style : italic;
+	font-weight : bold;
+	position : relative;
+	left : 2px;
+	color : #003366;
+}
+
+.ProtectedField
+{
+        font-family:arial,helvetica,sans-serif;
+        font-size:12px;
+        color:#003366;
+        background-color:#FFFFA4;
+}
+
+.offsetColor
+{
+        background-color:#EAEAEA;
+}
+
+.tableBGColor
+{
+        background-color:#90EE90;
+}
+
+.bannerColor
+{
+        background-color:#DDDDDD;
+}

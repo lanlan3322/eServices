@@ -1,0 +1,106 @@
+<html>
+<!--
+reportGeneral.html - Create list for audit selection
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Inventory Balence</title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+<style>
+	td {
+		padding: 10px;
+	}
+</style>
+</head>
+
+<body onLoad="init()">
+
+<form method="POST" action="LeaveEntNew.jsp" onSubmit="return submitReport()">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="target" value>
+  <input type="hidden" name="cat" value>
+
+  <div id="criteria">
+  <p><h1><font face="Arial">Show Inventory Balence for:&nbsp;</span></font><//h1></p>
+  <br/>
+  <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="beginningDate" class="MenuLink">Select the year</span>: </font></strong></em></td>
+      <td>	  	
+		<select name="year" value="">
+			<option value="2017">2017</option>
+			<option value="2018" selected>2018</option>
+			<option value="2019">2019</option>
+			<option value="2020">2020</option>
+			<option value="2021">2021</option>
+			<option value="2022">2022</option>
+		</select>
+		</td>
+    </tr>
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="beginningDate" class="MenuLink">Select category</span>: </font></strong></em></td>
+      <td>	  	
+		<select name="category" value="" onChange="createCat();"></select>
+		</td>
+    </tr>
+	<tr>
+		<input id="butDisplayListDays" type="button" value="Show" name="ButtonDays" onclick="SubmitDays()">
+	</tr>
+  </table></div>
+</form>
+<script LANGUAGE="JavaScript" SRC="addmerchant.js"></script>
+<script LANGUAGE="JavaScript">
+
+function init() {
+  if (parent.contents.statusTable && parent.contents.setDefaultDate && parent.contents.getJSX) {
+    document.forms[0].action = parent.contents.defaultApps + "inventoryBalance.jsp";
+		parent.contents.setListWithValue(document.forms[0].category,parent.contents.getCatTypes(),0,1,true,true,1);
+		document.forms[0].category.options[0].text = "All"; 
+		document.forms[0].category.options[0].value = "All";
+		document.forms[0].category.selectedIndex = 0;
+
+	} else {
+    setTimeout("init()", 200);
+  }
+}
+
+function SubmitDays(){
+	submitReport();
+	document.forms[0].submit();
+}
+
+function submitReport() {
+  with(document.forms[0]) {
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      xaction.value = "List";
+	  target.value = year.options[ year.selectedIndex ].text;
+	  cat.value = category.options[ category.selectedIndex ].text;
+   	  		
+      return true;
+
+  }
+}
+
+</script>
+
+</body>
+</html>

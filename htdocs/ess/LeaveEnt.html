@@ -1,0 +1,94 @@
+<html>
+<!--
+reportGeneral.html - Create list for audit selection
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Leave Entitlement</title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+<style>
+	td {
+		padding: 10px;
+	}
+</style>
+</head>
+
+<body onLoad="init()">
+
+<form method="POST" action="LeaveEntNew.jsp" onSubmit="return submitReport()">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="target" value>
+
+  <div id="criteria">
+  <p><h1><font face="Arial">Show Leave Entitlement for:&nbsp;</span></font><//h1></p>
+  <br/>
+  <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="beginningDate" class="MenuLink">Select the year</span>: </font></strong></em></td>
+      <td>	  	
+		<select name="year" value="">
+			<option value="2017">2017</option>
+			<option value="2018">2018</option>
+			<option value="2019" selected>2019</option>
+			<option value="2020">2020</option>
+			<option value="2021">2021</option>
+			<option value="2022">2022</option>
+		</select>
+		</td>
+    </tr>
+	<tr>
+		<input id="butDisplayListDays" type="button" value="Show" name="ButtonDays" onclick="SubmitDays()">
+	</tr>
+  </table></div>
+</form>
+<script LANGUAGE="JavaScript" SRC="addmerchant.js"></script>
+<script LANGUAGE="JavaScript">
+
+function init() {
+  if (parent.contents.statusTable && parent.contents.setDefaultDate && parent.contents.getJSX) {
+    document.forms[0].action = parent.contents.defaultApps + "LeaveEntNew.jsp";
+
+	} else {
+    setTimeout("init()", 200);
+  }
+}
+
+function SubmitDays(){
+	submitReport();
+	document.forms[0].submit();
+}
+
+function submitReport() {
+  with(document.forms[0]) {
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      xaction.value = "List";
+	  target.value = year.options[ year.selectedIndex ].text;
+   	  		
+      return true;
+
+  }
+}
+
+</script>
+
+</body>
+</html>

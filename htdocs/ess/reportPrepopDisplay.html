@@ -1,0 +1,190 @@
+<html>
+<!--
+reportGeneral.html - Create list for audit selection
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Report Selection for Audit Usage</title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+</head>
+
+<body onLoad="init()">
+
+<p align="center"><big><em><strong><font face="Arial">Expense Report Select List</font></strong></em></big></p>
+
+<form method="POST" action="ReportAuditList.jsp">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="database" value>
+
+  <input type="hidden" name="reportclass" value="form">
+  <input type="hidden" name="reporttype" value="SELECT * FROM REPORT WHERE">
+
+  <div align="center"><center><table border="0" cellpadding="0" cellspacing="0" width="80%">
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">Report Status: </font></strong></em></td>
+      <td width="51%"><select name="rpstat" size="1">
+        <option selected value="All">All</option>
+        <option value="B1">Submit via Web</option>
+        <option value="C1">Submit Other</option>
+        <option value="D1">Reviewed</option>
+        <option value="E2">Approved</option>
+        <option value="F0">System Rejected</option>
+        <option value="F1">Manager Rejected</option>
+        <option value="G3">Audited</option>
+        <option value="G4">Process Incomplete</option>
+        <option value="G5">Hold Payment</option>
+        <option value="H4">Processed</option>
+        <option value="L4">Receipted</option>
+      </select></td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">Personnel #: </font></strong></em></td>
+      <td width="51%"><input type="text" name="persnum" size="11">
+      <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalJsp(document.forms[0].persnum,'UserPersNum',900,300);MerchantType = 'user'"><sm><em>Lookup!</em></sm></a>
+      </td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">Previous Reference #: </font></strong></em></td>
+      <td width="51%"><input type="text" name="pvoucher" size="11"></td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">Central Reference #: </font></strong></em></td>
+      <td width="51%"><input type="text" name="voucher" size="11"></td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">Beginning Date: </font></strong></em></td>
+      <td width="51%"><input type="text" name="begdate" size="11"
+      onChange="checkdate(document.forms[0].begdate)"><a HREF="javascript:doNothing()"
+      mysubst="2"
+      onClick="setDateField(document.forms[0].begdate); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+      SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">Ending Date: </font></strong></em></td>
+      <td width="51%"><input type="text" name="enddate" size="11"
+      onChange="checkdate(document.forms[0].enddate)"><a HREF="javascript:doNothing()"
+      mysubst="2"
+      onClick="setDateField(document.forms[0].enddate); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+      SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+    </tr>
+
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial">Order by: </font></strong></em></td>
+      <td width="51%"><select name="rporder" size="1">
+        <option selected value="VOUCHER ASC">Central Reference</option>
+        <option value="CUR_DATE ASC">Submission Date (ascending)</option>
+        <option value="CUR_DATE DESC">Submission Date (descending)</option>
+        <option value="RP_STAT ASC">Report Status</option>
+        <option value="PERS_NUM ASC">Personnel Number</option>
+        <option value="PVOUCHER ASC">Previous Reference</option>
+      </select></td>
+    </tr>
+
+
+  </table>
+  </center></div><div align="center"><center><p><input type="button" value="Display List"
+  name="B1" onClick="submitReport()"></p>
+  </center></div>
+</form>
+
+<p>&nbsp;</p>
+
+<p><big>Instructions:&nbsp; </big>
+
+<ul>
+  <li>Select desired Status or &quot;All&quot; for all.</li>
+  <li>Enter the personnel number or leave blank for all.</li>
+  <li>Enter the date range values in mm/dd/yyyy format or use the calendar to select a date
+    range.  Date checked is last submission date.</li>
+  <li>Click on the &quot;Display List&quot; button</li>
+</ul>
+
+<p>&nbsp;</p>
+<script LANGUAGE="JavaScript" SRC="calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="addmerchant.js"></script>
+<script LANGUAGE="JavaScript">
+
+function init() {
+  if (parent.contents.setDefaultDate) {
+    document.forms[0].action = parent.contents.defaultApps + "ReportAuditList.jsp";
+    parent.contents.setDefaultDate(document.forms[0].begdate,-7);
+    parent.contents.setDefaultDate(document.forms[0].enddate,0);
+
+    document.forms[0].begdate.value = parent.contents.getDBString(parent.PersDBase, "reportBegDate", document.forms[0].begdate.value);
+    document.forms[0].enddate.value = parent.contents.getDBString(parent.PersDBase, "reportEndDate", document.forms[0].enddate.value);
+
+
+  } else {
+    setTimeout("init()", 200);
+  }
+}
+
+function submitReport() {
+  with(document.forms[0]) {
+    if ((begdate.value == "" || checkdate(begdate)) 
+    && (enddate.value == "" || checkdate(enddate))) {
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      xaction.value = "List";
+      reporttype.value = "SELECT * FROM REPORT WHERE";
+      var middlevar = " ";
+      var skipDates = false;
+      if (rpstat.options[rpstat.selectedIndex].value != "All") {
+        reporttype.value = reporttype.value + middlevar + "RP_STAT = '" + rpstat.options[rpstat.selectedIndex].value + "'";
+        middlevar = " AND "
+      }
+      if (voucher.value != null && voucher.value != "") {
+        reporttype.value = reporttype.value + middlevar + "VOUCHER = '" + voucher.value + "'";
+        middlevar = " AND "
+        skipDates = true;
+      }
+      if (persnum.value != null && persnum.value != "") {
+        reporttype.value = reporttype.value + middlevar + "PERS_NUM = '" + persnum.value + "'";
+        middlevar = " AND "
+      }
+      if (pvoucher.value != null && pvoucher.value != "") {
+        reporttype.value = reporttype.value + middlevar + "PVOUCHER = '" + pvoucher.value + "'";
+        middlevar = " AND "
+        skipDates = true;
+      }
+      //later transfer date logic to the JSP
+      if (!skipDates) {
+         if (begdate.value != null && begdate.value != "") {
+           reporttype.value = reporttype.value + middlevar + "CUR_DATE >= $begdate$";
+           middlevar = " AND "
+         }
+         if (enddate.value != null && enddate.value != "") {
+           reporttype.value = reporttype.value + middlevar + "CUR_DATE <= $enddate$";
+         }
+      }
+      reporttype.value = reporttype.value + " ORDER BY " + rporder.options[rporder.selectedIndex].value;
+      
+      parent.contents.setDBPair(parent.PersDBase,"reportBegDate",begdate.value);
+      parent.contents.setDBPair(parent.PersDBase,"reportEndDate",enddate.value);
+
+      document.forms[0].submit();
+    }
+  }
+}
+
+</script>
+
+</body>
+</html>

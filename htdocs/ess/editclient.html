@@ -1,0 +1,215 @@
+<!--
+editclient.html - manager clients in personal data
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Edit Client</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body onLoad="FormInit()">
+
+<h1>Edit existing client:</h1>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%" align="center">
+    <form method="post" action="SavePersXML.jsp">
+    <input type="hidden" name="email" value>
+    <input type="hidden" name="persdbase" value>
+    <input type="hidden" name="database" value>
+    <input type="hidden" name="ccode" value>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td width="10%" class="offsetColor"><div class="ExpenseTag">Client #: </div></td>
+          <td width="77%" class="offsetColor" height="26"><select name="clientno" size="1" mysubst="2" onChange="populateClient()">
+          </select><span class="ExpenseLink">&nbsp;&nbsp;<a href="javascript:doNothing()" onClick="setLocalObj(document.forms[0].clientno,'addclientLegacy',400,400,'./'); LocalReturn = 'populateClient()'; MerchantType = 'client';"><small>New Client</small></span></a></td>
+        </tr>
+        <tr>
+          <td width="10%"><div class="ExpenseTag">Name:</strong></td>
+          <td width="90%"><input type="text" name="client" size="25"></td>
+        </tr>
+        <tr>
+          <td width="10%" class="offsetColor"><div class="ExpenseTag">Location:</div></td>
+          <td width="90%" class="offsetColor"><select name="location" size="1" mysubst="5">
+          </select><span class="ExpenseLink">&nbsp;&nbsp;<a href="javascript:doNothing()" onClick="PopUp()"><small>New Location</small></span></a></td>
+        </tr>
+        <tr>
+          <td width="10%"><div class="ExpenseTag">Phone:</div></td>
+          <td width="90%"><input type="text" name="phone" size="25"></td>
+        </tr>
+        <tr>
+          <td width="10%" class="offsetColor"><div class="ExpenseTag">Contact:</div></td>
+          <td width="90%" class="offsetColor"><input type="text" name="contact" size="25"></td>
+        </tr>
+        <tr>
+          <td width="10%"><div class="ExpenseTag">Comment:</div></td>
+          <td width="90%"><input type="text" name="comment" size="25"></td>
+        </tr>
+        <tr>
+          <td width="10%" class="offsetColor"><div class="ExpenseTag">Remarks:</div></td>
+          <td width="90%" class="offsetColor"><textarea rows="4" name="remarks" cols="32"></textarea></td>
+        </tr>
+        <tr>
+          <td width="10%"><div class="ExpenseTag">Bill Expenses:</div></td>
+          <td width="90%"><select name="billexp" size="1" mysubst="11">
+            <option selected value></option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select></td>
+        </tr>
+        <tr>
+          <td width="10%" class="offsetColor"><div class="ExpenseTag">Company:</div></td>
+          <td width="90%" class="offsetColor"><input type="text" name="company" size="25"></td>
+        </tr>
+      </table>
+      <div align="left"><p><input type="button" value="Save Changes" name="OK" onClick="JavaScript: void addItem()"> <input type="button" value="Delete this client" name="Delete" onClick="JavaScript: void removeItem()"></p>
+      </div>
+    </form>
+    </td>
+  </tr>
+</table>
+<p align="center"><span class="ExpenseReturnLink"><a href="javascript: void parent.contents.ListDelay()" mysubst="16">Return
+to report display</strong></span></p>
+
+<script LANGUAGE="JavaScript" SRC="addmerchant.js"></script>
+<script LANGUAGE="JavaScript">
+function addItem() {
+  if (document.forms[0].clientno.selectedIndex > 0) {
+    var theinfo = new Array(9);
+    theinfo[0] = ["clientno",document.forms[0].clientno.options[document.forms[0].clientno.selectedIndex].text];
+    theinfo[1] = ["client",document.forms[0].client.value];
+    if (document.forms[0].location.selectedIndex >= 0) {
+      theinfo[2] = ["location",document.forms[0].location.options[document.forms[0].location.selectedIndex].text];
+    } else {
+      theinfo[2] = ["location",""]; 
+    }
+    theinfo[3] = ["phone",document.forms[0].phone.value];
+    theinfo[4] = ["contact",document.forms[0].contact.value];
+    theinfo[5] = ["comment",document.forms[0].comment.value];
+    theinfo[6] = ["remarks",document.forms[0].remarks.value];
+    if (document.forms[0].billexp.selectedIndex >= 0) {
+      theinfo[7] = ["billexp",document.forms[0].billexp.options[document.forms[0].billexp.selectedIndex].text];
+    } else {
+      theinfo[7] = ["billexp",""];   
+    }    
+    theinfo[8] = ["company",document.forms[0].company.value];
+    parent.contents.setDBPair(PersDataArea.PersDBase,"client",theinfo);
+    save2server();
+  } else {
+    alert("Cannot save empty client number record - pls create a new client record");
+  }
+}
+
+function save2server() {
+  var DateObj = new Date();
+  parent.contents.setDBPair(parent.PersDBase,"last_save",DateObj.toString());
+  document.forms[0].persdbase.value = parent.contents.CreatePersDBXML(parent.PersDBase);
+  document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+  document.forms[0].database.value = parent.database;
+  document.forms[0].ccode.value = parent.CCode;
+  initFields();
+  document.forms[0].submit();
+}
+
+function removeItem(){
+  if (document.forms[0].clientno.length > 0 && document.forms[0].clientno.selectedIndex > 0) {
+    if (confirm("Do you really want to delete this item?")) {
+      var theinfo = new Array(1);  //need to establish the key
+      theinfo[0] = ["clientno",document.forms[0].clientno.options[document.forms[0].clientno.selectedIndex].text];
+      var k = parent.contents.removeDBPair(PersDataArea.PersDBase,"client",theinfo);
+      document.forms[0].clientno.length = 0;
+      FormInit();
+      save2server();
+    }
+  } else {
+    if (document.forms[0].clientno.length == 0) {
+      alert("List is already empty");
+    } else {
+      alert("Cannot delete a blank record");  
+    }    
+  }
+}
+
+
+function FormInit(){
+  document.forms[0].action = parent.contents.defaultApps + "SavePersXML.jsp";
+  CCode = parent.contents;  //located in addMerchant.js
+  PersDataArea = parent;
+  var t = new Array();
+  CCode.setListWValWPersWBlank(document.forms[0].clientno, t,"client","clientno","client");
+  MerchantType = "location";
+  CCode.setListWithPers(document.forms[0].location, CCode.getLocations("1"),MerchantType);
+  document.forms[0].clientno.selectedIndex = 0;
+  //populateClient();
+  window.focus();
+}
+
+function PopUp() {
+setLocalObj(document.forms[0].location,'addmerchant',300,100,'./'); 
+Merchanttype = 'location';
+}
+
+function doNothing() {
+
+}
+
+function populateClient() {
+  initFields();
+  if (document.forms[0].clientno.length > 0 && document.forms[0].clientno.selectedIndex > 0) {
+    var X = parent.contents.getDBSingle(parent.PersDBase,"client","clientno",document.forms[0].clientno.options[document.forms[0].clientno.selectedIndex].text);
+    var Y;
+    for (var i = 0; i < X[0].length; i++) {
+      Y = X[0][i][0];
+      if (Y == "clientno") {
+      // 
+      } else if(Y == "location") {
+        setList(document.forms[0].elements["location"], X[0][i][1]);
+      } else {
+        document.forms[0].elements[Y].value = X[0][i][1];
+      }
+    }
+  }
+}
+
+function setList(TheSelect, xValue) {
+  j = 0;
+  do {
+    if (TheSelect.options[j].text == xValue) {
+       TheSelect.selectedIndex = j;
+    }
+    j = j + 1;
+  } while (j < TheSelect.length); 
+}
+
+function initFields() {
+  with (document.forms[0]) {
+    client.value = "";
+    location.selectedIndex = 0;
+    phone.value = "";
+    contact.value = "";
+    comment.value = "";
+    remarks.value = "";
+    billexp.selectedIndex = 0;
+    company.value = "";
+  }
+}
+
+</script>
+
+</body>
+</html>

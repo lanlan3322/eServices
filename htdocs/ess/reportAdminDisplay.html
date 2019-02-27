@@ -1,0 +1,233 @@
+<html>
+<!--
+reportGeneral.html - Create list for audit selection
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Report Selection for Audit Usage</title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+</head>
+
+<body onLoad="init()">
+
+<p align="center"><big><em><strong><font face="Arial"><span id="expenseRepSelList">Expense Report Select List</span></font></strong></em></big></p>
+
+<form method="POST" action="ReportAuditList.jsp" onSubmit="return submitReport()">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="database" value>
+
+  <input type="hidden" name="reportclass" value="form">
+  <input type="hidden" name="reporttype" value="SELECT * FROM REPORT WHERE">
+
+  <div align="center"><center><table border="0" cellpadding="0" cellspacing="0" width="80%">
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial"><span id="personnelNum">Personnel #: </span></font></strong></em></td>
+      <td width="51%"><input type="text" name="persnum" size="11" onBlur="setDatesBlank(document.forms[0].persnum)">
+      <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalJsp(document.forms[0].persnum,'UserPersNum',900,300);MerchantType = 'user'"><sm><em><span id="lookUp">Lookup!</span></em></sm></a>
+      </td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial"><span id="reportStatus">Report Status: </span></font></strong></em></td>
+      <td width="51%"><select name="rpstat" size="1" onChange="setDatesBlankIfStat();document.forms[0].pvoucher.focus()">
+      </select></td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial"><span id="previousRefNum">Previous Reference #: </span></font></strong></em></td>
+      <td width="51%"><input type="text" name="pvoucher" size="11" onBlur="setDatesBlank(document.forms[0].pvoucher)"></td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial"><span id="centralRefNum">Central Reference #: </span>s</font></strong></em></td>
+      <td width="51%"><input type="text" name="voucher" size="11" onBlur="setDatesBlank(document.forms[0].voucher)"></td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial"><span id="beginningDate">Beginning Date: </span></font></strong></em></td>
+      <td width="51%"><input type="text" name="begdate" size="11"
+      onChange="checkdate(document.forms[0].begdate)"><a HREF="javascript:doNothing()"
+      mysubst="2"
+      onClick="setDateField(document.forms[0].begdate); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+      SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+    </tr>
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial"><span id="endingDate">Ending Date: </span></font></strong></em></td>
+      <td width="51%"><input type="text" name="enddate" size="11"
+      onChange="checkdate(document.forms[0].enddate)"><a HREF="javascript:doNothing()"
+      mysubst="2"
+      onClick="setDateField(document.forms[0].enddate); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+      SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+    </tr>
+
+    <tr>
+      <td width="49%" align="right"><em><strong><font face="Arial"><span id="orderBy">Order by: </span></font></strong></em></td>
+      <td width="51%"><select name="rporder" size="1">
+        <option id="selectCentralRef" selected value="VOUCHER ASC">Central Reference</option>
+        <option id="selectSubmissionDateAsc" value="CUR_DATE ASC">Submission Date (ascending)</option>
+        <option id="selectSubmissionDateDes" value="CUR_DATE DESC">Submission Date (descending)</option>
+        <option id="selectReportStatus" value="RP_STAT ASC">Report Status</option>
+        <option id="selectPersnum" value="PERS_NUM ASC">Personnel Number</option>
+        <option id="selectPreviousRef" value="PVOUCHER ASC">Previous Reference</option>
+      </select></td>
+    </tr>
+
+
+  </table>
+  <center><p><input id="butDisplayList" type="submit" value="Display List" name="B1"></p></center>
+</form>
+
+<p>&nbsp;</p>
+
+<p><big><span id="instructions">Instructions:&nbsp;</span></big>
+
+<ul>
+  <li><span id="selectStat">Select desired Status or &quot;All&quot; for all.</span></li>
+  <li><span id="enterPerNum">Enter the personnel number or leave blank for all.</span></li>
+  <li><span id="enterDatVal">Enter the date range values in mm/dd/yyyy format or use the calendar to select a date range.  Date checked is last submission date.</span></li>
+  <li><span id="clickDisBut">Click on the &quot;Display List&quot; button</span></li>
+</ul>
+
+<p>&nbsp;</p>
+<script LANGUAGE="JavaScript" SRC="calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="addmerchant.js"></script>
+<script LANGUAGE="JavaScript">
+
+function init() {
+  if (parent.contents.statusTable && parent.contents.setDefaultDate) {
+    document.forms[0].action = parent.contents.defaultApps + "ReportAuditList.jsp";
+
+    parent.contents.setListWithValue (document.forms[0].rpstat, parent.contents.statusTable, 1, 0); 
+    var lastCell = document.forms[0].rpstat.length;
+    document.forms[0].rpstat.length = lastCell + 1;
+    document.forms[0].rpstat.options[lastCell].text = "All"; 
+    document.forms[0].rpstat.options[lastCell].value = "All";
+    document.forms[0].rpstat.selectedIndex = lastCell;
+
+    parent.contents.setDefaultDate(document.forms[0].begdate,-7);
+    parent.contents.setDefaultDate(document.forms[0].enddate,0);
+
+    document.forms[0].begdate.value = parent.contents.getDBString(parent.PersDBase, "reportBegDate", document.forms[0].begdate.value);
+    document.forms[0].enddate.value = parent.contents.getDBString(parent.PersDBase, "reportEndDate", document.forms[0].enddate.value);
+    
+    document.getElementById("expenseRepSelList").innerHTML = parent.contents.getJSX("expenseRepSelList");
+	document.getElementById("personnelNum").innerHTML = parent.contents.getJSX("persnum");
+	document.getElementById("lookUp").innerHTML = parent.contents.getJSX("lookUp");
+	document.getElementById("reportStatus").innerHTML = parent.contents.getJSX("reportStatus");
+	document.getElementById("previousRefNum").innerHTML = parent.contents.getJSX("previousRefNum");
+	document.getElementById("centralRefNum").innerHTML = parent.contents.getJSX("centralRefNum");
+	document.getElementById("beginningDate").innerHTML = parent.contents.getJSX("beginningDate");
+	document.getElementById("endingDate").innerHTML = parent.contents.getJSX("endingDate");
+	document.getElementById("orderBy").innerHTML = parent.contents.getJSX("orderBy");
+	document.getElementById("selectCentralRef").innerHTML = parent.contents.getJSX("selectCentralRef");
+	document.getElementById("selectSubmissionDateAsc").innerHTML = parent.contents.getJSX("selectSubmissionDateAsc");
+	document.getElementById("selectSubmissionDateDes").innerHTML = parent.contents.getJSX("selectSubmissionDateDes");
+	document.getElementById("selectReportStatus").innerHTML = parent.contents.getJSX("selectReportStatus");
+	document.getElementById("selectPersnum").innerHTML = parent.contents.getJSX("selectPersnum");
+	document.getElementById("selectPreviousRef").innerHTML = parent.contents.getJSX("selectPreviousRef");
+	document.getElementById("butDisplayList").value = parent.contents.getJSX("butDisplayList");
+	document.getElementById("instructions").innerHTML = parent.contents.getJSX("instructions");
+	document.getElementById("selectStat").innerHTML = parent.contents.getJSX("selectStat");
+	document.getElementById("enterPerNum").innerHTML = parent.contents.getJSX("enterPerNum");
+	document.getElementById("enterDatVal").innerHTML = parent.contents.getJSX("enterDatVal");
+	document.getElementById("clickDisBut").innerHTML = parent.contents.getJSX("clickDisBut");
+    
+    document.forms[0].persnum.focus();
+  } else {
+    setTimeout("init()", 200);
+  }
+}
+
+function setDatesBlankIfStat()
+{
+  with (document.forms[0])
+  {
+     var xStr = rpstat.options[rpstat.selectedIndex].text;
+     if (xStr != "All" && xStr.substring(0,4) != "Paid") 
+     {
+        document.forms[0].begdate.value = "";
+        document.forms[0].enddate.value = "";
+     }
+  }
+}
+
+function setDatesBlank(obj)
+{
+  if (obj.value != null && obj.value != "")
+  {
+     document.forms[0].begdate.value = "";
+     document.forms[0].enddate.value = "";
+  }
+}
+
+function submitReport() {
+  with(document.forms[0]) {
+    if ((begdate.value == "" || checkdate(begdate)) 
+    && (enddate.value == "" || checkdate(enddate))) {
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      xaction.value = "List";
+      reporttype.value = "SELECT * FROM REPORT WHERE";
+      var middlevar = " ";
+      var skipDates = false;
+      if (rpstat.options[rpstat.selectedIndex].value != "All") {
+        reporttype.value = reporttype.value + middlevar + "RP_STAT = '" + rpstat.options[rpstat.selectedIndex].value + "'";
+        middlevar = " AND "
+      }
+      if (voucher.value != null && voucher.value != "") {
+        reporttype.value = reporttype.value + middlevar + "VOUCHER = '" + voucher.value + "'";
+        middlevar = " AND "
+        skipDates = true;
+      }
+      if (persnum.value != null && persnum.value != "") {
+        reporttype.value = reporttype.value + middlevar + "PERS_NUM = '" + persnum.value + "'";
+        middlevar = " AND "
+      }
+      if (pvoucher.value != null && pvoucher.value != "") {
+        reporttype.value = reporttype.value + middlevar + "PVOUCHER = '" + pvoucher.value + "'";
+        middlevar = " AND "
+        skipDates = true;
+      }
+      var selCompany = parent.contents.getNameValue(parent.Header, "company");
+      reporttype.value = reporttype.value + middlevar + "COMPANY = '" + selCompany + "'";
+      middlevar = " AND "
+      
+      //later transfer date logic to the JSP
+      if (!skipDates) {
+         if (begdate.value != null && begdate.value != "") {
+           reporttype.value = reporttype.value + middlevar + "CUR_DATE >= $begdate$";
+           middlevar = " AND "
+         }
+         if (enddate.value != null && enddate.value != "") {
+           reporttype.value = reporttype.value + middlevar + "CUR_DATE <= $enddate$";
+         }
+      }
+      reporttype.value = reporttype.value + " ORDER BY " + rporder.options[rporder.selectedIndex].value;
+      
+      parent.contents.setDBPair(parent.PersDBase,"reportBegDate",begdate.value);
+      parent.contents.setDBPair(parent.PersDBase,"reportEndDate",enddate.value);
+
+      return true;
+    } else {
+      return false;
+    } 
+  }
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+.CategoryHeader
+{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 12px;
+	font-weight : bold;
+	line-height : 12px;
+	color : #999999;
+	max-height : 30;
+}
+
+.BodyHeader
+{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 14pt;
+	font-weight : normal;
+	position : relative;
+	left : 10px;
+	color : #003366;
+}
+
+.BodySubHeader
+{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 12pt;
+	font-weight : bold;
+	position : relative;
+	left : 10px;
+	color : #003366;
+}
+
+.BodyCopy
+{
+	font-size : 10pt;
+	font-family : arial, Helvetica, sans-serif;
+	color : Black;
+	position : relative;
+	left : 10px;
+	
+}
+
+.TableData	
+{
+	font-size : 10pt;
+	font-family : arial, Helvetica, sans-serif;
+	color : Black;
+}
+
+.MenuLink
+{
+	color : #003366;
+	font-size : 12px;
+	line-height : 12px;
+	text-decoration : none;
+	font-weight : bold;
+	font-family: Arial, Helvetica, sans-serif;
+	max-height : 28;
+}
+
+.SubMenuLink
+{
+	font-size : 10px;
+	font-family : Arial, Helvetica, sans-serif;
+	color : #003366;
+	text-decoration : none;
+	line-height : 12px;
+}
+
+.SuperMenuLink
+{
+	font-size : 12px;
+	line-height : 12px;
+	font-family : Arial, Helvetica, sans-serif;
+	color : #003366;
+	text-decoration : none;
+        font-weight : bold;
+	max-height : 28;
+}
+
+.SuperMenuLink:hover
+{
+	background-color : #FFFFA4;
+	width:100%;
+}
+
+.SubMenuLink:hover
+{
+	background-color : #FFFFA4;
+	width:100%;
+}
+
+h1
+{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 14pt;
+	font-weight : bold;
+	position : relative;
+	left : 0px;
+	color : #003366;
+}
+
+h2
+{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 10pt;
+	font-weight : bold;
+	position : relative;
+	left : 0px;
+	color : #003366;
+}
+
+body
+{
+	font-size : 9pt;
+	font-family : arial, Helvetica, sans-serif;
+	color : Black;
+        font-weight : bold;
+	position : relative;
+	vetical-align : center
+	left : 0px;
+        scrollbar-width: 8px;
+}
+
+.ExpenseBody
+{
+	font-size : 9pt;
+	font-family : arial, Helvetica, sans-serif;
+	color : Black;
+        font-weight : bold;
+	position : relative;
+	vetical-align : center
+	left : 0px;
+}
+
+.ExpenseTag
+{
+	font-size : 10pt;
+	font-family : arial, Helvetica, sans-serif;
+	color : Black;
+        font-weight : bold;
+	position : relative;
+	vetical-align : center
+	left : 0px;
+	
+}
+
+.ExpenseTagOffset
+{
+	font-size : 10pt;
+	font-family : arial, Helvetica, sans-serif;
+	color : Black;
+        font-weight : bold;
+	position : relative;
+	vetical-align : center
+	left : 0px;
+        background-color:#EAEAEA;
+}
+
+.ExpenseLink
+{
+	color : #003366;
+	font-size : 11px;
+	line-height : 11px;
+	text-decoration : none;
+	font-weight : bold;
+	font-family: Arial, Helvetica, sans-serif;
+	max-height : 28;
+	
+}
+
+.ExpenseReturnLink
+{
+	color : #003366;
+	font-size : 12px;
+	line-height : 12px;
+	font-weight : bold;
+	font-family: Arial, Helvetica, sans-serif;
+	max-height : 28;
+}
+
+.ExpenseTinyLink
+{
+	color : #003366;
+	font-size : 8px;
+	line-height : 11px;
+	text-decoration : none;
+	font-weight : bold;
+	font-family: Arial, Helvetica, sans-serif;
+	max-height : 28;
+}
+
+.ExpenseError
+{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 10pt;
+	font-weight : bold;
+	position : relative;
+	left : 0px;
+	color : #003366;
+}
+
+.AdisoftName
+{
+	font-family : Times, serif;
+	font-size : 14pt;
+        font-style : italic;
+	font-weight : bold;
+	position : relative;
+	left : 2px;
+	color : #003366;
+}
+
+.ProtectedField
+{
+        font-family:arial,helvetica,sans-serif;
+        font-size:14px;
+        color:#003366;
+        background-color:#FFFFA4;
+}
+
+.offsetColor
+{
+        background-color:#EAEAEA;
+}
+
+.bannerColor
+{
+        background-color:#DDDDDD;
+}

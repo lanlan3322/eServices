@@ -1,0 +1,43 @@
+<HTML>
+
+<HEAD>
+  <TITLE>JavaScript Calendar</TITLE>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</HEAD>
+
+<SCRIPT LANGUAGE="JavaScript">
+    //newWin = window;
+    // USE THE JAVASCRIPT-GENERATED DOCUMENTS (calDocTop, calDocBottom) IN THE FRAMESET
+    
+calDocFrameset =  "<FRAMESET ROWS='70,*' FRAMEBORDER='0' onLoad=\"window.focus();\">\n"; 
+calDocFrameset += "  <FRAME NAME='topCalFrame' SRC='javascript:parent.opener.calDocTop' SCROLLING='no'>\n"; 
+calDocFrameset += "  <FRAME NAME='bottomCalFrame' SRC='javascript:parent.opener.calDocBottom' SCROLLING='no'>\n";
+calDocFrameset += "</FRAMESET>\n";
+
+window.onresize = hdleResize;
+document.write(calDocFrameset);
+
+function hdleResize() {
+//  note that ns6 also supports : body.clientWidth/Height 
+  var x = 0;
+  var y = 0;
+  if (document.documentElement.clientWidth && document.documentElement.clientWidth != 0) {
+    x = document.documentElement.clientWidth;  //IE 6 standard
+    y = document.documentElement.clientHeight;
+  } else if (document.body.clientWidth && document.body.clientWidth != 0) {
+    x = document.body.clientWidth;  // IE quirkie mode
+    y = document.body.clientHeight;
+  } else if (window.innerWidth && window.innerWidth != 0) {
+    x = window.innerWidth;  // NS
+    y = window.innerHeight;
+  }
+  
+  if(opener.parent.main.CalWinSize && opener.parent.main.CalWinSize != null) { 
+    opener.parent.main.CalWinSize(x,y);
+  }
+}
+
+</SCRIPT>
+
+</HTML>
+

@@ -1,0 +1,56 @@
+<!--
+Loginlocal.html - relogin screen 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Relogin screen</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginheight="0" marginwidth="0"
+link="#000000" vlink="#000000" alink="#EAEAEA" onLoad="formInit()">
+<div class="ExpenseTag"><strong>
+
+<p>Your web server session has expired.&nbsp; Please enter your password, press the
+&quot;Login&quot;.</strong></div>
+<strong></p>
+
+<form method="POST" action="Relogin.jsp">
+  <input type="hidden" name="company" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="email" value>
+  <strong><div align="center"><center><p>Email:</strong>
+  <input type="text" name="email" size="13"></strong></p>
+  <strong><div align="center"><center><p>Password:</strong>
+  <input type="password" name="password" size="13"></strong></p> 
+  </center></div>
+  <div align="center"><center><p>
+  <input type="button" value="Login" name=" " tabindex="15" onClick="Javascript: void document.forms[0].submit()"> 
+<script language="javascript">
+function formInit() {
+  document.forms[0].action = parent.contents.defaultApps + "Relogin.jsp";
+  with (document.forms[0]) {
+    database.value = parent.database;
+    company.value = "k1"; //omit??
+    email.value = parent.contents.getDBValue(parent.Header,"email");
+    password.focus();
+  }
+}
+</script> </p>
+  </center></div>
+</form>
+</body>
+</html>

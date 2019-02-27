@@ -1,0 +1,260 @@
+<!--
+addattendee.html - Add Attendees to Report   
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Attendee List 2b</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body onLoad="getForm()">
+
+<form>
+  <table border="0" cellspacing="0" width="599" height="514" cellpadding="0">
+    <tr>
+      <td width="527" height="48" class="bannerColor"><strong><em><big><big><big><font
+      face="Times New Roman">Attendee List </font></big></big></big></em></strong></td>
+    </tr>
+    <tr>
+      <td width="527" height="182"><table border="0" cellspacing="0" width="100%" height="85"
+      cellpadding="0">
+        <tr>
+          <td width="25%" height="1"><div class="ExpenseTag">Location:</div></td>
+          <td width="75%" height="1"><input type="text" name="location" size="20"></td>
+        </tr>
+        <tr>
+          <td width="25%" height="83" class="offsetColor"><div class="ExpenseTag">Discussion:</div></td>
+          <td width="75%" height="83" class="offsetColor"><textarea rows="3" name="comment" cols="45"></textarea></td>
+        </tr>
+        <tr>
+          <td width="25%" height="19"><div class="ExpenseTag">Total Attendees: </div></td>
+          <td width="75%" height="19"><table border="0" cellspacing="0" width="100%" cellpadding="0">
+            <tr>
+              <td width="20%"><input type="text" name="number" size="6"></td>
+              <td width="80%"><em><strong><font face="Arial"><small>List attendees below.&nbsp; If more
+              than seven attendees, list seven below and list all attendees on the back of your receipt.
+              &quot;List Name&quot; is required. Reuse of names will overwrite any existing list with
+              the same name. </small></font></strong></em></td>
+            </tr>
+          </table>
+          </td>
+        </tr>
+      </table>
+      </td>
+    </tr>
+    <tr>
+      <td width="527" height="180"><table border="0" cellspacing="0" width="100%"
+      cellpadding="0" height="241">
+        <tr>
+          <td width="58%" height="42">&nbsp;<table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+              <td width="37%"><strong>List Name:</strong></td>
+              <td width="63%"><input type="text" name="peoplelist" size="13"></td>
+            </tr>
+          </table>
+          </td>
+          <td width="37%" align="center" height="42"></td>
+          <td width="72%" align="center" height="42"></td>
+        </tr>
+        <tr>
+          <td width="58%" class="offsetColor" height="24"><div align="center"><center><p><u><div class="ExpenseTag">Person</div></u></td>
+          <td width="37%" class="offsetColor" align="center" height="24"><div align="center"><center><p><u><div class="ExpenseTag">Title</div></u></td>
+          <td width="72%" class="offsetColor" align="center" height="24"><div align="center"><center><p><u><div class="ExpenseTag">Company</div></u></td>
+        </tr>
+        <tr align="center">
+          <td width="58%" height="25"><input type="text" name="attendee_1_name" size="21"></td>
+          <td width="37%" height="25"><input type="text" name="attendee_1_title" size="11"></td>
+          <td width="72%" height="25"><input type="text" name="attendee_1_company" size="21"></td>
+        </tr>
+        <tr align="center">
+          <td width="58%" class="offsetColor" height="25"><input type="text" name="attendee_2_name"
+          size="21"></td>
+          <td width="37%" class="offsetColor" height="25"><input type="text" name="attendee_2_title"
+          size="11"></td>
+          <td width="72%" class="offsetColor" height="25"><input type="text" name="attendee_2_company"
+          size="21"></td>
+        </tr>
+        <tr align="center">
+          <td width="58%" height="25"><input type="text" name="attendee_3_name" size="21"></td>
+          <td width="37%" height="25"><input type="text" name="attendee_3_title" size="11"></td>
+          <td width="72%" height="25"><input type="text" name="attendee_3_company" size="21"></td>
+        </tr>
+        <tr align="center">
+          <td width="58%" class="offsetColor" height="25"><input type="text" name="attendee_4_name"
+          size="21"></td>
+          <td width="37%" class="offsetColor" height="25"><input type="text" name="attendee_4_title"
+          size="11"></td>
+          <td width="72%" class="offsetColor" height="25"><input type="text" name="attendee_4_company"
+          size="21"></td>
+        </tr>
+        <tr align="center">
+          <td width="58%" height="25"><input type="text" name="attendee_5_name" size="21"></td>
+          <td width="37%" height="25"><input type="text" name="attendee_5_title" size="11"></td>
+          <td width="72%" height="25"><input type="text" name="attendee_5_company" size="21"></td>
+        </tr>
+        <tr align="center">
+          <td width="58%" class="offsetColor" height="25"><input type="text" name="attendee_6_name"
+          size="21"></td>
+          <td width="37%" class="offsetColor" height="25"><input type="text" name="attendee_6_title"
+          size="11"></td>
+          <td width="72%" class="offsetColor" height="25"><input type="text" name="attendee_6_company"
+          size="21"></td>
+        </tr>
+        <tr align="center">
+          <td width="58%" height="25"><input type="text" name="attendee_7_name" size="21"></td>
+          <td width="37%" height="25"><input type="text" name="attendee_7_title" size="11"></td>
+          <td width="72%" height="25"><input type="text" name="attendee_7_company" size="21"></td>
+        </tr>
+      </table>
+      </td>
+    </tr>
+    <tr align="center">
+      <td width="527" height="25" class="offsetColor"><div align="center"><center><p><input
+      type="button" value="Save to report and make list permanant" name="SaveButton"
+      onClick="javascript: void saveForm()"></td>
+    </tr>
+  </table>
+  <div align="center"><center><p>&nbsp;</p>
+  </center></div>
+</form>
+<script>
+
+function saveForm() {
+  window.opener.setAttendeeList(setVarString());
+  window.close();
+}
+
+var O = "["; //These are the standard delimiters,etc.
+var C = "]"; //and they are used below for formatting.
+var D = ",";
+var Q = "'";
+
+function setVarString() {
+//gets form and places it into a string array
+    var ThisTrans = new Array(0);
+    var ThisName;
+    var SubType;
+    var j = 0;
+    for (var i = 0; i < document.forms[0].length; i++) {
+      ThisName = document.forms[0].elements[i].name;
+      if (document.forms[0].elements[i].subtype){
+        SubType = document.forms[0].elements[i].subtype;
+      } else {
+        SubType = document.forms[0].elements[i].type;
+      } 
+      switch (SubType) {
+        case "text":      
+            ThisTrans[j] = Array(ThisName, document.forms[0].elements[i].value);
+            j = j + 1;
+            break;    
+        case "select-one":
+            ThisTrans[j] = Array(ThisName, document.forms[0].elements[i].options[document.forms[0].elements[i].selectedIndex].text);
+            j = j + 1;            
+            if (document.forms[0].elements[i].xref) {           
+                ThisTrans[j] = Array(document.forms[0].elements[i].xref, document.forms[0].elements[i].options[document.forms[0].elements[i].selectedIndex].value);
+                j = j + 1;
+            } 
+            break;
+        case "textarea":      
+            ThisTrans[j] = Array(ThisName, document.forms[0].elements[i].value);
+            j = j + 1;
+            break;    
+        case "hidden":      
+            ThisTrans[j] = Array(ThisName, document.forms[0].elements[i].value);
+            j = j + 1;
+            break;
+        case "exclude":   // only xref on an excluded select-one list is processed
+            if (document.forms[0].elements[i].xref) {           
+                ThisTrans[j] = Array(document.forms[0].elements[i].xref, document.forms[0].elements[i].options[document.forms[0].elements[i].selectedIndex].value);
+                j = j + 1;
+            }
+            break;    
+        case "radio": // not implemented yet
+            break;
+        case "checkbox": // not implemented yet
+            break;
+        case "button": // don't capture any of the following
+            break;
+        case "submit":
+            break;
+        case "reset":
+            break;
+        default:
+            alert("Field '" + SubType + "' not anticipated by UpdateReport() in : " + TransType);
+      }
+    }
+    return setToString(ThisTrans);
+}
+
+function setToString(TList) {  //similar function in common.js
+  var outstring = O;  //could be modularized
+  var idelimit = "";
+  var processStr = "";
+  var regexp = /'/g ;
+  for (var i = 0; i < TList.length; i++) {
+    if (TList[i][1].length > 0) {
+      outstring += idelimit; 
+      outstring += O + Q + TList[i][0] + Q + D;   
+      processStr = TList[i][1];
+      outstring += Q + processStr.replace(regexp,"") + Q + C;  // wanted &#39 but using ""
+      idelimit = D;   
+    }
+  }
+  return outstring + C;
+  alert("outstring");
+}
+
+function setTransaction(ListBuffer) {
+  var j;
+  for (var i = 0; i < ListBuffer.length; i++) {
+    if (document.forms[0].elements[ListBuffer[i][0]]) {
+      switch (document.forms[0].elements[ListBuffer[i][0]].type) {
+        case "text":  
+           document.forms[0].elements[ListBuffer[i][0]].value = ListBuffer[i][1];
+           break;    
+        case "textarea":  
+           document.forms[0].elements[ListBuffer[i][0]].value = ListBuffer[i][1];
+           break;    
+        case "select-one":
+           j = 0;
+           do {
+             if (document.forms[0].elements[ListBuffer[i][0]].options[j].text == ListBuffer[i][1]) {
+               document.forms[0].elements[ListBuffer[i][0]].selectedIndex = j;
+             }
+             j = j + 1;
+           } while (j < document.forms[0].elements[ListBuffer[i][0]].length); 
+           break;
+        case "hidden": 
+           document.forms[0].elements[ListBuffer[i][0]].value = ListBuffer[i][1];
+           break; 
+        default:
+          alert("Form: cannot load " + ListBuffer[i][0] + ", type:" + ListBuffer[i].type + ", value:" + ListBuffer[i].value);
+      }  //need to add the other types eventually
+    }
+  }
+}
+function getForm() {
+   var TList; 
+   eval("TList = " + window.opener.getAttendeeList()); 
+   setTransaction(TList);
+}
+
+</script>
+
+</body>
+</html>

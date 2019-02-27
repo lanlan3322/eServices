@@ -1,0 +1,91 @@
+<html>
+<!--
+reportGeneral.html - Create list for audit selection
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Attendance Edit</title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+<style>
+	td {
+		padding: 10px;
+	}
+</style>
+</head>
+
+<body onLoad="init()">
+
+<form method="POST" action="ReportLeaves.jsp" onSubmit="return submitReport()">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="database" value>
+
+  <div id="criteria">
+  <p><h1><font face="Arial">Edit Attendance for:&nbsp;</span></font><//h1></p>
+  <br/>
+  <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="right"><em><strong><font face="Arial"><span id="beginningDate" class="MenuLink">Select the date</span>: </font></strong></em></td>
+      <td><input type="text" name="begdate" size="11"><a HREF="javascript:doNothing()"
+      mysubst="2"
+      onClick="setDateField(document.forms[0].begdate); top.newWin = window.open('./calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+      SRC="calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1"></td>
+    </tr>
+  </table></div>
+  <p><input id="butDisplayListDays" type="button" value="Show and Edit" name="ButtonDays" onclick="SubmitDays()"></p>
+</form>
+<script LANGUAGE="JavaScript" SRC="calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="addmerchant.js"></script>
+<script LANGUAGE="JavaScript">
+
+function init() {
+  if (parent.contents.statusTable && parent.contents.setDefaultDate && parent.contents.getJSX) {
+    document.forms[0].action = parent.contents.defaultApps + "AttendanceEdit.jsp";
+
+    parent.contents.setDefaultDate(document.forms[0].begdate,0);
+
+    document.forms[0].begdate.value = parent.contents.getDBString(parent.PersDBase, "reportStartDate", document.forms[0].begdate.value);
+
+	} else {
+    setTimeout("init()", 200);
+  }
+}
+
+function SubmitDays(){
+	submitReport();
+	document.forms[0].submit();
+}
+
+function submitReport() {
+  with(document.forms[0]) {
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      xaction.value = "List";
+     
+      parent.contents.setDBPair(parent.PersDBase,"reportBegDate",begdate.value);
+	  		
+      return true;
+
+  }
+}
+
+</script>
+
+</body>
+</html>
