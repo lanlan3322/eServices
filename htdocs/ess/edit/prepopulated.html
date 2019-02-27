@@ -1,0 +1,189 @@
+<!--
+prepopulated.html - edit prepopulated (e.g., credit card) items
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Expense Type Editor</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void fillForm()">
+<big><big>
+
+<p><h1>Pre-populated Item Information</h1></p>
+</big></big>
+<form method="post" action="edit/SubmitEdit.jsp" onSubmit="return updateValues()">
+  <input type="hidden" name="screenname" value> 
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="STATUS" value>
+  
+  <table border="0" width="100%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="1" cellpadding="0">
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Pre-populated Status:</td>
+      <td width="75%" class="offsetColor">
+      <select name="statusname" size="1" essType="List" essRequired="Yes" essTitle="Reconcilement Status" maxLength="2">
+            <option selected value='NW'>New</option>
+            <option value='XX'>User Accepted</option> 
+            <option value='OK'>Reconciled</option>
+            <option value='DS'>Disputed</option>
+            <option value='NU'>Not Used</option>
+            <option value='PD'>Paid</option>
+            <option value=''>Unprocessed</option>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%"><div class="ExpenseTag">Payment Method:</div></td>
+      <td width="75%"><select name="CHARGE" size="1" essType="List" essRequired="Yes" essTitle="Payment Method" maxLength="12">
+      <script>parent.contents.setList(document.forms[0].CHARGE, parent.contents.getPaymentTypes("2"));
+      </script></select></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset"><div class="ExpenseTag">Card Number:</div></td>
+      <td width="75%" class="offsetColor"><script>parent.main.document.write("<input type=\"text\" name=\"CARD\" size=\"30\"" + parent.contents.setKeyField("ProtectedField") + " essType=\"String\" essRequired=\"Yes\" maxLength=\"30\" essTitle=\"Card Number\">")</script>
+      <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalJsp(document.forms[0].CARD,'UserPersNum2Card',900,300);MerchantType = 'user'"><sm><em>Lookup!</em></sm></a></td>
+    </tr>
+    <tr>
+      <td width="25%"><div class="ExpenseTag">Vendor Reference #:</div></td>
+      <td width="75%"><script>parent.main.document.write("<input type=\"text\" name=\"REFERENCE\" size=\"23\"" + parent.contents.setKeyField("ProtectedField") + " essType=\"String\" essRequired=\"Yes\" maxLength=\"23\" essTitle=\"Vendor Reference\">")</script></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Amount:</td>
+      <td width="75%" class="offsetColor"><script>parent.main.document.write("<input type=\"text\" name=\"AMOUNT\" size=\"12\"" + parent.contents.setKeyField("ProtectedField") + " essType=\"Currency\" essRequired=\"Yes\" maxLength=\"12\" essTitle=\"Amount\">")</script></td>
+    </tr>
+
+    <tr>
+      <td width="25%" class="ExpenseTag">Employee/Device:</td>
+      <td width="75%"><input type="text" name="EMPLOYEE" size="25" essType="String" essRequired="Yes" essTitle="Employee Name" maxLength="25"></td>
+    </tr>
+
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Transaction Date:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="TDATE" size="10" essType="Date" essRequired="Yes" essTitle="Transaction Date" maxLength="10">
+      <a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].TDATE); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Statement Date:</td>
+      <td width="75%"><input type="text" name="SDATE" size="10"  class="ProtectedField" readOnly=true>
+      <a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].SDATE); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">SIC Code:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="SIC" size="20" essType="String" essTitle="SIC/Transaction Type" maxLength="20"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Detail Info:</td>
+      <td width="75%"><input type="text" name="INFO" size="30" essType="String" essTitle="Detail Info" maxLength="30"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Reconcilement Date:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="RDATE" size="10" essType="Date" essTitle="Reconcilement Date" maxLength="10">
+      <a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].RDATE); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Cross Reference:</td>
+      <td width="75%"><input type="text" name="XREF" size="8" essType="Integer" essTitle="Cross Reference" essMaximum="99999999"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Date Vendor Paid:</td>
+      <td width="75%"><input type="text" name="PDATE" size="10" essType="Date" essTitle="Date Vendor Paid" maxLength="10">
+      <a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].PDATE); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Fgn Amout:</td>
+      <td width="75%"><input type="text" name="REC_AMT" size="12" essType="Currency" essTitle="Fgn Amount" maxLength="12"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Fgn Currency:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="UNITS" size="12" essType="String" essTitle="Fgn Currency" maxLength="12"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Fgn Exchange Rate:</td>
+      <td width="75%"><input type="text" name="XRATE" size="12" essType="Rate" essTitle="Fgn Exchange Rate" maxLength="12"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Scan Reference:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="SCAN_REF" size="8" essType="String" essTitle="Scan Reference" maxLength="8"></td>
+    </tr>
+
+
+  </table>
+  <p><input type="submit" value="OK - Accept any Changes" name="btn"></p>
+</form>
+
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void history.go(-1)">Return to previous screen</a></p>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script language="Javascript">
+
+function fillForm() {
+  if (parent.contents.isNew())
+  {
+    document.forms[0].xaction.value = "INSERT";
+  } else {
+    parent.contents.setTransaction(document.forms[0]);
+    parent.contents.setListDfltWVal(document.forms[0].statusname,document.forms[0].STATUS.value);
+    document.forms[0].xaction.value = "UPDATE";
+    parent.contents.ListBuffer.length = 0;
+  }
+  
+  if (document.forms[0].REC_AMT.value == "0.00" && document.forms[0].XRATE.value == "0.0000")
+  {
+  		document.forms[0].REC_AMT.value = "";
+  		document.forms[0].XRATE.value = "";
+  }
+  
+  document.forms[0].STATUS.focus();
+
+  //parent.contents.setDefaultDate(document.forms[1].begdate,-1090);
+  //parent.contents.setDefaultDate(document.forms[1].enddate,-1);
+
+  document.forms[0].action = parent.contents.defaultApps + "edit/SubmitEdit.jsp";
+  document.forms[1].action = parent.contents.defaultHome + "prepopulatedDisplay.html";
+}
+
+
+function updateValues() {
+  if (checkAllFields(document.forms[0]))
+  {
+    document.forms[0].screenname.value = "prepopulated";
+    document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+    document.forms[0].database.value = parent.database;
+    document.forms[0].ccode.value = parent.CCode;
+    document.forms[0].STATUS.value = document.forms[0].statusname.options[document.forms[0].statusname.selectedIndex].value;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+</script>
+
+  <form method="GET" action="prepopulatedDisplay.html">
+    <input type="submit" value= "Database Access" name="Search">
+  </form>
+</body>
+</html>

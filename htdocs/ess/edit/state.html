@@ -1,0 +1,163 @@
+<!--
+state.html - edit the state table. State table controls initial acceptance of a report
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Expense Type Editor</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void fillForm()">
+<big><big>
+
+<p><h1>Acceptance State Table Editor</h1></p>
+
+<form method="post" action="edit/SubmitEdit.jsp" onSubmit="return updateValues()">
+  <input type="hidden" name="screenname" value> 
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="database" value>
+  <table border="0" width="100%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="1" cellpadding="0">
+    <tr>
+      <td width="25%" class="ExpenseTag">Report status:</td>
+      <td width="75%">
+      <select name="STATUS" size="1">
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Process action:</td>
+      <td width="75%" class="offsetColor">
+      <select name="ACTION" size="1">
+            <option selected>REPLACEOLD</option>
+            <option>AUDITORSUBMIT</option>
+            <option>GUIDELINE</option> 
+            <option>RANDOMSELECT</option>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Positive result:</td>
+      <td width="75%">
+      <select name="POSITIVE" size="1">
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Negative result:</td>
+      <td width="75%" class="offsetColor">
+      <select name="NEGATIVE" size="1">
+      </select>
+      </td>
+    </tr>
+  </table>
+  <p><input type="submit" value="OK - Accept any Changes" name="btn"></p>
+</form>
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void history.go(-1)">Return to previous screen</a></p>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script language="Javascript">
+
+function fillForm() {
+  var positveArray = new Array("");
+  var negativeArray = new Array("");
+  parent.contents.setList(document.forms[0].STATUS, parent.contents.getStati());
+  parent.contents.setList(document.forms[0].POSITIVE, positveArray.concat(parent.contents.getStati()));
+  parent.contents.setList(document.forms[0].NEGATIVE, negativeArray.concat(parent.contents.getStati()));
+  if (parent.contents.isNew())
+  {
+    document.forms[0].xaction.value = "INSERT";
+  } else {
+    parent.contents.setTransaction(document.forms[0]);
+    document.forms[0].xaction.value = "UPDATE";
+    parent.contents.ListBuffer.length = 0;
+  }
+
+  document.forms[0].action = parent.contents.defaultApps + "edit/SubmitEdit.jsp";
+  document.forms[1].action = parent.contents.defaultApps + "edit/EditList.jsp";
+}
+
+function HandleReset() {
+  loadValues();
+  return false;
+}
+
+function updateValues() {
+  if (checkAllFields(document.forms[0]))
+  {
+    document.forms[0].screenname.value = "state";
+    document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+    document.forms[0].database.value = parent.database;
+    document.forms[0].ccode.value = parent.CCode;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function setMyList(FormObj,xvalue) {
+   var k;        //location of m in string
+   var n;        // recover value
+   var m = ": "; //delimiter for recover values
+   var j = 0;
+   var z = true;
+   do {
+     if (FormObj.options[j].text == xvalue) {
+         FormObj.selectedIndex = j;
+         z = false;
+     }
+     j = j + 1;
+   } while (z && j < FormObj.length); 
+   if (z) {  
+     FormObj.length = j + 1; 
+     FormObj.options[j].text = xvalue;
+     n = xvalue;
+     k = n.indexOf(m);
+     if (k > 0) n = n.substring(0,k);
+     FormObj.options[j].value = n;
+     FormObj.selectedIndex = j;
+   }
+}      
+
+</script>
+
+  <form method="POST" action="edit/EditList.jsp" onSubmit="SubmitSearch()">
+    <h2>Access the central database for:&nbsp;
+    <input type="submit" value= "State Table" name="Search"></h2>
+    <input type="hidden" name="screenname" value> 
+    <input type="hidden" name="email" value>
+    <input type="hidden" name="ccode" value>
+    <input type="hidden" name="database" value>
+  </form>
+  <script language="JavaScript">
+  function SubmitSearch() {
+    with(document.forms[1]) {
+       screenname.value = "state";
+       email.value = parent.contents.getNameValue(parent.Header, "email");
+       database.value = parent.database;
+       ccode.value = parent.CCode;
+       return true;  
+    }
+  }
+  </script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!--
+address.html - edit address table - holds the cell phone, email address for submitting a scan
+Copyright (C) 2012 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Address Editor</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void fillForm()">
+<big><big>
+
+<p><h1>Address Editor</h1></p>
+
+<form method="post" action="edit/SubmitEdit.jsp" onSubmit="return updateValues()">
+  <input type="hidden" name="screenname" value> 
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="database" value>
+  <table border="0" width="100%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="1" cellpadding="0">
+    <tr>
+      <td width="25%"><div class="ExpenseTag">Address:</div></td>
+      <td width="75%"><input type="text" name="ADDRESS" size="30" essType="String" essRequired="yes" maxLength="60" essTitle="address"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">User #:</td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor">
+      <script>parent.main.document.write("<input type=\"text\" name=\"PERS_NUM\" size=\"22\"" + parent.contents.setKeyField("ProtectedField")  + " essType=\"String\" essRequired=\"yes\" maxLength=\"12\" essTitle=\"persnum\">")</script>
+      </td>
+      <!--  <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor"><input type="text" name="PERS_NUM" size="22"></td> -->
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Scan Status:</td>
+      <td width="75%"><select name="SCAN_MODE" size="1">
+      <option selected>Upload</option>
+      <option>Add</option>
+      <option>Create</option>
+      <option>Inactive</option>
+      <option>Blocked</option>
+      <option>Confirm</option>
+      </select></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Clerk #:</td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor"><input type="text" name="CLERK" size="22" class="ProtectedField" readOnly="true"></td>
+    </tr>
+
+  </table>
+  <p><input type="submit" value="OK - Accept any Changes" name="btn"></p>
+</form>
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void history.go(-1)">Return to previous screen</a></p>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script language="Javascript">
+
+function fillForm() {
+  if (parent.contents.isNew())
+  {
+    document.forms[0].xaction.value = "INSERT";
+	document.forms[0].ADDRESS.focus();
+  } else {
+  	document.forms[0].PERS_NUM.focus();
+    parent.contents.setTransaction(document.forms[0]);
+    document.forms[0].xaction.value = "UPDATE";
+    parent.contents.ListBuffer.length = 0;
+  }
+  
+  document.forms[0].action = parent.contents.defaultApps + "edit/SubmitEdit.jsp";
+  document.forms[1].action = parent.contents.defaultApps + "edit/EditList.jsp";
+  document.forms[2].action = parent.contents.defaultApps + "edit/EditList.jsp";
+}
+
+function updateValues() {
+  if (checkAllFields(document.forms[0]))
+  {
+    document.forms[0].CLERK.value = parent.Header[0][1];  // Move to server
+    document.forms[0].screenname.value = "address_address";
+    document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+    document.forms[0].database.value = parent.database;
+    document.forms[0].ccode.value = parent.CCode;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+</script>
+
+
+
+<form method="POST" action="edit/EditList.jsp" onSubmit="return SubmitSearch()">
+  <input type="hidden" name="screenname" value><input type="hidden" name="email" value><input
+  type="hidden" name="ccode" value><input type="hidden" name="database" value><h2>Address:
+  <input type="text" name="searchstring" size="16" value=""> <input type="submit"
+  value="Show list based on email address" name="Search"></h2>
+</form>
+<script language="JavaScript">
+  function SubmitSearch() {
+   with(document.forms[1]) {
+    if (searchstring.value.length >= 1 && searchstring.value.substr(0,1) != "%") {
+      screenname.value = "address_address";
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      return true; 
+    } else {
+      alert("You must limit the search to at least one alphabetic letter");
+      return false;
+    }
+   }
+  }
+  </script>
+
+
+<form method="POST" action="edit/EditList.jsp" onSubmit="return SubmitSearch2()">
+  <input type="hidden" name="screenname" value><input type="hidden" name="email" value><input
+  type="hidden" name="ccode" value><input type="hidden" name="database" value><h2>Personnel
+  number: <input type="text" name="searchstring" size="16" value> <input type="submit"
+  value="Show list based on personnel number" name="Search"></h2>
+</form>
+<script language="JavaScript">
+  function SubmitSearch2() {
+   with(document.forms[2]) {
+    if (searchstring.value.length >= 1 && searchstring.value.substr(0,1) != "%") {
+      screenname.value = "address_persnum";
+      email.value = parent.contents.getNameValue(parent.Header, "email");
+      database.value = parent.database;
+      ccode.value = parent.CCode;
+      return true;
+    } else {
+      alert("You must limit the search to at least one alpha/numeric letter");
+      return false;
+    }
+   }
+  }
+  </script>
+
+</body>
+</html>

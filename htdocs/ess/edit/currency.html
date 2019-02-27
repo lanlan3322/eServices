@@ -1,0 +1,170 @@
+<!--
+currency.html - edit currency types
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Currency Type Editor</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void fillForm()">
+<big><big>
+
+<p><h1>Expense Type Editor</h1></p>
+
+<form method="post" action="edit/SubmitEdit.jsp" onSubmit="return updateValues()">
+  <input type="hidden" name="screenname" value> 
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="database" value>
+  <table border="0" width="100%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="1" cellpadding="0">
+    <tr>
+      <td width="25%"><div class="ExpenseTag">Currency:</div></td>
+      <td width="75%"><script>parent.main.document.write("<input type=\"text\" name=\"CURRENCY\" size=\"20\"" + parent.contents.setKeyField("ProtectedField")  + " essType=\"String\" essRequired=\"yes\" maxLength=\"20\" essTitle=\"Currency\">")</script></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Single Transaction Limit:</td>
+      <td width="75%" class="offsetColor"><input type="text" name="LIMIT" size="12" essType="Currency" essRequired="No" essMinimum="0" essMaximum="100000000" essTitle="Single Transaction Limit"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Notes:</td>
+      <td width="75%"><input type="text" name="COMMENT" size="49" maxLength="60"></td>
+    </tr>
+
+    <tr>
+      <td width="25%" class="ExpenseTagOffset">Show in dropdown:</td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor">
+      <select name="SHOW" size="1">
+            <option selected>Yes</option>
+            <option>No</option> 
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%" class="ExpenseTag">Order in List:</td>
+      <td width="75%">
+      <select name="SHOWLIST" size="1">
+            <option>1</option>
+            <option>2</option> 
+            <option>3</option>
+            <option>4</option>
+            <option selected>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+      </select>
+      </td>
+    </tr>
+
+  </table>
+  <p><input type="submit" value="OK - Accept any Changes" name="btn"></p>
+</form>
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void history.go(-1)">Return to previous screen</a></p>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../adddepart.js"></script>
+<script language="Javascript">
+
+function doNothing() {
+}
+
+function fillForm() {
+  if (parent.contents.isNew())
+  {
+    document.forms[0].xaction.value = "INSERT";
+  } else {
+    parent.contents.setTransaction(document.forms[0]);
+    document.forms[0].xaction.value = "UPDATE";
+    parent.contents.ListBuffer.length = 0;
+  }
+  document.forms[0].CURRENCY.focus();
+  document.forms[0].action = parent.contents.defaultApps + "edit/SubmitEdit.jsp";
+  document.forms[1].action = parent.contents.defaultApps + "edit/EditList.jsp";
+}
+
+function HandleReset() {
+  loadValues();
+  return false;
+}
+
+function updateValues() {
+  if (checkAllFields(document.forms[0]))
+  {
+    document.forms[0].screenname.value = "currency";
+    document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+    document.forms[0].database.value = parent.database;
+    document.forms[0].ccode.value = parent.CCode;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function setMyList(FormObj,xvalue) {
+   var k;        //location of m in string
+   var n;        // recover value
+   var m = ": "; //delimiter for recover values
+   var j = 0;
+   var z = true;
+   do {
+     if (FormObj.options[j].text == xvalue) {
+         FormObj.selectedIndex = j;
+         z = false;
+     }
+     j = j + 1;
+   } while (z && j < FormObj.length); 
+   if (z) {  
+     FormObj.length = j + 1; 
+     FormObj.options[j].text = xvalue;
+     n = xvalue;
+     k = n.indexOf(m);
+     if (k > 0) n = n.substring(0,k);
+     FormObj.options[j].value = n;
+     FormObj.selectedIndex = j;
+   }
+}      
+
+</script>
+
+  <form method="POST" action="edit/EditList.jsp" onSubmit="SubmitSearch()">
+    <h2>Access the central database for:&nbsp;
+    <input type="submit" value= "Currency Types" name="Search"></h2>
+    <input type="hidden" name="screenname" value> 
+    <input type="hidden" name="email" value>
+    <input type="hidden" name="ccode" value>
+    <input type="hidden" name="database" value>
+  </form>
+  <script language="JavaScript">
+  function SubmitSearch() {
+    with(document.forms[1]) {
+       screenname.value = "currency";
+       email.value = parent.contents.getNameValue(parent.Header, "email");
+       database.value = parent.database;
+       ccode.value = parent.CCode;
+       return true;  
+    }
+  }
+  </script>
+
+
+
+
+</body>
+</html>
