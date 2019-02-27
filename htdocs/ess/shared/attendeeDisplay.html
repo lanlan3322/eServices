@@ -1,0 +1,171 @@
+<!--
+attendeeDisplay.html - Add attendees to report/unlimited attendees    
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Attendee Display</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body onLoad="getForm()">
+
+<form>
+  <table border="0" cellspacing="0" width="520" cellpadding="0">
+    <tr>
+      <td width="500" height="48" class="bannerColor"><strong><em><big><big><big><font face="Times New Roman">Attendee Display</font></big></big></big></em></strong></td>
+    </tr>
+    <tr>
+      <td width="500" height="182">
+      <table border="0" cellspacing="0" width="100%" height="85" cellpadding="0">
+        
+        <tr>
+          <td width="25%" height="1"><div class="ExpenseTag">Location:</div></td>
+          <td width="75%" height="1"><input type="text" name="LOCATION" size="20"></td>
+        </tr>
+        <tr>
+          <td width="25%" height="83" class="offsetColor"><div class="ExpenseTag">Discussion:</div></td>
+          <td width="75%" height="83" class="offsetColor"><textarea rows="3" name="COMMENT" cols="45"></textarea></td>
+        </tr>
+        <tr>
+          <td width="25%" height="19"><div class="ExpenseTag">Total Attendees: </div></td>
+          <td width="75%" height="19"><input type="text" name="NUMBER" size="6"></td>
+        </tr>
+        <tr>
+          <td width="25%" class="offsetColor" align="right"><strong>Attendees:&nbsp; </strong></td>
+          <td width="75%" class="offsetColor" height="26" align="center">
+          <select name="attendee" size="7" tabindex="2" width="40" subtype="list">
+          </select></td>
+        </tr>
+                    
+        </table>
+    </td>
+    </tr>
+    <tr align="center">
+      <td><a href="javascript: window.close()" class="ExpenseLink">Close&nbsp;Attendee&nbsp;Display</a></td>
+    </tr>
+  </table>
+</form> 
+<script>
+
+function closeWindow() {
+  window.close();
+}
+
+var O = "["; //These are the standard delimiters,etc.
+var C = "]"; //and they are used below for formatting.
+var D = ",";
+var Q = "'";
+
+function strPair(x,y) {
+  return O + Q + correctStr(x) + Q + D + Q + correctStr(y) + Q + C; 
+}
+
+function correctStr(processStr) {  //similar function in common.js
+  var regexp ;
+  regexp = /'/g ;
+  processStr = processStr.replace(regexp,"");
+  regexp = /\n/g ;
+  processStr = processStr.replace(regexp,"\\n");
+  regexp = /\r/g ;
+  processStr = processStr.replace(regexp,"");
+  regexp = /\]/g ;
+  processStr = processStr.replace(regexp,"(");
+  regexp = /\[/g ;
+  processStr = processStr.replace(regexp,")");
+  regexp = /"/g ;
+  processStr = processStr.replace(regexp,"");
+  return processStr;
+}
+
+function setTransaction(ListBuffer) {
+  var j;
+  var SelectObj;
+  var wObj;
+  var xStr;
+  var delimit;
+  var SubType;
+
+  for (var i = 0; i < ListBuffer.length; i++) {
+    if (document.forms[0].elements[ListBuffer[i][0]]) {
+      if (document.forms[0].elements[ListBuffer[i][0]].subtype){
+        SubType = document.forms[0].elements[ListBuffer[i][0]].subtype;
+      } else {
+        SubType = document.forms[0].elements[ListBuffer[i][0]].type;
+      } 
+      switch (SubType) {
+        case "list":  
+           SelectObj = document.forms[0].elements[ListBuffer[i][0]];
+           delimit = "";
+           xStr = "";
+           for (var k = 0; k < ListBuffer[i][1].length; k++) {
+              xStr +=  delimit + ListBuffer[i][1][k][1];
+              delimit = ", ";
+           }
+           j = SelectObj.length;
+           SelectObj.length = j + 1;
+           SelectObj.options[j].text = xStr;
+           delimit = "";
+           xStr = O + Q + "attendee" + Q + D + O;
+           for (var k = 0; k < ListBuffer[i][1].length; k++) {            
+               xStr += delimit + strPair(ListBuffer[i][1][k][0],ListBuffer[i][1][k][1]);
+               delimit = D;
+           }              
+           xStr += C + C;      
+           SelectObj.options[j].value = xStr;
+           break;
+        case "text":  
+           document.forms[0].elements[ListBuffer[i][0]].value = ListBuffer[i][1];
+           break;    
+        case "textarea":  
+           document.forms[0].elements[ListBuffer[i][0]].value = ListBuffer[i][1];
+           break;    
+        case "select-one":
+           for (var j = 0;j < document.forms[0].elements[ListBuffer[i][0]].length; j++)  {
+             if (document.forms[0].elements[ListBuffer[i][0]].options[j].text == ListBuffer[i][1]) {
+               document.forms[0].elements[ListBuffer[i][0]].selectedIndex = j;
+               j = document.forms[0].elements[ListBuffer[i][0]].length;
+             }
+           } 
+           break;
+        case "hidden": 
+           document.forms[0].elements[ListBuffer[i][0]].value = ListBuffer[i][1];
+           break; 
+        default:
+          alert("Form: cannot load " + ListBuffer[i][0] + ", type:" + ListBuffer[i].type + ", value:" + ListBuffer[i].value);
+      }  //need to add the other types eventually
+    }
+  }
+}
+
+function getForm() {
+   Y = 380;
+   if (screen.height < Y) Y = screen.height - 10;
+   window.resizeTo(580, Y);
+   var XList = [["",""]]; 
+   var TList;
+   document.forms[0].attendee.subtype = "list";
+   if (window.opener.getAttendeeList) {
+     eval("TList = " + window.opener.getAttendeeList());
+   }
+   setTransaction(TList);
+   window.focus();
+}
+
+</script>
+
+</body>
+</html>

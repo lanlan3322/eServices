@@ -1,0 +1,128 @@
+<!--
+helpRequest.html - Contact and utilities for support
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<h1>Getting Started:<h1>
+
+<ol>
+  <li class="TableData">Click on a Wizard at the top of the content frame and fill out each field, click
+    the wizard &quot;finish&quot; button and then add in any&nbsp; receipts you have with
+    options in the &quot;expense entry&quot; section.</li>
+</ol>
+
+<div align="center"><u><strong><em>OR</em></strong></u></div>
+
+<ol>
+  <li class="TableData">Click on &quot;Show Report&quot;</li>
+  <li class="TableData">Click on &quot;Edit&quot; in the report header and verify information</li>
+  <li class="TableData">Click on &quot;Single Purpose&quot; and fill in the form.</li>
+  <li class="TableData">Now you are ready to enter you expense receipts.&nbsp; Choose the most appropriate
+    expense entry form and enter your information.</li>
+  <li class="TableData">When all receipts are entered, click on &quot;Submit&quot; to submit your report
+    for payment.</li>
+</ol>
+
+<h1>Troubleshooting:</h2>
+
+<ul>
+  <li class="TableData">Ensure that your browser has Javascript enabled.</li>
+  <li class="TableData">To use the safety recovery feature, you need to have cookies enabled.</li>
+  <li class="TableData">To recover a report that you had previously been working on click <a href="javascript: void parent.GetLocal(); parent.ListMemory()">Recovery</a>.</li>
+  <li class="TableData">To manually save your report to a cookie, click <a href="javascript: void parent.SetLocal(); parent.ListMemory()">Save</a>.</li>
+  <li class="TableData">To test your communications link, click <a href="javascript: void parent.TransWindow(parent.defaultHome + 'submitXMLTest.html')">Test
+    Link</a>.&nbsp;&nbsp; An XML version of your report will be displayed if the link and
+    application processor are functioning.&nbsp; If your browser is not XML enabled, it will
+    ask you if you want to run or save the application. &nbsp; You can click cancel.&nbsp; To
+    test with your alternate format click <a href="javascript: void parent.TransWindow(parent.defaultHome + 'submitADPTest.html')">here</a>.</li>
+  <li class="TableData" class="TableData">If you still need support, fill in the following form and click the submit button:</li>
+</ul>
+
+<form method="POST" action="SubmitForm.jsp">
+  <table border="4" cellpadding="0" width="69%" class="offsetColor" cellspacing="0">
+  <input type="hidden" name="appName" value>
+  <input type="hidden" name="appVersion" value>
+  <input type="hidden" name="userAgent" value>
+  <input type="hidden" name="platform" value>
+  <input type="hidden" name="cookieEnabled" value>
+  <input type="hidden" name="rcpt2" value>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" class="offsetColor" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong><big>Help
+      / Support Request</big></strong></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" class="offsetColor" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" class="offsetColor" style="border: medium none rgb(255,255,0)"><strong>Date:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input type="text" name="FormDate" size="30" readOnly="yes"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" class="offsetColor" style="border: medium none rgb(255,255,0)"><strong>Name: </strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input type="text" name="Name" size="38"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong>Company:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input type="text" name="Company" size="38"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong>Phone:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input type="text" name="Phone" size="20"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong>Email
+      Address:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input type="text" name="Email" size="38"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong>Problem/Issue/Comment:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><textarea rows="4" name="Text" cols="62"></textarea></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input type="submit" value="Submit" name="Submit"></td>
+    </tr>
+  </table>
+  <div align="left"><p>&nbsp;</p>
+  </div>
+</form>
+
+<ul>
+  <li class="ExpenseLink">If the form doesn't work for you, call us at (510)
+    483-3556</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p align="center"><a class="ExpenseLink" href="javascript: void parent.SetLocal(); parent.ListMemory()">Save</a>
+&nbsp;&nbsp;&nbsp; <a class="ExpenseLink" href="javascript: void parent.GetLocal(); parent.ListMemory()">Recovery</a>
+&nbsp;&nbsp;&nbsp; <a class="ExpenseLink" href="javascript: void parent.TransWindow(parent.defaultHome + 'submitXMLTest.html')">Test
+Link/XML</a> &nbsp;&nbsp;&nbsp; <a class="ExpenseLink" href="javascript: void parent.PrintPersXML(parent.PersDBase)">View Personal Data</a>
+&nbsp;&nbsp;&nbsp; </p>
+
+<p align="center"><a class="ExpenseLink" href="javascript: void parent.PrintPersXML(parent.WorkDBase)">View Work Data</a>
+&nbsp;&nbsp;&nbsp; <a class="ExpenseLink" href="javascript: void parent.PrintXML()">View Local
+Report</a>&nbsp;&nbsp; <a class="ExpenseLink" href="editother.html">Manage Personal
+Data</a></p>
+
+<p align="center">******</p>
+<script language="JavaScript" id="script" file="en/helpRequest.js">
+
