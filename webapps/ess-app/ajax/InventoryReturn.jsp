@@ -188,8 +188,9 @@ if (pFlag && PersFile.getChallengeCode().equals(CCode)) {
      		<tr>
 				<th width="20%" <%=backcolor%>>Name</th>
 				<th width="10%" <%=backcolor%>>Category</th>
-				<th width="40%" <%=backcolor%>>Description</th>
+				<th width="30%" <%=backcolor%>>Description</th>
 				<th width="10%" <%=backcolor%>>Requested</th>
+				<th width="10%" <%=backcolor%>>Already returned</th>
 				<th width="15%" <%=backcolor%>>To be returned</th>
 				<th width="5%" <%=backcolor%>></th>
 			</tr>
@@ -212,7 +213,7 @@ if (pFlag && PersFile.getChallengeCode().equals(CCode)) {
         //reference = PersFile.getTrim(Reg.myResult.getString(2));
         repamt = PersFile.getTrim(Reg.myResult.getString(3)); 
         repStat = PersFile.getTrim(Reg.myResult.getString(4));  
-        curdate = "";//PersFile.getTrim(Reg.myResult.getString(5)); 
+        curdate = PersFile.getTrim(Reg.myResult.getString(5)); 
         firstSigner = "";//PersFile.getTrim(Reg.myResult.getString(6));  //need variable name for column later to check for dup sign
         voucher = PersFile.getTrim(Reg.myResult.getString(5));
         prefer = "";//PersFile.getTrim(Reg.myResult.getString(8));
@@ -282,13 +283,22 @@ if (pFlag && PersFile.getChallengeCode().equals(CCode)) {
           if (true)// ifSeemsOK(PersFile, xDup, atLeastOnce, adminSigner, firstSigner, secondSigner, xLimit) )
 		  {
         	  //Dt.getSimpleDate(Dt.getDateFromXBase(curdate))
+			
+			String SQLReturned = "SELECT SUM(DB_OPERATED_ITEM.REF_AMOUNT_ITEM) FROM DB_OPERATED_ITEM JOIN DB_OPERATION ON DB_OPERATED_ITEM.REF_ID_OPERATION = DB_OPERATION.OPERATION_ID WHERE DB_OPERATION.OPERATION_TYPE = 'Return' AND DB_OPERATION.OPERATION_REF = '";
+			SQLReturned += operationID + "' AND DB_OPERATED_ITEM.REF_ID_ITEM = '";
+			SQLReturned += curdate + "'" + PersFile.getSQLTerminator();
+			String sReturned = "0";
+			if (Reg2.setResultSet(SQLReturned)) {
+				sReturned = PersFile.getTrim(Reg2.myResult.getString(1));
+			}
         	  
 %>       
             <tr>
             <td width="20%" <%=backcolor%>><%= persname%></td>
             <td width="10%" <%=backcolor%>><%= xcheck%></td>
-            <td width="40%" <%=backcolor%>><%= repamt%></td>
+            <td width="30%" <%=backcolor%>><%= repamt%></td>
             <td width="10%" <%=backcolor%>><%= repStat%></td>
+            <td width="10%" <%=backcolor%>><%= sReturned%></td>
             <td width="15%" <%=backcolor%>><input id="<%=voucher%>" type="text" name="name" value="0" onChange="Change('<%=voucher%>',<%= repStat%>,this.value);" onfocus="this.select();"></td>
             <td width="5%" <%=backcolor%>></td>
             <td width="5%"  <%=backcolor%>>
@@ -314,10 +324,196 @@ if (pFlag && PersFile.getChallengeCode().equals(CCode)) {
  <!-- </form>  -->
 
 	</table>
+<%
+//Inventory history start
+if(true)//PersFile.depart.equalsIgnoreCase("TEST") || PersFile.depart.equalsIgnoreCase("MMT"))
+{
+	%>
+<div id="expenseReport5" class="reportSection" style="display: none">
+	<a class="titleForm" href="javascript: void hideDataFields('expenseReport5', showDataFields('expenseReportHidden5'), hideDataFields('expenseReportOptions5'))">Return History (Click here to open/close details)<span id="reportUsersReference5"></span></a>
+<%
+   String SQLInv = "SELECT * FROM DB_OPERATION WHERE OPERATION_REF = '";
+   SQLInv += operationID + "' AND OPERATION_TYPE = 'Return' ORDER BY OPERATION_CREATED DESC";
+   SQLInv += PersFile.getSQLTerminator();
+
+	if (Reg.setResultSet(SQLInv)) {
+
+    try {
+     do {
+		String OPERATION_ID=PersFile.getTrim(Reg.myResult.getString(1));
+		String OPERATION_BY=PersFile.getTrim(Reg.myResult.getString(2));
+		String OPERATION_CREATED=PersFile.getTrim(Reg.myResult.getString(3));
+		String OPERATION_DELIVERED=PersFile.getTrim(Reg.myResult.getString(4));
+		String OPERATION_PREPARED=PersFile.getTrim(Reg.myResult.getString(5));
+		String OPERATION_SIGNED=PersFile.getTrim(Reg.myResult.getString(6));
+		String OPERATION_REASON=PersFile.getTrim(Reg.myResult.getString(7));
+		String OPERATION_STATUS=PersFile.getTrim(Reg.myResult.getString(8));
+		String OPERATION_TYPE=PersFile.getTrim(Reg.myResult.getString(9));
+		String PERS_NAME=OPERATION_CREATED;
+			PERS_NAME += " - " + OPERATION_REASON;
+		String divIDreporter = "Report" + OPERATION_ID;
+		String divHiddenreporter = "Hidden" + OPERATION_ID;
+		String divOptionreporter = "Option" + OPERATION_ID;
+		String divRefreporter = "Ref" + OPERATION_ID;
+
+		String divID = "Report" + PERS_NAME;
+		String divHidden = "Hidden" + PERS_NAME;
+		String divOption = "Option" + PERS_NAME;
+		String divRef = "Ref" + PERS_NAME;
+		backcolor = "class=\"offsetColor\"";
+		oldbackcolor = "";
+		newbackcolor = backcolor;
+%>
+
+<%
+   String SQLCommand_Leave1 = SystemDOM.getDOMTableValueFor("history","inventory_items");
+   SQLCommand_Leave1 = Reg3.SQLReplace(SQLCommand_Leave1,"$persnum$",OPERATION_ID);
+%>
+<div id="<%=divIDreporter%>" class="reportSection" style="display: none">
+	<a class="titleForm" href="javascript: void hideDataFields('<%=divIDreporter%>', showDataFields('<%=divHiddenreporter%>'), hideDataFields('<%=divOptionreporter%>'))">[ <%=OPERATION_STATUS%> - <%=OPERATION_TYPE%> ] <%= PERS_NAME%><span id="<%=divRefreporter%>"></span></a>
+
+<%if (Reg3.setResultSet(SQLCommand_Leave1)) {
+
+     //String persname;
+     //byte[] bArray;    //used for encrypted values
+     //String E;         //     ditto
+     //boolean xFlag;
+     //boolean xfound = false;
+     //String voucher = "";
+     String pvoucher = "";
+     //String reference;
+     String repdate;
+     //String repamt;
+     //String repStat;
+     //String repDBStat;
+	 String reason;
+	 String created;
+	 String total;
+     //int adjustment = 0; //see status.xml
+%>
+	<%	if(OPERATION_STATUS.equalsIgnoreCase("Delivered") && OPERATION_TYPE.equalsIgnoreCase("Request")){
+	%>
+        <input id="btSave" type="button" name="B1" value="Return"  onClick="Javascript: void returnItems('<%=OPERATION_ID%>')">
+	<%	}
+	%>
+	<table id="previousTable" border="0" cellspacing="0" cellpadding="0">
+     <thead>
+         <tr>
+			 <td class="ExpenseTag" width="5%" <%=backcolor%>>&nbsp;</td>
+             <td class="ExpenseTag" width="10%" <%=backcolor%>>Name</td>
+             <td class="ExpenseTag" width="10%" <%=backcolor%>>Category</td>
+             <td class="ExpenseTag" width="60%" <%=backcolor%>>Description</td>
+             <td class="ExpenseTag" width="5%" <%=backcolor%>>Amount</td>
+	<%	if(OPERATION_STATUS.equalsIgnoreCase("Delivered") && OPERATION_TYPE.equalsIgnoreCase("Request")){
+	%>
+             <td class="ExpenseTag" width="10%" <%=backcolor%>>
+				<span>Returned<input id="btShow" type="button" name="B1" value="?"  onClick="Javascript: void returnItems('<%=OPERATION_ID%>')"></span>
+			</td>
+	<%	}
+	%>
+         </tr>
+     </thead>
+
+<%
+		backcolor = "class=\"offsetColor\"";
+		oldbackcolor = "";
+		newbackcolor = backcolor;
+
+    try {
+		do {
+			String sName = PersFile.getTrim(Reg3.myResult.getString(1));
+			String sCat = PersFile.getTrim(Reg3.myResult.getString(2));
+			String sDesc = PersFile.getTrim(Reg3.myResult.getString(3));
+			String sAmount = PersFile.getTrim(Reg3.myResult.getString(4));
+			String sId = PersFile.getTrim(Reg3.myResult.getString(5));
+			
+			String SQLReturned = "SELECT SUM(DB_OPERATED_ITEM.REF_AMOUNT_ITEM) FROM DB_OPERATED_ITEM JOIN DB_OPERATION ON DB_OPERATED_ITEM.REF_ID_OPERATION = DB_OPERATION.OPERATION_ID WHERE DB_OPERATION.OPERATION_TYPE = 'Return' AND DB_OPERATION.OPERATION_REF = '";
+			SQLReturned += OPERATION_ID + "' AND DB_OPERATED_ITEM.REF_ID_ITEM = '";
+			SQLReturned += sId + "'" + PersFile.getSQLTerminator();
+			String sReturned = "0";
+			if (Reg2.setResultSet(SQLReturned)) {
+				sReturned = PersFile.getTrim(Reg2.myResult.getString(1));
+			}
+
+     %>
+            <tr>
+			<td width="5%" <%=backcolor%>>&nbsp;</td>
+            <td width="10%" <%=backcolor%>><%= sName%></td>
+            <td width="10%" <%=backcolor%>><%= sCat%></td>
+            <td width="60%" <%=backcolor%>><%= sDesc%></td>
+            <td width="5%"  <%=backcolor%>><%= sAmount%></td>
+	<%	if(OPERATION_STATUS.equalsIgnoreCase("Delivered") && OPERATION_TYPE.equalsIgnoreCase("Request")){
+	%>
+            <td width="10%"  <%=backcolor%>><%= sReturned%></td>
+	<%	}
+	%>
+            </tr>
+     <%     xfound = true;
+            newbackcolor = backcolor;
+            backcolor = oldbackcolor;
+            oldbackcolor = newbackcolor;
+     } while (Reg3.myResult.next());
+  } catch (java.lang.Exception ex) {
+    Log.println("[500] ajax/HistoryList.jsp exception toString : " + ex.toString());
+    ex.printStackTrace();
+%>
+    <h2>Error in the SQL logic - contact support.<h2>
+<%
+  } //try
+%>
+  </table>
+
+<% if (!xfound) { %>
+<h2>
+<%= Lang.getString("REPORTS_NOT_FOUND") %><br>
+</h2>
+<% } %>
+<% } else { %>
+    <div class="ExpenseTag">
+    <%=PersFile.name%>, <%= Lang.getString("REPORTS_NOT_FOUND") %>
+    <% Log.println("[400] ajax/HistoryList.jsp No expense reports where found."); %>
+    </div>
+<% } //if (Reg.setResultSet(SQLCommand))
+%>
+
+</div>
+<div id="<%=divHiddenreporter%>" class="reportSection">
+	<a class="titleForm" href="javascript: void showDataFields('<%=divIDreporter%>', showDataFields('<%=divOptionreporter%>'), hideDataFields('<%=divHiddenreporter%>'))"> [ <%=OPERATION_STATUS%> - <%=OPERATION_TYPE%> ] <%= PERS_NAME%><span id="<%=divRefreporter%>"></span></a>
+    <div><a href="javascript: void showDataFields('<%=divIDreporter%>', showDataFields('<%=divOptionreporter%>'), hideDataFields('<%=divHiddenreporter%>'))">click here <span>to open inventory history</span></a></div>
+</div>
+
+
+<%
+     } while (Reg.myResult.next());
+  } catch (java.lang.Exception ex) {
+    ex.printStackTrace();
+%>
+    <h2>Error in the SQL logic - contact support.<h2>
+<%
+  } //try
+%>
+  </table>
+<% } else { %>
+    <div class="ExpenseTag">
+    <%=PersFile.name%>, <%= Lang.getString("REPORTS_NOT_FOUND") %>
+    <% Log.println("[400] ajax/HistoryList.jsp No expense reports where found."); %>
+    </div>
+<% } //if (Reg.setResultSet(SQLCommand))
+%>
+</div>
+
+<div id="expenseReportHidden5" class="reportSection">
+	<a class="titleForm" href="javascript: void showDataFields('expenseReport5', showDataFields('expenseReportOptions5'), hideDataFields('expenseReportHidden5'))">Return History (Click here to open/close details)<span id="reportUsersReference5"></span></a>
+    <div><a href="javascript: void showDataFields('expenseReport5', showDataFields('expenseReportOptions5'), hideDataFields('expenseReportHidden5'))">click here <span>to open inventory details</span></a></div>
+</div>
+<%
+}//test department finish
+//Inventory history finish
+%>
+
+
 	  <input id="btSave" type="button" name="B1" value="Confirm (to return)"  onClick="Javascript: void Return('<%=operationID%>')">
 	</form>
-
-
 
 <% if (!xfound) { %>
 <strong><em>

@@ -261,8 +261,15 @@ if(true)//PersFile.depart.equalsIgnoreCase("TEST") || PersFile.depart.equalsIgno
 			 <td class="ExpenseTag" width="5%" <%=backcolor%>>&nbsp;</td>
              <td class="ExpenseTag" width="10%" <%=backcolor%>>Name</td>
              <td class="ExpenseTag" width="10%" <%=backcolor%>>Category</td>
-             <td class="ExpenseTag" width="65%" <%=backcolor%>>Description</td>
-             <td class="ExpenseTag" width="10%" <%=backcolor%>>Amount</td>
+             <td class="ExpenseTag" width="60%" <%=backcolor%>>Description</td>
+             <td class="ExpenseTag" width="5%" <%=backcolor%>>Amount</td>
+	<%	if(OPERATION_STATUS.equalsIgnoreCase("Delivered") && OPERATION_TYPE.equalsIgnoreCase("Request")){
+	%>
+             <td class="ExpenseTag" width="10%" <%=backcolor%>>
+				<span>Returned<input id="btShow" type="button" name="B1" value="?"  onClick="Javascript: void returnItems('<%=OPERATION_ID%>')"></span>
+			</td>
+	<%	}
+	%>
          </tr>
      </thead>
 
@@ -277,14 +284,28 @@ if(true)//PersFile.depart.equalsIgnoreCase("TEST") || PersFile.depart.equalsIgno
 			String sCat = PersFile.getTrim(Reg3.myResult.getString(2));
 			String sDesc = PersFile.getTrim(Reg3.myResult.getString(3));
 			String sAmount = PersFile.getTrim(Reg3.myResult.getString(4));
+			String sId = PersFile.getTrim(Reg3.myResult.getString(5));
+			
+			String SQLReturned = "SELECT SUM(DB_OPERATED_ITEM.REF_AMOUNT_ITEM) FROM DB_OPERATED_ITEM JOIN DB_OPERATION ON DB_OPERATED_ITEM.REF_ID_OPERATION = DB_OPERATION.OPERATION_ID WHERE DB_OPERATION.OPERATION_TYPE = 'Return' AND DB_OPERATION.OPERATION_REF = '";
+			SQLReturned += OPERATION_ID + "' AND DB_OPERATED_ITEM.REF_ID_ITEM = '";
+			SQLReturned += sId + "'" + PersFile.getSQLTerminator();
+			String sReturned = "0";
+			if (Reg2.setResultSet(SQLReturned)) {
+				sReturned = PersFile.getTrim(Reg2.myResult.getString(1));
+			}
 
      %>
             <tr>
 			<td width="5%" <%=backcolor%>>&nbsp;</td>
             <td width="10%" <%=backcolor%>><%= sName%></td>
             <td width="10%" <%=backcolor%>><%= sCat%></td>
-            <td width="65%" <%=backcolor%>><%= sDesc%></td>
-            <td width="10%"  <%=backcolor%>><%= sAmount%></td>
+            <td width="60%" <%=backcolor%>><%= sDesc%></td>
+            <td width="5%"  <%=backcolor%>><%= sAmount%></td>
+	<%	if(OPERATION_STATUS.equalsIgnoreCase("Delivered") && OPERATION_TYPE.equalsIgnoreCase("Request")){
+	%>
+            <td width="10%"  <%=backcolor%>><%= sReturned%></td>
+	<%	}
+	%>
             </tr>
      <%     xfound = true;
             newbackcolor = backcolor;
