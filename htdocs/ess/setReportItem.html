@@ -1,0 +1,78 @@
+<!--
+setReportItem.html - request update from audit module 
+Copyright (C) 2005 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Submit XML Test </title>
+<link rel="stylesheet" href="expense.css" type="text/css">
+</head>
+
+<body onLoad="Submit()">
+
+<form method="post" action="SetReportItem.jsp">
+  <input type="hidden" name="email" value><input type="hidden" name="report" value><input
+  type="hidden" name="persdbase" value><input type="hidden" name="status" value><input
+  type="hidden" name="reference" value><input type="hidden" name="ccode" value><input
+  type="hidden" name="comment" value><input type="hidden" name="xaction" value><input
+  type="hidden" name="database" value><input type="hidden" name="endproc"
+  value="blankOutReport();"><div align="center"><div align="center"></div><div
+  class="ExpenseTag" align="left"><p>Updating report with this transaction...</p>
+  </div>
+</form>
+<script language="JavaScript">
+var submitSafetyFlag = true;
+function Submit() {
+  if (submitSafetyFlag) {
+  submitSafetyFlag = false;
+  document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+  var status = parent.contents.getNameValue(parent.contents.Header,"status");
+  if (status == "") status = "New";
+  document.forms[0].status.value = status;
+  var reference = parent.contents.getNameValue(parent.contents.Header, "reference");
+  document.forms[0].reference.value = reference;
+  if (status == "New") parent.contents.setNameValue(parent.contents.Header,"xref",reference);
+  document.forms[0].xaction.value = "Submit";
+
+  //This is not really submitting - the date should not be filled in.  Change if we are and add CUR_DATE  
+  //var subdate = parent.contents.getNameValue(parent.contents.Header, "SUB_DATE");
+  //if (subdate == "") {
+  //   parent.contents.setNameValue(parent.contents.Header,"SUB_DATE",parent.contents.setDateStr(0));
+  //   parent.contents.setNameValue(parent.contents.Header,"SUB_TIME",parent.contents.setTimeStr());
+  //}
+
+  parent.contents.setTotalValues();  //This should fire off OK
+
+  var DateObj = new Date();
+  parent.contents.setDBPair(parent.PersDBase,"last_submit",DateObj.toString());
+  document.forms[0].database.value = parent.database;
+  parent.contents.iXMLB = true;  //Passes along blank items
+  document.forms[0].report.value = parent.contents.CreateXML();
+  parent.contents.iXMLB = false;
+  document.forms[0].persdbase.value = parent.contents.CreatePersDBXML(parent.PersDBase);
+  document.forms[0].ccode.value = parent.CCode;
+  document.forms[0].comment.value = parent.contents.rtrim(parent.contents.getNameValue(parent.contents.Header,"comment"));
+  parent.contents.SetLocal()
+  document.forms[0].action = parent.contents.defaultApps + "edit/SetReportItem.jsp";
+  document.forms[0].submit();
+  }
+}
+
+</script>
+
+</body>
+</html>

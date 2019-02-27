@@ -1,0 +1,51 @@
+<!--
+submitXMLTest.html - Submits a test XML
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Submit XML Test </title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body>
+
+<form method="POST" action="DisplayXML.jsp">
+  <input type="hidden" name="report" value><div align="center">
+  <input type="hidden" name="database" value>
+  </div><p><big><big><big>This
+  is a diagnostic routine that will send your expense report in XML format to the server
+  which will then display the XML version on your browser. &nbsp; You can use this
+  diagnostic to:</big></big></big></p>
+  <p><big><big><big>1. Check that the server is running.</big></big></big></p>
+  <p><big><big><big>2. View your raw expense report data directly. </big></big></big></p>
+  <p><big><big><big>To send your expense report for XML viewing, click on the &quot;Send and
+  View an XML Version&quot; button.</big></big></big></p>
+  <p>&nbsp;</p>
+  <p><input type="submit" value="Send and View an XML Version" name="B1"></p>
+</form>
+<script language="JavaScript">
+parent.contents.SetLocal();
+parent.contents.setTotalValues();
+
+document.forms[0].database.value = parent.database;
+document.forms[0].report.value = parent.contents.CreateXML();
+document.forms[0].action = parent.contents.defaultApps + "DisplayXML.jsp";
+
+</script>
+
+</body>
+</html>

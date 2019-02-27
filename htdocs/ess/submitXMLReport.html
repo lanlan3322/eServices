@@ -1,0 +1,65 @@
+<!--
+submitXMLReport.html - requests a detailed reporit
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Report hardcopy </title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body>
+
+<form method="POST" action="PrintESS.jsp">
+  <input type="hidden" name="report" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+
+
+  <div align="center"><p><big><big><big>This
+  option will produce a display that can be printed as a hardcopy.&nbsp; This function will
+  automatically envoke your computer's print dialog box. If you select to print, the report
+  will be sent to your printer.</big></big></big></p>
+  <p>&nbsp;</p>
+  <p><input type="button" value="Click to produce display for hardcopy" name="B1" onClick="Javascript: void SubmitOK()"></p>
+  </div>
+</form>
+<script language="JavaScript">
+
+parent.contents.setTotalValues();
+
+document.forms[0].database.value = parent.database;
+document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+document.forms[0].ccode.value = parent.CCode;
+parent.contents.SetLocal()
+document.forms[0].report.value = parent.contents.CreateXML();
+document.forms[0].action = parent.contents.defaultApps + "PrintESS.jsp";
+
+var xTestx = 0;
+var submitSafetyFlag = true;
+function SubmitOK() {
+  if (submitSafetyFlag) {
+     submitSafetyFlag = false;
+     // if (xTestx++ > 0) alert("Double-click detected!");
+     document.forms[0].submit();
+  }
+}
+
+</script>
+
+</body>
+</html>

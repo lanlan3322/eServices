@@ -1,0 +1,61 @@
+<!--
+ShutdownMessage.html - Sends up a message to display to pinging users
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>New user page</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<link rel="stylesheet" href="expense.css" type="text/css">
+</head> 
+
+<body onLoad="init()">
+
+<p><em><big>Shutdown Message Generator</big></em></p>
+
+<p>In the field below, enter a short text message to inform users of a pending system
+shutdown.&nbsp; This message will apear in an alert box on all logged-in expense users'
+browser during the next one-half hour.&nbsp; When indicating shutdown time, indicate an
+absolute time (e.g., 10:30 AM Central Time) and not a relative time (e.g., thirty minutes)
+as the message will take time to populate to all users.&nbsp; 'Multiple view' indicates
+that the user will receive multiple alert notices if they remain on the system.&nbsp;
+ 'Single view' indicates that the user will receive the notice just once.&nbsp; To turn 
+off an existing message, enter a blank text message.</p>
+
+<form method="POST" action="logging/ShutdownMessage.jsp">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="database" value>
+  <p>Shutdown Message:&nbsp;&nbsp;&nbsp; <input type="text" name="message" size="64"></p>
+  <p>Display Type:&nbsp;&nbsp;&nbsp; <select name="Display" size="1">
+    <option selected value="Multiply">Multiple view</option>
+    <option value="Single view">Single view</option>
+  </select> <em>(currently not available - Multiple view only)</em></p>
+  <p><input type="submit" value="Send shutdown message to all users" name="submitMessage"></p>
+</form>
+<script>
+function init() {
+  document.forms[0].action = parent.contents.defaultApps + "logging/ShutdownMessage.jsp";
+  with(document.forms[0]) {
+    email.value = parent.contents.getNameValue(parent.Header, "email");
+    database.value = parent.database;
+    ccode.value = parent.CCode;
+  }
+}
+</script>
+</body>
+</html>

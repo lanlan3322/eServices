@@ -1,0 +1,84 @@
+<!--
+selectDepart.html - Add clients to purpose and personnal data    
+Copyright (C) 2006 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Select Depart</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body onLoad="FormInit()">
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%" align="center"><form>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100">
+        <tr>
+          <td width="10%" height="26" class="bannerColor"><strong>Double click to select a department:</strong></td>
+          <td width="90%" height="26"><select name="depart" size="14" tabindex onDblClick="selectDepartment()">
+          </select></td>
+        </tr>
+      </table>
+      <p><input type="button" value="Select" name="Choice" onClick="selectDepartment()">
+      <input type="button" value="Cancel" name="Cancel" onClick="window.close()"></p>
+    </form>
+    </td>
+  </tr>
+</table>
+<script LANGUAGE="JavaScript">
+
+function FormInit(){
+  window.opener.parent.contents.setListWithValue(document.forms[0].depart, window.opener.parent.contents.getDeparts("1"),1,0, true);
+  window.opener.parent.contents.setListDfltWVal(document.forms[0].depart,"");
+  window.focus();
+  window.onresize = hdleResize;
+}
+
+function selectDepartment() {
+  var x = document.forms[0].depart[document.forms[0].depart.selectedIndex].value; 
+  var y = window.opener.parent.contents.getDeparts("1");
+  window.opener.parent.main.returnDepart(x,y[document.forms[0].depart.selectedIndex][1]);
+  window.close();
+}
+
+function doNothing() {
+}
+
+function hdleResize() {
+//  note that ns6 also supports : body.clientWidth/Height 
+  var x = 0;
+  var y = 0;
+  if (document.documentElement.clientWidth && document.documentElement.clientWidth != 0) {
+    x = document.documentElement.clientWidth;  //IE 6 standard
+    y = document.documentElement.clientHeight;
+  } else if (document.body.clientWidth && document.body.clientWidth != 0) {
+    x = document.body.clientWidth;  // IE quirkie mode
+    y = document.body.clientHeight;
+  } else if (window.innerWidth && window.innerWidth != 0) {
+    x = window.innerWidth;  // NS
+    y = window.innerHeight;
+  }
+  
+  if(opener.parent.main.MerWinSize && opener.parent.main.MerWinSize != null) { 
+    opener.parent.main.MerWinSize(x,y,"addclient");
+  }
+}
+
+</script>
+
+</body>
+</html>
