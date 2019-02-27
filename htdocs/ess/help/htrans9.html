@@ -1,0 +1,103 @@
+<!--
+htrans9.html - associated help screen 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Split Receipt</title>
+<link rel="stylesheet" href="../expense.css" type="text/css">
+</head>
+
+<body onLoad="javascript: void window.focus()">
+
+<p class="BodyHeader">Split Receipt</p>
+
+<p class="ExpenseBody">This screen is used to apply a single expenditure across multiple
+expense types and/or departments (cost centers).&nbsp; In order to split the expense
+across departments, you need to know the department numbers. &nbsp;</p>
+
+<p class="ExpenseBody">The Split Receipt screen is broken into two sections.&nbsp; The top
+section is used to enter information that is common to the receipt.&nbsp; The bottom
+section describes the expense type and department breakdown.</p>
+
+<p class="ExpenseBody">These are the fields and links that are used to enter information
+in the top part of the screen:</p>
+
+<p class="ExpenseBody">Receipt Date: - (required) Enter the date from the receipt.&nbsp;
+For expense without a physical receipt, enter the date the expense was incurred.</p>
+
+<p class="ExpenseBody">Receipt Amount: - (required) Enter the total receipt amount here.
+&nbsp; When a foreign currency is used, this field is protected and entry occurs via the
+Foreign Amount field. The Split Receipt screen will insure that the receipt amount equals
+the total for the expense amounts.</p>
+
+<p class="ExpenseBody">Reference: - Enter the receipt or document reference number. &nbsp;
+Since you will be charging other departments, it is important that you establish a clear
+audit trail.</p>
+
+<p class="ExpenseBody">Purpose: (list) - (required) Select the purpose form your report to
+which you want to tie this expense.</p>
+
+<p class="ExpenseBody"># of Persons: - Enter the number of persons covered by this receipt
+for guideline checking purposes.&nbsp; This should be a whole number, 1 or greater.</p>
+
+<p class="ExpenseBody">Amount remaining to distribute: - (protected) </p>
+
+<p class="ExpenseBody">The bottom part of the screen is made up of rows and columns.
+&nbsp; Each expense entry (i.e., line item) is represented by a row.&nbsp; Up to ten rows
+may be entered.&nbsp; The columns are as follows:</p>
+
+<p class="ExpenseBody">Expense Type (list) - (required) Select the most appropriate
+expense type for this expense. One receipt can have several different expense types.</p>
+
+<p class="ExpenseBody">Amount - (required) Enter the receipt/expense amount here. &nbsp;
+When a foreign currency is used, this field is protected and entry occurs via the Foreign
+Amount field.</p>
+
+<p class="ExpenseBody">Depart - (list) This column provides the department name.</p>
+
+<p class="ExpenseBody">Bill - (list) This is 'Yes' or 'No'.&nbsp; 'Yes' to bill expenses
+to the client specified in the associated purpose.</p>
+
+<p class="ExpenseBody">Comment - Enter any explanation for the expense here.&nbsp; If no
+explanation beyond the trip purpose is called for, leave this field blank.&nbsp; Although
+optional, some expense types require an explanation in the comment field be present.</p>
+
+<p class="ExpenseBody">The screen also contains the following links and buttons to assist
+in entering information:</p>
+
+<p class="ExpenseBody"><img src="../calendar.gif" alt="calendar.gif (171 bytes)" WIDTH="16" HEIGHT="16"> calendar
+- This link will pop-up a calendar.&nbsp; Any date that you select by clicking on it will
+be entered into the associated date field.&nbsp; The single arrows will move the calendar
+one month while the double arrows move the calendar a year.</p>
+
+<p class="ExpenseBody">Update report with this receipt (button) - (required) After you
+have entered all the information required to describe thisreceipt-expense, click this
+button to add this information to the report you are creating or editing.&nbsp; If you
+exit the this screen without using this button, the information you provided will not be
+added to the report and will be lost.</p>
+
+<p class="ExpenseBody">Return to report display (link) - Use this link if you wish to
+abandon data entry and return to the report display without saving any of the information
+you may have added or changed. </p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+</body>
+</html>

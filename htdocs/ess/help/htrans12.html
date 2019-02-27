@@ -1,0 +1,164 @@
+<!--
+htrans12.html - associated help screen 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Hotel Receipt</title>
+<link rel="stylesheet" href="../expense.css" type="text/css">
+</head>
+
+<body onLoad="javascript: void window.focus()">
+
+<p class="BodyHeader">Hotel Receipt</p>
+
+<p class="ExpenseBody">This screen is used enter information from a hotel bill.&nbsp; The
+screen is divided into three sections.&nbsp; The top of the screen is used to enter the
+bill total and information pertaining to the visit, such as checkin and checkout dates.
+&nbsp; The middle part of the screen displays a list of itemized non-room charges while
+the bottom of the screen allows you to edit the non-room charges.&nbsp; Typically, you'll
+enter you total bill amount on top and the use the bottom portion of the screen to specify
+the items not to charge to you room expense.&nbsp; Typically things like meals, laundry,
+phone usage, etc. are charge to expense categories other than you room.</p>
+
+<p class="ExpenseBody">Make sure that you finish this screen by clicking the 'Update
+report with this receipt' button.&nbsp; If you don't your entry will be lost.</p>
+
+<p class="BodySubHeader">Top Portion of Screen</p>
+
+<p class="ExpenseBody">These are the fields that are found on the top of the screen:</p>
+
+<p class="ExpenseBody">Check in: - (required) Enter the date you checked into the
+hotel.&nbsp; In some installations this date may be tied to the purpose 'from' date.</p>
+
+<p class="ExpenseBody">Check out: - (required) Enter your check out date.&nbsp;In some
+installations this date may be tied to the purpose 'to' date.</p>
+
+<p class="ExpenseBody">Total Reciept Amount: - (required) Enter the receipt/expense amount
+here. &nbsp; This is your total bill amount. Itemized charges will be deducted from this
+amount to get your room amount. When a foreign currency is used, this field is protected
+and entry occurs via the Foreign Amount field.</p>
+
+<p class="ExpenseBody">Purpose: (list) - (required) Select the purpose from your report to
+which you want to tie this expense.</p>
+
+<p class="ExpenseBody"># of Persons: - Enter the number of people sharing the room. &nbsp;
+Normally this is one.&nbsp; For people other than yourself, enter their names in the
+comment section.</p>
+
+<p class="ExpenseBody">Hotel Company: (list) - (required) Select the name of the hotel
+from the list.&nbsp; To add a hotel to your list, use the New Hotel link.&nbsp; </p>
+
+<p class="ExpenseBody">Comment: - Enter any explanation for the expense here.&nbsp; If no
+explanation beyond the trip purpose is called for, leave this field blank.&nbsp; Although
+optional, sone expense types require and explanation in the comment be present.</p>
+
+<p class="ExpenseBody">Room Billable: (list)&nbsp; - If this field is present, select
+either 'Yes' if the expense is billable to the client or project specified in the purpose
+or 'No' if not billable.&nbsp; Some installations do not include this field.</p>
+
+<p class="ExpenseBody">Room Amount: - (protected) This is the amount that will be charged
+to your lodging (room) expense.&nbsp; It is calculated by taking the sum of the itemized
+charges below from the total reciept amount.</p>
+
+<p class="BodySubHeader">Non-room Expense List</p>
+
+<p class="ExpenseBody">In the middle of the screen is a list that contains expenses that
+have been itemized from the hotel receipt.&nbsp; Expenses covering phone usage, meals, and
+personal items should be added to this list by using the buttons to the right and the form
+in the lowerportion of the screen.&nbsp; This items will be deducted from the receipt
+total amount to calculate your room expense, so do not enter you room expense here. &nbsp;
+If you have no non-room charges you can skip entering anything here.&nbsp; Check you
+accounting policy to determine is taxes should be entered her or whether they can be
+include in the room expense.</p>
+
+<p class="ExpenseBody">The effect the contents of the itemized list, there are three
+actions:</p>
+
+<p class="ExpenseBody">Select an item - This is normally done by clicking on the item with
+your mouse.&nbsp; Selected items are hi-lighted.&nbsp; Once an item has been selected it
+can either be edited or removed from the list. The contents of a selected item are copied
+to the Non-Room Item Detail form below the list.&nbsp; See below for information on the
+Non-Room Item Detail form.</p>
+
+<p class="ExpenseBody">Remove (button) - The Remove button will remove a selected item.</p>
+
+<p class="ExpenseBody">New (button) - This button clears out an item from the Non-Room
+Item Detail form and deselects any item in list.&nbsp; No items are selected after the New
+button is pushed. Any information entered into the form then will be added to the list if
+the 'Update non-room expenses' button is clicked. </p>
+
+<p class="BodySubHeader">Non-Room Item Detail</p>
+
+<p class="ExpenseBody">This part of the screen is a form that lets you edit and add to the
+Non-room Expense List.&nbsp; These are the fields and buttons.</p>
+
+<p class="ExpenseBody">Expense Type: (list) - (required) Select the most appropriate
+expense type for this item.</p>
+
+<p class="ExpenseBody"> Amount: - (required) Enter the receipt/expense amount here. &nbsp;
+When a foreign currency is used, this field is protected and entry occurs via the Foreign
+Amount field.</p>
+
+<p class="ExpenseBody">Attendee List (link) - Use this link to access the Attendee list
+screens.&nbsp; Although filling out attendees is usual optional, some expense type, such
+as entertainment, require that the attendee list be completed.</p>
+
+<p class="ExpenseBody">Billable: (list)&nbsp; - If this field is present, select either
+'Yes' if the expense is billable to the client or project specified in the purpose or 'No'
+if not billable.&nbsp; Some installations do not include this field.</p>
+
+<p class="ExpenseBody">Comment: - Enter any explanation for the expense here.&nbsp; If no
+explanation beyond the trip purpose is called for, leave this field blank.&nbsp; Although
+optional, some expense types require an explanation in the comment field be present.</p>
+
+<p class="ExpenseBody">Attendee List (link) - Use this link to access the Attendee list
+screens.&nbsp; Although filling out attendees is usual optional, some expense type, such
+as entertainment, require that the attendee list be completed.</p>
+
+<p class="ExpenseBody">Update non-room expenses (button) - When you have finished editing
+the non-room expense item, click here to update the non-room expense list.</p>
+
+<p class="BodySubHeader">General Controls</p>
+
+<p class="ExpenseBody">The screen also contains the following links and buttons to assist
+in entering information:</p>
+
+<p class="ExpenseBody"><img src="../calendar.gif" alt="calendar.gif (171 bytes)" WIDTH="16" HEIGHT="16"> calendar
+- This link will pop-up a calendar.&nbsp; Any date that you select by clicking on it will
+be entered into the associated date field.&nbsp; The single arrows will move the calendar
+one month while the double arrows move the calendar a year.</p>
+
+<p class="ExpenseBody">New Merchant (link) - This link is used to add a Merchant to the
+Merchant list and to your personal database. </p>
+
+<p class="ExpenseBody">Update report with this receipt (button) - (required) After you
+have entered all the information required to describe this receipt-expense, click this
+button to add this information to the report you are creating or editing.&nbsp; If you
+exit this screen without using this button, the information you provided will not be added
+to the report and will be lost.</p>
+
+<p class="ExpenseBody">Return to report display (link) - Use this link if you wish to
+abandon data entry and return to the report display without saving any of the information
+you may have added or changed. </p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!--
+hmenuAudit.html - associated help screen 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Menu Options</title>
+<link rel="stylesheet" href="../expense.css" type="text/css">
+</head>
+
+<body>
+
+<p class="BodyHeader">Audit Menu Options</p>
+
+<p class="ExpenseBody">The menu on the left-side of your browser contains the following
+options:</p>
+
+<p class="BodySubHeader"><u>Audit:</u></p>
+
+<p class="ExpenseBody">The options under 'Audit' provide you with working audit queues.
+&nbsp; A working queue is a list of reports from which you can select a report to edit or
+approve for further processing.&nbsp; As an auditor, once you approve a report for further
+processing, it can be be paid.</p>
+
+<p class="ExpenseBody">Edit and Audit - All the reports that you can audit as shown in a
+working queue.&nbsp; Normally these are reports that have been approved and are ready for
+further processing.&nbsp; Batch auditing is possible from this screen.</p>
+
+<p class="ExpenseBody">Fast Track - This is a working queue for all the reports that you
+can audit that do not require any additional paper documentation to process.&nbsp; The
+idea is that these reports can be processed quickly via the screen.</p>
+
+<p class="ExpenseBody">Report Selection - You can create a working queue based on your own
+parameters.&nbsp; You can select reports based on status, reporter, reference # and date
+range.&nbsp; Some reports may appear that you cannot edit or audit, however, you can
+review them. </p>
+
+<p class="BodySubHeader"><u>Process:</u></p>
+
+<p class="ExpenseBody">Release for Payment - This option creates the daily payment batch.
+&nbsp; Once a report has audited, it can be released for payment with this option.&nbsp; A
+report that is added to the daily batch simply has its status updated.&nbsp; There is no
+other processing done at this point.&nbsp; Reports that have been audited can be excluded
+from the batch creation process by unchecking them.</p>
+
+<p class="ExpenseBody">EOD Feed Creation - Reports that are part of a batch are used to
+create export files for processing by other systems.&nbsp; EOD feeds can be run for any
+batch date.</p>
+
+<p class="ExpenseBody">Payment Messages - Generates e-mail notifications that a report has
+been processed and payment has been made.&nbsp; This option is usually run right after the
+EOD Feed Creation for a batch.&nbsp; Reports, from a selected batch, can be excluded from
+having the e-mail message sent out by unchecking them.</p>
+
+<p class="ExpenseBody">Follow-up Notifications - Generates e-mail messages that remind a
+reporter or approver that they have expense reports that need some sort of attention.
+&nbsp; Messages are generated to remind approvers to approve (or reject) outstanding
+reports after a specified period of time.&nbsp; E-mail messages are sent to an approver's
+mamanger are a spcified period of time.&nbsp; Reporters are also remind if they have
+reports, as indicated by a manager reject status, that require attention. </p>
+
+<p class="ExpenseBody">Prenote Items -&nbsp; Creates an ACH prenote file.&nbsp; If you are
+paying reporters via ACH, you bank may require you to prenote payees when you first set
+them up.</p>
+
+<p class="ExpenseBody">OK Prenoting - Changes the reporter's Reimbursement Method from
+'VERIFYING' to 'ACH'.&nbsp; This is usually done 10 days after a user has been prenoted
+and no rejection has been returned.&nbsp; Consult your bank for specific information
+regarding your process.&nbsp; Once a reporter's Reimbursement Method has been changed to
+'ACH', they will be included the batch ACH feed.</p>
+
+<p class="ExpenseBody">Latest EOD Journal - Prints out a list of all standard debit and
+credit entries for the last run EOD Feed Creation.&nbsp;&nbsp;&nbsp; As part of the
+standard release, ESS produces a 'SimpleGL.dat' file that contains debits and credits.
+&nbsp; This is the file that is used to generate the 'Latest EOD Journal'.&nbsp; Consult
+ESS's &quot;Professional Services Manual&quot; for more information on this feed.</p>
+
+<p class="ExpenseBody">Latest Payments -&nbsp; Prints out a list of all standard
+paymensfor the last run EOD Feed Creation.&nbsp;&nbsp;&nbsp; As part of the standard
+release, ESS produces a 'SimplePayment.dat' file that contains payment information.
+&nbsp; This is the file that is used to generate the 'Latest Payments'.&nbsp; Consult
+ESS's &quot;Professional Services Manual&quot; for more information on this feed.</p>
+
+<p class="BodySubHeader"><u>Research:</u></p>
+
+<p class="ExpenseBody">Simple Inquiries - This is a list of reports that can be run from
+the database.&nbsp; New reports can be created by modifying the 'reports.xml' file.
+&nbsp;&nbsp; Consult ESS's &quot;Professional Services Manual&quot; for more information.</p>
+
+<p class="ExpenseBody">SQL Selection - Simple SQL select statements are executed against
+the database for ad hoc retrievals.</p>
+
+<p class="BodySubHeader"><u>Misc:</u></p>
+
+<p class="ExpenseBody">Manage Personal Data -&nbsp; Primarily used under direction of
+technical support in problem solving.</p>
+
+<p class="ExpenseBody">Logout - Logs the current user out of the system.</p>
+
+<p class="BodySubHeader"><u>User File:</u></p>
+
+<p class="ExpenseBody">This options allow auditors and administrators to add users and
+modify user profiles.</p>
+
+<p class="ExpenseBody">Primary Info - Primary information on the user such as name, email,
+phone, approval dollar limit, menu used and special accounting codes.&nbsp; Also allows
+the users password to be reset.</p>
+
+<p class="ExpenseBody">ACH Info - Contains information necessary to make an ACH transfer
+such as the bank routiing code, account numbers and account type.&nbsp; Fields required to
+manage prenote process are found on this screen</p>
+
+<p class="ExpenseBody">Card Info - Maps credit card numbers to users.&nbsp;&nbsp; </p>
+
+<p class="ExpenseBody">Fleet Vehicle Info - This screen maintains information on the
+reporters fleet vehicle if they have one.</p>
+
+<p class="ExpenseBody">Misc.&nbsp; Info - Fields from the user file that aren't always
+used.&nbsp; These include special mileage rate, reimbursement type and extra site defined
+fields.</p>
+
+<p class="BodySubHeader"><u>File Editors:</u></p>
+
+<p class="ExpenseBody">These options allow auditors to control the setup of system tables.
+&nbsp; These tables define how ESS processes reports and provide edit checks, as well as
+selection lists.</p>
+
+<p class="ExpenseBody">Clients - Client list that is used on the purpose screen.
+&nbsp; This information is often used for billing or cost/benefit purposes.</p>
+
+<p class="ExpenseBody">Departments - Departments with associated accounting, admin and
+manager information.&nbsp; Used create a valid list of department to which expense can be
+assigned.&nbsp; These mappings are also used in the EOD feed generation process.</p>
+
+<p class="ExpenseBody">Expense Types - List of valid expense types and associated
+accounting information.&nbsp; Expense types also provide the mechanism to enforce data
+entry requirements based upon the expense being entered such as comment required, merchant
+required, dedicated payment methods, etc.</p>
+
+<p class="ExpenseBody">Payment Methods - List of payment methods, such as cash, prepaid,
+and credit card along with associated accounting information.</p>
+
+<p class="ExpenseBody">Projects - Project list that is used on the purpose screen.
+&nbsp; Project numbers can track an expense to a specific project for accounting and
+billing purposes.</p>
+
+<p class="ExpenseBody">Merchants - List of merchants used to track expenses.</p>
+
+<p class="ExpenseBody">Company Codes - List if legal entity codes.&nbsp; Departments are a
+subset of companies in ESS.&nbsp; Used for accounting purposes</p>
+
+<p class="ExpenseBody">Locations/Cities - List of names that map expense purposes to
+geographical locations.&nbsp; Used by the guidelines to allow polices to be adjusted based
+on where the reporter is incurring the expense.&nbsp; For example, a hotel in New York can
+be expected to cost more that a hotel room in Souix Falls.</p>
+
+<p class="ExpenseBody">Guidelines - The guideline table is used to express allowable
+expense limits in a way that they can be interpreted by the guideline check routines.</p>
+
+<p class="ExpenseBody">State Table - Normally not used by audit personnel.&nbsp; This
+table describes what to do during report submission such whether to accept a report is a
+previous copy exists, alternate routing based on a guideline check (pass/fail) and what to
+do if an auditor submitted the report.</p>
+
+<p class="ExpenseBody">Special Handling - General table that hold information specific to
+a customized EOD feed.</p>
+
+<p class="BodySubHeader"><u>Pre-populated Items:</u></p>
+
+<p class="ExpenseBody">Pre-populated items are items, such as credit card charges, that
+are brought in from external sources.&nbsp; There main purpose is to allow reporters to
+create expense reports quickly with data that is already in the system.&nbsp; They are
+also used to match expenses to external items so that all items are accounted for.</p>
+
+<p class="ExpenseBody">Database Access - This option allows the auditors access to the
+pre-populated database to effect changes.</p>
+
+<p class="ExpenseBody">Reconcilement - The reconcilement option lets the auditor match
+user entered/selected expenses against the pre-populated items so that all items are
+accounted for.</p>
+
+<p class="ExpenseBody">Import a File - Imports a file from a credit card vendor</p>
+
+<p class="BodySubHeader"><u>System Admin:</u></p>
+
+<p class="ExpenseBody">Shoutdown Message - </p>
+
+<p class="ExpenseBody">EOD Reset - The EOD process can only be run by one person at a
+time.&nbsp; In the event that there is a software failure this option will return ESS to a
+state where the EOD can be rerun.</p>
+
+<p class="ExpenseBody">Current Usage - Display current users and which reports are being
+edited by the auditors.&nbsp; Since ESS is a peer-to-peer system, this list may not be
+totally accurate over the short run.</p>
+
+<p class="ExpenseBody" align="center">###</p>
+
+<p class="ExpenseBody">&nbsp;</p>
+</body>
+</html>
