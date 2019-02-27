@@ -1,0 +1,2786 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 10">
+<meta name=Originator content="Microsoft Word 10">
+<link rel=File-List href="System_xml_explained_files/filelist.xml">
+<title>System</title>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="place"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="stockticker"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="date"/>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Jim Holton</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Jim</o:LastAuthor>
+  <o:Revision>5</o:Revision>
+  <o:TotalTime>1493</o:TotalTime>
+  <o:Created>2006-03-29T18:36:00Z</o:Created>
+  <o:LastSaved>2011-09-29T21:59:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>5476</o:Words>
+  <o:Characters>31216</o:Characters>
+  <o:Company>Adisoft, Inc.</o:Company>
+  <o:Lines>260</o:Lines>
+  <o:Paragraphs>73</o:Paragraphs>
+  <o:CharactersWithSpaces>36619</o:CharactersWithSpaces>
+  <o:Version>10.2625</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:Zoom>150</w:Zoom>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:ApplyBreakingRules/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if !mso]><object
+ classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object>
+<style>
+st1\:*{behavior:url(#ieooui) }
+</style>
+<![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:\5B8B\4F53;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 680460288 22 0 262145 0;}
+@font-face
+	{font-family:"\@SimSun";
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 680460288 22 0 262145 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:SimSun;}
+p.MsoDate, li.MsoDate, div.MsoDate
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:SimSun;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:SimSun;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:35739933;
+	mso-list-template-ids:-10053504;}
+@list l1
+	{mso-list-id:114637889;
+	mso-list-template-ids:-1684401336;}
+@list l2
+	{mso-list-id:191722581;
+	mso-list-template-ids:1957305766;}
+@list l2:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3
+	{mso-list-id:201216347;
+	mso-list-template-ids:-1362963706;}
+@list l3:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4
+	{mso-list-id:250820553;
+	mso-list-template-ids:-1101083548;}
+@list l4:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5
+	{mso-list-id:250889782;
+	mso-list-template-ids:-1639409234;}
+@list l6
+	{mso-list-id:273481773;
+	mso-list-template-ids:-936113170;}
+@list l7
+	{mso-list-id:294023541;
+	mso-list-template-ids:-1508732624;}
+@list l8
+	{mso-list-id:344404512;
+	mso-list-template-ids:1816011922;}
+@list l9
+	{mso-list-id:578321206;
+	mso-list-template-ids:1216635748;}
+@list l9:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l10
+	{mso-list-id:600141978;
+	mso-list-template-ids:291030190;}
+@list l10:level1
+	{mso-level-start-at:71;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11
+	{mso-list-id:620771687;
+	mso-list-template-ids:-422253156;}
+@list l11:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12
+	{mso-list-id:622152547;
+	mso-list-template-ids:-1850938758;}
+@list l12:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13
+	{mso-list-id:655886024;
+	mso-list-template-ids:-1572173164;}
+@list l13:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14
+	{mso-list-id:663901061;
+	mso-list-template-ids:-1203454170;}
+@list l15
+	{mso-list-id:698702126;
+	mso-list-template-ids:67251938;}
+@list l15:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l16
+	{mso-list-id:733166676;
+	mso-list-template-ids:1779837114;}
+@list l17
+	{mso-list-id:736052783;
+	mso-list-template-ids:1969933426;}
+@list l18
+	{mso-list-id:768895409;
+	mso-list-template-ids:579655446;}
+@list l18:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l18:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l18:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l18:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l18:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l18:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l18:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l18:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l18:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l19
+	{mso-list-id:786123167;
+	mso-list-template-ids:498631252;}
+@list l19:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l20
+	{mso-list-id:796728384;
+	mso-list-template-ids:-199223628;}
+@list l21
+	{mso-list-id:845360593;
+	mso-list-template-ids:-537500734;}
+@list l21:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l21:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l21:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l21:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l21:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l21:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l21:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l21:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l21:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l22
+	{mso-list-id:872961290;
+	mso-list-template-ids:955677850;}
+@list l22:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l22:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l22:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l22:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l22:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l22:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l22:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l22:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l22:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l23
+	{mso-list-id:1068461598;
+	mso-list-template-ids:-1372053708;}
+@list l24
+	{mso-list-id:1092117592;
+	mso-list-template-ids:-1784394044;}
+@list l25
+	{mso-list-id:1098646351;
+	mso-list-template-ids:1154110366;}
+@list l26
+	{mso-list-id:1137339592;
+	mso-list-template-ids:-298282826;}
+@list l26:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l26:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l26:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l26:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l26:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l26:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l26:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l26:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l26:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l27
+	{mso-list-id:1161851585;
+	mso-list-template-ids:880985374;}
+@list l28
+	{mso-list-id:1170172607;
+	mso-list-template-ids:-1187355620;}
+@list l29
+	{mso-list-id:1174419256;
+	mso-list-template-ids:551832154;}
+@list l30
+	{mso-list-id:1225678147;
+	mso-list-template-ids:913366354;}
+@list l31
+	{mso-list-id:1265579909;
+	mso-list-template-ids:1318858644;}
+@list l32
+	{mso-list-id:1282296517;
+	mso-list-template-ids:1910660562;}
+@list l33
+	{mso-list-id:1415934135;
+	mso-list-template-ids:-796500652;}
+@list l33:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l33:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l33:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l33:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l33:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l33:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l33:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l33:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l33:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l34
+	{mso-list-id:1470322559;
+	mso-list-template-ids:-225430378;}
+@list l34:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l34:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l34:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l34:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l34:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l34:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l34:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l34:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l34:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l35
+	{mso-list-id:1484590874;
+	mso-list-template-ids:-259198726;}
+@list l35:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l35:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l35:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l35:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l35:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l35:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l35:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l35:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l35:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l36
+	{mso-list-id:1502701269;
+	mso-list-template-ids:-1391551696;}
+@list l36:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l36:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l36:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l36:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l36:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l36:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l36:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l36:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l36:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l37
+	{mso-list-id:1518036118;
+	mso-list-template-ids:1305899554;}
+@list l37:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l37:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l37:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l37:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l37:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l37:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l37:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l37:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l37:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l38
+	{mso-list-id:1524173682;
+	mso-list-template-ids:-2007719646;}
+@list l39
+	{mso-list-id:1566598807;
+	mso-list-template-ids:343452038;}
+@list l39:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l39:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l39:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l39:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l39:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l39:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l39:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l39:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l39:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l40
+	{mso-list-id:1723943652;
+	mso-list-template-ids:-1501399066;}
+@list l40:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l40:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l40:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l40:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l40:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l40:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l40:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l40:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l40:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l41
+	{mso-list-id:1730808936;
+	mso-list-template-ids:1065766558;}
+@list l42
+	{mso-list-id:1895193901;
+	mso-list-template-ids:-1491937898;}
+@list l42:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l42:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l42:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l42:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l42:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l42:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l42:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l42:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l42:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l43
+	{mso-list-id:1921940212;
+	mso-list-template-ids:1956438492;}
+@list l44
+	{mso-list-id:1934390542;
+	mso-list-template-ids:-1114110652;}
+@list l44:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l44:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l44:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l44:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l44:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l44:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l44:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l44:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l44:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l45
+	{mso-list-id:1961034744;
+	mso-list-template-ids:-688591298;}
+@list l45:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l45:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l45:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l45:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l45:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l45:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l45:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l45:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l45:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l46
+	{mso-list-id:1996689976;
+	mso-list-template-ids:749008016;}
+@list l46:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l46:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l46:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l46:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l46:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l46:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l46:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l46:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l46:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l47
+	{mso-list-id:2068020123;
+	mso-list-template-ids:1525835078;}
+@list l47:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l47:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l47:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l47:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l47:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l47:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l47:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l47:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l47:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l48
+	{mso-list-id:2110351694;
+	mso-list-template-ids:614100156;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]-->
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal align=center style='text-align:center'><span class=SpellE><strong><i
+style='mso-bidi-font-style:normal'><u>System.xml</u></i></strong></span><strong><u>
+Explained</u></strong><b><u><o:p></o:p></u></b></p>
+
+<p class=MsoNormal align=center style='text-align:center'><st1:date Month="3"
+Day="20" Year="2006">March 20, 2006</st1:date></p>
+
+<p class=MsoNormal align=center style='text-align:center'><i style='mso-bidi-font-style:
+normal'><span style='font-size:10.0pt'>Copyright 2006, R. James Holton<o:p></o:p></span></i></p>
+
+<p><span style='font-size:10.0pt'>This document describes the <span
+class=SpellE><i style='mso-bidi-font-style:normal'>system.xml</i></span>
+file.&nbsp; The system .xml file is the primary configuration for the ESS
+system.&nbsp; It contains both site specific and database specific information.
+The <span class=SpellE><i style='mso-bidi-font-style:normal'>system.xml</i></span>
+element is broken-down into <span class=SpellE>subelements</span>, which for
+purposes of this document, are lettered A through Z.<o:p></o:p></span></p>
+
+<p><u><span style='font-size:10.0pt'>A. configuration</span></u><span
+style='font-size:10.0pt'><o:p></o:p></span></p>
+
+<p><span style='font-size:10.0pt'>This element contains basic configuration
+information for the ESS Report, Audit and Disconnect systems. Unlike the other
+elements in the <span class=SpellE>system.xml</span> file, this element is
+cached. Any changes require that the server be restarted prior to the changes
+taking effect. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span style='font-size:10.0pt'>company
+     - company name (e.g., <span class=SpellE>Adisoft</span>) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>exp_email_address</span></span><span
+     style='font-size:10.0pt'> - return address for email messages
+     (e.g.,expense@site.com) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>smtp_address</span></span><span style='font-size:
+     10.0pt'> - address of SMTP server for sending e-mail messages (e.g.,
+     mail.site.com) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>smtp_domain</span></span><span style='font-size:
+     10.0pt'> - domain name for user's emails. This is only used to construct
+     email address's if required (e.g., adisoft-inc.com) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>smtp_delimiter</span></span><span
+     style='font-size:10.0pt'> - character used to delimit first and last name
+     in constructed e-mail address. . This is only used to construct email
+     address's if required (e.g<span class=GramE>.,</span> '.') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>xml_folder</span></span><span style='font-size:
+     10.0pt'> - Full path of the folder that holds the register files. The
+     register files are comprised of the XML version of the expense reports.
+     (e.g., E:\ess_test\xmlr\/xml_folder, or, /<span class=SpellE>var/ess/xmlr</span>/)
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>pal_email_address</span></span><span
+     style='font-size:10.0pt'> - set to the same value as <span class=SpellE>exp_email_address</span>
+     unless there is a specific reason not to do so.&nbsp; This address is used
+     specifically for receiving forms in the <span class=SpellE>SubmitForm.jsp</span>.&nbsp;
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>personal_folder</span></span><span
+     style='font-size:10.0pt'> - Full path for the folder that holds personnel
+     information. (e.g. E:\ess_test\xmlu\) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>rep_reference</span></span><span
+     style='font-size:10.0pt'> - This element tells the XML2ESS class how to
+     summarize department totals. Within department options are: 1.
+     Project/Client, by unique project and client, 2. Entity/Client, by unique
+     entity (<span class=SpellE>stepno</span>) and client, 3. <span
+     class=SpellE>Clientno</span>, by unique client. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>xmlstatus</span></span></span><span
+     style='font-size:10.0pt'> - <span class=SpellE>fullpath</span> for <span
+     class=SpellE>Status.xml</span>. <span class=SpellE>Status.xml</span> holds
+     information on routing and processing of reports. (e.g., E:\ess_test\xmls\Status.xml)
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>xmlsecurity</span></span></span><span
+     style='font-size:10.0pt'> - <span class=SpellE>fullpath</span> for <span
+     class=SpellE>security.xml</span>. <span class=SpellE>Security.xml</span>
+     specifies who can perform the audit, profile generation and password reset
+     <span class=SpellE>funcitons</span>. (e.g., E:\ess_test\xmls\security.xml)<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>receipt_req_amt_fld</span></span><span
+     style='font-size:10.0pt'> - this is the field to use in the EXPENSE table
+     for the amount at which a receipt is required. Normally it will be LIMIT
+     or XLIMIT. Use XLIMIT for <span class=SpellE>MySQL</span> databases and
+     LIMIT for others where LIMIT is not a reserved word. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>xmlrules</span></span></span><span
+     style='font-size:10.0pt'> - Full path of the <span class=SpellE>rules.xml</span>
+     file. The <span class=SpellE>rules.xml</span> file describes the rules
+     used for the initial processing of reports that have been submitted.
+     (e.g., /<span class=SpellE>var/ess/rules.xml</span>) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>pwd_expires_days</span></span><span
+     style='font-size:10.0pt'> - number of days before a user is required to
+     change there password. A '0' indicates that the user is never forced to
+     change their password. (e.g., a 28 requires a user to change their
+     password every four weeks) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>pwd_minimum_length</span></span><span
+     style='font-size:10.0pt'> - specifies the minimum length of a password. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>pwd_approval</span></span><span style='font-size:
+     10.0pt'> - a 'Yes' indicates that approvers need to enter their password
+     when approving reports. 'No' indicates that they don't. 'Yes' is akin to
+     requiring a signature on a report and is more secure in the event of an
+     unattended browser. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>pwd_audit</span></span><span style='font-size:
+     10.0pt'> - a 'Yes' indicates that auditors need to enter their password
+     when <span class=SpellE>OKing</span> reports for payment. 'No' indicates
+     that they don't. 'Yes' is akin to requiring a signature on a report and is
+     more secure in the event of an unattended browser. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>personal_code</span></span><span
+     style='font-size:10.0pt'> - Enter the expense type that indicates a
+     personal item that should not be <span class=SpellE>reimbured</span>. This
+     item will eventually be <span class=SpellE>depricated</span> and replaced
+     with <span class=SpellE>process.personal</span> below. (e.g., PERSONAL) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>xmlremove</span></span></span><span
+     style='font-size:10.0pt'> - Full path of <span class=SpellE>Remove.xml</span>
+     which describes what happens to a report that a user selects for removal.
+     (e.g., E:\ess_test\xmls\Remove.xml/xmlremove) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>xmlreports</span></span></span><span
+     style='font-size:10.0pt'> - Full path of <span class=SpellE>reports.xml</span>.
+     <span class=SpellE>Reports.xml</span> holds report descriptions for the
+     simple report generator. (e.g., /<span class=SpellE>var/ess/reports.xml</span>)
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>project_report_name</span></span><span
+     style='font-size:10.0pt'> - The name for the title of the project field
+     that displays in the trip section of the detailed report. (e.g.,
+     'Project/Acct') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>manager_report_name</span></span><span
+     style='font-size:10.0pt'> - The name for the title of the <span
+     class=GramE>reporters</span> physical location on the report header. This
+     is usually either the name of their manager or the name of there
+     department. (e.g., 'Dept Name') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>show_company_name</span></span><span
+     style='font-size:10.0pt'> - A 'No' indicates that the company name with
+     not be displayed as part of the expense line items in the Trip section of
+     the report. Any other value indicates the title on the company column.
+     (e.g., 'Entity Charged') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>add_merchant_comment</span></span><span
+     style='font-size:10.0pt'> - a 'Yes' indicates that the merchant name will
+     be added to the comment detail of an expense line item in the Trip
+     section. 'No' indicates that it will not. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>dump_mail</span></span><span style='font-size:
+     10.0pt'> - In the <span class=SpellE>ESSApprover</span> class, reporters
+     who do not have a manager assigned will have there <span class=SpellE>messags</span>
+     sent to this e-mail address. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>update_exp_approval</span></span><span
+     style='font-size:10.0pt'> - Set to 'Yes.' Will be deprecated. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>home_page</span></span><span style='font-size:
+     10.0pt'> - This is the URL that you wish the user to be transferred to
+     after they logout. ( e.g., 'http://www.adisoft-inc.com') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>background_color</span></span><span
+     style='font-size:10.0pt'> - the color used as the background for trip
+     boxes, offset lines, etc. This color should match the colors used in the <span
+     class=SpellE>expense.css</span> style sheet. (e.g., '#EAEAEA') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>xmlnacha</span></span></span><span
+     style='font-size:10.0pt'> - Full path for the NACHA file description.
+     (e.g. 'E:\<span class=SpellE>ess\xmls\nacha.xml/xmlnacha</span>') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>xmlcalendar</span></span></span><span
+     style='font-size:10.0pt'> - Full path for the calendar file. The calendar file
+     describes bank holidays and other important dates. (e.g., 'E:\<span
+     class=SpellE>ess_test\xmls\calendar.xml/xmlcalendar</span>') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>xmlimport</span></span></span><span
+     style='font-size:10.0pt'> - Full path for the import file. The import file
+     describes the various layouts or files that ESS uses to transfer
+     information from and to other systems. (e.g., '/<span class=SpellE>var/ess/import.xml</span>')
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>xmlexpoty</span></span></span><span
+     style='font-size:10.0pt'> – Reserved.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>xmledit</span></span></span><span
+     style='font-size:10.0pt'> - Full path of the edit file. The edit file
+     describes the interaction between the various file maintenance screens in
+     the Audit module and the database. (e.g., '/<span class=SpellE>var/ess/xmls/edit.xml</span>')
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>xmlschema</span></span></span><span
+     style='font-size:10.0pt'> - Full path of the schema file. The schema file
+     E:\ess_test\xmls\schema.xml/xmlschema <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>xmlsecurityE:\ess_test\xmls\security.xml/xmlsecurity</span></span><span
+     style='font-size:10.0pt'> <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>xmlprepopulatedmap</span></span></span><span
+     style='font-size:10.0pt'> - XML file used to map the pre-populated
+     information to a valid expense type. (e.g., /<span class=SpellE>var/ess/xmls/prepopulated.xml</span>)
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>reportfolder</span></span></span><span
+     style='font-size:10.0pt'> - reserved for future. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>htmloutput</span></span></span><span
+     style='font-size:10.0pt'> - reserved for future. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>essprofile</span></span></span><span
+     style='font-size:10.0pt'> - Full path for the <span class=SpellE>ESSProfile.js</span>.
+     This is the physical location of the web <span class=SpellE>ess</span>
+     folder. (e.g., e:\Inetpub\wwwroot\ess\ESSProfile.js) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>referenceprefix</span></span></span><span
+     style='font-size:10.0pt'> - Prefix to the central reference number of a
+     report. The central reference number is generated as an eight-digit
+     number. If specified, this prefix replaces the first digit. (e.g., 'X') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>alternateprefix</span></span></span><span
+     style='font-size:10.0pt'> - Prefix to the alternate reference number of a
+     report. The alternate reference is generated from the user's reference
+     number and is a packed eight-digit number. If specified, this prefix
+     replaces the first digit. (e.g., 'A') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>alternatelength</span></span></span><span
+     style='font-size:10.0pt'> - Specified length of the alternate number.
+     Currently leave as '8.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>step_display</span></span><span style='font-size:
+     10.0pt'> - The purpose table contains a <span class=SpellE><i>stepno</i></span>
+     column. The column is used to further classify expenses that are tied to
+     this expense in <span class=GramE>an</span> manner that they client
+     wishes. This is the title of the associated field. (e.g., 'Aircraft' may
+     be appropriate is you want to know the type of aircraft being used for
+     travel) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>prepopulateditems</span></span></span><span
+     style='font-size:10.0pt'> - Set to 'Yes' if you import credit card items,
+     etc. to pre-populated report entry or else 'No' if you do not. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>pwd_audit</span></span><span style='font-size:
+     10.0pt'> – A ‘Yes’ means that auditors need to enter their password (as
+     their signature) when they approve reports for payment.<span
+     style='mso-spacerun:yes'>  </span>A ‘No’ means the auditor just has to
+     click the button.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>currency</span></span><span style='font-size:
+     10.0pt'> – Default currency in the event that one is not specified in the
+     company record in the <span class=SpellE>the</span> company table.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>transactionlimit</span></span></span><span
+     style='font-size:10.0pt'> – Limit of a single transaction if one is not
+     specified in the currency table for this currency.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>distance</span></span><span style='font-size:
+     10.0pt'> – Default mileage units for the site. (Note: translated by
+     property file)<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>billable_name</span></span><span
+     style='font-size:10.0pt'> – Label for the billable field. (Note:
+     translated by property file)<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>omitforeignguidelines</span></span></span><span
+     style='font-size:10.0pt'> – A ‘Yes’ will omit the guideline check from the
+     audit copy for reports that are in a foreign currency.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>omitguidelines</span></span></span><span
+     style='font-size:10.0pt'> – A ‘Yes’ will omit the guideline check from the
+     audit copy.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>purposescreen</span></span><span
+     style='font-size:10.0pt'> – {deprecated}<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>historycopy</span></span></span><span
+     style='font-size:10.0pt'> – Status a copy of a report is given after it is
+     converted from a foreign currency.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>normalizetest</span></span></span><span
+     style='font-size:10.0pt'> – A ‘Yes’ will convert names, titles, etc. to
+     uppercase before saving them.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>omitforeignconversion</span></span></span><span
+     style='font-size:10.0pt'> – A ‘Yes’ will not allow auditors to convert
+     reports in foreign currency to local currency.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>dateformat</span></span></span><span
+     style='font-size:10.0pt'> – default date format to use if none is
+     specified in the user profile.<span style='mso-spacerun:yes'> 
+     </span>Options are MM/<span class=SpellE>dd/yyyy</span>, <span
+     class=SpellE>dd/MM/yyyy</span>, and <span class=SpellE>yyyy-MM-dd</span>.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>numberformat</span></span></span><span
+     style='font-size:10.0pt'> – Controls the default numeric display to be used
+     if there is not a value set in the user’s profile. It can be set to
+     decimal, period, or comma.<span style='mso-spacerun:yes'>  </span>Decimal
+     and period are effectively the same.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>language</span></span><span style='font-size:
+     10.0pt'> – Default language to use.<span style='mso-spacerun:yes'> 
+     </span>Current languages supports are ‘en’ for English and ‘<span
+     class=SpellE>fr</span>’ for French.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>country</span></span><span style='font-size:10.0pt'>
+     – Default country code to use.<span style='mso-spacerun:yes'> 
+     </span>Currently not used.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>location</span></span><span style='font-size:
+     10.0pt'> – Default location to use for location field.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>importwork</span></span></span><span
+     style='font-size:10.0pt'> – physical location of the user import file.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>requireauditcomment</span></span></span><span
+     style='font-size:10.0pt'> – If set to ‘Yes’ the audit is required to provide
+     a comment/email to user regarding any report that is rejected.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>appserver</span></span></span><span
+     style='font-size:10.0pt'> - Enter the URL with ending slash of your
+     application server. If you use a conduit, the application server with be
+     the same as your Web server. (e.g., http://www.yourserver.com:8080).<span
+     style='mso-spacerun:yes'>  </span>As of version 7, this element should be
+     left blank unless there is an overwhelming reason to use it.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>webserver</span></span></span><span
+     style='font-size:10.0pt'> - Enter the URL with an ending slash of the Web
+     server. (e.g., http<span class=GramE>:/</span>/www.yourserver.com').<span
+     style='mso-spacerun:yes'>  </span>As of version 7, this element should be
+     left blank unless there is an overwhelming reason to use it.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>appfolder</span></span></span><span
+     style='font-size:10.0pt'> - This is the name of the application as it
+     appears in <span class=SpellE>webapps</span>. Normally should be '<span
+     class=SpellE>ess</span>-app,' but can be customized. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>webfolder</span></span></span><span
+     style='font-size:10.0pt'> - This is the name of the Web folder the
+     application resides in. Normally should be '<span class=SpellE>ess</span>,'
+     but can be customized. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>customfolder</span></span></span><span
+     style='font-size:10.0pt'> - Normally should be '<span class=SpellE>ess</span>'
+     unless you have done customized purpose screens, menu's etc that you wish
+     to maintain separately for upgrade purposes. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>localserver</span></span></span><span
+     style='font-size:10.0pt'> - Address of the server port used by the
+     disconnected application. Normally should be 'http<span class=GramE>:/</span>/localhost:8085/localserver.'
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>localsecuritystring</span></span></span><span
+     style='font-size:10.0pt'> - This string is used to test is the request to
+     the disconnected server is coming from the local machine. Leave as
+     '/127.0.0.1' unless you have a reason to change it. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>centraldatabase</span></span></span><span
+     style='font-size:10.0pt'> - This is the name of the JDBC driver. (e.g., <span
+     class=SpellE>jdbc:odbc:adisoft</span>) <o:p></o:p></span></li>
+</ol>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span
+style='font-size:10.0pt'>The following items are found in the <span
+class=SpellE>system.xml</span> file, but are not used in the online
+version.<span style='mso-spacerun:yes'>  </span>They can be removed if you
+don’t want to look at them.<o:p></o:p></span></p>
+
+<ol start=71 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>localserverport</span></span></span><span
+     style='font-size:10.0pt'> - The port number that the disconnected server
+     is using. Leave as '8085' unless there is a conflict. This needs to be
+     coordinated with the <span class=SpellE><i>localserver</i></span> element.
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>localfolder</span></span></span><span
+     style='font-size:10.0pt'> - Normally should be './' unless there is a
+     special problem. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>localserverfile</span></span></span><span
+     style='font-size:10.0pt'> - This is the html screen that is used for the
+     initial disconnected login. (e.g., './x1x.html') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>remotedomain</span></span><span style='font-size:
+     10.0pt'> - This is the application domain that this disconnected version
+     uses for uploading, etc. (e.g., 'http://www.adisoft-inc.com:8080/ess-app/')
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>remoteprofileupdate</span></span></span><span
+     style='font-size:10.0pt'> - Full path name of the profile update JSP. The
+     profile update JSP updates disconnected users with the latest tables for
+     editing as well was sending them their pre-populated items. (e.g.,
+     http://www.adisoft-inc.com:8080/ess-app/ProfileFeed.jsp) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>remoteusersetup</span></span></span><span
+     style='font-size:10.0pt'> - This is the name of the screen that is used to
+     accept logins for the initial setup and update processes. (e.g.,
+     'http://www.adisoft-inc.com/ess/ess/LoginLocalSetup.html') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>xmluser</span></span></span><span
+     style='font-size:10.0pt'> - Name of the XML file that stores information
+     about the user in the disconnected system Leave as '<span class=SpellE>user.xml</span>'
+     unless debugging. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>lessprofile</span></span></span><span
+     style='font-size:10.0pt'> - path name of the <span class=SpellE>ESSProfile</span>
+     location in the disconnected system. Leave as '.\<span class=SpellE>ess\ess\ESSProfile.js</span>.'
+     unless instructed by technical support. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>remotesave</span></span><span style='font-size:
+     10.0pt'> - http://192.168.0.2:8101/ess-app/SubmitLocal.jsp/remotesave <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>testjsp</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.HelloWorldServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>intro</span></span><span style='font-size:10.0pt'>
+     - Disconnected system process. Leave as '<span class=SpellE>Less.IntroServlet</span>.'
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>submitform</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.HelloWorldServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>submitformn</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.HelloWorldServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>savexml</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.SaveXMLServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>getreport</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.GetReportServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>localmessage</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.LocalMessageServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>lessscreen</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.LessScreenServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>saveprofile</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.SaveProfileServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>savepersxml</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.SavePersXMLServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>prepopfeed</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.PrepopFeedServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>prepopsave</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.PrepopSaveServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>printreport</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.PrintReportServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>loginprofile</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.LoginProfileServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>logout</span></span><span style='font-size:10.0pt'>
+     - Disconnected system process. Leave as '<span class=SpellE>Less.LogoutServlet</span>.'
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>recoverlog</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.RecoverLogServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>guidelines</span></span><span style='font-size:
+     10.0pt'> - Disconnected system process. Leave as '<span class=SpellE>Less.GuidelineServlet</span>.'
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>removesave</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.SaveRemoveServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>submitxmlwguide</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.SubmitWithGuideServlet</span>.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l18 level1 lfo3;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>submitlocal</span></span></span><span
+     style='font-size:10.0pt'> - Disconnected system process. Leave as '<span
+     class=SpellE>Less.SaveXMLServlet</span>.' <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>B. process<o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This element is used by various processes,
+such as the generic G/L and payment feeds, to avoid having to hard code
+information. Other sub-elements flow into the JavaScript profiles. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo7;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>defaultpayment</span></span></span><span
+     style='font-size:10.0pt'> - Used to designate the default payment method.
+     (e.g., </span><st1:stockticker><span style='font-size:10.0pt'>CASH</span></st1:stockticker><span
+     style='font-size:10.0pt'>) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo7;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>defaultlodging</span></span></span><span
+     style='font-size:10.0pt'> – Not currently used.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo7;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>lodging</span></span><span style='font-size:10.0pt'>
+     - Expense type to be used for hotel receipt screens. (e.g., LODGING) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo7;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>fleetallowance</span></span></span><span
+     style='font-size:10.0pt'> - Expense type used for fleet vehicle
+     maintenance allowances. (e.g., ALLOWANCE) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo7;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>advance</span></span><span style='font-size:10.0pt'>
+     - Receipt type used to account for cash advances. There can be multiple
+     elements. If there are multiple elements, the first occurring element is
+     the default. (e.g., ADVANCE) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo7;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>personal</span></span><span style='font-size:
+     10.0pt'> - Expense type used to account for personal usage items that get
+     removed from the reimbursement calculation. There can be multiple
+     elements. If there are multiple elements, the first occurring element is
+     the default. (e.g., PERSONAL) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo7;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>returned</span></span><span style='font-size:
+     10.0pt'> - Receipt type used to account for cash returned against
+     advances. There can be multiple elements. If there are multiple elements,
+     the first occurring element is the default. (e.g., </span><st1:stockticker><span
+      style='font-size:10.0pt'>CASH</span></st1:stockticker><span
+     style='font-size:10.0pt'>-RETD) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo7;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>mileage</span></span><span style='font-size:10.0pt'>
+     - Items to translate to mileage receipts when imported to your legacy
+     system. &nbsp; There can be multiple elements.&nbsp; Also, any expense
+     items where the units are 'miles' will also be imported as mileage
+     receipts. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo7;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>defaultmileage</span></span><span
+     style='font-size:10.0pt'> - Used to designate the default mileage expense
+     type (e.g., MILEAGE) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo7;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>airfare</span></span><span style='font-size:10.0pt'>
+     – used to designate the airfare entry on the “new” report screen.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo7;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>defaultcompany</span></span></span><span
+     style='font-size:10.0pt'> – Not currently used.<o:p></o:p></span></li>
+</ol>
+
+<p><span style='font-size:10.0pt'>&nbsp;<o:p></o:p></span></p>
+
+<p><u><span style='font-size:10.0pt'>C. <span class=SpellE>generaloffset</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>Items in this element are used by the generic
+EOD G/L creation to create debit entries for receipt types that do not have expense
+information. Currently, these receipt types are identified in the process
+element above. In the non-customized installation, they are 'advance' and
+'cash-<span class=SpellE>retd</span>.' <span class=SpellE>Inportant</span>, the
+element names are constructed by the program. Credit information is stored in
+the payment type table. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>advance_debit_account</span></span><span
+     style='font-size:10.0pt'> - major account number for the advance debit. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>advance_debit_costcenter</span></span><span
+     style='font-size:10.0pt'> - cost center for the advance debit. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>advance_credit_account</span></span><span
+     style='font-size:10.0pt'> - major account number for the credit. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>advance_credit_costcenter</span></span><span
+     style='font-size:10.0pt'> - cost center for the credit. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>cash-<span class=SpellE>retd_debit_account</span></span></span><span
+     style='font-size:10.0pt'> - major account number for the debit offset. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>cash-<span class=SpellE>retd_debit_costcenter</span></span></span><span
+     style='font-size:10.0pt'> - cost center for the debit offset. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>cash-<span class=SpellE>retd_credit_account</span></span></span><span
+     style='font-size:10.0pt'> - major account number for the debit offset. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>cash-<span class=SpellE>retd_credit_costcenter</span></span></span><span
+     style='font-size:10.0pt'> - cost center for the debit offset. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>cash_search</span></span><span style='font-size:
+     10.0pt'><o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>cash_debit_account</span></span><span
+     style='font-size:10.0pt'> - major account number for the debit offset. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>cash_debit_costcenter</span></span><span
+     style='font-size:10.0pt'> - cost center for the debit offset. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>cash_credit_account</span></span><span
+     style='font-size:10.0pt'> - major account number for the debit offset. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>cash_credit_costcenter</span></span><span
+     style='font-size:10.0pt'> - cost center for the debit offset. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>billable_debit_account</span></span><span
+     style='font-size:10.0pt'> - major account number for the debit offset. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l35 level1 lfo10;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>billable_debit_costcenter</span></span><span
+     style='font-size:10.0pt'> - cost center for the debit offset. <o:p></o:p></span></li>
+</ol>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.25in'><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p><u><span style='font-size:10.0pt'>D. <span class=SpellE>registertable</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>The register table element contains elements
+needed to describe the register table to the application. Currently there is
+only one element. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l9 level1 lfo13;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>listreports</span></span></span><span
+     style='font-size:10.0pt'> - This is the SQL statement that is used to
+     display the report selection list in the &quot;Your Reports&quot; option.
+     The statement must contain the following columns: register status,
+     reference, message, central database status, account date, accounting
+     time, register file date, personnel number and, report total receipt
+     amount. The following macro substitutes are used: $owner$ - personnel
+     number of the reports desired. Used in <span class=SpellE>Intro.jsp</span>.
+     <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>E. encrypt<o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>Certain columns in the report, purpose and
+expense tables can be scrambled to prevent prying eyes from easily discerning
+trip purposes or locations. It is not a true encryption but actually a simple XOR
+cipher feedback process. It is not recommended for general usage but available
+if strongly desired. Please <span class=GramE>note,</span> that if you decided
+to use this feature, you'll need to write routines to decrypt the columns in
+the event you wish to use this information outside the expense system.
+Scrambling occurs during the SQL write process so the values of the following
+sub-elements are dependent upon the database being used. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l22 level1 lfo16;tab-stops:list .5in'><span style='font-size:
+     10.0pt'>apply - Set to 'Yes' to scramble, otherwise leave as 'No.' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l22 level1 lfo16;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>key</span></span><span style='font-size:10.0pt'>
+     - The decimal equivalent of the character to XOR with the first character
+     of text. Additional characters are <span class=SpellE>XORed</span> against
+     the previous results (i.e., feedback). (e.g., '6') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l22 level1 lfo16;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>base</span></span><span style='font-size:10.0pt'>
+     - Numeric base to use to describe the characters in the SQL statement.
+     Needs to be 'Decimal,' 'Octal,' or 'Hex' <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l22 level1 lfo16;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>head</span></span><span style='font-size:10.0pt'>
+     - Text string that begins each column value in the SQL statement. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l22 level1 lfo16;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>tail</span></span><span style='font-size:10.0pt'>
+     - Text string that ends each column value in the SQL statement. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l22 level1 lfo16;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>delimit</span></span><span style='font-size:10.0pt'>
+     - Text string that is between each character value in the column. <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>F. mileage<o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This element is a collection of rate elements
+and describes the default mileage rates to <span class=GramE>used</span> over a
+period of time. Your can thus change the default rate but still allow creation
+of back dated reports with the effective rate for that period. This is
+especially useful during January or February as many companies set yearly
+rates. Each rate sub-element contains the following elements: <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l26 level1 lfo19;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>value</span></span><span style='font-size:10.0pt'>
+     - Mileage reimbursement rate expressed in dollars or major currency.
+     (e.g., 0.3450) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l26 level1 lfo19;tab-stops:list .5in'><span style='font-size:
+     10.0pt'>effective01/01/2004/effective <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>G. <span class=SpellE>sql</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This is a <span class=SpellE>desciption</span>
+of the SQL format used for a particular database. If you have selected a
+standard configuration that matches your database, you shouldn't have to change
+this. If you are using a new database that doesn’t have a standard <span
+class=SpellE>system.xml</span> already for it, then you may have to tweak this
+section as well as most of the other SQL templates in this file. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo22;tab-stops:list .5in'><span style='font-size:10.0pt'>driver
+     - simply identifies the driver for documentation purposes (e.g., 'VFP ODBC
+     Setup') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo22;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>dateformat</span></span></span><span
+     style='font-size:10.0pt'> - Either 'MM/DD/YYYY' , 'YYYY-MM-DD’, or
+     ‘DD-MMM-YYYY’. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo22;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>datesql</span></span></span><span
+     style='font-size:10.0pt'> - This is the string which to embed the date
+     string to write to a date type SQL column. The macro $data$ is replaced
+     with the date string. (e.g., &quot;CTOD('$date$')&quot; works for FoxPro) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo22;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>yessql</span></span></span><span
+     style='font-size:10.0pt'> - Column value to use for true. (e.g., '1') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo22;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>nosql</span></span></span><span
+     style='font-size:10.0pt'> - Column value to use for false. (e.g., '0') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo22;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>acceptnulls</span></span></span><span
+     style='font-size:10.0pt'> - Indicates whether the database accepts null
+     values. If the database doesn't accept null values, the values are
+     converted to either empty strings or zeros. 'No' indicates that the
+     database does not accept nulls and a 'Yes' indicates that it does accept
+     nulls. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo22;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>blankdate</span></span></span><span
+     style='font-size:10.0pt'> - String to use for a blank date. (e.g.,
+     '00/00/0000') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo22;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>locktablesql</span></span></span><span
+     style='font-size:10.0pt'> - Reserved. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo22;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>unlocktablesql</span></span></span><span
+     style='font-size:10.0pt'> - Reserved. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo22;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>insertmethod</span></span></span><span
+     style='font-size:10.0pt'> - Database method to use to insert a record. Available
+     methods are '<span class=SpellE>SimpleSQL</span>' or '<span class=SpellE>PreparedStatement</span>.'
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo22;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>reservedwordlist</span></span></span><span
+     style='font-size:10.0pt'> - List of column names, <span class=SpellE>seperated</span>
+     by semi-colons, that will be double quoted when the standard <span
+     class=SpellE>AdisoftDbase</span> routines are used. Note, this is database
+     dependant and does not cover non-constructed SQL statements in the <span
+     class=SpellE>system.xml</span> file. <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>H. <span class=SpellE>passwordchange</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This element contains the SQL statements that
+are used to change and reset passwords. Passwords can be originally set as part
+of the USER table maintenance process which is defined in the <span
+class=SpellE>edit.xml</span> file. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l12 level1 lfo25;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>updatesql</span></span></span><span
+     style='font-size:10.0pt'> - Used by end users to change their passwords.
+     Supports macros: $password$, $date$, and $email$. Used by <span
+     class=SpellE>ChangePWD.jsp</span>. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l12 level1 lfo25;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>resetsql</span></span></span><span
+     style='font-size:10.0pt'> - Used by support staff to reset their
+     passwords. Supports macros: $password$, $date$, and $email$, however the
+     $date$ macro is always set to a blank date. Used by <span class=SpellE>ResetPassword.jsp</span>.
+     <o:p></o:p></span></li>
+</ol>
+
+<p><st1:place><u><span style='font-size:10.0pt'>I.</span></u></st1:place><u><span
+style='font-size:10.0pt'> <span class=SpellE>personneltable</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This information is used by <span
+class=SpellE>PersonnelTalble.java</span> to access the personnel table (i.e.,
+USER). <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l46 level1 lfo28;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>emailinfoallsql</span></span></span><span
+     style='font-size:10.0pt'> - Used be <span class=SpellE>setEmailInfoAll</span>
+     method to load a personal profile and supports $email$. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l46 level1 lfo28;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>persinfosql</span></span></span><span
+     style='font-size:10.0pt'> - Used be <span class=SpellE>setPersInfo</span>
+     method to load a personal profile and supports $email$. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l46 level1 lfo28;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>persinfoallsql</span></span></span><span
+     style='font-size:10.0pt'> - Used be <span class=SpellE>setPersInfoAll</span>
+     method to load a personal profile and supports $<span class=SpellE>persnum</span>$.
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l46 level1 lfo28;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>persnuminfosql</span></span><span
+     style='font-size:10.0pt'> - Used be <span class=SpellE>setPersNumInfo</span>
+     method to load a personal profile and supports $<span class=SpellE>persnum</span>$
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l46 level1 lfo28;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>blanktopersnum</span></span></span><span
+     style='font-size:10.0pt'> - Normally set to 'No.' A 'Yes' lets the
+     personnel number be used as a password. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l46 level1 lfo28;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>persnumendcount</span></span></span><span
+     style='font-size:10.0pt'> - In conjunction with above, lets a portion of
+     the personnel number be used as a password. This value indicates <span
+     class=GramE>the <span class=SpellE>offest</span></span> to the portion to
+     use. (e.g., '0') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l46 level1 lfo28;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>userlistsql</span></span></span><span
+     style='font-size:10.0pt'> - SQL statement used by auditor and
+     administrators to pull up a list of users from which to select for report
+     header entry. Must have last name, first name, phone, location, department
+     code, email, vehicle, and service date columns. The $<span class=SpellE>lname</span>$
+     macro (last name) is used. <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>J. <span class=SpellE>departtable</span><o:p></o:p></span></u></p>
+
+<p><span class=GramE><span style='font-size:10.0pt'>The <span class=SpellE>DepartmentTable</span>
+class to access the department table.</span></span><span style='font-size:10.0pt'>
+<o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l40 level1 lfo31;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>departinfosql</span></span></span><span
+     style='font-size:10.0pt'> - <span class=SpellE>Selets</span> a row from
+     the department table. Uses the $depart$ macro which is the unique
+     department code or description. <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>K. <span class=SpellE>vouchertable</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This element describes how to generate
+central reference numbers. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l13 level1 lfo34;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>voucherobject</span></span></span><span
+     style='font-size:10.0pt'> - Should be set to '<span class=SpellE>ServerSystemTable</span>'
+     for all new installations. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l13 level1 lfo34;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>voucherprefix</span></span></span><span
+     style='font-size:10.0pt'> - Prefix for central reference numbers. (e.g.,
+     'K') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l13 level1 lfo34;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>voucherlength</span></span></span><span
+     style='font-size:10.0pt'> - Reserved. <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>L. <span class=SpellE>reportstatus</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>The <span class=SpellE>ProcessESSReport</span>
+class uses this element to accept and provide the initial state of a report
+into the central database. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l37 level1 lfo37;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>submitstatus</span></span></span><span
+     style='font-size:10.0pt'> - This is the initial status that a report is
+     set to prior to running a guideline check. This should correspond to a
+     status that is located in the default element and status sub-element.
+     (e.g., ST_SUBMIT_ON) <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l37 level1 lfo37;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>findsql</span></span></span><span
+     style='font-size:10.0pt'> - This is a SQL statement that will determine if
+     the submitted report already exists in the database. Normally this is done
+     be searching for a report with a valid processing status (i.e., hasn't
+     been rejected of deleted) for this user and previous reference number.
+     Macros $<span class=SpellE>persnum</span>$ and $<span class=SpellE>pvoucher</span>$
+     are used. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l37 level1 lfo37;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>updatecharsql</span></span></span><span
+     style='font-size:10.0pt'> - This SQL statement that is used to update a
+     single date column in the report. Macros $column$, $value$, $<span
+     class=SpellE>persnum</span>$ and $<span class=SpellE>pvoucher</span>$ are
+     used. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l37 level1 lfo37;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>pdatesql</span></span></span><span
+     style='font-size:10.0pt'> - This SQL statement that is used to update a
+     single non-date column in the report. Macros $column$, $value$, $<span
+     class=SpellE>persnum</span>$ and $<span class=SpellE>pvoucher</span>$ are
+     used. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l37 level1 lfo37;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>avoidduplicatesql</span></span></span><span
+     style='font-size:10.0pt'> - This SQL statement is used to check to see if
+     this specific instance already exists in the central database. It uses
+     macros $<span class=SpellE>persnum</span>$, $<span class=SpellE>pvoucher</span>$,
+     $status$, and $voucher$. <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>M. <span class=SpellE>reporttable</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This element provides SQL <span class=GramE>status
+which are</span> used to create report lists for various tasks. Each statement
+needs to return these columns: name, personnel number, total receipt (report)
+amount, report status (translated), report date, first approval signature,
+central reference number, previous reference number, second approval signature
+and, report department. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l42 level1 lfo40;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>selectapprove</span></span></span><span
+     style='font-size:10.0pt'> - List of reports for approval purpose. This is
+     the list of all reports requiring approval. There is logic in the Approve
+     List that will match reports against the current approver and only
+     actually display the reports they can act on. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l42 level1 lfo40;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>selectaudit</span></span></span><span
+     style='font-size:10.0pt'> - List of reports that can be audited. This is
+     the list of all reports requiring audit that met any work queue control
+     rules. The work queue rules are part of the SQL statement. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l42 level1 lfo40;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>selectfasttrack</span></span></span><span
+     style='font-size:10.0pt'> - Similar to <span class=SpellE>selectaudit</span>
+     above, but should only show reports that do not require physical receipts.
+     If receipts are required before payment, these reports can be audited
+     immediately avoiding an unnecessary delay in payment. <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>N. <span class=SpellE>prepopulateditems</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>Pre-populated items generally enter the
+system through credit card feeds. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l21 level1 lfo43;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>selectcards</span></span></span><span
+     style='font-size:10.0pt'> – SQL that will retrieve a list of cards for a
+     specific user from the card file.<span style='mso-spacerun:yes'> 
+     </span>The $<span class=SpellE>persnum</span>$ macro is used.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l21 level1 lfo43;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>selectallitems</span></span></span><span
+     style='font-size:10.0pt'> - SQL that selects all items that have not yet
+     been used to pre-populate a report. Macros are $card$ and $number$. The
+     unique reference or cursor must be in the first column. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l21 level1 lfo43;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>updateitem</span></span></span><span
+     style='font-size:10.0pt'> - SQL that updates the item as having been
+     selected for a report. Macro is $<span class=SpellE>recordcursor</span>$. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l21 level1 lfo43;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>selectitem</span></span></span><span
+     style='font-size:10.0pt'> - SQL that identifies the individual, based on a
+     unique reference number or cursor, for receipt creation. Macro is $<span
+     class=SpellE>readcursor</span>$. Columns are the transaction type, and the
+     transaction date. <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>O. <span class=SpellE>prepopulatedrecovery</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>Recovery option in case user needs to repost
+an item. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l33 level1 lfo46;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>selectallitems</span></span></span><span
+     style='font-size:10.0pt'> - SQL that selects all items that have been
+     marked as used but not reconciled as paid. Macros are $card$ and $number$.
+     The unique reference or cursor must be in the first column. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l33 level1 lfo46;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>updateitem</span></span></span><span
+     style='font-size:10.0pt'> - SQL that updates the item as having been
+     selected for a recovery. Macro is $<span class=SpellE>recordcursor</span>$.
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l33 level1 lfo46;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>selectitem</span></span></span><span
+     style='font-size:10.0pt'> - SQL that identifies the individual, based on a
+     unique reference number or cursor, for recovery. Macro is $<span
+     class=SpellE>readcursor</span>$. Columns are the transaction type, and the
+     transaction date. <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>Q. reconcilement<o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>The reconcilement function allows auditors to
+reconcile charges that have been paid to credit card statements. It is
+primarily used to account that all items have been passed on an expense report,
+but can also be used to detect fraud caused by overcharging. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l36 level1 lfo49;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>selectallcarditems</span></span></span><span
+     style='font-size:10.0pt'> - This SQL selects the items from the vendor
+     file that have been selected for a report but not yet reconciled. Macros
+     are $card$ and $number$. Columns are the record cursor/unique reference,
+     vendor status, card type, amount, transaction date, statement date, vendor
+     reference, and detail. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l36 level1 lfo49;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>carditemtable</span></span></span><span
+     style='font-size:10.0pt'> - Physical name of the vendor table. (e.g.,
+     'STATEMNT') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l36 level1 lfo49;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>selectallreceiptitems</span></span></span><span
+     style='font-size:10.0pt'> - This SQL selects the items from the receipt
+     file that have been paid but not yet reconciled. Macros are $card$ and
+     $number$. Columns are the record cursor/unique reference, status, payment
+     type, <span class=SpellE>anount</span>, transaction date, report date,
+     receipt reference, and merchant. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l36 level1 lfo49;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>receiptitemtable</span></span></span><span
+     style='font-size:10.0pt'> - Physical name of the ESS receipt table. (e.g.,
+     'RECEIPT') <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>R. post<o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This element consists of a single sub-element
+that is executed by the reconcilement process to indicate that an item is OK.
+The pre-populated POST JSP <span class=GramE>select</span> which statement to
+use based upon the table the item comes from. The table is the actual <span
+class=SpellE>statusok</span> sub-element. Below is an example of a <span
+class=SpellE>statusok</span> element that can handle a STATEMNT table or a
+RECEIPT table: <o:p></o:p></span></p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l47 level1 lfo52;tab-stops:list .5in'><span style='font-size:
+     10.0pt'>&lt;<span class=SpellE>statusok</span>&gt; <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l47 level1 lfo52;tab-stops:list .5in'><span style='font-size:
+     10.0pt'>&lt;STATEMNT&gt; <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l47 level1 lfo52;tab-stops:list .5in'><span style='font-size:
+     10.0pt'>UPDATE STATEMNT SET VND_</span><st1:stockticker><span
+      style='font-size:10.0pt'>STAT</span></st1:stockticker><span
+     style='font-size:10.0pt'> = 'OK' WHERE <span class=SpellE>recno</span>() =
+     $<span class=SpellE>rowkey</span>$; <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l47 level1 lfo52;tab-stops:list .5in'><span style='font-size:
+     10.0pt'>&lt;/STATEMNT&gt; <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l47 level1 lfo52;tab-stops:list .5in'><span style='font-size:
+     10.0pt'>&lt;RECEIPT&gt; <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l47 level1 lfo52;tab-stops:list .5in'><span style='font-size:
+     10.0pt'>UPDATE RECEIPT SET OK_STAT = 'OK' WHERE <span class=SpellE>recno</span>()
+     = $<span class=SpellE>rowkey</span>$; <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l47 level1 lfo52;tab-stops:list .5in'><span style='font-size:
+     10.0pt'>&lt;/RECEIPT&gt; <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l47 level1 lfo52;tab-stops:list .5in'><span style='font-size:
+     10.0pt'>&lt;/<span class=SpellE>statusok</span>&gt; <o:p></o:p></span></li>
+</ul>
+
+<p><u><span style='font-size:10.0pt'>S. history<o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This element is used to generate the report
+history list. The report history list lets <span class=GramE>users</span>
+access reports in the central database for personal investigations.<u> <o:p></o:p></u></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l34 level1 lfo55;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>approval</span></span><span style='font-size:
+     10.0pt'> - Should correspond to the first level approval type in the <span
+     class=SpellE>Status.xml</span>. (e.g., 'MANAGER') <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l34 level1 lfo55;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>reporter</span></span><span style='font-size:
+     10.0pt'> - This <span class=SpellE>SQl</span> lists all reports submitted
+     for this user over the selected time frame. Macros are $<span
+     class=SpellE>persnum</span>$, $<span class=SpellE>begdate</span>$, and $<span
+     class=SpellE>enddate</span>$. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l34 level1 lfo55;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>approver</span></span><span style='font-size:
+     10.0pt'> - This <span class=SpellE>SQl</span> lists all reports approved
+     by this user over the selected time frame. Macros are $<span class=SpellE>persnum</span>$,
+     $<span class=SpellE>begdate</span>$, and $<span class=SpellE>enddate</span>$.
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l34 level1 lfo55;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>admin</span></span><span style='font-size:10.0pt'>
+     - This <span class=SpellE>SQl</span> lists all reports entered by this user
+     over the selected time frame. Macros are $<span class=SpellE>persnum</span>$,
+     $<span class=SpellE>begdate</span>$, and $<span class=SpellE>enddate</span>$.
+     <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l34 level1 lfo55;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>subordinates</span></span><span style='font-size:
+     10.0pt'> - This <span class=SpellE>SQl</span> lists all reports for people
+     who report to this user over the selected time frame. Macros are $<span
+     class=SpellE>begdate</span>$ and $<span class=SpellE>enddate</span>$. <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>T. <span class=SpellE>sendmessages</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This element provides information needed to
+send payment notices. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l39 level1 lfo58;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>messagelistmsg</span></span></span><span
+     style='font-size:10.0pt'> - This is the screen message for the operator. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l39 level1 lfo58;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>messagelistsql</span></span></span><span
+     style='font-size:10.0pt'> - This is the SQL that selects the reports to
+     have processing messages sent for. It uses the $update$ macro. It needs to
+     specify name, personnel number, receipt (report) amount, report status
+     (translation), report date, batch date, central reference number, previous
+     reference number, and department columns for a specific batch date.
+     Specific reports can be deselected so a message will not be delivered. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l39 level1 lfo58;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>messagesendsql</span></span></span><span
+     style='font-size:10.0pt'> - This SQL collects information on a report for
+     the actual message send process, one report at a time. It needs <span
+     class=SpellE>colums</span> personnel number, report status, name, receipt
+     (report) amount, previous reference number, central reference number,
+     batch date, department, report create date. It selects based on the
+     $voucher$ and $status$ macros. <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>U. <span class=SpellE>delinquentmessages</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This element defines how the delinquent
+message routine will act, including the text of the follow-up messages that are
+sent out. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l45 level1 lfo61;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>resendafterdays</span></span></span><span
+     style='font-size:10.0pt'> - Number of days that will elapse, since
+     submittal, before the <span class=SpellE>orignal</span> router is
+     re-notified that they need to take action. This is calendar days (e.g.,
+     '7' would be two weeks). This person will then be notified <span
+     class=SpellE>everytime</span> the <span class=SpellE>delinquient</span>
+     message routine is run until they either approve/reject the report or
+     until their manager is notified. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l45 level1 lfo61;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>notifymanagerdays</span></span></span><span
+     style='font-size:10.0pt'> - Number of days that elapse since submittal on
+     non-approved reports before the original approvers manager is notified
+     that the report is still in the queue. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l45 level1 lfo61;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>sendtoreporter</span></span></span><span
+     style='font-size:10.0pt'> - This is a list of central database status
+     codes (i.e., <span class=SpellE>Status.xml</span>, translation element)
+     that will notify the original reporter that his report needs action. These
+     are normally manager and <span class=GramE>system reject</span> <span
+     class=SpellE>stati</span>. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l45 level1 lfo61;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>messagelistmsg</span></span></span><span
+     style='font-size:10.0pt'> - Instruction to the operator on running the
+     delinquent report module. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l45 level1 lfo61;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>messagelistsql</span></span></span><span
+     style='font-size:10.0pt'> - The SQL that will select which reports need
+     attention. This would be a list of specific <span class=SpellE>stati</span>
+     where the last operation occurred prior to the current date adjusted for
+     the number of &quot;resend after days&quot; number. The macro $update$ is
+     substituted for the adjusted date. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l45 level1 lfo61;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>messagesendsql/messagesendsql</span></span><span
+     style='font-size:10.0pt'> <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l45 level1 lfo61;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>notifymessage</span></span></span><span
+     style='font-size:10.0pt'> - Message sent to a reporter if there is a
+     report that needs his attention. The follow are the macros used $<span
+     class=SpellE>pvoucher</span>$, $voucher$, $amount$, $date$ and $status$. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l45 level1 lfo61;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>approvermessage</span></span></span><span
+     style='font-size:10.0pt'> - Message sent to an approver if there is a
+     report that needs his attention. The follow are the macros used $<span
+     class=SpellE>pvoucher</span>$, $voucher$, $amount$, $date$ and $status$.
+     Note: It is customary to provide a link to the ESS system with this
+     message. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l45 level1 lfo61;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>escalatemessage</span></span></span><span
+     style='font-size:10.0pt'> - Message sent to an approver's manager if there
+     is a report that needs his attention. The follow are the macros used $<span
+     class=SpellE>pvoucher</span>$, $voucher$, $amount$, $date$ and $status$.
+     Note: It is customary to provide a link to the ESS system with this
+     message. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l45 level1 lfo61;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>messagelistsql</span></span></span><span
+     style='font-size:10.0pt'> – SQL that retrieves the base set of reports for
+     which to generate<span style='mso-spacerun:yes'>  </span>delinquent
+     approval messages. The $<span class=SpellE>curdate</span>$ macro is
+     used.<span style='mso-spacerun:yes'>  </span>The $<span class=SpellE>curdate</span>$
+     macro refers to the current date of the report (i.e., <span class=SpellE>cur_date</span>
+     <span class=SpellE>clomun</span>). (In pre-1.7, the $update$ macro is
+     used.<span style='mso-spacerun:yes'>  </span>It is resolved with the <span
+     class=SpellE>cur_date</span>.<span style='mso-spacerun:yes'>  </span>The
+     $update$ macro is still maintained, but has been deprecated.)<o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>V. <span class=SpellE>releasepayments</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This element groups reports together in a
+'daily' batch and updates their status so that they can be included in the
+posting and payments processes. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo64;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>screenmessage</span></span></span><span
+     style='font-size:10.0pt'> - This is the screen message for the operator. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo64;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>listsql</span></span></span><span
+     style='font-size:10.0pt'> - This lists the reports that can be included in
+     the batch. The process allows an operator to deselect a specific report
+     after it <span class=GramE>have</span> been listed. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo64;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>retrievesql</span></span></span><span
+     style='font-size:10.0pt'> – used to verify the existence of a report.<span
+     style='mso-spacerun:yes'>  </span>Uses macros: $voucher$ and $status$.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo64;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>updatesql</span></span></span><span
+     style='font-size:10.0pt'> - Used to update the report status in the
+     central database to indicate that it has been processed into a batch. Uses
+     the macros: $status$, $date$, $<span class=SpellE>persnum</span>$ and
+     $voucher$ <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo64;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>updatesqlreceipts</span></span></span><span
+     style='font-size:10.0pt'> – Used to update the receipt status in the
+     central database to indicate that it has been processed into a batch. Uses
+     the macros: $status$, $date$, $<span class=SpellE>persnum</span>$ and
+     $voucher$ <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo64;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>updatesqlexpenses</span></span></span><span
+     style='font-size:10.0pt'> - Used to update the expense status in the
+     central database to indicate that it has been processed into a batch. Uses
+     the macros: $status$, $date$, $<span class=SpellE>persnum</span>$ and
+     $voucher$ <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>W. <span class=SpellE>endofday</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This element is used be the end of day feed
+creation process to take information from the ESS system and post it to other
+corporate systems. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l2 level1 lfo67;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>screenmessage</span></span></span><span
+     style='font-size:10.0pt'> - Message that describes the process to the person
+     who runs the feeds. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l2 level1 lfo67;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>listsql</span></span></span><span
+     style='font-size:10.0pt'> - This is the SQL that selects the reports to be
+     included in the feed. It uses the $update$ macro. It needs to specify
+     name, personnel number, receipt (report) amount, report status
+     (translation), report date, batch date, central reference number, previous
+     reference number, and department columns for a specific batch date. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l2 level1 lfo67;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>feed</span></span><span style='font-size:10.0pt'>
+     - This element specifies an ESS <span class=SpellE>complient</span> class
+     to run as part of the EOD feed creation process. Some generic classes are <span
+     class=SpellE>ess.NACHAFeed</span>, <span class=SpellE>ess.GeneralFeed</span>
+     and <span class=SpellE>ess.GeneralPayment</span>. This element type can
+     appear multiple times. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l2 level1 lfo67;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>folder</span></span><span style='font-size:10.0pt'>
+     - This is the folder to deposit the output of the feeds in. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l2 level1 lfo67;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>prenote</span></span></span><span
+     style='font-size:10.0pt'> - A 'Yes' indicates that the <span class=SpellE>prenotes</span>
+     should be included at the end of the daily NACHA.FIL file automatically. A
+     'No' indicates that <span class=SpellE>prenotes</span> will be handle in a
+     separate process./<span class=SpellE>prenote</span> <o:p></o:p></span></li>
+</ol>
+
+<p><u><span style='font-size:10.0pt'>X. <span class=SpellE>achprenote</span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This element controls the ACH <span
+class=SpellE>prenote</span> process. The ACH <span class=SpellE>prenote</span>
+process also uses information in the <span class=SpellE>nacha.xml</span> file. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l44 level1 lfo70;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>listsql</span></span></span><span
+     style='font-size:10.0pt'> - SQL statement that selects users who have been
+     designated to be <span class=SpellE>prenoted</span>. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l44 level1 lfo70;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>batchupdatesql</span></span></span><span
+     style='font-size:10.0pt'> – Reserved.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l44 level1 lfo70;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>updatesql</span></span></span><span
+     style='font-size:10.0pt'> - This updates a single user as having been <span
+     class=SpellE>prenoted</span>. Uses the $date$ and $<span class=SpellE>persnum</span>$
+     macros. <span class=SpellE><span class=GramE>screenmessage</span></span> -
+     Instructions to the person running the <span class=SpellE>prenote</span>
+     process. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l44 level1 lfo70;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>listsqlstatus</span></span></span><span
+     style='font-size:10.0pt'> - this SQL list the items that have been <span
+     class=SpellE>prenoted</span> so that they can be marked as OK to send via
+     ACH after the ten days have elapsed. Need columns: Personnel number, <span
+     class=SpellE>Lanst</span> name, First name, payment method, <span
+     class=SpellE>prenote</span> date, bank routing number and bank account. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l44 level1 lfo70;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>screenmessagestatus</span></span></span><span
+     style='font-size:10.0pt'> - Instructions to the person running the <i>OK <span
+     class=SpellE>Prenote</span></i> process. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l44 level1 lfo70;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>updatesqlstatusUPDATE</span></span><span
+     style='font-size:10.0pt'> USER SET CASH='ACH' WHERE PERS_NUM = '$<span
+     class=SpellE>persnum$';/updatesqlstatus</span> <o:p></o:p></span></li>
+</ol>
+
+<p><span style='font-size:10.0pt'>&nbsp;<o:p></o:p></span></p>
+
+<p><u><span style='font-size:10.0pt'>XX. <span class=SpellE><span class=GramE>auditreport</span></span><o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>Contains only one sub-element, <span
+class=SpellE><span class=GramE><i style='mso-bidi-font-style:normal'>receiptcheckupdate</i></span></span><span
+class=GramE>, that</span> contains the SQL statement to update a receipt with
+the status of a physical receipt. <o:p></o:p></span></p>
+
+<p><u><span style='font-size:10.0pt'>Y. <span class=SpellE>removereport</span> <o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This is the set of SQL statements required to
+fully delete a report from the central database. There is one type of
+sub-element call <span class=SpellE><i>sql</i></span>. There can be a multiple
+number of <span class=SpellE><i>sql</i></span> statements, each one of which
+will be executed. The only macro is $voucher$.<o:p></o:p></span></p>
+
+<p><u><span style='font-size:10.0pt'>Z. messages<o:p></o:p></span></u></p>
+
+<p><span style='font-size:10.0pt'>This element consists of text messages that
+system uses to communicate with the user. <o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l11 level1 lfo73;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>email_name</span></span><span style='font-size:
+     10.0pt'> - Used as the email title in the acceptance notification
+     generated by <span class=SpellE>ProcessESSReport</span> class. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l11 level1 lfo73;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>email_reporter</span></span><span
+     style='font-size:10.0pt'> - Used as the title for the reporters name in
+     the accept notification generated by <span class=SpellE>ProcessESSReport</span>
+     class. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l11 level1 lfo73;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>central_reference</span></span><span
+     style='font-size:10.0pt'> - Used as the central reference number title in
+     the acceptance notification generated by <span class=SpellE>ProcessESSReport</span>
+     class. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l11 level1 lfo73;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>personal_reference</span></span><span
+     style='font-size:10.0pt'> - Used as the previous reference number title in
+     the acceptance notification generated by <span class=SpellE>ProcessESSReport</span>
+     class. Note: the letter prefix is stripped from the previous reference
+     number in this display. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l11 level1 lfo73;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>email_routeto</span></span><span
+     style='font-size:10.0pt'> - Title for the name of the individual that this
+     report has been routed to for approval. Used in <span class=SpellE>ProcessESSReport</span>
+     class. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l11 level1 lfo73;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>email_subject</span></span><span
+     style='font-size:10.0pt'> - This is the text that will appear on the subject
+     line of the acceptance notification. Uses macros $voucher$ and $name$. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l11 level1 lfo73;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>email_new_line</span></span><span
+     style='font-size:10.0pt'> – the new line character to use.<span
+     style='mso-spacerun:yes'>  </span>Defaults to “\n”.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l11 level1 lfo73;tab-stops:list .5in'><span class=SpellE><span
+     style='font-size:10.0pt'>submission_link</span></span><span
+     style='font-size:10.0pt'> - This is the text of the submission link that
+     the user sees after the guideline check has been run. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l11 level1 lfo73;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>introduction</span></span><span style='font-size:
+     10.0pt'> - This is the text the user will see the first time that they log
+     into the system. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l11 level1 lfo73;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>approvallist</span></span></span><span
+     style='font-size:10.0pt'> - Text that displays below the approval queue. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l11 level1 lfo73;tab-stops:list .5in'><span class=SpellE><span
+     class=GramE><span style='font-size:10.0pt'>auditlist</span></span></span><span
+     style='font-size:10.0pt'> - Text that displays below the approval queue. <o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l11 level1 lfo73;tab-stops:list .5in'><span class=GramE><span
+     style='font-size:10.0pt'>received</span></span><span style='font-size:
+     10.0pt'> - Screen message the user sees to indicate that the report has
+     been submitted and persisted OK. Macros available are: $time$, $email$, $<span
+     class=SpellE>personalReference</span>$, $<span class=SpellE>personalStatus</span>$,
+     $<span class=SpellE>centralStatus</span>$ and, $<span class=SpellE>centralReference</span>$.
+     <o:p></o:p></span></li>
+</ol>
+
+<p align=center style='text-align:center'><span style='font-size:10.0pt'>###<o:p></o:p></span></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+</div>
+
+</body>
+
+</html>

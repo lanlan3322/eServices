@@ -1,0 +1,70 @@
+LDAP Interface Instructions
+(November 1, 2011)
+
+To use LDAP to log into ESS, you will need to add parameters to the web.xml file.  The web.xml file is located under 
+Tomcat in the webapps/ess-app/WEB-INF folder.  You add the following parameters:
+
+  <context-param>
+    <param-name>LDAPSearchPrincipal</param-name>
+    <param-value>ldap</param-value>
+  </context-param>
+  <context-param>
+    <param-name>LDAPCredentials</param-name>
+    <param-value>password</param-value>
+  </context-param>
+  <context-param>
+    <param-name>LDAPProvider</param-name>
+    <__param-value></__param-value>
+    <param-value>ldap://{LDAP Server}:{LDAP Port}</param-value>
+  </context-param>
+  <context-param>
+    <param-name>LDAPFactory</param-name>
+    <param-value>com.sun.jndi.ldap.LdapCtxFactory</param-value>
+  </context-param>
+  <context-param>
+    <param-name>LDAPSearchString</param-name>
+    <param-value>CN=Users,DC={domain},DC=com</param-value>
+  </context-param>
+  <context-param>
+    <param-name>LDAPEmailAttribute</param-name>
+    <param-value>mail</param-value>
+  </context-param>
+  <context-param>
+    <param-name>LDAPPrincipalAttribute</param-name>
+    <param-value>userPrincipalName</param-value>
+  </context-param>
+  
+  where:
+  
+  1. LDAPSearchPrincipal - This is an Active Directory (AD) or SLAP account that can search the relevant object branch. 
+  2. LDAPCredentials - Credentials (i.e., password) for the LDAPSearchPrincipal.
+  3. LDAPProvider - LDAP server URL.
+  4. LDAPFactory - JAVA factory used to connect via LDAP.  Probably can leave as above.
+  5. LDAPSearchString - Branch that will be searched.
+  6. LDAPEmailAttribute - Attribute that will be matched against the ESS email column.
+  7. LDAPPrincipalAttribute - Attribute that identifies the principal (i.e., user).
+  
+  Ultimately, the value of the LDAPPrincipalAttribute with be used with the keyed in password to validate
+  the user.
+  
+  The LDAPEmailAttribute can either be a simple value identifying the users email address in the AD or SLAP database, 
+  as above or can be an expression. In the expression, the $email$ and $persnum$ strings will 
+  be resolved with the email and personnel numbers from the user table for the relevant
+  user as defined by the email address.  
+  
+  A look "under the hood" will show you exactly how the LDAPEmailAttribute resolution takes place:
+  
+     	  String filter = LDAPEmailAttribute;   //
+    	  if ((filter.indexOf("$email$") > -1) || (filter.indexOf("$persnum$") > -1))
+    	  {
+    		  filter.replace("$email$", email);
+    		  filter.replace("$persnum$", persnum);
+    	  } else {
+    	       filter = "(" + LDAPEmailAttribute + "=" + email + ")";   //
+    	  }
+ 
+ The LDAP interface is located in the PersonnelTable.java class.
+ 
+ The LDAP interface can be turned off by blanking out the LDAPProvider parameter.
+ 
+ ###

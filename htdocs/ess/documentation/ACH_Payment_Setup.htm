@@ -1,0 +1,577 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 10">
+<meta name=Originator content="Microsoft Word 10">
+<link rel=File-List href="ACH_Payment_Setup_files/filelist.xml">
+<title>ACH Processing</title>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="City"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="place"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="date"/>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Jim Holton</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Jim Holton</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>236</o:TotalTime>
+  <o:Created>2006-03-29T18:39:00Z</o:Created>
+  <o:LastSaved>2006-03-29T18:39:00Z</o:LastSaved>
+  <o:Pages>4</o:Pages>
+  <o:Words>1063</o:Words>
+  <o:Characters>6061</o:Characters>
+  <o:Company>Adisoft, Inc.</o:Company>
+  <o:Lines>50</o:Lines>
+  <o:Paragraphs>14</o:Paragraphs>
+  <o:CharactersWithSpaces>7110</o:CharactersWithSpaces>
+  <o:Version>10.2625</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if !mso]><object
+ classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object>
+<style>
+st1\:*{behavior:url(#ieooui) }
+</style>
+<![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:\5B8B\4F53;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:"\@SimSun";
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:SimSun;}
+p.MsoDate, li.MsoDate, div.MsoDate
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:SimSun;}
+span.tx1
+	{mso-style-name:tx1;
+	font-weight:bold;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:284315173;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1044420906 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1
+	{mso-list-id:533691631;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1475263684 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l1:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2
+	{mso-list-id:665665487;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1423310970 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l2:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l3
+	{mso-list-id:927421329;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1606074274 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l3:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:39.0pt;
+	mso-level-number-position:left;
+	margin-left:39.0pt;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l4
+	{mso-list-id:1362589236;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-692129134 67698689 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l4:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:39.0pt;
+	mso-level-number-position:left;
+	margin-left:39.0pt;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l5
+	{mso-list-id:1411191705;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-232230622 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l5:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6
+	{mso-list-id:1542325761;
+	mso-list-type:hybrid;
+	mso-list-template-ids:78800540 67698703 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l6:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]-->
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
+normal'><u><span style='font-size:14.0pt'>ACH Payment Setup<o:p></o:p></span></u></b></p>
+
+<p class=MsoNormal align=center style='text-align:center'><st1:date Month="3"
+Day="23" Year="2006">March 23, 2006</st1:date></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span class=GramE><b
+style='mso-bidi-font-weight:normal'><i style='mso-bidi-font-style:normal'><span
+style='font-size:9.0pt'>Copyright 2006, R. James Holton.</span></i></b></span><b
+style='mso-bidi-font-weight:normal'><i style='mso-bidi-font-style:normal'><span
+style='font-size:9.0pt'> All rights reserved.<o:p></o:p></span></i></b></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>FIRST THING: If you are contemplating paying reports via
+ACH, you need to contact your bank and/or processor to get all the required
+information and requirements from them.<span style='mso-spacerun:yes'> 
+</span>Anything in this document may be superceded by them.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>SECOND THING: The author and Adisoft, Inc. assume no
+responsibility for any thing said, written or described in this document.<span
+style='mso-spacerun:yes'>  </span>The author and Adisoft, Inc. are not
+responsible for any loses that may occur, directly or indirectly, by using the
+information in this document or by use of the associated software.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>THIRD THING: Before using ACH as a payment method, make sure
+that you fully understand the process, and its risks, and that you have proper
+controls and audit procedures in place to compensate and control the associated
+risks. </p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>This document describes how the Expense Submittal System
+creates an ACH feed and how to set up the system so it produces the feed that
+you need.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>Here are some terms that will be used in this document:</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo1;tab-stops:list .5in'>Account
+     number – An account number is assigned by a bank to either a checking or
+     savings account.<span style='mso-spacerun:yes'>  </span>It is unique
+     within the bank.<span style='mso-spacerun:yes'>  </span>Account numbers
+     are not standard and come in different lengths.<span
+     style='mso-spacerun:yes'>  </span>The account number is found in the
+     microcode at the bottom of a check.</li>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo1;tab-stops:list .5in'><st1:City><st1:place>ABA</st1:place></st1:City>
+     Number – “<st1:City><st1:place>ABA</st1:place></st1:City>” stands for
+     “American Bankers’ Association.”<span style='mso-spacerun:yes'> 
+     </span>This group assigns each bank a unique number with is called an “ABA
+     Number.”<span style='mso-spacerun:yes'>  </span>An ABA Number is comprised
+     of 8 digits with the first two digits tied to a specific Federal Reserve
+     district.</li>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo1;tab-stops:list .5in'>ACH –
+     Stands for “Automated Clearing House.”<span style='mso-spacerun:yes'> 
+     </span>A clearing house is a collection of banks that exchange
+     checks.<span style='mso-spacerun:yes'>  </span>This allows individuals to
+     write checks and have them cleared effectively.<span
+     style='mso-spacerun:yes'>  </span>When ACH is used as an adjective for an
+     electronic file, it is used interchangeably with NACHA.</li>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo1;tab-stops:list .5in'>NACHA
+     – Stands for “National Automated Clearing House Association,” which is the
+     body that makes the standards for various clearing houses.</li>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo1;tab-stops:list .5in'>Prenote
+     – Prenote stands for “pre-notification.”<span style='mso-spacerun:yes'> 
+     </span>A prenote is a transaction that tests the validity of a routing
+     code, account and associated information.<span style='mso-spacerun:yes'> 
+     </span>Prenotes are sent in advance of payments to ensure that the payment
+     will be processed.<span style='mso-spacerun:yes'>   </span></li>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo1;tab-stops:list .5in'>Routing
+     Code – This is a bank’s <st1:City><st1:place>ABA</st1:place></st1:City>
+     number plus a check digit.<span style='mso-spacerun:yes'>  </span>The
+     Routing Code is 9 digits and is found in the microcode at the bottom of a
+     check.</li>
+</ol>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><u>Required end-of-day information<o:p></o:p></u></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>To run an ACH feed as part of your end-of-day process, you
+need ensure that the <i style='mso-bidi-font-style:normal'>endofday</i> element
+in the <i style='mso-bidi-font-style:normal'>system.xml</i> file is setup
+correctly.<span style='mso-spacerun:yes'>  </span>To run the NACHA feed, review
+the following sub-elements:</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:39.0pt;text-indent:-.25in;mso-list:l3 level1 lfo2;
+tab-stops:list 39.0pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>feed – ensure that a feed element exists with a
+text value of “ess.NACHAFeed”</p>
+
+<p class=MsoNormal style='margin-left:39.0pt;text-indent:-.25in;mso-list:l3 level1 lfo2;
+tab-stops:list 39.0pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>nacha_file_name – Name of the NACHA payment feed
+file.<span style='mso-spacerun:yes'>  </span>The default is “NACHA.FIL.”<span
+style='mso-spacerun:yes'>  </span>You may include a $date$ macro in the name,
+which will be expanded to be the current date in YYYYMMDD format.</p>
+
+<p class=MsoNormal style='margin-left:39.0pt;text-indent:-.25in;mso-list:l3 level1 lfo2;
+tab-stops:list 39.0pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=GramE>prenote</span> – Set to “No”
+for now.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><u>The NACHA.XML file<o:p></o:p></u></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>There are five record types in an ESS NACHA payment
+file.<span style='mso-spacerun:yes'>  </span>They are:</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:39.0pt;text-indent:-.25in;mso-list:l4 level1 lfo4;
+tab-stops:list 39.0pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>File Header Record</p>
+
+<p class=MsoNormal style='margin-left:39.0pt;text-indent:-.25in;mso-list:l4 level1 lfo4;
+tab-stops:list 39.0pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Batch Header Record</p>
+
+<p class=MsoNormal style='margin-left:39.0pt;text-indent:-.25in;mso-list:l4 level1 lfo4;
+tab-stops:list 39.0pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Entry Detail Record</p>
+
+<p class=MsoNormal style='margin-left:39.0pt;text-indent:-.25in;mso-list:l4 level1 lfo4;
+tab-stops:list 39.0pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Batch Control Record</p>
+
+<p class=MsoNormal style='margin-left:39.0pt;text-indent:-.25in;mso-list:l4 level1 lfo4;
+tab-stops:list 39.0pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>File Control Record</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>Each record is 94 bytes long.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>The <span class=GramE><i style='mso-bidi-font-style:normal'>nacha.xml
+</i><span style='mso-spacerun:yes'> </span>file</span> is used by ESS to write
+out each record.<span style='mso-spacerun:yes'>  </span>It consists of five
+elements that correspond to the five record types above.<span
+style='mso-spacerun:yes'>  </span>The text area of certain sub-elements is used
+to provide site specific information.<span style='mso-spacerun:yes'> 
+</span>These are noted below.<span style='mso-spacerun:yes'>  </span>The
+sub-elements below that are noted as “ESS:” are often followed by further
+explanations that indicate what the NACHA feed logic provides for these values.<span
+style='mso-spacerun:yes'>  </span>Elements where there is no notation are left
+blank in the feed.<span style='mso-spacerun:yes'>  </span>Here are the <i
+style='mso-bidi-font-style:normal'>nacha.xml</i> elements.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='mso-list:l0 level1 lfo5;tab-stops:list .5in'>FileHeader
+     – File Header Record</li>
+ <ol style='margin-top:0in' start=1 type=a>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>recordtypecontrol
+      – “1”</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>prioritycode</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>immediatedestination
+      – your bank’s/processor’s nine digit routing code</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>immediateorigin
+      – Your company’s account number</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>filecreationdate
+      – ESS: date from server feed process run</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>filecreationtime
+      – ESS: time from server feed process run</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>fileidmodifier
+      – “1”</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>recordsize
+      – “094”</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>blockingfactor
+      – “10”</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>immediatedestinationname
+      – your bank’s/processor’s name </li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>immediateoriginname
+      – Your company name</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>reference</li>
+ </ol>
+ <li class=MsoNormal style='mso-list:l0 level1 lfo5;tab-stops:list .5in'>Batchheader
+     – Batch Header Record</li>
+ <ol style='margin-top:0in' start=1 type=a>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>recordtypecontrol
+      – “5”</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>serviceclasscode
+      – “220” (confirm with your bank, sometimes “200”)</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>companyname
+      – Your company name</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>companydescrtionarydate</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>companyidentification
+      – Company’s ID with bank/processor</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>standardentryclasscode
+      -<span style='mso-spacerun:yes'>  </span>“PPD”</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>companyentrydescription
+      – “Expenses”</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>companydescriptiondate
+      – ESS: feed date </li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>settlementdate
+      – ESS: feed date plus two business days</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>originatorstatuscode
+      – “1”</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>originatingfiidentification
+      – Your bank’s/processor’s routing code</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>batchnumber
+      – ESS: usually “0000001”</li>
+ </ol>
+ <li class=MsoNormal style='mso-list:l0 level1 lfo5;tab-stops:list .5in'>entrydetail
+     – Entry Detail Record</li>
+ <ol style='margin-top:0in' start=1 type=a>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>recordtypecode
+      – “6”</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>transactioncode
+      – ESS: either “22” or “32”</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>receivingdfiindentificationnumber
+      – ESS: reporter’s bank routing code</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>rdfiaccountnumber
+      – ESS: reporter’s account number with bank</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>amount
+      – ESS: amount of payment</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>identificationnumber
+      – ESS: reporter’s personnel number</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>individualname
+      – ESS: reporter’s name</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>dicretionarydata
+      </li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>addendarecordindication
+      – “0”</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>tracenumber1
+      – Company’s bank assigned ID</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>tracenumber2
+      – ESS: sequence number</li>
+ </ol>
+ <li class=MsoNormal style='mso-list:l0 level1 lfo5;tab-stops:list .5in'>batchcontrol
+     – Batch Control Record</li>
+ <ol style='margin-top:0in' start=1 type=a>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>recordtypecode
+      – “8”</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>serviceclasscode
+      – “220” (confirm with your bank, sometimes “200”)</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>entrycount
+      – ESS: number of transactions</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>entryhash
+      – ESS: generated check number</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>totaldebitentrydollaramount
+      – ESS: zero</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>totalcreditentrydollaramount
+      – ESS: total of payments</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>companyidentification
+      </li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>messageauthenticationcode</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>reserved</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>originatingdfiidentification-
+      Company’s ID with bank/processor </li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>batchnumber
+      – ESS: usually “0000001”</li>
+ </ol>
+ <li class=MsoNormal style='mso-list:l0 level1 lfo5;tab-stops:list .5in'>filecontrol
+     – File Control Record</li>
+ <ol style='margin-top:0in' start=1 type=a>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>recordtypecode
+      – “9”</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'><span
+      class=GramE>batchcount</span> – ESS: number of batches, usually one.</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>blockcount
+      – number of lines in file divided by 10</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>entrycount
+      – number of payments in file</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>entryhash
+      – generated check number</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>totaldebitentrydollaramount
+      – zero</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>totalcreditentrydollaramount
+      – total of all payments</li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo5;tab-stops:list 1.0in'>reserved</li>
+ </ol>
+</ol>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>You should contact your bank and/or processor to verify the
+above information.<span style='mso-spacerun:yes'>  </span>You should also do a
+test run before going live.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><u>Setting up the <i style='mso-bidi-font-style:normal'>calendar.xml</i>
+file<o:p></o:p></u></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>This is an important file if you are using the NACHA feed.<span
+style='mso-spacerun:yes'>  </span>The NACHA feeds needs to be able to calculate
+two business days from any feed date.<span style='mso-spacerun:yes'>  </span>It
+can account for weekends with simple logic, but must be told when bank holidays
+occur so it can compensate for those dates.<span style='mso-spacerun:yes'> 
+</span>A bank holiday is any day, other than Saturday and Sunday, when banks
+are closed.<span style='mso-spacerun:yes'>  </span>These are days like Memorial
+Day or Christmas.<span style='mso-spacerun:yes'>  </span>ACH payments cannot be
+made on dates that banks are closed.<span style='mso-spacerun:yes'>  </span>The
+<i style='mso-bidi-font-style:normal'>calendar.xml</i> file contains the dates
+for future bank holidays and needs to be accurately maintained if the NACHA
+feed is used.<span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>The location of the <i style='mso-bidi-font-style:normal'>calendar.xml</i>
+file is specified in the <i style='mso-bidi-font-style:normal'>system.xml</i>
+file under the <i style='mso-bidi-font-style:normal'>xmlcalendar</i>
+sub-element in the <i style='mso-bidi-font-style:normal'>configuration</i>
+element.<span style='mso-spacerun:yes'>  </span>Normally this is in the <i
+style='mso-bidi-font-style:normal'>xmls</i> folder, but can be specifed in
+another location if it is convenient for maintenance purposes. <o:p></o:p></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>To specify at date for a bank holiday, add a date elements
+to the bankholiday element in the file.<span style='mso-spacerun:yes'> 
+</span>Dates are specified in the ‘YYYY-MM-DD’ format. </p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal align=center style='text-align:center'>###<o:p></o:p></p>
+
+</div>
+
+</body>
+
+</html>

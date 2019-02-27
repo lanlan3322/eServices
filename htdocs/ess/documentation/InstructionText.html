@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<!-- Copyright R. James Holton, Inc. 2002, 2014, All rights reserved -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+ul {
+ list-style:none
+}
+.OK {
+ list-style-image:url('/ess/images/ess-OK.gif');
+ }
+ .Issue {
+ list-style-image:url('/ess/images/ess-Check.gif');
+ }
+ .View {
+ list-style-image:url('/ess/images/ess-View.gif');
+ }
+ .Simple {
+  list-style:circle
+ }
+
+</style>
+
+<title>ESS AMI Documentation</title>
+</head>
+
+<body onLoad="writeURL()">
+
+<h2>Expense Submittal System 8.1 on the Amazon Cloud</h2>
+<sm><sm><i>Copyright 2014, R. James Holton, All rights reserved</i></sm></sm><br/><br/><br/>
+
+This web page provides the information necessary to finish the basic installation of ESS on an AWS EC2 instance.  We are assuming you have an SSH client, such as PuTTY, installed and that you have a basic understanding of Linux.  You also need to be able to use <i>vi</i> or some other editor to edit files on the EC2 instance that you have created.
+
+The first thing that you want to do is run the installation script. This will get the basic ESS system running.  After you run the installation script, you'll be able to: 
+
+<ul class="OK">
+<li>Login to ESS with the supplied logins</li>
+<li>Submit reports</li>
+<li>Create new users</li>
+<li>Set up your accounting process</li>
+<li>Generate work-flow email messages to your users</li>
+<li>Approve and audit reports</li>
+<li>Run the EOD and other reports</li>
+</ul>
+
+Bookmark this page - you'll need it later.
+
+<h2>Installation Script</h2>
+
+The initial user account for the ESS AWS instance is <i>ec2-user</i>.  As part of the setup you will have established a passphrase for your public key.
+
+The installation script lets you easily configure ESS on AWS so you can get the core system up and running in minutes.  It should be used right after the instance has been initiated.  Warning: If you run The installation script after you have made other changes, such as advanced SMTP or POP3 set-up, to the system.xml file, you will lose those changes as the installation script initializes itself by copying the .orig version.  The script will prompt you for the following information:
+<ul class="OK">
+<li>Server URL/IP - normally you should leave this as the default.  The main exception is if you are using an elastic IP.</li>
+<li>Domain - Enter the domain that is used by most of your users.  This is the part after the <i>@</i> in your email address.</li>
+<li>Service Address - This is the email address that will send out the work-flow messages.  It should be a valid address/account on your email server.</li>
+<li>SMTP Address - Enter the SMTP address of your email server.  The ESS AMI comes with SendMail so you use <i>localhost,</i> en lieu of your email server if you want.</li>
+</ul>
+
+To run the installation script, enter:
+
+<ul>
+<li><i>sudo /var/ess/install/install.sh</i></li>
+</ul>  
+
+from the Linux command line.  Remember, this script is normally run only once.  You can remove the <i>/var/ess/install</i> folder after you've completed your installation.
+<br/><br/>
+ESS will not be correctly installed until you run this script. Once you run the installation script, you'll be able to access ESS.
+<br/><br/>
+As part of the install process, you have created the test users' default (initial) password.  Make sure to copy this down so that you can use it.  If you need to recover it, it is in the <i>/var/ess/xmls/.usercode</i> file.
+
+<h2>Accessing Reporter and Admin Screens with a Browser</h2>
+
+The following URL will let you use your browser to access both the "Reporter" screens and the "Audit and Admin" screens:
+
+<ul>
+<li><a id="url1" href=""><span id="url2"></span></a></li>
+</ul>
+
+If you log in from this screen you will get the reporter screen.  To go to the "Audit and Admin" screens you should click the <i>Go to admin</i> link.<br/><br/>
+
+The system comes loaded with several users so that you can login immediately:
+
+<ul class="Simple">
+<li>admin@expenseservices.com - This user has access to the "Audit and Admin" module.</li>
+<li>approver@expenseservices.com - General user/reporter who reports to the admin user.</li>
+<li>reporter@expenseservices.com - General user/reporter who reports to the approver.</li>
+</ul>
+
+The password for each user is the default (initial) password you created during the installation.  If you need to redo this process, you can run:
+
+<ul>
+<li><i>sudo /var/ess/scripts/changeAllPasswords.sh</i></li>
+</ul> 
+
+You will need to know the MySQL password (see below) to run this script.
+<br/><br/>
+<b>Remember</b> to inform your users to change their passwords.
+
+<h2>Starting and Stopping ESS</h2>
+
+Apache2 (httpd), Tomcat (tomcat7) and MySQL (mysqld) are run as services.  You can initiate each with the <i>service</i> command under <i>sudo</i> or use the provided scripts:
+
+<ul class="Simple">
+<li>/var/ess/application/scripts/startup.sh - this will start the three services</li>
+<li>/var/ess/application/scripts/shutdown.sh - this will stop the three services</li>
+</ul>
+
+The scripts should be run under <i>sudo</i>.  For example to stop ESS, you would type:
+
+<ul>
+<li><i>sudo /var/ess/application/scripts/shutdown.sh</i></li>
+</ul>
+<h2>Advanced SMTP Set-up</h2>
+
+If you are not receiving work-flow messages, there could be several reasons:
+
+<ul class="Issue">
+<li>If you are still using the test users, the messages are probably being sent to us at expenseservices.com.  In this case when we notice this, we'll send an email to the account you specified to send messages from and let you know.</li>
+<li>The test users may not have valid email boxes on your server.</li>
+<li>Your gateway could think that you are not authorized to forward messages.  Make sure the user that you are sending messages from is authorized to send messages to any user.</li>
+<li>Your SMTP server might receive messages on a port other than 25, or you might require an ID/password to send a message.</li>
+</ul>
+The following parameters in the <i>system.xml</i>, which is located in the <i>/var/ess/xmls</i> folder, we let you fine tune the SMTP connection to fit your requirements: 
+<ul class="Simple">
+<li>smtp_address - This is the IP or URL of the SMTP server that you will use to send workflow email messages to your users. If you are using sendmail you can set this to <i>localhost</i>. Examples: <i>yourcompany.com</i> or <i>127.0.01</i></li>
+<li>smtp_domain - This is the domain that the majority of your users have as part of their email address. Example: <i>yourcompany.com</i></li>
+<li>smtp_port - This is the port number to access when sending email.  Normally this will be port 25, 587 or 465.  If port 465 is used, SSL (enryption) will be used.</li>
+<li>smtp_delimiter - This is almost always set to '.'.</li>
+<li>smtp_authtype - This is set to 'plain' or 'none'.  If 'plain' is used a valid login and password must be supplied in the follow two elements.</li>
+<li>smtp_logon - User login for the mail server.</li>
+<li>smtp_password - Password for the above login</li>
+</ul>
+
+If you selected "localhost" as your SMTP server during installation, <i>sendmail</i> is an active service on the ESS AWS server and should be stopped if it is not used.
+
+<h2>POP3 For Receipts Images and Text Entries</h2>
+
+The POP3 interface is used to:
+
+<ul class="OK">
+<li>Register remote email accounts and mobile phones for users</li>
+<li>Accept receipt images from email and mobile phones</li>
+<li>Accept report entries via text or email</li>
+</ul>
+
+The installation script does not set up the POP3 interface.  To enable the POP3 interface you need to edit the following parameters in the <i>system.xml</i>, which is located in the <i>/var/ess/xmls</i> folder.
+
+<ul class="Simple">
+<li>gateway_interval - This is the number of minutes between checks for incoming email. </li>
+<li>gateway_stop_time - If an a time is specified (hh:mm in 24 hour format), the gateway will stop at this time</li>
+<li>pop3_logon - User ID for the POP3 account</li>
+<li>pop3_password - Password for the above account</li>
+<li>pop3_delete_messages - Normally set to 'Yes' for production.</li>
+<li>pop3_address - This is the IP or URL of the POP3 server that you will use to receive receipt images and text input from your users. If you are using sendmail you can set this to <i>localhost</i>. Examples: <i>yourcompany.com</i> or <i>127.0.01</i></li>
+<li>pop3_port - This is the port number that the POP3 server monitors.  Normally this will be 110 or 995.  If port 995 is used, SSL (encryption) will be used.</li>
+<li>pop3_incoming_folder - Messages are initially saved in this folder before they are analysed for content.  The default and recommended value is '/var/ess/incoming'.</li>
+</ul>
+
+Next you will need to uncomment the listener element in the <i>/var/ess/xmls/web.xml</i> file.  You do this by changing the element:
+
+  <ul>
+  <li>&lt;comment-listener&gt;</li>
+        <ul><li>&lt;listener-class&gt;ess.ReceiptConduitLaunch&lt;/listener-class&gt;</li></ul>
+  <li>&lt;/comment-listener&gt;</li>
+  </ul>
+to
+
+  <ul>
+  <li>&lt;listener&gt;</li>
+        <ul><li>&lt;listener-class&gt;ess.ReceiptConduitLaunch&lt;/listener-class&gt;</li></ul>
+  <li>&lt;/listener&gt;</li>
+  </ul>
+
+After you have completed the edits, restart the services with the <i>shutdown.sh</i> and <i>startup.sh</i> scripts.  
+
+<h2>Corporate Logo and Company Edit Screen</h2>
+
+At some point you will want to brand ESS with your corporate logo.  To do this:
+
+<ol>
+<li>Select the logo image.  Smaller ones are better. ESS will image the logo in a space that is 50 px high.</li>
+<li>Copy the logo image into <i>/var/ess/applications/htdocs/ess/images</i>.</li>
+<li>Goto the "File Editors" section of the "Audit and Admin" menu (<i>Go to Admin</i>) and select the <i>Company Codes</i> link.</li>
+<li>Enter the name of the file in the "Logo File Name" field.</li>
+<li>Enter the display height in the "Logo Height" field. Heights greater than 50 px will not image correctly.</li>
+<li>Enter the display width in the "Logo Width" field. You should keep the width/height entries in proportion to the physical width/height of the image.</li>
+<li>Click the <i>OK - Accept Any Changes</i> button.</li>
+</ol>
+
+Consult the documents listed below for the other fields on the "Company Code" screen.
+
+<h2>Changing MySQL Password</h2>
+
+The root password for MySQL is set during the installation script.  The current password is available in the <i>web.xml</i> file located in the <i>/var/ess/xmls</i> folder. To reset the password you need to change the password in <i>web.xml</i> and change the password with the mysqladmin command.
+
+<ul class="OK">
+<li>web.xml - use the <i>vi</i> editor to edit the value of the context parameter <i>DBPassword</i> to the new password.</li>
+<li>mysql - run the mysqladmin tool to change the root password.  You will be prompted for the old/current password as part of the process:<br/>
+<ul>
+<li><br/>/usr/bin/mysqladmin -u root -p password "new-password"<br/><br/></li>
+</ul>
+where new-password is the new password you want.  Also, the password parameter is actually <i>password</i>.  You will be prompted for the current password as part of the process.
+</li>
+</ul>
+
+
+<h2>Selecting Input Screens</h2>
+
+ESS currently ships with the following options for report entry: 
+<ul class="Simple">
+<li>screen.html - captures project and location data on line items. (English, French and Portuguese)</li>
+<li>screenSimple.html - simple screen for expense and mileage entries. No FX. (English and French)</li>
+<li>screenLocation.html - Cross charge reports. Project and location on line items. (English)</li>
+<li>screenClientBillable.html - Captures client billing information. (English)</li>
+<li>screenCrossCharge.html - Available for future modification.(English)</li>
+<li>screenMerchant1.html - Cross charge, No FX, No Airline. Merchant field is user controlled list. (English)</li>
+<li>screenMerchant2.html - Cross charge, No FX, No Airline. Merchant field is text entry. (English)</li>
+<li>screenDemo.html - Cross charge and client by report. Project line item. (English)</li>
+</ul>
+
+Enter the screen name (e.g., <i>screen.html</i>) in the "Entry Screen" field of the "Company Code" screen. 
+
+<h2>Log Rotation and Data Backup</h2>
+
+<ul class="OK">
+<li>ESS uses <i>logrotate</i> to rotate its logs with the <i>ess</i> file located in <i>/etc/logrotate.d</i>.
+<li><i>Cron</i> is used to delete old Tomcat logs and ESS messages files in <i>/var/ess/incoming</i>.
+<li>Database backups are done manually with the <i>/var/ess/dbdump.sh</i>.  It will create a <i>essBackup.sql</i> file in the /var/ess folder.  You can upload or download this file to another machine to safe store your data.</li>
+</ul>
+
+
+<h2>Documentation</h2>
+
+<ul class="View">
+<li><a id="url3" href="">Administration and Installation Manuals</a></li>
+<li><a href="http://www.expenseservices.com">ExpenseServices.com Website</a></li>
+<li><a id="url4" href="">Sending in Receipt Images and Expense Entries from Phone and Email</a></li>
+</ul>
+
+
+<h2>Adding SSL for HTTPS</h2>  
+
+To add SSL to Apache, so your users can use HTTPS, you simply need to install the <i>mod_ssl</i> in Apache.  It will come with a test certificate.
+<ul class="Simple">
+<li>Issue this command to configure the instance to Apache SSL support: <i>sudo yum install httpd mod_ssl</i></li>
+<li>Stop the server with : <i>sudo /var/ess/application/scripts/shutdown.sh</i></li>
+<li>Start the server with : <i>sudo /var/ess/application/scripts/startup.sh</i></li>
+</ul>
+The test certificate will cause an untrusted message to be displayed when you access ESS with HTTPS until you get a certificate from a trusted authority.  During your testing you can ignore it and proceed to the site.  However, when you go live you will want to get a certificate from a trusted authority.
+
+<h2>Support Options</h2>
+
+<ul class="View">
+<li>Free Support: We strive to answer any questions that you might have regarding ESS no matter how specific they might.  You can either contact us or funnel your requests through one of several groups.  <a href="http://expenseservices.net/communitySupport.html">Here is a set of links for ESS support</a>. </li>
+<li>Priority Support: If the free support isn't enough we offer priority support.  In priority support any service requests go to the top of the queue and receive priority over free support.  We will also access your system remotely to configure it, fix any issues, make minor customizations and keep your software up-to-date.  This service comes with 8 hours of consulting to apply towards major customization and feed creation.  The pricing for priority support is tied to the number of reports that you process/month and ranges from $2400 to $10000 a year.  Let me know the number of reports that you process per month and we will give you a quote.
+</li>
+<li>Customization Services: We also do "projects" such as major customization, feed creation, etc.  If you have something in mind, we will provide a quote.
+</li>
+</ul>
+
+
+<h2>Open Source - How to Help!</h2>
+
+
+<ul class="OK">
+<li>Seek Help - If you have an issue please don't hesitate to contact us.  You'll get your problem addressed and we'll know what is going on.</li>
+<li>Offer Help - If you add anything, jazz anything up or translate anything, let us know and send your work along.</li>
+<li>Contact Info - <a href="mailto:service@expenseservices.com?Subject=AWS%20User%20Message" target="_top">Send an email to service@expenseservices.com</a></li>
+</ul>
+
+Have a good day!
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+###
+<br/>
+<br/>
+<br/>
+<br/>
+<script language="javascript">
+
+function writeURL() 
+{
+var myURL = document.URL;
+var ending = myURL.indexOf("ess");
+myURL = myURL.substring(0, ending);
+document.getElementById("url1").href = myURL + "ess/en/XLogin.html";
+document.getElementById("url2").innerHTML = myURL + "ess/en/XLogin.html";
+document.getElementById("url3").href = myURL + "ess/documentation/index.html";
+document.getElementById("url4").href = myURL + "ess/documentation/Device_Registration_Procedures.htm";
+}
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,159 @@
+Expense Submittal System (ESS) Release 7
+========================================
+Updated: October 15th (for Rel 7.0.4)
+
+Note: User and technical documentation is available 
+on ExpenseServices.com's web site (http://expenseservices.com).  
+Support is also available on SourceForge (http://sourceforge.net/projects/expense-ss) 
+and on Yahoo Users' Groups 
+(http://tech.groups.yahoo.com/group/OpenSourceExpense/).
+
+Please review this file as it contains important information 
+to get you up and running with ESS.
+
+
+
+Try it out first!
+=================
+This system has been installed at http://expenseservices.com as a service.  You can
+subscribe to and use the basic service for free.  This way you can take ESS for a test
+drive before installing this package.  Please note that the basic service does not 
+have all the features of the package that you are downloading.  If you have any 
+questions contact service@expenseservices.com.  
+
+
+
+Database Support Changes
+========================
+
+ESS on SourceForge is QA'd against the MySQL database.  The configuration files for Oracle 
+are provided in case you want to use an Oracle server.  The MS SQLServer configurations are not 
+currently up-to-date, but are available by contacting service@expenseservices.com.
+If you wish to update them (by comparing them to the MySQL files) you can use them.  
+
+
+Installers
+==========
+
+As of October 15, 2011 there are no installers for version 7.0.  All installations
+must be performed manually.
+
+As soon as the installers have been updated and tested they will be made available
+on SourceForge.  We plan on providing installers for existing Web and app server 
+installations on Windows and Linux.  We do not have plans to ship LAMP stacks in the
+near future as we did in the past 
+
+
+User Menus
+==========
+
+One of the most powerful options ESS provides is the ability, by 
+editing HTML files, to custom tailor menus for your users.  To 
+get you started ESS is shipped with the following menus:
+
+1 - Very simple menu and supports foreign travel.
+2 - Supports client billing, project tracking, foreign travel,  and password change.
+    foreign travel, and password change.
+3 - Very simple menu and supports foreign travel. Includes support for scan receipt files.
+4 - Supports client billing, project tracking, foreign travel,  and password change.
+    foreign travel, and password change. Includes support for scan receipt files.
+8 - Fully loaded with screens that allow for the capture of GST.  
+    Great for Australia, Canada, etc.  You can remove any options 
+    you don't want.
+
+To change a user's menu, log into the Audit module and access 
+the User File: User Primary screens.
+
+
+JDBC Database Drivers, etc.
+===========================
+
+ESS uses JDBC to connect to your database.  The drivers mentioned 
+here are all jar files that contain Java class files.
+
+If you use MySQL, you're set. The MySQL JDBC drivers ship with ESS 
+and will automatically be installed in the webapps/WEB-INF/lib folder.
+
+If you are using Microsoft SQL Server, you need to download the drivers 
+from Microsofts Web site.  There is an installation program that gets run.  
+After you download the drivers you need to move them to the
+webapps/WEB-INF/lib folder.  The files you need to copy are msbase.jar, 
+mssqlserver.jar and msutil.jar.
+
+If you are using Oracle, you need to copy the JDBC drivers into the 
+webapps/WEB-INF/lib folder.  Drivers for Java 1.4 are nls_charset12.jar 
+and ojdbc14.jar.  The drivers for Java 1.3 are classes12.jar and 
+mls_charset12.jar. You may be able to find these drivers in your 
+oracle/ora92/jdbc/lib folder.
+
+Another note regarding the Oracle dirvers: The Installer will give 
+you, as a default, the following string:
+
+jdbc:oracle:thin@localhost:1521:adisoft
+
+An explanation for each item is:
+
+     jdbc:oracle:thin - driver being used.
+     localhost - address of the machine hosting the Oracle server.  
+                 This can be a URL or IP.
+     1521 - port that the Oracle server listens to.  1521 is the 
+            standard port.
+     adisoft - SID of the database being used.
+
+With an Oracle install, you'll probably endup changing some of these.
+
+Database Connection Strings
+===========================
+
+The ESS Installer uses the following database connection strings:
+
+MySQL: jdbc:mysql//localhost/adisoft?zeroDateTimeBehavior=convertToNull
+MS SQl Server: jdbc:microsoft:sqlserver://localhost:1433;SelectMethod=cursor
+Oracle: jdbc:oracle:thin:@localhost:1521:adisoft
+
+Installers will let you change these strings if you need to.  The defaults 
+will work if the database server is on the same machine as the app server.  
+If you are not using one of the Installers, or you want to change the 
+string after installation, you'll need to change the string in the system.xml 
+file (ess/xmls), in the web.xml file (webapps/ess-app/WEB-INF) and on the 
+2 URLs used to generate the JavaScript profiles described below. 
+
+
+Security Settings
+=================
+
+ESS reads and writes information to your hard disk in the form of xml 
+files, log files and JavaScript files.  In addition to being able to execute 
+html and JSP, it is important that the user that launches the Tomcat service 
+has the ablitily to create and write the following:
+
+/var/ess, c:\ess folder or equivalent - These folders will hold logs and user 
+data that the system creates and adds to as it is run.
+
+Folder from where Tomcat is started - In the event that the expense.log 
+cannot be opened in one of the folders, it will attempt to open the log in the 
+folder that it is pointed to when Tomcat is started.
+
+Linux Security Note: Make sure that the user installing ESS has adequate 
+privileges to modify the web and app server directories.  Because user 
+launching Tomcat has needs to have adequate privileges to write to the 
+/var/ess folder and that user may be different from the user installing 
+ESS, the Linux installation routine applys 777 as the privilege - protection 
+level.  System Admins should review this folder, together with the user that 
+launches Tomcat and make appropriate ownership and privilege changes.
+
+Maintenance
+===========
+
+From Time to time, you'll want to perform some basic maintenance on the 
+Expense Submittal System.
+
+1. ESS logs all important actions to the 'expense.log' log.  If you 
+   stick with the default settings, 'expense.log will either be in 
+   '/var/ess' or 'c:\ess'. You'll need to search your disk drive to 
+   find the exact location of the log.  As 'expense.log' serves as an 
+   audit trail, it is never automatically deleted.  Therefore, you'll 
+   want to backup up the log and delete it from time to time depending 
+   on your report volume.
+
+####

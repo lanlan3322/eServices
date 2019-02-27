@@ -1,0 +1,59 @@
+ESS Installation Addendum
+
+The following are examples of how to use hard and symbolic links to set up ESS.  Since every installation may be a little different, please use these as examples only.
+
+1. Example: Creating symbolic links from apache, tomcat and mysql folders.
+
+On a BitNami Windows Apache Tomcat Stack, run as the Administrator in the command prompt:
+In the /BitNami/tomcatstack-7.0.50-0/apache-tomcat/webapps folder: mklink /D ess \var\ess\application\htdocs\ess
+In the /BitNami/tomcatstack-7.0.50-0/apache-tomcat/webapps folder: mklink /D ess-app \var\ess\application\webapps\ess-app
+In the /var/ess/application/webapps/ess-app/WEB-INF folder: mklink web.xml \var\ess\xmls\web.xml
+
+On Ubuntu Linux with mod_jk
+In the /var/www folder: ln -s /var/ess/application/htdocs/ess ess
+In the /var/lib/tomcat6/webapps folder: ln -s /var/ess/application/webapps/ess-app ess-app
+In the /var/ess/application/webapps/ess-app/WEB-INF folder: ln /var/ess/xmls/web.xml web.xml
+
+On Amazon Micro Linux with proxy_ajp (BitNami TomcatStack [see Notes 6,7)
+In the /opt/bitnami/apache-tomcat/webapps folder: ln -s /var/ess/application/htdocs/ess ess
+In the /opt/bitnami/apache-tomcat/webapps folder: ln -s /var/ess/application/webapps/ess-app ess-app
+In the /var/ess/application/webapps/ess-app/WEB-INF folder: ln \var\ess\xmls\web.xml web.xml
+
+On my Mac Mini [see Note 5]
+In the /Library/WebServer/documents folder: ln -s /var/ess/application/htdocs/ess ess
+In the /usr/local/apache-tomcat-n.n.nn folder: ln -s /var/ess/application/webapps/ess-app ess-app
+In the /var/ess/application/webapps/ess-app/WEB-INF folder: ln \var\ess\xmls\web.xml web.xml
+
+On my Mac with BitNami [see Notes 6,7]
+In the /Applications/tomcatstack*/apache-tomcat/webapps folder: ln -s /var/ess/application/htdocs/ess ess
+In the /Applications/tomcatstack*/apache-tomcat/webapps folder: ln -s /var/ess/application/webapps/ess-app ess-app
+In the /var/ess/application/webapps/ess-app/WEB-INF folder: ln \var\ess\xmls\web.xml web.xml
+
+On a Linux with BitNami [see Notes 6,7]
+In the /opt/tomcatstack*/apache-tomcat/webapps folder: ln -s /var/ess/application/htdocs/ess ess
+In the /opt/tomcatstack*/apache-tomcat/webapps folder: ln -s /var/ess/application/webapps/ess-app ess-app
+In the /var/ess/application/webapps/ess-app/WEB-INF folder: ln \var\ess\xmls\web.xml web.xml
+
+You may need to be logged on as root or use sudo for these operations
+
+
+
+Other notes:
+
+1. If you change the controller and auditor's email address you will need to adjust the security.xml file which is located in the /var/ess/xmls folder.
+
+2. Add the AddDefaultCharset ISO-8859-1 to either the httpd.conf or the httpd-languages.conf [see if there is a better solution]
+
+3. Note to adding expense types and locations they will need a translation in the ess.properties files.
+
+4. You can determine whether you are using mod_jk or proxy_ajp by looking in the Apache httpd.conf file.
+
+5. If you installed with BitNami, the default BitNami folder is in the Applications folder on the Mac.  The "On my Mac" example had the components installed separately.
+
+6. In my test installation with BitNami on the Mac, I needed to go into the setenv.sh file in the tomcat/bin folder and change the Java version to 1.6.0.
+
+7. These instructions are for installations that use the BitNami TomcatStack.  BitNami has other stacks that contain Tomcat.  You may need to modify the httpd.conf file to get the proxy to work correctly.
+
+=======
+
+
