@@ -1,0 +1,44 @@
+/var/ess/expense.log {
+    compress
+    delaycompress
+    rotate 7
+    daily
+    size 2M
+    prerotate
+       /opt/bitnami/apache-tomcat/scripts/ess_ctl.sh stop >/dev/null
+    endscript
+    postrotate
+       /opt/bitnami/apache-tomcat/scripts/ess_ctl.sh start >/dev/null
+    endscript
+}
+
+/opt/bitnami/apache2/logs/*_log {
+    compress
+    delaycompress
+    rotate 7
+    daily
+    size 2M
+    sharedscripts
+    prerotate
+       /opt/bitnami/ctlscript.sh stop apache >/dev/null
+    endscript
+    postrotate
+       /opt/bitnami/ctlscript.sh start apache >/dev/null
+    endscript
+}
+
+/opt/bitnami/apache-tomcat/logs/catalina.out {
+    compress
+    delaycompress
+    rotate 7
+    daily
+    size 2M
+    prerotate
+       /opt/bitnami/apache-tomcat/scripts/ess_ctl.sh stop >/dev/null
+    endscript
+    postrotate
+       /opt/bitnami/apache-tomcat/scripts/ess_ctl.sh start >/dev/null
+    endscript
+}
+
+

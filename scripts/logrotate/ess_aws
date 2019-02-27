@@ -1,0 +1,29 @@
+/var/ess/expense.log {
+    compress
+    delaycompress
+    rotate 7
+    daily
+    size 2M
+    prerotate
+       service tomcat7 stop >/dev/null
+    endscript
+    postrotate
+       service tomcat7 start >/dev/null
+    endscript
+}
+
+/var/log/tomcat7/tomcat7-initd.log {
+    missingok
+    compress
+    delaycompress
+    rotate 7
+    daily
+    size 1M
+    prerotate
+       service tomcat7 stop >/dev/null
+    endscript
+    postrotate
+       service tomcat7 start >/dev/null
+    endscript
+}
+
