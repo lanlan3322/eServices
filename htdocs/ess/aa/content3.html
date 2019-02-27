@@ -1,0 +1,100 @@
+<!--
+content2.html - menu level 2
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Content</title>
+<base target="Main">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../expense.css" type="text/css">
+</head>
+
+
+<body topmargin="0" leftmargin="0">
+<script>
+var defaultHome = parent.webServer + "/" + parent.webFolder + "/";
+var defaultHead = parent.webServer + "/" + parent.webFolder + "/" + parent.customFolder + "/";
+var defaultTrans = parent.webServer + "/" + parent.webFolder + "/aa/";  
+var defaultApps = parent.appServer + "/" + parent.appFolder + "/";
+</script>
+<!--- Common script code for all sites --->
+<script language="JavaScript">
+</script>
+
+<p align="left">
+<a href="javascript: void parent.frames[1].Newie(parent.frames[1].defaultHome + 'ess/combine7.html')"><font face="Arial Black"><small>Day&nbsp;Trip&nbsp;Wizard</small></font></a> 
+</p>
+
+<p align="left"><small><font face="Arial Black"><a href="javascript: void parent.frames[1].Newie(parent.frames[1].defaultHome + 'ess/head2d.html')">Create
+a New Report</a><br>
+Add an item:<br>
+<small><small></p>
+
+<p align="center">
+<a href="javascript: void parent.frames[1].TransWindow(parent.frames[1].defaultHome + 'ess/head2d.html')">Single Client Purpose</a><br>
+<a href="javascript: void parent.frames[1].TransWindow(parent.frames[1].defaultHome + 'ess/head2e.html')">Split Client Purpose</a><br>
+<a href="javascript: void parent.frames[1].TransWindow(parent.frames[1].defaultHome + 'aa/trans1afx.html')">Basic&nbsp;Receipt</a><br>
+<a href="javascript: void parent.frames[1].TransWindow(parent.frames[1].defaultHome + 'aa/trans2.html')">Hotel&nbsp;Receipt</a><br>
+<a href="javascript: void parent.frames[1].TransWindow(parent.frames[1].defaultHome + 'aa/trans5.html')">Personal Mileage</a><br>
+<a href="javascript: void parent.frames[1].TransWindow(parent.frames[1].defaultHome + 'aa/trans4a.html')">Fleet
+Vehicle Odometer</a><br>
+<a href="javascript: void parent.frames[1].TransWindow(parent.frames[1].defaultHome + 'aa/trans11.html')">Fleet
+Vehicle Expense</a><br>
+<a href="javascript: void parent.frames[1].TransWindow(parent.frames[1].defaultHome + 'aa/trans7.html')">Cash
+Advance</a><br>
+<a href="javascript: void parent.frames[1].TransWindow(parent.frames[1].defaultHome + 'aa/trans8.html')">Returned
+Payment</a> </small></small></font></small></p>
+
+<p align="left"><small><font face="Arial Black">Process:</font></p>
+
+<p align="center" nowrap><font face="Arial Black"><small><small><a href="javascript: void parent.frames[1].PersWithDBase(parent.frames[1].defaultApps + '/ApproveList.jsp?downlevel=','approvallevel','1')">Approve&nbsp;Reports</a><br>
+<br>
+<a href="javascript: void parent.frames[1].PersWindow(parent.frames[1].defaultApps + '/Intro.jsp')">Your&nbsp;Reports</a><br>
+<br>
+<a href="javascript: void parent.frames[1].NeedAReport(parent.frames[1].defaultHome + 'submitGuideChk.html')">Check&nbsp;Against&nbsp;Guidelines</a><br>
+<a href="javascript: void parent.frames[1].NeedAReport(parent.frames[1].defaultHome + 'ess/submitXMLSMTP.html')">Submit&nbsp;for&nbsp;Payment</a><br>
+<a href="javascript: void parent.frames[1].NeedAReport(parent.frames[1].defaultHome + 'ess/selectXMLReport.html')">Print&nbsp;Report</a><br>
+<br>
+<a href="javascript: void parent.frames[1].OnlyIfChanged(parent.frames[1].defaultHome + 'saveXMLFile.html')">Save&nbsp;Report&nbsp;to&nbsp;Server</a><br>
+<a href="javascript: void parent.frames[1].ListMemory()">Show&nbsp;Current&nbsp;Report</a><br>
+
+<a href="javascript: void parent.frames[1].NewMaybe('parent.frames[1].ListMemory()')">Close&nbsp;Current&nbsp;Report</a><br>
+
+<a href="javascript: void parent.frames[1].Copie()">Copy&nbsp;Report</a><br>
+<br>
+<a href="javascript: void parent.frames[1].TransWindow(parent.frames[1].defaultHome + 'historyList.html')">Report&nbsp;History&nbsp;List</a><br>
+<a href="javascript: void parent.frames[1].TransWindow(parent.frames[1].defaultHome + 'editlists.html')">Manage&nbsp;Personal&nbsp;Data</a><br>
+<!--<a href="javascript: void parent.location(parent.frames[1].defaultHome + 'r1/pwdChange.html')">Change&nbsp;Password</a><br>-->
+<a href="javascript: void parent.frames[1].Logout()">Logout</a> </small></small></small></p>
+
+
+<form name="Userdata">
+  <input type="hidden" class="userData" style="behavior:url(#default#userdata)" id="ReportData" name="ReportData">
+</form>
+
+<!--- general formatting routines --->
+<script language="Javascript" src="../shared1.js">
+</script>
+<!--- site specific error check routines --->
+<script language="Javascript" src="../shared2.js">
+</script>
+<!--- site specific lists, generated from tables --->
+<script language="Javascript" src="../ESSProfile.js">
+</script>
+
+</body>
+</html>

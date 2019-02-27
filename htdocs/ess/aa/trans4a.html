@@ -1,0 +1,278 @@
+<!--
+trans4a.html - fleet vehicle odometer without allowance
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Fleet Vehicle without Allowance</title>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script src="../validation.js"></script>
+<script language="JavaScript">
+<!-- Begin Script
+function isDupType(value1) {
+        var retVal = -1;
+        var thisList = parent.contents.TailList;
+        for (var i = 0; i < thisList.length; i++) {
+                if (thisList[i][0] == value1) {
+                        retVal = i;
+                        i = thisList.length;
+                }
+        }
+        return retVal;
+}
+
+//is numeric input a positive or negative number
+function checkXRate(formObj) {
+        var newValue = formObj.xrate.value
+        if (isNumber(newValue)) {
+                calcBarterAmount(mileage);
+        }
+        else {
+                xRateAlert(formObj.xrate);
+                return false;
+        }
+}
+function xRateAlert(textObj) {
+        alert("Mileage Rate must be numeric.");
+        textObj.focus();
+        textObj.select();
+}
+function isNumber(inputVal) {
+        oneDecimal = false
+        inputStr = inputVal.toString()
+        for (var i = 0; i < inputStr.length; i++) {
+                var oneChar = inputStr.charAt(i)
+                if (i == 0 && oneChar == "-") {
+                        continue
+                }
+                if (oneChar == "." && !oneDecimal) {
+                        oneDecimal = true
+                        continue
+                }
+                if (oneChar < "0" || oneChar > "9") {
+                        return false
+                }
+        }
+        return true
+}
+        
+function calcBarterAmount(formObj) {
+        var intAmount = parseFloat(formObj.recamt.value);
+        var intRate = parseFloat(formObj.xrate.value);
+        var totalAmt = intAmount * intRate;
+        formObj.amount.value = totalAmt;
+        amountVal(formObj.amount);
+        //formObj.amount.value = amountVal(formObj.amount);
+        return;
+}
+
+function calcAdj(tag1,tag2) {
+  var val1 = parseFloat(tag1.value);
+  var val2 = parseFloat(tag2.value);
+  if (val1 > 0 && val2 == 0) tag2.value = tag1.value;
+}
+
+function calcAdd(tag1,tag2,tag3) {
+        var val1 = parseFloat(tag1.value);
+        var val2 = parseFloat(tag2.value);
+        var val3 = "0";
+        val3 = (val2 - val1);
+        if (isNaN(tag1.value) || isNaN(tag2.value) || val3 < "0") {
+                alert("Odometer Start value must be less than Finish value and be numeric." + val1 + ", " + val2 + ", " + val3);
+//                tag1.focus();
+//                tag1.select();
+        }
+        else {
+                document.forms[0].odototal.value = val3;
+                return true;
+        }
+}
+
+function FillForm() {
+        document.forms[0].weekend.value = parent.Weekend;
+        // parent.contents.setDefaultDate(document.forms[0].servdate,0);
+        parent.contents.setRcptDefDate(document.forms[0].rcptdate,0);
+        if (parent.Vehicle == "") {
+           document.forms[0].vehicle.value = parent.contents.getDBString(parent.PersDBase, "vehicle", "");
+        } else {
+           document.forms[0].vehicle.value = parent.Vehicle;
+        }
+        if (parent.Servdate == "") {
+           document.forms[0].servdate.value = parent.contents.getDBString(parent.PersDBase, "servdate", document.forms[0].rcptdate.value);
+        } else {
+           document.forms[0].servdate.value = parent.Servdate;
+        }
+        document.forms[0].start.value = parent.contents.getDBString(parent.PersDBase, "finish", "0");
+        document.forms[0].finish.value = parent.contents.getDBString(parent.PersDBase, "finish", "0");
+        // parent.contents.setTransaction(document.forms[0]);
+        var index = (isDupType('trans4a'));
+        if (index != -1 ) {
+                parent.contents.ListBuffer = parent.contents.TailList[index][1];
+                parent.contents.ListIndex = index;   
+        } 
+        parent.contents.setTransaction(document.forms[0]);
+        document.forms[0].weekend.focus();
+}
+
+function isOk(NumberButtons) {
+                SubmitRec();
+}
+
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+function CheckSaturday(rdate) {
+  var x = parent.contents.setDateObj(rdate);
+  if (x.getDay() == 6) {
+    return true;
+  } else {
+    alert("Week ending date is not a Saturday");
+    return false;
+  }
+}
+
+function SubmitRec() {
+  with (document.forms[0]) {
+     charge.value = parent.contents.getChargeDef();
+     if (business.value == "") business.value = "0";
+     if (CheckAmount(amount)
+       && checkdate(rcptdate)
+       && doDateChkToday(rcptdate)
+       && checkdate(weekend)
+       && CheckSaturday(weekend.value)
+       && checkVehicle(vehicle)
+       && doDateChkToday(servdate)
+       && checkdate(servdate)
+       && CheckAmount(business)
+       && checkXLessY(business,odototal)) {
+              if (!isNaN(amount.value)) parent.contents.makeCurrency(amount);
+              parent.contents.UpdateReport('2','trans4a');
+              parent.defDateStr = rcptdate.value;
+              parent.contents.setDBPair(parent.PersDBase,"finish",finish.value);
+              parent.contents.setDBPair(parent.PersDBase,"vehicle",vehicle.value);
+              parent.contents.setDBPair(parent.PersDBase,"servdate",servdate.value);
+              parent.contents.ListDelay();
+      }
+  }
+}
+
+function checkVehicle(object) {
+        check =  parent.contents.alltrim(object.value);
+        if (check.length > 4) {
+                return true;
+        } else
+        alert("Need to supply a vehicle number of at least 5 characters");
+        object.focus();
+        object.select();
+        return false;
+}
+
+function checkXLessY(x,y) {
+  if (parseFloat(x.value) - parseFloat(y.value) > 0) {
+    alert("Business miles cannot exceed total miles");
+    x.focus();
+    return false;
+  } else {
+    return true; 
+  }
+}
+
+function CheckZero(tag) {
+  var Check = parseFloat(tag.value);
+  if (Check == 0) {
+     return true;
+  } else {
+     return false;
+  }
+}
+
+var NeedComment = parent.contents.getCommentReq();
+function CheckComment(tag,expense_1_expensetype) {
+  var Check =  parent.contents.alltrim(tag.value);
+  if (NeedComment.indexOf(expense_1_expensetype) > -1 && Check.length < 10) {
+     alert("Need to supply a comment of at least 10 characters");
+     tag.focus();
+     tag.select();
+     return false;
+  } else {
+     return true;
+  }
+}
+
+// end script -->
+</script>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript:void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('htrans4a.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%" class="offsetColor">
+  <tr>
+  <td width="100%"><h1>Odometer Reading</strong></h1>
+  </tr>
+</table>
+
+<form>
+    <p>(Enter vehicle information) </p>
+  <table border="0" width="73%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="0" cellpadding="2">
+    <tr>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Week Ending:</div></td>
+      <td width="80%" class="offsetColor"><input type="text" name="weekend" size="10" value tabindex="1" onChange="checkdate(this.form.weekend)"> <a HREF="javascript:doNothing()" tabindex="2" onClick="setDateField(document.forms[0].weekend);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"> </a><span class="ExpenseTinyLink">Popup Calendar</span></td>
+    </tr>
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Vehicle No.:</div></td>
+      <td width="80%"><input type="text" name="vehicle" size="8" tabindex="3"></td>
+    </tr>
+    <tr>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Date Put In Service:</div></td>
+      <td width="80%" class="offsetColor"><input type="text" name="servdate" size="10" value tabindex="4" onChange="checkdate(this.form.servdate)"> <a HREF="javascript:doNothing()" tabindex="5" onClick="setDateField(document.forms[0].servdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"> </a><span class="ExpenseTinyLink">Popup Calendar</span></td>
+    </tr>
+    </table>
+    <p>(Enter odometer information) </p>
+    <table class="offsetColor" border="0" width="73%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" height="34">
+    <tr>
+      <td width="20%" height="28" class="offsetColor"><div class="ExpenseTag">Start:</div></td>
+      <td width="20%" height="28" class="offsetColor"><input type="text" name="start" value="0" onchange="calcAdj(this.form.start, this.form.finish); calcAdd(this.form.start, this.form.finish, this.form.odototal)" size="10" tabindex="6"> </td>
+      <td width="20%" height="28" class="offsetColor"><div class="ExpenseTag">Finish:</div></td>
+      <td width="40%" height="28" class="offsetColor"><input type="text" name="finish" value="0" size="10" tabindex="7" onchange="calcAdd(this.form.start, this.form.finish, this.form.odototal)"> </td>
+    </tr>
+  </table>
+  <table border="0" width="73%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="0" cellpadding="2">
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Total:</div></td>
+      <td width="80%"><input type="text" name="odototal" size="8" readonly="yes" value = "0"></td>
+    </tr>
+    <tr>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Business:</div></td>
+      <td width="80%" class="offsetColor"><input type="text" name="business" size="8" tabindex="8"></td>
+    </tr>
+  </table>
+
+
+  <input type="hidden" name="rcptdate">
+  <input type="hidden" name="amount" value="0.00">
+  <input type="hidden" name="expense_1_expensetype" value="ODOMETER">
+  <input type="hidden" name="expense_1_purpose" value="FLEET">
+  <input type="hidden" name="expense_1_billtype" value="No">
+  <input type="hidden" name="expense_1_xref" value>
+  <input type="hidden" name="charge" value>
+</form>
+
+<p><input type="button" value="Update report with this vehicle information" name=" " tabindex="14" onClick="Javascript: isOk(1)" onDblClick="parent.contents.dupFlagOK = false"> </p>
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void parent.contents.ListDelay()" tabindex="15">Return to report display</a></p>
+</body>
+</html>

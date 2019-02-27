@@ -1,0 +1,613 @@
+<!--
+trans2s.html - DEPRECATED use trans12 seris
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Hotel Bill Entry</title>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" src="../validation.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../attendee.js"></script>
+<script language="JavaScript">
+<!-- Begin Script
+function FillForm() {
+  if (parent.contents.HeadList.length > 0) {
+    //Gets a simple list found in personal.js
+    document.forms[0].charge.value = parent.contents.getChargeDef();
+    //Gets a simple list found in personal.js
+    parent.contents.setList(document.forms[0].expense_2_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getLodgingDef(parent.Category) + ";");
+    parent.contents.setList(document.forms[0].expense_3_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getLodgingDef(parent.Category) + ";");
+    parent.contents.setList(document.forms[0].expense_4_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getLodgingDef(parent.Category) + ";");
+    parent.contents.setList(document.forms[0].expense_5_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getLodgingDef(parent.Category) + ";");
+    parent.contents.setList(document.forms[0].expense_6_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getLodgingDef(parent.Category) + ";");
+    parent.contents.setList(document.forms[0].expense_7_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getLodgingDef(parent.Category) + ";");
+    parent.contents.setList(document.forms[0].expense_8_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getLodgingDef(parent.Category) + ";");
+    parent.contents.setList(document.forms[0].expense_9_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getLodgingDef(parent.Category) + ";");
+    parent.contents.setList(document.forms[0].expense_10_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getLodgingDef(parent.Category) + ";");
+    parent.contents.setList(document.forms[0].expense_11_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getLodgingDef(parent.Category) + ";");
+
+    //Sets the number of perople default
+    document.forms[0].persplit.value = "1";
+    //Sets in the default for the merchants
+    MerchantType = "hotel"
+    var merchArray = parent.contents.getMerchants("1");
+    var mArray = merchArray.concat(parent.contents.getDBResult(parent.PersDBase,MerchantType));
+    parent.contents.setList(document.forms[0].merchant, mArray.sort());
+    //Sets the purpose pulldown from the HeadList
+    parent.contents.setDfltFrmHdWSplit(document.forms[0].purpose);
+    //Sets the default dates
+    parent.contents.setRcptDefDate(document.forms[0].begdate,-2);
+    parent.contents.setRcptDefDate(document.forms[0].enddate,-1);
+    //Sets the default dates
+    parent.contents.setRcptDefDate(document.forms[0].expense_2_expdate,-1);
+    parent.contents.setRcptDefDate(document.forms[0].expense_3_expdate,-1);
+    parent.contents.setRcptDefDate(document.forms[0].expense_4_expdate,-1);
+    parent.contents.setRcptDefDate(document.forms[0].expense_5_expdate,-1);
+    parent.contents.setRcptDefDate(document.forms[0].expense_6_expdate,-1);
+    parent.contents.setRcptDefDate(document.forms[0].expense_7_expdate,-1);
+    parent.contents.setRcptDefDate(document.forms[0].expense_8_expdate,-1);
+    parent.contents.setRcptDefDate(document.forms[0].expense_9_expdate,-1);
+    parent.contents.setRcptDefDate(document.forms[0].expense_10_expdate,-1);
+    parent.contents.setRcptDefDate(document.forms[0].expense_11_expdate,-1);
+
+    //Brings in any transaction information (note date above can be optimized against this later)
+    cBillLoad();
+    parent.contents.setTransaction(document.forms[0]);
+    cBillAdjust();
+    resetDates();
+    document.forms[0].begdate.focus();
+  } else {
+    alert("You must specify a purpose first, then choose hotel receipt again.");
+    parent.contents.TransWindow(parent.contents.defaultHead + "head2.html");
+  }
+}
+function calcLodging(formObj) {
+        var recAmt = ChkTotal1(formObj.amount.value);
+        var exp2Amt = ChkTotal1(formObj.expense_2_amount.value);
+        var exp3Amt = ChkTotal1(formObj.expense_3_amount.value);
+        var exp4Amt = ChkTotal1(formObj.expense_4_amount.value);
+        var exp5Amt = ChkTotal1(formObj.expense_5_amount.value);
+        var exp6Amt = ChkTotal1(formObj.expense_6_amount.value);
+        var exp7Amt = ChkTotal1(formObj.expense_7_amount.value);
+        var exp8Amt = ChkTotal1(formObj.expense_8_amount.value);
+        var exp9Amt = ChkTotal1(formObj.expense_9_amount.value);
+        var exp10Amt = ChkTotal1(formObj.expense_10_amount.value);
+        var exp11Amt = ChkTotal1(formObj.expense_11_amount.value);
+        var workNum = Math.round(100 * (recAmt - (exp2Amt + exp3Amt + exp4Amt + exp5Amt + exp6Amt + exp7Amt + exp8Amt + exp9Amt + exp10Amt + exp11Amt)));
+        formObj.expense_1_amount.value = workNum / 100;
+        return;
+}
+function SubmitRec() {
+  with (document.forms[0]) {
+
+   rcptdate.value = enddate.value;
+   expense_1_expdate.value = enddate.value;
+   expense_1_expensetype.value = parent.contents.getLodgingDef(parent.Category);  
+  
+   if (CheckAmount(amount)
+      && doDateCheck(begdate.value,enddate.value)
+      && doDateChkToday(enddate)
+      && CheckTotals()
+      && CheckHotel()
+      && CheckAttendee(expense_2_attendeelist, expense_2_expensetype.options[expense_2_expensetype.selectedIndex].text)
+      && CheckAttendee(expense_3_attendeelist, expense_3_expensetype.options[expense_3_expensetype.selectedIndex].text)
+      && CheckAttendee(expense_4_attendeelist, expense_4_expensetype.options[expense_4_expensetype.selectedIndex].text)
+      && CheckAttendee(expense_5_attendeelist, expense_5_expensetype.options[expense_5_expensetype.selectedIndex].text)
+      && CheckAttendee(expense_6_attendeelist, expense_6_expensetype.options[expense_6_expensetype.selectedIndex].text)
+      && CheckAttendee(expense_7_attendeelist, expense_7_expensetype.options[expense_7_expensetype.selectedIndex].text)
+      && CheckAttendee(expense_8_attendeelist, expense_8_expensetype.options[expense_8_expensetype.selectedIndex].text)
+      && CheckAttendee(expense_9_attendeelist, expense_9_expensetype.options[expense_9_expensetype.selectedIndex].text)
+      && CheckAttendee(expense_10_attendeelist, expense_10_expensetype.options[expense_10_expensetype.selectedIndex].text)
+      && CheckAttendee(expense_11_attendeelist, expense_11_expensetype.options[expense_11_expensetype.selectedIndex].text)
+      && ChkBtween(expense_2_expensetype,expense_2_expdate)
+      && ChkBtween(expense_3_expensetype,expense_3_expdate)
+      && ChkBtween(expense_4_expensetype,expense_4_expdate)
+      && ChkBtween(expense_5_expensetype,expense_5_expdate)
+      && ChkBtween(expense_6_expensetype,expense_6_expdate)
+      && ChkBtween(expense_7_expensetype,expense_7_expdate)
+      && ChkBtween(expense_8_expensetype,expense_8_expdate)
+      && ChkBtween(expense_9_expensetype,expense_9_expdate)
+      && ChkBtween(expense_10_expensetype,expense_10_expdate)
+      && ChkBtween(expense_11_expensetype,expense_11_expdate)) {
+
+    if (!isNaN(amount.value)) parent.contents.makeCurrency(amount);
+
+    ChkExtra2(expense_1_expensetype,expense_1_amount);
+    ChkExtra2(expense_2_expensetype,expense_2_amount);
+    ChkExtra2(expense_3_expensetype,expense_3_amount);
+    ChkExtra2(expense_4_expensetype,expense_4_amount);
+    ChkExtra2(expense_5_expensetype,expense_5_amount);
+    ChkExtra2(expense_6_expensetype,expense_6_amount);
+    ChkExtra2(expense_7_expensetype,expense_7_amount);
+    ChkExtra2(expense_8_expensetype,expense_8_amount);
+    ChkExtra2(expense_9_expensetype,expense_9_amount);
+    ChkExtra2(expense_10_expensetype,expense_10_amount);
+    ChkExtra2(expense_11_expensetype,expense_11_amount);
+
+    if (ChkExtra1(expense_1_amount,expense_1_expensetype,expense_1_expdate,expense_1_comment)) parent.contents.makeCurrency(expense_1_amount);
+    if (ChkExtra1(expense_2_amount,expense_2_expensetype,expense_2_expdate,expense_2_comment)) parent.contents.makeCurrency(expense_2_amount);
+    if (ChkExtra1(expense_3_amount,expense_3_expensetype,expense_3_expdate,expense_3_comment)) parent.contents.makeCurrency(expense_3_amount);
+    if (ChkExtra1(expense_4_amount,expense_4_expensetype,expense_4_expdate,expense_4_comment)) parent.contents.makeCurrency(expense_4_amount);
+    if (ChkExtra1(expense_5_amount,expense_5_expensetype,expense_5_expdate,expense_5_comment)) parent.contents.makeCurrency(expense_5_amount);
+    if (ChkExtra1(expense_6_amount,expense_6_expensetype,expense_6_expdate,expense_6_comment)) parent.contents.makeCurrency(expense_6_amount);
+    if (ChkExtra1(expense_7_amount,expense_7_expensetype,expense_7_expdate,expense_7_comment)) parent.contents.makeCurrency(expense_7_amount);
+    if (ChkExtra1(expense_8_amount,expense_8_expensetype,expense_8_expdate,expense_8_comment)) parent.contents.makeCurrency(expense_8_amount);
+    if (ChkExtra1(expense_9_amount,expense_9_expensetype,expense_9_expdate,expense_9_comment)) parent.contents.makeCurrency(expense_9_amount);
+    if (ChkExtra1(expense_10_amount,expense_10_expensetype,expense_10_expdate,expense_10_comment)) parent.contents.makeCurrency(expense_10_amount);
+    if (ChkExtra1(expense_11_amount,expense_11_expensetype,expense_11_expdate,expense_11_comment)) parent.contents.makeCurrency(expense_11_amount);
+ 
+    if (CheckTotals()) {
+       parent.contents.UpdateReport('2','trans2');
+       parent.contents.ListDelay();
+    } else {
+       alert("Hotel bill is out of balance - pls review it.");  //12/13/02
+    }
+  } else
+    alert("Pls chk receipt - invalid data");
+  }
+}
+
+function doCheapCheck(x) {
+//alert("step: " + x);
+return true;
+}
+
+function CheckTotals(formObj) {
+   formObj = document.forms[0];
+   var recAmt = ChkTotal1(formObj.amount.value);
+   var exp1Amt = ChkTotal1(formObj.expense_1_amount.value);
+   var exp2Amt = ChkTotal1(formObj.expense_2_amount.value);
+   var exp3Amt = ChkTotal1(formObj.expense_3_amount.value);
+   var exp4Amt = ChkTotal1(formObj.expense_4_amount.value);
+   var exp5Amt = ChkTotal1(formObj.expense_5_amount.value);
+   var exp6Amt = ChkTotal1(formObj.expense_6_amount.value);
+   var exp7Amt = ChkTotal1(formObj.expense_7_amount.value);
+   var exp8Amt = ChkTotal1(formObj.expense_8_amount.value);
+   var exp9Amt = ChkTotal1(formObj.expense_9_amount.value);
+   var exp10Amt = ChkTotal1(formObj.expense_10_amount.value);
+   var exp11Amt = ChkTotal1(formObj.expense_11_amount.value);
+
+   var expAmt = exp1Amt + exp2Amt + exp3Amt + exp4Amt + exp5Amt + exp6Amt + exp7Amt + exp8Amt + exp9Amt + exp10Amt + exp11Amt;
+   if (recAmt - expAmt < 0.005 && expAmt - recAmt < 0.005) {
+     if (exp1Amt > 0) {
+        return true;
+     } else {
+        alert("Room amount must be greater than zero")
+        return false;
+     }
+   } else {
+     alert("Receipt is out of balance by " + (recAmt - (exp1Amt + exp2Amt + exp3Amt + exp4Amt + exp5Amt + exp6Amt + exp7Amt + exp8Amt + exp9Amt + exp10Amt + exp11Amt)));
+     return false;
+   } 
+}
+
+function ChkTotal1(v1) {
+  if (isNaN(v1) || v1 == "") {
+    return 0;
+  }else{
+    return Number(v1);
+  }
+}
+
+function ChkExtra1(o1,o2,o3,o4) {
+  if (isNaN(o1.value) || parent.contents.rtrim(o1.value) == "" || o1.value == 0) {
+    o1.value = "";
+    o2.selectedIndex = 0;
+    o3.value = "";
+    o4.value = "";
+    return false;
+  } else {
+    return true;
+  }
+}
+
+// eventually combine these 2 functions 12/13/02
+function ChkExtra2(o1,o2,o3,o4,o5) {
+  if (o1.selectedIndex == 0 || isNaN(o2.value) || parent.contents.rtrim(o2.value) == "" || o2.value == 0) {
+    o2.value = "";
+    o3.length = 3;
+    o3.options[2].text = "";
+    o3.options[2].value = "";
+    o3.selectedIndex = 2;
+    if (o4 != null) o4.value = "";
+    if (o5 != null) o5.value = "";
+  }
+}
+
+function ChkBtween(xType,rdateObj) {
+
+  if (xType.selectedIndex != 0) {
+    //alert("from: " + document.forms[0].begdate.value);
+    //alert("to: " + document.forms[0].enddate.value);
+    //alert("rcpt: " + rdateObj.value);
+    if (doBetweenChk(rdateObj.value,document.forms[0].begdate.value,document.forms[0].enddate.value)) {
+      return true;
+    } else {
+      rdateObj.focus();
+      return false;
+    } 
+  } else {
+    return true;
+  }
+}
+
+function CheckAttendee(tag,expense) {
+  var retVal = true;
+  if (expense.length > 0) {
+    var Check = tag.value;
+    var Xstr = parent.contents.getAttendeeReq();
+    if (Xstr.indexOf(expense) > -1 && Check.length < 3) {
+      alert("Need to supply attendee list for " + expense + " expense");
+      retVal = false;
+    }
+  }
+  return retVal;
+}
+
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+
+var NeedComment = parent.contents.getCommentReq();
+function CheckComment(tag,expensetype) {
+  var Check = tag.value;
+  var StrV = expensetype.options[expensetype.selectedIndex].text;
+  if (NeedComment.indexOf(StrV) > -1 && Check.length < 10) {
+     alert("Need to supply a comment of at least 10 characters");
+     tag.focus();
+     tag.select();
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function CheckHotel() {
+  return CheckRequired(document.forms[0].merchant,document.forms[0].expense_1_expensetype.value,parent.contents.getMerchantReq(),"Need to supply a merchant name in the hotel field");
+}
+
+function CheckRequired(tag,expense,validation, msgtext) {
+  var Check = "";
+  var n = false 
+  if (validation.indexOf(expense) > -1) {
+    if (tag.type.indexOf("select") == 0) {
+      Check = tag.options[tag.selectedIndex].text;
+      if (Check.length > 2) n = true;     
+    } else { 
+      Check = tag.value;
+      if (Check.length > 10) n = true;
+    } 
+    if (!n) {
+      alert(msgtext);
+      tag.focus();
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+     return true;
+  }
+}
+
+function cCheckBill() {
+  if (parent.contents.companyBillCheck) {
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_1_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_2_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_3_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_4_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_5_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_6_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_7_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_8_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_9_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_10_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_11_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    return true;
+  } else {
+    return true;
+  }
+}
+
+function cBillLoad() {
+  if (parent.contents.companyBillLoad) {
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_1_billtype,document.forms[0].purpose.selectedIndex);
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_2_billtype,document.forms[0].purpose.selectedIndex);
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_3_billtype,document.forms[0].purpose.selectedIndex);
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_4_billtype,document.forms[0].purpose.selectedIndex);
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_5_billtype,document.forms[0].purpose.selectedIndex);
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_6_billtype,document.forms[0].purpose.selectedIndex);
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_7_billtype,document.forms[0].purpose.selectedIndex);
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_8_billtype,document.forms[0].purpose.selectedIndex);
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_9_billtype,document.forms[0].purpose.selectedIndex);
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_10_billtype,document.forms[0].purpose.selectedIndex);
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_11_billtype,document.forms[0].purpose.selectedIndex);
+  }
+}   
+
+function cBillAdjust() {
+  if (parent.contents.companyBillLoad) {    
+    with (document.forms[0]) {
+     if (expense_2_expensetype.selectedIndex == 0) parent.contents.companyBillLoad("trans1",expense_2_billtype, purpose.selectedIndex); 
+     if (expense_3_expensetype.selectedIndex == 0) parent.contents.companyBillLoad("trans1",expense_3_billtype, purpose.selectedIndex); 
+     if (expense_4_expensetype.selectedIndex == 0) parent.contents.companyBillLoad("trans1",expense_4_billtype, purpose.selectedIndex); 
+     if (expense_5_expensetype.selectedIndex == 0) parent.contents.companyBillLoad("trans1",expense_5_billtype, purpose.selectedIndex); 
+     if (expense_6_expensetype.selectedIndex == 0) parent.contents.companyBillLoad("trans1",expense_6_billtype, purpose.selectedIndex); 
+     if (expense_7_expensetype.selectedIndex == 0) parent.contents.companyBillLoad("trans1",expense_7_billtype, purpose.selectedIndex); 
+     if (expense_8_expensetype.selectedIndex == 0) parent.contents.companyBillLoad("trans1",expense_8_billtype, purpose.selectedIndex); 
+     if (expense_9_expensetype.selectedIndex == 0) parent.contents.companyBillLoad("trans1",expense_9_billtype, purpose.selectedIndex); 
+     if (expense_10_expensetype.selectedIndex == 0) parent.contents.companyBillLoad("trans1",expense_10_billtype, purpose.selectedIndex); 
+     if (expense_11_expensetype.selectedIndex == 0) parent.contents.companyBillLoad("trans1",expense_11_billtype, purpose.selectedIndex); 
+    }
+  } 
+} 
+
+function resetDates() {
+  with (document.forms[0]) {
+    if (!isDateLess(expense_2_expdate.value, enddate.value)) expense_2_expdate.value = enddate.value;
+    if (!isDateLess(expense_3_expdate.value, enddate.value)) expense_3_expdate.value = enddate.value;
+    if (!isDateLess(expense_4_expdate.value, enddate.value)) expense_4_expdate.value = enddate.value;
+    if (!isDateLess(expense_5_expdate.value, enddate.value)) expense_5_expdate.value = enddate.value;
+    if (!isDateLess(expense_6_expdate.value, enddate.value)) expense_6_expdate.value = enddate.value;
+    if (!isDateLess(expense_7_expdate.value, enddate.value)) expense_7_expdate.value = enddate.value;
+    if (!isDateLess(expense_8_expdate.value, enddate.value)) expense_8_expdate.value = enddate.value;
+    if (!isDateLess(expense_9_expdate.value, enddate.value)) expense_9_expdate.value = enddate.value;
+    if (!isDateLess(expense_10_expdate.value, enddate.value)) expense_10_expdate.value = enddate.value;
+    if (!isDateLess(expense_11_expdate.value, enddate.value)) expense_11_expdate.value = enddate.value;
+  }
+}
+
+function doubleChk(x) {
+  if (checkdate(x)) resetDates();
+}
+
+// end script -->
+</script>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="Javascript: void FillForm()">
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0" class="offsetColor">
+  <tr>
+    <td width="50%"><em><div class="ExpenseTag"><big><big>Hotel Receipt </big></big></div></em></td>
+  </tr>
+</table>
+
+<form>
+  <input type="hidden" name="expense_2_persplit" value>
+  <input type="hidden" name="expense_3_persplit" value>
+  <input type="hidden" name="expense_4_persplit" value>
+  <input type="hidden" name="expense_5_persplit" value>
+  <input type="hidden" name="expense_6_persplit" value>
+  <input type="hidden" name="expense_7_persplit" value>
+  <input type="hidden" name="expense_8_persplit" value>
+  <input type="hidden" name="expense_9_persplit" value>
+  <input type="hidden" name="expense_10_persplit" value>
+  <input type="hidden" name="expense_11_persplit" value>
+
+  <input type="hidden" name="expense_2_attendeelist" value="[]">
+  <input type="hidden" name="expense_3_attendeelist" value="[]">
+  <input type="hidden" name="expense_4_attendeelist" value="[]">
+  <input type="hidden" name="expense_5_attendeelist" value="[]">
+  <input type="hidden" name="expense_6_attendeelist" value="[]">  
+  <input type="hidden" name="expense_7_attendeelist" value="[]">
+  <input type="hidden" name="expense_8_attendeelist" value="[]">
+  <input type="hidden" name="expense_9_attendeelist" value="[]">
+  <input type="hidden" name="expense_10_attendeelist" value="[]">
+  <input type="hidden" name="expense_11_attendeelist" value="[]">  
+
+  <input type="hidden" name="expense_1_expensetype" value>
+  <input type="hidden" name="expense_1_expdate" value>
+  <input type="hidden" name="rcptdate" value>
+  <input type="hidden" name="charge" value>
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td><table border="0" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="20%" class="offsetColor"><div class="ExpenseTag">Check in:</div></td>
+          <td width="80%" class="offsetColor"><input type="text" name="begdate" size="10" value maxlength="10" mysubst="1" onChange="checkdate(this.form.begdate)"><a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].begdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><div class="ExpenseTag">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Check out:</div><input type="text" name="enddate" size="10" value maxlength="10" mysubst="3" onChange="doubleChk(this.form.enddate)"><a HREF="javascript:doNothing()" mysubst="4" onClick="setDateField(document.forms[0].enddate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+        </tr>
+        <tr>
+          <td width="20%"><div class="ExpenseTag">Receipt Amount:</div></td>
+          <td width="80%"><input type="text" name="amount" size="9" value="0.00" mysubst="5" onchange="calcLodging(document.forms[0])"></td>
+        </tr>
+        <tr>
+          <td width="20%" class="offsetColor"><div class="ExpenseTag">Purpose/Visit:</div></td>
+          <td width="80%" class="offsetColor"><select name="purpose" size="1" mysubst="7" xref="xref" onChange="cBillLoad()">
+          </select></td>
+        </tr>
+        <tr>
+          <td width="20%"><div class="ExpenseTag"># Persons:</div></td>
+          <td width="80%"><input type="text" name="persplit" size="2" maxlength="8" mysubst="8"></td>
+        </tr>
+        <tr>
+          <td width="20%" class="offsetColor"><div class="ExpenseTag">Hotel Company:</div></td>
+          <td width="80%" class="offsetColor"><select name="merchant" size="1" mysubst="9">
+          </select><a href="javascript:doNothing()" mysubst="11" onClick="setLocalObj(document.forms[0].merchant);">
+          <div class="ExpenseLink">New Hotel</div></a></td>
+        </tr>
+        <tr>
+          <td width="20%"><div class="ExpenseTag">Comment:</div></td>
+          <td width="80%"><textarea rows="3" name="expense_1_comment" cols="38" mysubst="10"></textarea></td>
+        </tr>
+        
+        <tr>
+          <td width="20%" class="offsetColor"><div class="ExpenseTag">Room Amount:</div></td>
+          <td width="80%" class="offsetColor"><input type="text" name="expense_1_amount" size="8" readonly="yes"></td>
+        </tr>
+      </table>
+      <p><strong>Enter your non-room expenses from the hotel bill in the following section.<br> You do not need to enter your room amount</strong></p>
+      <table border="0" width="100%" cellpadding="0">
+        <tr>
+          <td width="100%" class="offsetColor"><table border="0" width="750" cellpadding="0" style="border: medium none">
+            <tr>
+              <td width="150" align="center"><div class="ExpenseTag">Expense Date</div></td>
+              <td width="90" align="center"><div class="ExpenseTag">Amount</div></td>
+              <td width="110" align="center"><div class="ExpenseTag">Expense Type</div></td>
+              <td width="290" align="left"><div class="ExpenseTag">Comment</div></td>
+              <td width="60" align="center"><div class="ExpenseTag"></div></td>
+            </tr>
+          </table>
+          </td>
+        </tr>
+        <tr>
+          <td width="100%" bgcolor="#FFFFFF"></td>
+        </tr>
+        <tr>
+          <td width="100%"><table border="0" width="750" cellpadding="0">
+            <tr>
+              <td width="150"><input type="text" name="expense_2_expdate" size="13" mysubst="12"><a HREF="javascript:doNothing()" mysubst="13" onClick="setDateField(document.forms[0].expense_2_expdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+              <td width="90"><input type="text" name="expense_2_amount" size="9" value="0.00" mysubst="14" onChange="calcLodging(this.form)"></td>
+              <td width="110"><select name="expense_2_expensetype" size="1" mysubst="15">
+              </select></td>
+              <td width="290"><input type="text" name="expense_2_comment" size="36" onChange="CheckComment(this.form.expense_2_comment,this.form.expense_2_expensetype)" mysubst="17"></td>
+              <td width="60"><a href="javascript:doNothing()" mysubst="30" onClick="initAttendeeList(document.forms[0].expense_2_attendeelist,document.forms[0].expense_2_persplit); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><div class="ExpenseLink">Attendee List</div></a>       
+            </tr>
+          </table>
+          </td>
+        </tr>
+        <tr>
+          <td width="100%" class="offsetColor"><table border="0" width="750" cellpadding="0">
+            <tr>
+              <td width="150"><input type="text" name="expense_3_expdate" size="13" mysubst="18"><a HREF="javascript:doNothing()" mysubst="19" onClick="setDateField(document.forms[0].expense_3_expdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+              <td width="90"><input type="text" name="expense_3_amount" size="9" value="0.00" mysubst="20" onChange="calcLodging(this.form)"></td>
+              <td width="110"><select name="expense_3_expensetype" size="1" mysubst="21">
+              </select></td>
+              <td width="290"><input type="text" name="expense_3_comment" size="36" onChange="CheckComment(this.form.expense_3_comment,this.form.expense_3_expensetype)" mysubst="23"></td>
+              <td width="60"><a href="javascript:doNothing()" mysubst="30" onClick="initAttendeeList(document.forms[0].expense_3_attendeelist,document.forms[0].expense_3_persplit); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><div class="ExpenseLink">Attendee List</div></a>       
+            </tr>
+          </table>
+          </td>
+        </tr>
+        <tr>
+          <td width="100%"><table border="0" width="750" cellpadding="0">
+            <tr>
+              <td width="150"><input type="text" name="expense_4_expdate" size="13" mysubst="24"><a HREF="javascript:doNothing()" mysubst="25" onClick="setDateField(document.forms[0].expense_4_expdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+              <td width="90"><input type="text" name="expense_4_amount" size="9" value="0.00" mysubst="26" onChange="calcLodging(this.form)"></td>
+              <td width="110"><select name="expense_4_expensetype" size="1" mysubst="27">
+              </select></td>
+              <td width="290"><input type="text" name="expense_4_comment" size="36" onChange="CheckComment(this.form.expense_4_comment,this.form.expense_4_expensetype)" mysubst="29"></td>
+              <td width="60"><a href="javascript:doNothing()" mysubst="30" onClick="initAttendeeList(document.forms[0].expense_4_attendeelist,document.forms[0].expense_4_persplit); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><div class="ExpenseLink">Attendee List</div></a>       
+            </tr>
+          </table>
+          </td>
+        </tr>
+        <tr>
+          <td width="100%" class="offsetColor"><table border="0" width="750" cellpadding="0">
+            <tr>
+              <td width="150" class="offsetColor"><input type="text" name="expense_5_expdate" size="13" mysubst="30"><a HREF="javascript:doNothing()" mysubst="31" onClick="setDateField(document.forms[0].expense_5_expdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+              <td width="90" class="offsetColor"><input type="text" name="expense_5_amount" size="9" value="0.00" mysubst="32" onChange="calcLodging(this.form)"></td>
+              <td width="110" class="offsetColor"><select name="expense_5_expensetype" size="1" mysubst="33">
+              </select></td>
+              <td width="290" class="offsetColor"><input type="text" name="expense_5_comment" size="36" onChange="CheckComment(this.form.expense_5_comment,this.form.expense_5_expensetype)" mysubst="35"></td>
+              <td width="60" class="offsetColor"><a href="javascript:doNothing()" mysubst="30" onClick="initAttendeeList(document.forms[0].expense_5_attendeelist,document.forms[0].expense_5_persplit); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><div class="ExpenseLink">Attendee List</div></a>       
+           </tr>
+          </table>
+          </td>
+        </tr>
+        <tr>
+          <td width="100%"><table border="0" width="750" cellpadding="0">
+            <tr>
+              <td width="150"><input type="text" name="expense_6_expdate" size="13" mysubst="36"><a HREF="javascript:doNothing()" mysubst="37" onClick="setDateField(document.forms[0].expense_6_expdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+              <td width="90"><input type="text" name="expense_6_amount" size="9" value="0.00" mysubst="38" onChange="calcLodging(this.form)"></td>
+              <td width="110"><select name="expense_6_expensetype" size="1" mysubst="39">
+              </select></td>
+              <td width="290"><input type="text" name="expense_6_comment" size="36" onChange="CheckComment(this.form.expense_6_comment,this.form.expense_6_expensetype)" mysubst="41"></td>
+              <td width="60"><a href="javascript:doNothing()" mysubst="30" onClick="initAttendeeList(document.forms[0].expense_6_attendeelist,document.forms[0].expense_6_persplit); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><div class="ExpenseLink">Attendee List</div></a>       
+            </tr>
+          </table>
+          </td>
+        </tr>
+        <tr>
+          <td width="100%" class="offsetColor"><table border="0" width="750" cellpadding="0">
+            <tr>
+              <td width="150"><input type="text" name="expense_7_expdate" size="13" mysubst="36"><a HREF="javascript:doNothing()" mysubst="37" onClick="setDateField(document.forms[0].expense_7_expdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+              <td width="90"><input type="text" name="expense_7_amount" size="9" value="0.00" mysubst="38" onChange="calcLodging(this.form)"></td>
+              <td width="110"><select name="expense_7_expensetype" size="1" mysubst="39">
+              </select></td>
+              <td width="290"><input type="text" name="expense_7_comment" size="36" onChange="CheckComment(this.form.expense_7_comment,this.form.expense_7_expensetype)" mysubst="41"></td>
+              <td width="60"><a href="javascript:doNothing()" mysubst="30" onClick="initAttendeeList(document.forms[0].expense_7_attendeelist,document.forms[0].expense_7_persplit); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><div class="ExpenseLink">Attendee List</div></a>       
+            </tr>
+          </table>
+          </td>
+        </tr>
+        <tr>
+          <td width="100%"><table border="0" width="750" cellpadding="0">
+            <tr>
+              <td width="150"><input type="text" name="expense_8_expdate" size="13" mysubst="36"><a HREF="javascript:doNothing()" mysubst="37" onClick="setDateField(document.forms[0].expense_8_expdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+              <td width="90"><input type="text" name="expense_8_amount" size="9" value="0.00" mysubst="38" onChange="calcLodging(this.form)"></td>
+              <td width="110"><select name="expense_8_expensetype" size="1" mysubst="39">
+              </select></td>
+              <td width="290"><input type="text" name="expense_8_comment" size="36" onChange="CheckComment(this.form.expense_8_comment,this.form.expense_8_expensetype)" mysubst="41"></td>
+              <td width="60"><a href="javascript:doNothing()" mysubst="30" onClick="initAttendeeList(document.forms[0].expense_8_attendeelist,document.forms[0].expense_8_persplit); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><div class="ExpenseLink">Attendee List</div></a>       
+            </tr>
+          </table>
+          </td>
+        </tr>
+        <tr>
+          <td width="100%" class="offsetColor"><table border="0" width="750" cellpadding="0">
+            <tr>
+              <td width="150"><input type="text" name="expense_9_expdate" size="13" mysubst="36"><a HREF="javascript:doNothing()" mysubst="37" onClick="setDateField(document.forms[0].expense_9_expdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+              <td width="90"><input type="text" name="expense_9_amount" size="9" value="0.00" mysubst="38" onChange="calcLodging(this.form)"></td>
+              <td width="110"><select name="expense_9_expensetype" size="1" mysubst="39">
+              </select></td>
+              <td width="290"><input type="text" name="expense_9_comment" size="36" onChange="CheckComment(this.form.expense_9_comment,this.form.expense_9_expensetype)" mysubst="41"></td>
+              <td width="60"><a href="javascript:doNothing()" mysubst="30" onClick="initAttendeeList(document.forms[0].expense_9_attendeelist,document.forms[0].expense_9_persplit); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><div class="ExpenseLink">Attendee List</div></a>       
+            </tr>
+          </table>
+          </td>
+        </tr>
+        <tr>
+          <td width="100%"><table border="0" width="750" cellpadding="0">
+            <tr>
+              <td width="150"><input type="text" name="expense_10_expdate" size="13" mysubst="36"><a HREF="javascript:doNothing()" mysubst="37" onClick="setDateField(document.forms[0].expense_10_expdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+              <td width="90"><input type="text" name="expense_10_amount" size="9" value="0.00" mysubst="38" onChange="calcLodging(this.form)"></td>
+              <td width="110"><select name="expense_10_expensetype" size="1" mysubst="39">
+              </select></td>
+              <td width="290"><input type="text" name="expense_10_comment" size="36" onChange="CheckComment(this.form.expense_10_comment,this.form.expense_10_expensetype)" mysubst="41"></td>
+              <td width="60"><a href="javascript:doNothing()" mysubst="30" onClick="initAttendeeList(document.forms[0].expense_10_attendeelist,document.forms[0].expense_10_persplit); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><div class="ExpenseLink">Attendee List</div></a>       
+            </tr>
+          </table>
+          </td>
+        </tr>
+        <tr>
+          <td width="100%" class="offsetColor"><table border="0" width="750" cellpadding="0">
+            <tr>
+              <td width="150"><input type="text" name="expense_11_expdate" size="13" mysubst="36"><a HREF="javascript:doNothing()" mysubst="37" onClick="setDateField(document.forms[0].expense_11_expdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+              <td width="90"><input type="text" name="expense_11_amount" size="9" value="0.00" mysubst="38" onChange="calcLodging(this.form)"></td>
+              <td width="110"><select name="expense_11_expensetype" size="1" mysubst="39">
+              </select></td>
+              <td width="290"><input type="text" name="expense_11_comment" size="36" onChange="CheckComment(this.form.expense_11_comment,this.form.expense_11_expensetype)" mysubst="41"></td>
+              <td width="60"><a href="javascript:doNothing()" mysubst="30" onClick="initAttendeeList(document.forms[0].expense_11_attendeelist,document.forms[0].expense_11_persplit); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><div class="ExpenseLink">Attendee List</div></a>       
+            </tr>
+          </table>
+          </td>
+        </tr>
+     </table>
+      </td>
+    </tr>
+  </table>
+</form>
+<!--Control buttons - Save and Add another expense, Save expense, Clear and add another, Cancel expense input -->
+
+<p><input type="button" value="Update report with this receipt" name=" " mysubst="42" onClick="Javascript: void SubmitRec()" onDblClick="parent.contents.dupFlagOK = false"></p>
+
+<p align="right"><a href="javascript: void parent.contents.ListDelay()"><em><strong>Return
+to receipt display</strong></em></a></p>
+</body>
+</html>

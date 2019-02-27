@@ -1,0 +1,778 @@
+<!--
+multi1fx.html - multiple receipts with fx and billing
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<title>Multiple Receipt Entry</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="JavaScript:void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('hmulti1fxn.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%" class="offsetColor">
+  <tr>
+    <td width="100%"><h1>Enter multiple receipts:</h1>
+  </tr>
+</table>
+<br>
+<h2>Shared Information</h2>
+
+<form name="topside">
+  <input type="hidden" name="xref" value="XXX">
+  <input type="hidden" name="ratetype" value>
+  <input type="hidden" name="xsource" value>
+  <input type="hidden" name="xrate" value>
+  <input type="hidden" name="xdate" value>
+  <input type="hidden" name="amount" value>
+  <input type="hidden" name="recamt" value>
+
+  <table border="0" width="100%" cellpadding="0">
+  <tr><table border="0" width="910" cellpadding="0" style="border: medium none">
+      <td width="60%"><p align="left"><small><bold>Select a purpose and enter payment type. These items will be applied to all the receipts below.  To vary shared information
+      use separate entry screens.  If FX conversion is required, use the single receipt screen.<br><br></bold></small></td>
+      <td width="20%"></td>
+  </table></tr>
+  <tr>
+
+
+  <table border="0" cellspacing="0" width="100%" cellpadding="0">
+    <tr>
+      <td width="22%" class="offsetColor"><div class="ExpenseTag">Purpose:</div> </td>
+      <td width="84%" class="offsetColor"><select name="purpose" size="1" xref="xref" onChange="popDates();resetBillType()">
+      </select></td>
+    </tr>
+    <tr>
+      <td width="22%"><div class="ExpenseTag">Paid By:</div></td>
+      <td width="84%"><select name="charge" size="1">
+      </select></td>
+    </tr>
+  </table>
+</form>
+
+
+
+<h2>Expense Receipts</h2>
+<table border="0" width="100%" cellpadding="0">
+
+  <tr><table border="0" width="910" cellpadding="0" style="border: medium none">
+      <td width="60%"><p align="left"><small><bold>Enter individual receipts in the following forms.  
+      <br><br>To enter mileage and lodging use the &quot;Add Some Mileage&quot; and &quot;Add a Lodging Receipt &quot; links found under &quot;Create A Report&quot; in the menu on the left.<br><br></bold></small></td>
+      <td width="20%"></td>
+  </table></tr>
+  <tr>
+    <td width="100%"></td>
+  </tr>
+  <tr>
+
+    <td width="100%"><table class="offsetColor">
+    <form name="bottom1">
+      <input type="hidden" name="rcpttype" value>
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>      
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_purpose" value="wizard">
+      <input type="hidden" name="expense_1_xref" value>
+      <input type="hidden" name="charge" value>
+
+      <input type="hidden" name="expense_2_purpose" value="wizard">
+      <input type="hidden" name="expense_2_xref" value>
+      <input type="hidden" name="expense_2_persplit" value>
+      <input type="hidden" name="expense_2_expensetype" value>
+      <input type="hidden" name="expense_2_merchant" value>
+      <input type="hidden" name="expense_2_comment" value>
+      <input type="hidden" name="expense_2_billtype" value>
+
+    <tr>
+      <td>
+      <table>
+      <tr>
+        <td width="20%" align="center" class="offsetColor"><div class="ExpenseTag">Receipt #1 Date</div></td>
+        <td width="20%" align="center" class="offsetColor"><div class="ExpenseTag">Receipt Total</div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">Expense Amount</div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">GST Amount</div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">Expense Type</div></td>
+        <td width="10%" align="center" class="offsetColor"><div class="ExpenseTag">Bill</div></td>
+      </tr>
+      <tr>
+        <td width="20%" align="center" class="offsetColor"><input type="text" name="rcptdate" size="13" mysubst="100"><a HREF="javascript:doNothing()" mysubst="101" onClick="setDateField(document.forms[1].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="20%" align="center" class="offsetColor"><input type="text" name="amount" size="9" value="0.00" mysubst="102" onChange="CheckAmount(this.form.amount);FormNumber = 1;calcExpAndGST(this.form)"></td>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="expense_1_amount" size="12" value mysubst="103" onChange="CheckAmount(this.form.expense_1_amount);FormNumber = 1;calcGSTFromExp(this.form)"></td>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="expense_2_amount" size="12" value mysubst="103" onChange="CheckGST(this.form.expense_2_amount);FormNumber = 1;calcExpFromGST(this.form)"></td>
+        <td width="25%" align="center" class="offsetColor"><select name="expense_1_expensetype" size="1" mysubst="104">
+        </select></td>
+        <td width="10%" class="offsetColor"><select name="expense_1_billtype" size="1" tabindex="13">
+          <option value="Yes">Yes</option>
+          <option selected value="No">No</option>
+        </select></td>
+      </tr>
+      </table></td>
+    </tr>
+    </td>
+      <td width="100%"><table>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Comment:</div></td>
+        <td width="40%" class="offsetColor"><input type="text" name="expense_1_comment" size="36" mysubst="106" onChange="CheckComment(this.form.expense_1_comment)"></td>
+        <td width="10%" class="offsetColor">
+        <a href="javascript:doNothing()" mysubst="108" onClick="initAttendeeList(document.forms[1].expense_1_attendeelist,document.forms[1].expense_1_persplit,document.forms[1].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><span class="ExpenseLink">Attendee&nbsp;List</span></a>       
+        </td>
+        <td width="15%" class="offsetColor"><div class="ExpenseTag">&nbsp;&nbsp;&nbsp;&nbsp;Merchant:</div></td>
+        <td width="20%" class="offsetColor"><select name="expense_1_merchant" size="1"></select>
+        </td>
+        <td width="10%" class="offsetColor">
+        <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalObj(document.forms[1].expense_1_merchant)">New&nbsp;Merchant</a> </td>
+      </tr>
+      </table></td>
+      </form>
+      </table>
+    </td>
+  </tr>
+  
+  
+  <tr>   
+    <td width="100%"><table>
+      <form name="bottom2">
+      <input type="hidden" name="rcpttype" value>
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_purpose" value="wizard">
+      <input type="hidden" name="expense_1_xref" value>
+      <input type="hidden" name="charge" value>
+      <input type="hidden" name="expense_2_purpose" value="wizard">
+      <input type="hidden" name="expense_2_xref" value>
+      <input type="hidden" name="expense_2_persplit" value>
+      <input type="hidden" name="expense_2_expensetype" value>
+      <input type="hidden" name="expense_2_merchant" value>
+      <input type="hidden" name="expense_2_comment" value>
+      <input type="hidden" name="expense_2_billtype" value>
+    
+    <tr>
+      <td>
+      <table>
+      <tr>
+        <td width="20%" align="center"><div class="ExpenseTag">Receipt #2 Date</div></td>
+        <td width="20%" align="center"><div class="ExpenseTag">Receipt Total</div></td>
+        <td width="20%" align="center"><div class="ExpenseTag">Expense Amount</div></td>
+        <td width="25%" align="center"><div class="ExpenseTag">GST Amount</div></td>
+        <td width="25%" align="center"><div class="ExpenseTag">Expense Type</div></td>
+        <td width="10%" align="center"><div class="ExpenseTag">Bill</div></td>
+      </tr>
+      <tr>
+        <td width="20%" align="center"><input type="text" name="rcptdate" size="13" mysubst="100"><a HREF="javascript:doNothing()" mysubst="101" onClick="setDateField(document.forms[2].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="20%" align="center"><input type="text" name="amount" size="9" value="0.00" mysubst="102" onChange="CheckAmount(this.form.amount);FormNumber = 2;calcExpAndGST(this.form)"></td>
+        <td width="25%" align="center"><input type="text" name="expense_1_amount" size="12" value mysubst="103" onChange="CheckAmount(this.form.expense_1_amount);FormNumber = 2;calcGSTFromExp(this.form)"></td>
+        <td width="25%" align="center"><input type="text" name="expense_2_amount" size="12" value mysubst="103" onChange="CheckGST(this.form.expense_2_amount);FormNumber = 2;calcExpFromGST(this.form)"></td>
+        <td width="25%" align="center"><select name="expense_1_expensetype" size="1" mysubst="104">
+        </select></td>
+        <td width="10%"><select name="expense_1_billtype" size="1" tabindex="13">
+          <option value="Yes">Yes</option>
+          <option selected value="No">No</option>
+        </select></td>
+      </tr>
+      </table></td>
+    </tr>
+    </td>
+      <td width="100%"><table>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Comment:</div></td>
+        <td width="40%"><input type="text" name="expense_1_comment" size="36" mysubst="106" onChange="CheckComment(this.form.expense_1_comment)"></td>
+        <td width="10%">
+        <a href="javascript:doNothing()" mysubst="108" onClick="initAttendeeList(document.forms[2].expense_1_attendeelist,document.forms[2].expense_1_persplit,document.forms[2].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><span class="ExpenseLink">Attendee&nbsp;List</span></a>       
+        </td>
+        <td width="15%"><div class="ExpenseTag">&nbsp;&nbsp;&nbsp;&nbsp;Merchant:</div></td>
+        <td width="20%"><select name="expense_1_merchant" size="1"></select>
+        </td>
+        <td width="10%">
+        <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalObj(document.forms[2].expense_1_merchant)">New&nbsp;Merchant</a> </td>
+      </tr>
+      </table></td>
+      </tr>
+      
+      </form>
+      </table> 
+  </tr>
+  <tr>
+    <td width="100%"><table class="offsetColor">
+      <form name="bottom3">
+      <input type="hidden" name="rcpttype" value>
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_purpose" value="wizard">
+      <input type="hidden" name="expense_1_xref" value>
+      <input type="hidden" name="charge" value>
+      <input type="hidden" name="expense_2_purpose" value="wizard">
+      <input type="hidden" name="expense_2_xref" value>
+      <input type="hidden" name="expense_2_persplit" value>
+      <input type="hidden" name="expense_2_expensetype" value>
+      <input type="hidden" name="expense_2_merchant" value>
+      <input type="hidden" name="expense_2_comment" value>
+      <input type="hidden" name="expense_2_billtype" value>
+
+    <tr>
+      <td>
+      <table>
+      <tr>
+        <td width="20%" align="center" class="offsetColor"><div class="ExpenseTag">Receipt #3 Date</div></td>
+        <td width="20%" align="center"><div class="ExpenseTag">Receipt Total</div></td>
+        <td width="20%" align="center"><div class="ExpenseTag">Expense Amount</div></td>
+        <td width="25%" align="center"><div class="ExpenseTag">GST Amount</div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">Expense Type</div></td>
+        <td width="10%" align="center" class="offsetColor"><div class="ExpenseTag">Bill</div></td>
+      </tr>
+      <tr>
+        <td width="20%" align="center" class="offsetColor"><input type="text" name="rcptdate" size="13" mysubst="100"><a HREF="javascript:doNothing()" mysubst="101" onClick="setDateField(document.forms[3].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="20%" align="center" class="offsetColor"><input type="text" name="amount" size="9" value="0.00" mysubst="102" onChange="CheckAmount(this.form.amount);FormNumber = 3;calcExpAndGST(this.form)"></td>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="expense_1_amount" size="12" value mysubst="103" onChange="CheckAmount(this.form.expense_1_amount);FormNumber = 3;calcGSTFromExp(this.form)"></td>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="expense_2_amount" size="12" value mysubst="103" onChange="CheckGST(this.form.expense_2_amount);FormNumber = 3;calcExpFromGST(this.form)"></td>
+        <td width="25%" align="center" class="offsetColor"><select name="expense_1_expensetype" size="1" mysubst="104">
+        </select></td>
+        <td width="10%" class="offsetColor"><select name="expense_1_billtype" size="1" tabindex="13">
+          <option value="Yes">Yes</option>
+          <option selected value="No">No</option>
+        </select></td>
+      </tr>
+      </table></td>
+    </tr>
+    </td>
+      <td width="100%"><table>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Comment:</div></td>
+        <td width="40%" class="offsetColor"><input type="text" name="expense_1_comment" size="36" mysubst="106" onChange="CheckComment(this.form.expense_1_comment)"></td>
+        <td width="10%" class="offsetColor">
+        <a href="javascript:doNothing()" mysubst="108" onClick="initAttendeeList(document.forms[3].expense_1_attendeelist,document.forms[3].expense_1_persplit,document.forms[3].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><span class="ExpenseLink">Attendee&nbsp;List</span></a>       
+        </td>
+        <td width="15%" class="offsetColor"><div class="ExpenseTag">&nbsp;&nbsp;&nbsp;&nbsp;Merchant:</div></td>
+        <td width="20%" class="offsetColor"><select name="expense_1_merchant" size="1"></select>
+        </td>
+        <td width="10%" class="offsetColor">
+        <a class="ExpenseLink" href="javascript:doNothing()" tabindex="8" onClick="setLocalObj(document.forms[3].expense_1_merchant)">New&nbsp;Merchant</a> </td>
+      </tr>
+      </table></td>
+     </tr> 
+      
+      </form>
+    </table>
+    </td>
+  </tr>
+   
+  <tr>   
+    <td width="100%"><table>
+      <form name="bottom4">
+      <input type="hidden" name="rcpttype" value>
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_purpose" value="wizard">
+      <input type="hidden" name="expense_1_xref" value>
+      <input type="hidden" name="charge" value>
+      <input type="hidden" name="expense_2_purpose" value="wizard">
+      <input type="hidden" name="expense_2_xref" value>
+      <input type="hidden" name="expense_2_persplit" value>
+      <input type="hidden" name="expense_2_expensetype" value>
+      <input type="hidden" name="expense_2_merchant" value>
+      <input type="hidden" name="expense_2_comment" value>
+      <input type="hidden" name="expense_2_billtype" value>
+    
+    <tr>
+      <td>
+      <table>
+      <tr>
+        <td width="20%" align="center"><div class="ExpenseTag">Receipt #4 Date</div></td>
+        <td width="20%" align="center"><div class="ExpenseTag">Receipt Total</div></td>
+        <td width="20%" align="center"><div class="ExpenseTag">Expense Amount</div></td>
+        <td width="25%" align="center"><div class="ExpenseTag">GST Amount</div></td>
+        <td width="25%" align="center"><div class="ExpenseTag">Expense Type</div></td>
+        <td width="10%" align="center"><div class="ExpenseTag">Bill</div></td>
+      </tr>
+      <tr>
+        <td width="20%" align="center"><input type="text" name="rcptdate" size="13" mysubst="100"><a HREF="javascript:doNothing()" mysubst="101" onClick="setDateField(document.forms[4].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="20%" align="center"><input type="text" name="amount" size="9" value="0.00" mysubst="102" onChange="CheckAmount(this.form.amount);FormNumber = 4;calcExpAndGST(this.form)"></td>
+        <td width="25%" align="center"><input type="text" name="expense_1_amount" size="12" value mysubst="103" onChange="CheckAmount(this.form.expense_1_amount);FormNumber = 4;calcGSTFromExp(this.form)"></td>
+        <td width="25%" align="center"><input type="text" name="expense_2_amount" size="12" value mysubst="103" onChange="CheckGST(this.form.expense_2_amount);FormNumber = 4;calcExpFromGST(this.form)"></td>
+        <td width="25%" align="center"><select name="expense_1_expensetype" size="1" mysubst="104">
+        </select></td>
+        <td width="10%"><select name="expense_1_billtype" size="1" tabindex="13">
+          <option value="Yes">Yes</option>
+          <option selected value="No">No</option>
+        </select></td>
+      </tr>
+      </table></td>
+    </tr>
+    </td>
+      <td width="100%"><table>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Comment:</div></td>
+        <td width="40%"><input type="text" name="expense_1_comment" size="36" mysubst="106" onChange="CheckComment(this.form.expense_1_comment)"></td>
+        <td width="10%">
+        <a href="javascript:doNothing()" mysubst="108" onClick="initAttendeeList(document.forms[4].expense_1_attendeelist,document.forms[4].expense_1_persplit,document.forms[4].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><span class="ExpenseLink">Attendee&nbsp;List</span></a>       
+        </td>
+        <td width="15%"><div class="ExpenseTag">&nbsp;&nbsp;&nbsp;&nbsp;Merchant:</div></td>
+        <td width="20%"><select name="expense_1_merchant" size="1"></select>
+        </td>
+        <td width="10%">
+        <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalObj(document.forms[4].expense_1_merchant)">New&nbsp;Merchant</a> </td>
+      </tr>
+      </table></td>
+      </tr>
+      
+      </form>
+      </table> 
+  </tr>
+  <tr>
+    <td width="100%"><table class="offsetColor">
+      <form name="bottom5">
+      <input type="hidden" name="rcpttype" value>
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_purpose" value="wizard">
+      <input type="hidden" name="expense_1_xref" value>
+      <input type="hidden" name="charge" value>
+      <input type="hidden" name="expense_2_purpose" value="wizard">
+      <input type="hidden" name="expense_2_xref" value>
+      <input type="hidden" name="expense_2_persplit" value>
+      <input type="hidden" name="expense_2_expensetype" value>
+      <input type="hidden" name="expense_2_merchant" value>
+      <input type="hidden" name="expense_2_comment" value>
+      <input type="hidden" name="expense_2_billtype" value>
+ 
+    <tr>
+      <td>
+      <table>
+      <tr>
+        <td width="20%" align="center" class="offsetColor"><div class="ExpenseTag">Receipt #5 Date</div></td>
+        <td width="20%" align="center"><div class="ExpenseTag">Receipt Total</div></td>
+        <td width="20%" align="center"><div class="ExpenseTag">Expense Amount</div></td>
+        <td width="25%" align="center"><div class="ExpenseTag">GST Amount</div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">Expense Type</div></td>
+        <td width="10%" align="center" class="offsetColor"><div class="ExpenseTag">Bill</div></td>
+      </tr>
+      <tr>
+        <td width="20%" align="center" class="offsetColor"><input type="text" name="rcptdate" size="13" mysubst="100"><a HREF="javascript:doNothing()" mysubst="101" onClick="setDateField(document.forms[5].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="20%" align="center" class="offsetColor"><input type="text" name="amount" size="9" value="0.00" mysubst="102" onChange="CheckAmount(this.form.amount);FormNumber = 5;calcExpAndGST(this.form)"></td>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="expense_1_amount" size="12" value mysubst="103" onChange="CheckAmount(this.form.expense_1_amount);FormNumber = 5;calcGSTFromExp(this.form)"></td>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="expense_2_amount" size="12" value mysubst="103" onChange="CheckGST(this.form.expense_2_amount);FormNumber = 5;calcExpFromGST(this.form)"></td>
+        <td width="25%" align="center" class="offsetColor"><select name="expense_1_expensetype" size="1" mysubst="104">
+        </select></td>
+        <td width="10%" class="offsetColor"><select name="expense_1_billtype" size="1" tabindex="13">
+          <option value="Yes">Yes</option>
+          <option selected value="No">No</option>
+        </select></td>
+      </tr>
+      </table></td>
+    </tr>
+    </td>
+      <td width="100%"><table>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Comment:</div></td>
+        <td width="40%" class="offsetColor"><input type="text" name="expense_1_comment" size="36" mysubst="106" onChange="CheckComment(this.form.expense_1_comment)"></td>
+        <td width="10%" class="offsetColor">
+        <a href="javascript:doNothing()" mysubst="108" onClick="initAttendeeList(document.forms[5].expense_1_attendeelist,document.forms[5].expense_1_persplit,document.forms[5].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><span class="ExpenseLink">Attendee&nbsp;List</span></a>       
+        </td>
+        <td width="15%" class="offsetColor"><div class="ExpenseTag">&nbsp;&nbsp;&nbsp;&nbsp;Merchant:</div></td>
+        <td width="20%" class="offsetColor"><select name="expense_1_merchant" size="1"></select>
+        </td>
+        <td width="10%" class="offsetColor">
+        <a class="ExpenseLink" href="javascript:doNothing()" tabindex="8" onClick="setLocalObj(document.forms[5].expense_1_merchant)">New&nbsp;Merchant</a> </td>
+      </tr>
+      </table></td>
+     </tr> 
+      
+      </form>
+    </table>
+    </td>
+  </tr>
+  
+</table>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../attendee.js"></script>
+<script LANGUAGE="JavaScript">
+
+function FillForm() {
+  if (parent.contents.HeadList.length > 0) {    
+  parent.contents.setList(document.forms[0].charge, parent.contents.getPaymentTypes("1"));
+  parent.contents.setListDefault(document.forms[0].charge, parent.contents.getChargeDef());
+  //Sets the purpose pulldown from the HeadList
+  //parent.contents.setDfltFrmHdWSplit(document.forms[0].purpose);
+  parent.contents.setDefaultFromHead(document.forms[0].purpose);
+  
+  //Fills in the merchant array with the proper stuff
+  MerchantType = "merchant"
+  var merchArray = parent.contents.getMerchants("1");
+  var mArray = merchArray.concat(parent.contents.getDBResult(parent.PersDBase,MerchantType));
+  var xlist =  ";" + DedicatedList() + ";";
+
+  for (var i = 1; i < document.forms.length; i++) {  
+    parent.contents.setList(document.forms[i].expense_1_expensetype, parent.contents.getExpenseTypes("1"), xlist);
+    parent.contents.setRcptDefDate(document.forms[i].rcptdate,-1);    
+    if (parent.contents.companyBillLoad) parent.contents.companyBillLoad("trans1",document.forms[i].expense_1_billtype,document.forms[0].purpose.selectedIndex);
+    parent.contents.setList(document.forms[i].expense_1_merchant, mArray.sort());
+  }
+  document.forms[0].purpose.focus();
+  } else {
+    alert("You must specify a purpose first, then choose Multiple Receipt Wizard again.");
+    parent.contents.TransWindow(parent.contents.defaultHead + parent.contents.getPurposeHTML("head2"));
+  }
+
+}
+
+function DedicatedList() {
+//Remove expense types requiring other than cash.
+  var retVal = "";
+  var delimit = "";
+  var x = parent.contents.getDedicatedMethod("1");
+  for (var i = 0; i < x.length; i++) {
+     if (x[i][1] != parent.contents.getChargeDef() && x[i][1] != "") {
+       retVal += delimit + x[i][0];
+       delimit = ";";
+     }
+  } 
+  return retVal;
+}
+
+var dupFlagOK = true;
+function SubmitRec(nContinue) {
+ if (dupFlagOK) {
+  dupFlagOK = false;
+  var PostScreen = true;
+  // do purpose form check here and set to false if failed
+  if ( PostScreen ) { 
+    
+    // do expense grid check here and set to false if failed
+    var i = 1; 
+    do {
+      with (document.forms[i]) { 
+        if (CheckZero(amount) 
+          || CheckAmount(amount)
+          && CheckAmount(expense_1_amount)
+          && CheckGST(expense_2_amount) 
+          && checkdate(rcptdate)
+          && doDateChkToday(rcptdate)
+          && CheckExpType(expense_1_expensetype, amount)
+          && CheckDedicated(expense_1_expensetype,document.forms[0].charge)
+          && CheckAttendee(expense_1_attendeelist, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)
+          && CheckMerchant(expense_1_merchant, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text) 
+          && CheckComment(expense_1_comment, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)) {
+          i = i + 1; 
+        } else {    
+          PostScreen = false;
+        }  
+      }
+    } while (PostScreen == true && i < document.forms.length);
+    if (PostScreen == true) {
+      // post report purpose
+      
+      var index = document.forms[0].purpose.selectedIndex
+      var thisPurpose = document.forms[0].purpose.options[index].text;
+      var this_xref = parent.contents.getXref(index);
+
+      var index2 = document.forms[0].charge.selectedIndex
+      var thisCharge = document.forms[0].charge.options[index2].text;
+
+      for (var j = 1; j < document.forms.length; j++) {
+        if (!CheckZero(document.forms[j].amount)) {
+          if (!isNaN(document.forms[j].amount.value)) parent.contents.makeCurrency(document.forms[j].amount);
+          if (!isNaN(document.forms[j].expense_1_amount.value)) parent.contents.makeCurrency(document.forms[j].expense_1_amount);
+          if (!isNaN(document.forms[j].expense_2_amount.value)) parent.contents.makeCurrency(document.forms[j].expense_2_amount);
+          document.forms[j].rcpttype.value = "3";
+          document.forms[j].charge.value = thisCharge;
+          document.forms[j].expense_1_purpose.value = thisPurpose;
+          document.forms[j].expense_1_xref.value = this_xref;
+
+          var Check = 0;
+          if (isNaN(document.forms[j].expense_2_amount.value) || parent.contents.rtrim(document.forms[j].expense_2_amount.value) == "") {
+             document.forms[j].expense_2_amount.value = "";
+             Check = 0; 
+          } else {
+             Check = parseFloat(document.forms[j].expense_2_amount.value);
+          }
+          if (Check > 0) {
+             document.forms[j].expense_2_purpose.value = document.forms[j].expense_1_purpose.value;
+             document.forms[j].expense_2_xref.value = document.forms[j].expense_1_xref.value;
+             document.forms[j].expense_2_persplit.value = document.forms[j].expense_1_persplit.value;
+             document.forms[j].expense_2_expensetype.value = "GST";
+             document.forms[j].expense_2_merchant.value = document.forms[j].expense_1_merchant.value;
+             document.forms[j].expense_2_comment.value = "";
+             document.forms[j].expense_2_billtype.value = document.forms[j].expense_1_billtype.value;
+          } else {
+             document.forms[j].expense_2_amount.value = "";
+             document.forms[j].expense_2_purpose.value = "";
+             document.forms[j].expense_2_xref.value = "";
+             document.forms[j].expense_2_persplit.value = "";
+             document.forms[j].expense_2_expensetype.value = "";
+             document.forms[j].expense_2_merchant.value = "";
+             document.forms[j].expense_2_comment.value = "";
+             document.forms[j].expense_2_billtype.value = "";
+          }
+          parent.contents.UpdateReport('2','trans1afx_gst',document.forms[j]);
+          parent.defDateStr = document.forms[j].rcptdate.value;
+        }
+      }
+      dupFlagOK = true;
+      if (nContinue == 1) {
+        parent.contents.DefaultXref = document.forms[0].xref.value;
+        parent.contents.TransWindow(parent.contents.defaultTrans + "multi1_gst.html");
+      } else {
+        parent.contents.ListDelay();
+      }
+    } else {
+      dupFlagOK = true;
+    }
+  } 
+ } 
+}
+
+function CheckAttendee(tag,expense) {
+  var Check = tag.value;
+  var Xstr = parent.contents.getAttendeeReq();
+  if (Xstr.indexOf(";" + expense + ";") > -1 && Check.length < 3) {
+     alert("Need to supply attendee list for " + expense + " expense");
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function checkPurpComment(object) {
+        if (object.value.length > 9) {
+                return true;
+        } else
+        alert("Need to supply a purpose of at least 10 characters");
+        object.focus();
+        object.select();
+}
+
+function CheckExpType(tag1, tag2) {
+        if (!CheckZero(tag2) && (tag1.selectedIndex == 0)) {
+     alert("Select an Expense Type.");
+     tag1.focus();
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function CheckZero(tag) {
+  var Check = parseFloat(tag.value);
+  if (Check == 0) {
+     return true;
+  } else {
+     return false;
+  }
+}
+
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+
+function CheckGST(tag) {
+  if (isNaN(tag.value) || parent.contents.rtrim(tag.value) == "") {
+     alert("Data in the amount field is not a valid numeric value");
+     tag.focus();
+     return false;
+  } else {
+    var Check = parseFloat(tag.value);
+    //if (Check < .01 && !parent.contents.getAllowNegative()) {
+    if (Check < .00) {        
+      alert("GST field cannot be negative");
+      tag.focus();
+      return false;
+    } else if (Check >= 1000) {
+      alert("GST field must be less than 1,000.");
+      tag.focus();
+      return false;
+    } else {
+      return true;
+    }
+  }
+}
+var NeedComment = parent.contents.getCommentReq();
+function CheckComment(tag,expensetype) {
+  var Check = parent.contents.alltrim(tag.value);
+  if (NeedComment.indexOf(expensetype) > -1 && Check.length < 10) {
+     alert("Need to supply a comment of at least 10 characters");
+     tag.focus();
+     tag.select();
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function CheckMerchant(tag,expense) {
+  return CheckRequired(tag,expense,parent.contents.getMerchantReq(),"Need to supply a merchant name in the merchant field");
+}
+
+function CheckRequired(tag,expense,validation, msgtext) {
+  var Check = "";
+  var n = false 
+  var CmtLen = parent.contents.getCommentLen();
+  expense = ";" + expense + ";";
+  if (validation.indexOf(expense) > -1) {
+    if (tag.type.indexOf("select") == 0) {
+      Check = tag.options[tag.selectedIndex].text;
+      if (Check.length > 2) n = true;     
+    } else { 
+      Check = tag.value;
+      if (Check.length >= CmtLen) n = true;
+    } 
+    if (!n) {
+      alert(msgtext);
+      tag.focus();
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+     return true;
+  }
+}
+
+function calcBarterAmount(formObj) {
+        var intAmount = parseFloat(formObj.recamt.value);
+        var intRate = parseFloat(formObj.xrate.value);
+        var totalAmt = intAmount * intRate;
+        formObj.amount.value = totalAmt;
+        amountVal(formObj.amount);
+        return;
+}
+
+function popDates() {
+  var xx = parent.contents.getItemValue(parent.contents.HeadList[document.forms[0].purpose.selectedIndex] , "begdate");
+  if (isDateLess(xx, parent.defDateStr)) xx = parent.defDateStr;
+  for (var i = 1; i < document.forms.length; i++) {
+    if (document.forms[i].expense_1_expensetype.selectedIndex == 0) document.forms[i].rcptdate.value = xx;
+  }
+}
+
+function CheckDedicated(expObj, chgObj) {
+  var x = expObj.options[expObj.selectedIndex].text;
+  var y = chgObj.options[chgObj.selectedIndex].text;
+  var retVal = true;
+  var dedicated = parent.contents.getDBValue(parent.contents.getDedicatedMethod("1"), x);
+  if (dedicated != "" && y != dedicated) { 
+    retVal = false;
+    alert("Invalid payment method " + y + " for expense type " + x + ". Need to use " + dedicated + ".");
+  }
+  return retVal;
+}    
+
+function resetBillType() {
+  for (var i = 1; i < document.forms.length; i++) {
+    if (document.forms[i].expense_1_expensetype.selectedIndex == 0) { 
+       if (parent.contents.companyBillLoad) parent.contents.companyBillLoad("trans1",document.forms[i].expense_1_billtype,document.forms[0].purpose.selectedIndex);
+    }
+  }
+}
+
+//var OK2Adjust = true;
+function calcExpAndGST(xform) {
+     with (xform) {
+        var recAmt = ChkTotal1(amount.value);
+        var exp1Amt = Math.round((recAmt/1.1)*100)/100;
+        var exp2Amt = Math.round((recAmt - exp1Amt)*100)/100;
+        expense_1_amount.value = exp1Amt;
+        expense_2_amount.value = exp2Amt;
+     }
+  return;
+}
+
+function calcExpFromGST(xform) {
+     with (xform) {
+        var recAmt = ChkTotal1(amount.value);
+        var exp2Amt = ChkTotal1(expense_2_amount.value);
+        var exp1Amt = Math.round((recAmt - exp2Amt)*100)/100;
+        expense_1_amount.value = exp1Amt;
+        expense_2_amount.value = exp2Amt;
+     }
+  return;
+}
+
+function calcGSTFromExp(xform) {
+     with (xform) {
+        var recAmt = ChkTotal1(amount.value);
+        var exp1Amt = ChkTotal1(expense_1_amount.value);
+        var exp2Amt = Math.round((recAmt - exp1Amt)*100)/100;
+        expense_1_amount.value = exp1Amt;
+        expense_2_amount.value = exp2Amt;
+     }
+  return;
+}
+
+function CheckTotals(formObj) {
+   if (formObj == null) formObj = document.forms[0];
+   var recAmt = ChkTotal1(formObj.amount.value);
+   var exp1Amt = ChkTotal1(formObj.expense_1_amount.value);
+   var exp2Amt = ChkTotal1(formObj.expense_2_amount.value);
+   var expAmt = exp1Amt + exp2Amt;
+   if (recAmt - expAmt < 0.005 && expAmt - recAmt < 0.005) {
+     if (exp1Amt > 0) {
+        return true;
+     } else {
+        alert("Expense amount must be greater than zero")
+        return false;
+     }
+   } else {
+     alert("Receipt is out of balance by " + (recAmt - (exp1Amt + exp2Amt)));
+     return false;
+   } 
+}
+
+function ChkTotal1(v1) {
+  if (isNaN(v1) || v1 == "") {
+    return 0;
+  }else{
+    return Math.round(Number(v1)*100)/100;
+  }
+}
+
+</script>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="50%"></td>
+    <td width="50%"><p align="right"><a class="ExpenseLink" href="Javascript: void SubmitRec(1)" mysubst="901" onDblClick="dupFlagOK = false">
+    Save and enter more expenses</a></p></td>
+  </tr>
+</table>
+<p align="center"><input type="button" value=" Finish Wizard - Add these items to report" name=" " mysubst="902" onClick="Javascript: void SubmitRec(0)" onDblClick="dupFlagOK = false"></p>
+</body>
+</html>

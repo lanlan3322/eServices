@@ -1,0 +1,698 @@
+<!--
+multifxn.html - multiple receipts with fx and no billing 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<title>Multiple Receipt Entry</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="JavaScript:void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('hmulti1fxn.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%" class="offsetColor">
+  <tr>
+    <td width="100%"><h1>Enter multiple receipts:</h1>
+  </tr>
+</table>
+<br>
+<h2>Shared Information</h2>
+
+<form name="topside">
+  <input type="hidden" name="xref" value="XXX">
+  <input type="hidden" name="ratetype" value>
+  <input type="hidden" name="xsource" value>
+  <input type="hidden" name="xrate" value>
+  <input type="hidden" name="xdate" value>
+  <input type="hidden" name="amount" value>
+  <input type="hidden" name="recamt" value>
+
+  <table border="0" width="100%" cellpadding="0">
+  <tr><table border="0" width="910" cellpadding="0" style="border: medium none">
+      <td width="60%"><p align="left"><small><bold>If not using your local currency, 
+      use the ‘Select Currency’ link to specify a currency, rate and other auditable 
+      information.  Selected currency will be applied to all the receipts below. 
+      To vary currency, use separate ‘Enter Multiple Receipts’ screens.  If you are 
+      entering receipts in your local currency, you can leave this field blank.
+      <br><br></bold></small></td>
+      <td width="20%"></td>
+  </table></tr>
+  <tr>
+      <td width="22%" class="offsetColor"><div class="ExpenseTag">Currency:</div></td>
+      <td width="84%" class="offsetColor"><input type="text" name="units" size="16" readOnly="yes">
+      <a href="javascript:doNothing()" mysubst="19" onClick="FormNumber = 0;top.newWin = window.open('../fx1.html', 'fx', 'dependent=yes, width=520, height=360, screenX=580, screenY=420, titlebar=yes, status=yes')"><span class="ExpenseLink">Select Currency</span></a>
+      </td>
+   </tr>
+  </table>
+</form>
+
+
+
+<h2>Expense Receipts</h2>
+<table border="0" width="100%" cellpadding="0">
+
+  <tr><table border="0" width="910" cellpadding="0" style="border: medium none">
+      <td width="60%"><p align="left"><small><bold>Enter individual receipts in the
+       following forms.  If receipts are not in your local currency, enter in the
+       foreign amount in the ‘Foreign Amount’ field and your local currency will
+       be calculated automatically from the information specified above.
+      <br><br></bold></small></td>
+      <td width="20%"></td>
+  </table></tr>
+  <tr>
+    <td width="100%"></td>
+  </tr>
+  <tr>
+
+    <td width="100%"><table class="offsetColor">
+    <form name="bottom1">
+      <input type="hidden" name="rcpttype" value>
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>      
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_amount" value>
+      <input type="hidden" name="expense_1_billtype" value="No">
+      <input type="hidden" name="expense_1_purpose" value="wizard">
+      <input type="hidden" name="expense_1_xref" value>
+      <input type="hidden" name="charge" value>
+
+    <tr>
+      <td>
+      <table>
+      <tr>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">Receipt #1 Date</div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag"><script>document.write(parent.contents.getCurrencyLabel())</script></div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">Foreign Amount</div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">Expense Type</div></td>
+      </tr>
+      <tr>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="rcptdate" size="13" mysubst="100"><a HREF="javascript:doNothing()" mysubst="101" onClick="setDateField(document.forms[1].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="amount" size="9" value="0.00" mysubst="102" onChange="CheckAmount(this.form.amount)"></td>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="recamt" size="12" value mysubst="103" onChange="FormNumber = 1;FXConvert()" readOnly="yes"></td>
+        <td width="25%" align="center" class="offsetColor"><select name="expense_1_expensetype" size="1" mysubst="104">
+        </select></td>
+      </tr>
+      </table></td>
+    </tr>
+    </td>
+      <td width="100%"><table>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Comment:</div></td>
+        <td width="40%" class="offsetColor"><input type="text" name="expense_1_comment" size="36" mysubst="106" onChange="CheckComment(this.form.expense_1_comment)"></td>
+        <td width="10%" class="offsetColor">
+        <a href="javascript:doNothing()" mysubst="108" onClick="initAttendeeList(document.forms[1].expense_1_attendeelist,document.forms[1].expense_1_persplit,document.forms[1].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><span class="ExpenseLink">Attendee&nbsp;List</span></a>       
+        </td>
+        <td width="15%"><div class="ExpenseTag">&nbsp;&nbsp;&nbsp;&nbsp;Merchant:</div></td>
+        <td width="20%"><select name="expense_1_merchant" size="1" onReturn="FillMerchant()"></select>
+        </td>
+        <td width="10%">
+        <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalObj(document.forms[1].expense_1_merchant)">New&nbsp;Merchant</a> </td>
+      </tr>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Reference:</div></td>
+        <td width="40%"><input type="text" name="refer" size="23" mysubst="106" onChange="CheckReference(this.form.expense_1_comment)"></td>
+        <td width="10%"></td>
+        <td width="15%"></td>
+        <td width="20%"></td>
+        <td width="10%"></td>
+      </tr>
+      
+      
+      </table></td>
+      </form>
+      </table>
+    </td>
+  </tr>
+  
+  
+  <tr>   
+    <td width="100%"><table>
+      <form name="bottom2">
+      <input type="hidden" name="rcpttype" value>
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_amount" value>
+      <input type="hidden" name="expense_1_billtype" value="No">
+      <input type="hidden" name="expense_1_purpose" value="wizard">
+      <input type="hidden" name="expense_1_xref" value>
+      <input type="hidden" name="charge" value>
+      
+    
+    <tr>
+      <td>
+      <table>
+      <tr>
+        <td width="25%" align="center"><div class="ExpenseTag">Receipt #2 Date</div></td>
+        <td width="25%" align="center"><div class="ExpenseTag"><script>document.write(parent.contents.getCurrencyLabel())</script></div></td>
+        <td width="25%" align="center"><div class="ExpenseTag">Foreign Amount</div></td>
+        <td width="25%" align="center"><div class="ExpenseTag">Expense Type</div></td>
+      </tr>
+      <tr>
+        <td width="25%" align="center"><input type="text" name="rcptdate" size="13" mysubst="100"><a HREF="javascript:doNothing()" mysubst="101" onClick="setDateField(document.forms[2].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="25%" align="center"><input type="text" name="amount" size="9" value="0.00" mysubst="102" onChange="CheckAmount(this.form.amount)"></td>
+        <td width="25%" align="center"><input type="text" name="recamt" size="12" value mysubst="103" onChange="FormNumber = 2;FXConvert()" readOnly="yes"></td>
+        <td width="25%" align="center"><select name="expense_1_expensetype" size="1" mysubst="104">
+        </select></td>
+      </tr>
+      </table></td>
+    </tr>
+    </td>
+      <td width="100%"><table>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Comment:</div></td>
+        <td width="40%"><input type="text" name="expense_1_comment" size="36" mysubst="106" onChange="CheckComment(this.form.expense_1_comment)"></td>
+        <td width="10%">
+        <a href="javascript:doNothing()" mysubst="108" onClick="initAttendeeList(document.forms[2].expense_1_attendeelist,document.forms[2].expense_1_persplit,document.forms[2].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><span class="ExpenseLink">Attendee&nbsp;List</span></a>       
+        </td>
+        <td width="15%"><div class="ExpenseTag">&nbsp;&nbsp;&nbsp;&nbsp;Merchant:</div></td>
+        <td width="20%"><select name="expense_1_merchant" size="1" onReturn="FillMerchant()"></select>
+        </td>
+        <td width="10%">
+        <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalObj(document.forms[2].expense_1_merchant)">New&nbsp;Merchant</a> </td>
+      </tr>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Reference:</div></td>
+        <td width="40%"><input type="text" name="refer" size="23" mysubst="106" onChange="CheckReference(this.form.expense_1_comment)"></td>
+        <td width="10%"></td>
+        <td width="15%"></td>
+        <td width="20%"></td>
+        <td width="10%"></td>
+      </tr>
+            
+      </table></td>
+      </tr>
+      
+      </form>
+      </table> 
+  </tr>
+  <tr>
+    <td width="100%"><table class="offsetColor">
+      <form name="bottom3">
+      <input type="hidden" name="rcpttype" value>
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_amount" value>
+      <input type="hidden" name="expense_1_billtype" value="No">
+      <input type="hidden" name="expense_1_purpose" value="wizard">
+      <input type="hidden" name="expense_1_xref" value>
+      <input type="hidden" name="charge" value>
+ 
+    <tr>
+      <td>
+      <table>
+      <tr>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">Receipt #3 Date</div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag"><script>document.write(parent.contents.getCurrencyLabel())</script></div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">Foreign Amount</div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">Expense Type</div></td>
+      </tr>
+      <tr>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="rcptdate" size="13" mysubst="100"><a HREF="javascript:doNothing()" mysubst="101" onClick="setDateField(document.forms[3].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="amount" size="9" value="0.00" mysubst="102" onChange="CheckAmount(this.form.amount)"></td>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="recamt" size="12" value mysubst="103" onChange="FormNumber = 3;FXConvert()" readOnly="yes"></td>
+        <td width="25%" align="center" class="offsetColor"><select name="expense_1_expensetype" size="1" mysubst="104">
+        </select></td>
+      </tr>
+      </table></td>
+    </tr>
+    </td>
+      <td width="100%"><table>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Comment:</div></td>
+        <td width="40%" class="offsetColor"><input type="text" name="expense_1_comment" size="36" mysubst="106" onChange="CheckComment(this.form.expense_1_comment)"></td>
+        <td width="10%" class="offsetColor">
+        <a href="javascript:doNothing()" mysubst="108" onClick="initAttendeeList(document.forms[3].expense_1_attendeelist,document.forms[3].expense_1_persplit,document.forms[3].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><span class="ExpenseLink">Attendee&nbsp;List</span></a>       
+        </td>
+        <td width="15%"><div class="ExpenseTag">&nbsp;&nbsp;&nbsp;&nbsp;Merchant:</div></td>
+        <td width="20%"><select name="expense_1_merchant" size="1" onReturn="FillMerchant()"></select>
+        </td>
+        <td width="10%">
+        <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalObj(document.forms[3].expense_1_merchant)">New&nbsp;Merchant</a> </td>
+      </tr>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Reference:</div></td>
+        <td width="40%"><input type="text" name="refer" size="23" mysubst="106" onChange="CheckReference(this.form.expense_1_comment)"></td>
+        <td width="10%"></td>
+        <td width="15%"></td>
+        <td width="20%"></td>
+        <td width="10%"></td>
+      </tr>
+           
+      </table></td>
+     </tr> 
+      
+      </form>
+    </table>
+    </td>
+  </tr>
+   
+  <tr>   
+    <td width="100%"><table>
+      <form name="bottom4">
+      <input type="hidden" name="rcpttype" value>
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_amount" value>
+      <input type="hidden" name="expense_1_billtype" value="No">
+      <input type="hidden" name="expense_1_purpose" value="wizard">
+      <input type="hidden" name="expense_1_xref" value>
+      <input type="hidden" name="charge" value>
+    
+    <tr>
+      <td>
+      <table>
+      <tr>
+        <td width="25%" align="center"><div class="ExpenseTag">Receipt #4 Date</div></td>
+        <td width="25%" align="center"><div class="ExpenseTag"><script>document.write(parent.contents.getCurrencyLabel())</script></div></td>
+        <td width="25%" align="center"><div class="ExpenseTag">Foreign Amount</div></td>
+        <td width="25%" align="center"><div class="ExpenseTag">Expense Type</div></td>
+      </tr>
+      <tr>
+        <td width="25%" align="center"><input type="text" name="rcptdate" size="13" mysubst="100"><a HREF="javascript:doNothing()" mysubst="101" onClick="setDateField(document.forms[4].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="25%" align="center"><input type="text" name="amount" size="9" value="0.00" mysubst="102" onChange="CheckAmount(this.form.amount)"></td>
+        <td width="25%" align="center"><input type="text" name="recamt" size="12" value mysubst="103" onChange="FormNumber = 4;FXConvert()" readOnly="yes"></td>
+        <td width="25%" align="center"><select name="expense_1_expensetype" size="1" mysubst="104">
+        </select></td>
+      </tr>
+      </table></td>
+    </tr>
+    </td>
+      <td width="100%"><table>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Comment:</div></td>
+        <td width="40%"><input type="text" name="expense_1_comment" size="36" mysubst="106" onChange="CheckComment(this.form.expense_1_comment)"></td>
+        <td width="10%">
+        <a href="javascript:doNothing()" mysubst="108" onClick="initAttendeeList(document.forms[4].expense_1_attendeelist,document.forms[4].expense_1_persplit,document.forms[4].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><span class="ExpenseLink">Attendee&nbsp;List</span></a>       
+        </td>
+        <td width="15%"><div class="ExpenseTag">&nbsp;&nbsp;&nbsp;&nbsp;Merchant:</div></td>
+        <td width="20%"><select name="expense_1_merchant" size="1" onReturn="FillMerchant()"></select>
+        </td>
+        <td width="10%">
+        <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalObj(document.forms[4].expense_1_merchant)">New&nbsp;Merchant</a> </td>
+     </tr>
+     <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Reference:</div></td>
+        <td width="40%"><input type="text" name="refer" size="23" mysubst="106" onChange="CheckReference(this.form.expense_1_comment)"></td>
+        <td width="10%"></td>
+        <td width="15%"></td>
+        <td width="20%"></td>
+        <td width="10%"></td>
+      </tr>
+          
+      </table></td>
+      </tr>
+      
+      </form>
+      </table> 
+  </tr>
+  <tr>
+    <td width="100%"><table class="offsetColor">
+      <form name="bottom5">
+      <input type="hidden" name="rcpttype" value>
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_amount" value>
+      <input type="hidden" name="expense_1_billtype" value="No">
+      <input type="hidden" name="expense_1_purpose" value="wizard">
+      <input type="hidden" name="expense_1_xref" value>
+      <input type="hidden" name="charge" value>
+ 
+    <tr>
+      <td>
+      <table>
+      <tr>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">Receipt #5 Date</div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag"><script>document.write(parent.contents.getCurrencyLabel())</script></div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">Foreign Amount</div></td>
+        <td width="25%" align="center" class="offsetColor"><div class="ExpenseTag">Expense Type</div></td>
+      </tr>
+      <tr>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="rcptdate" size="13" mysubst="100"><a HREF="javascript:doNothing()" mysubst="101" onClick="setDateField(document.forms[5].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="amount" size="9" value="0.00" mysubst="102" onChange="CheckAmount(this.form.amount)"></td>
+        <td width="25%" align="center" class="offsetColor"><input type="text" name="recamt" size="12" value mysubst="103" onChange="FormNumber = 5;FXConvert()" readOnly="yes"></td>
+        <td width="25%" align="center" class="offsetColor"><select name="expense_1_expensetype" size="1" mysubst="104">
+        </select></td>
+      </tr>
+      </table></td>
+    </tr>
+    </td>
+      <td width="100%"><table>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Comment:</div></td>
+        <td width="40%" class="offsetColor"><input type="text" name="expense_1_comment" size="36" mysubst="106" onChange="CheckComment(this.form.expense_1_comment)"></td>
+        <td width="10%" class="offsetColor">
+        <a href="javascript:doNothing()" mysubst="108" onClick="initAttendeeList(document.forms[5].expense_1_attendeelist,document.forms[5].expense_1_persplit,document.forms[5].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><span class="ExpenseLink">Attendee&nbsp;List</span></a>       
+        </td>
+        <td width="15%"><div class="ExpenseTag">&nbsp;&nbsp;&nbsp;&nbsp;Merchant:</div></td>
+        <td width="20%"><select name="expense_1_merchant" size="1" onReturn="FillMerchant()"></select>
+        </td>
+        <td width="10%">
+        <a class="ExpenseLink" href="javascript:doNothing()" onClick="setLocalObj(document.forms[5].expense_1_merchant)">New&nbsp;Merchant</a> </td>
+      </tr>
+      <tr>
+        <td width="15%" align="center"><div class="ExpenseTag">Reference:</div></td>
+        <td width="40%"><input type="text" name="refer" size="23" mysubst="106" onChange="CheckReference(this.form.expense_1_comment)"></td>
+        <td width="10%"></td>
+        <td width="15%"></td>
+        <td width="20%"></td>
+        <td width="10%"></td>
+      </tr>
+      
+      </table></td>
+     </tr> 
+      
+      </form>
+    </table>
+    </td>
+  </tr>
+  
+</table>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../attendee.js"></script>
+<script LANGUAGE="JavaScript" SRC="../fx1.js"></script>
+<script LANGUAGE="JavaScript">
+
+function FillForm() {
+  if (parent.contents.HeadList.length > 0) {    
+  var xlist =  ";" + DedicatedList() + ";";
+
+  for (var i = 1; i < document.forms.length; i++) {  
+    parent.contents.setList(document.forms[i].expense_1_expensetype, parent.contents.getExpenseTypes("1"), xlist);
+    parent.contents.setRcptDefDate(document.forms[i].rcptdate,-1);
+    document.forms[i].expense_1_billtype.value = "No";
+  }
+  FillMerchant();
+  LocalReturn = "FillMerchant()";
+  defCurrency();
+  fxCleanUp();
+  document.forms[0].units.focus();
+  } else {
+    alert("You must specify a purpose first with the 'Start A Report' option.");
+    parent.contents.TransWindow(parent.contents.defaultHead + parent.contents.getPurposeHTML("head2"));
+  }
+
+}
+
+function FillMerchant() {
+
+  MerchantType = "merchant"
+  var merchArray = parent.contents.getMerchants("1");
+  var mArray = merchArray.concat(parent.contents.getDBResult(parent.PersDBase,MerchantType));
+  var xlist =  ";" + DedicatedList() + ";";
+  var oldSelect;
+  for (var i = 1; i < document.forms.length; i++) { 
+   if (document.forms[i].expense_1_merchant.selectedIndex != -1) {
+     oldSelect = document.forms[i].expense_1_merchant.options[document.forms[i].expense_1_merchant.selectedIndex].text;
+   } else {
+     oldSelect = null;
+   }
+   document.forms[i].expense_1_merchant.options.length = 0;
+   parent.contents.setList(document.forms[i].expense_1_merchant, mArray.sort());
+   if (oldSelect != null) parent.contents.setListDefault(document.forms[i].expense_1_merchant,oldSelect);
+  }
+}
+
+function DedicatedList() {
+//Remove expense types requiring other than cash.
+  var retVal = "";
+  var delimit = "";
+  var x = parent.contents.getDedicatedMethod("1");
+  for (var i = 0; i < x.length; i++) {
+     if (x[i][1] != parent.contents.getChargeDef() && x[i][1] != "") {
+       retVal += delimit + x[i][0];
+       delimit = ";";
+     }
+  } 
+  return retVal;
+}
+
+var dupFlagOK = true;
+function SubmitRec(nContinue) {
+ if (dupFlagOK) {
+    dupFlagOK = false;
+    var PostScreen = true;
+   // do purpose form check here and set to false if failed
+    // do expense grid check here and set to false if failed
+    var i = 1; 
+    do {
+      with (document.forms[i]) { 
+        if (CheckZero(amount) 
+          || CheckAmount(amount) 
+          && checkdate(rcptdate)
+          && CheckReference(refer)
+          && doDateChkToday(rcptdate)
+          && CheckExpType(expense_1_expensetype, amount)
+          && CheckAttendee(expense_1_attendeelist, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)
+          && CheckComment(expense_1_comment, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)) {
+          i = i + 1; 
+        } else {    
+          PostScreen = false;
+        }  
+      }
+    } while (PostScreen == true && i < document.forms.length);
+    if (PostScreen == true) {
+      // post report purpose
+      
+      var index = 0
+      var headArray = parent.contents.getArrayFromHead(index,parent.contents.getList4Head());
+      var thisPurpose = headArray[0];
+      var this_xref = headArray[1];
+ 
+      var thisCharge = parent.contents.getChargeDef();
+
+
+      for (var j = 1; j < document.forms.length; j++) {
+        if ((document.forms[j].amount.value != "") && (!CheckZero(document.forms[j].amount)) ) {
+          if (!isNaN(document.forms[j].amount.value)) parent.contents.makeCurrency(document.forms[j].amount);
+          document.forms[j].rcpttype.value = "3";
+          document.forms[j].charge.value = thisCharge;
+          document.forms[j].expense_1_purpose.value = thisPurpose;
+          document.forms[j].expense_1_amount.value = document.forms[j].amount.value
+          document.forms[j].expense_1_xref.value = this_xref;
+          parent.contents.UpdateReport('2','trans1bfxnm',document.forms[j]);
+          parent.defDateStr = document.forms[j].rcptdate.value;
+        }
+      }
+      dupFlagOK = true;
+      if (nContinue == 1) {
+        parent.contents.TransWindow(parent.contents.defaultTrans + "multi1fxnj.html");
+      } else {
+        parent.contents.ListDelay();
+      }
+    } else {
+      dupFlagOK = true;
+    }
+  
+ } 
+}
+
+function CheckPaidBy(object) {
+  if (object.selectedIndex == 0) {
+     alert("A Payment Type is required.");
+     object.focus();
+     return false;
+  }  else {
+          return true;
+  }
+}
+
+function CheckAttendee(tag,expense) {
+  var Check = tag.value;
+  var Xstr = parent.contents.getAttendeeReq();
+  if (Xstr.indexOf(";" + expense + ";") > -1 && Check.length < 3) {
+     alert("Need to supply attendee list for " + expense + " expense");
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function checkPurpComment(object) {
+        if (object.value.length > 9) {
+                return true;
+        } else
+        alert("Need to supply a purpose of at least 10 characters");
+        object.focus();
+        object.select();
+}
+
+function CheckReference(object) {
+        var retVal = true;
+        if (object.value.length > 23) {
+                alert("Reference is too long - limit to 23 or less characters.");
+                retVal = false;
+        } 
+        return retVal;
+}
+
+function CheckExpType(tag1, tag2) {
+        if (!CheckZero(tag2) && (tag1.selectedIndex == 0)) {
+     alert("Select an Expense Type.");
+     tag1.focus();
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function CheckZero(tag) {
+  var Check = parseFloat(tag.value);
+  if (Check == 0) {
+     return true;
+  } else {
+     return false;
+  }
+}
+
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+var NeedComment = parent.contents.getCommentReq();
+function CheckComment(tag,expensetype) {
+  var Check = parent.contents.alltrim(tag.value);
+  if (NeedComment.indexOf(";" + expensetype + ";") > -1 && Check.length < 10) {
+     alert("Need to supply a comment of at least 10 characters");
+     tag.focus();
+     tag.select();
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function CheckMerchant(tag,expense) {
+  return CheckRequired(tag,expense,parent.contents.getMerchantReq(),"Need to supply a merchant name in the merchant field");
+}
+
+function CheckRequired(tag,expense,validation, msgtext) {
+  var Check = "";
+  var n = false 
+  var CmtLen = parent.contents.getCommentLen();
+  expense = ";" + expense + ";";
+  if (validation.indexOf(expense) > -1) {
+    if (tag.type.indexOf("select") == 0) {
+      Check = tag.options[tag.selectedIndex].text;
+      if (Check.length > 2) n = true;     
+    } else { 
+      Check = tag.value;
+      if (Check.length >= CmtLen) n = true;
+    } 
+    if (!n) {
+      alert(msgtext);
+      tag.focus();
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+     return true;
+  }
+}
+
+function calcBarterAmount(formObj) {
+        var intAmount = parseFloat(formObj.recamt.value);
+        var intRate = parseFloat(formObj.xrate.value);
+        var totalAmt = intAmount * intRate;
+        formObj.amount.value = totalAmt;
+        amountVal(formObj.amount);
+        return;
+}
+
+function fxCleanUp() {
+        checkFCurrency(1);
+        checkFCurrency(2);
+        checkFCurrency(3);
+        checkFCurrency(4);
+        checkFCurrency(5);
+}
+
+function checkFCurrency(n){
+        FormNumber = n;
+        document.forms[n].xrate.value = document.forms[0].xrate.value;
+        document.forms[n].units.value = document.forms[0].units.value; 
+        document.forms[n].ratetype.value = document.forms[0].ratetype.value; 
+        document.forms[n].xsource.value = document.forms[0].xsource.value; 
+        document.forms[n].xdate.value = document.forms[0].xdate.value;     
+        var z = isEmpty(document.forms[0].xrate.value);
+        setFgnProtected(z, 'recamt', 'amount');
+        FXConvert('recamt', 'amount', true);
+}
+
+function popDates() {
+  var xx = parent.contents.getItemValue(parent.contents.HeadList[document.forms[0].purpose.selectedIndex] , "begdate");
+  if (isDateLess(xx, parent.defDateStr)) xx = parent.defDateStr;
+  for (var i = 1; i < document.forms.length; i++) {
+    if (document.forms[i].expense_1_expensetype.selectedIndex == 0) document.forms[i].rcptdate.value = xx;
+  }
+}
+
+function CheckDedicated(expObj, chgObj) {
+  var x = expObj.options[expObj.selectedIndex].text;
+  var y = chgObj.options[chgObj.selectedIndex].text;
+  var retVal = true;
+  var dedicated = parent.contents.getDBValue(parent.contents.getDedicatedMethod("1"), x);
+  if (dedicated != "" && y != dedicated) { 
+    retVal = false;
+    alert("Invalid payment method " + y + " for expense type " + x + ". Need to use " + dedicated + ".");
+  } else {
+    if (y != dedicated && parent.contents.getDBValue(parent.contents.getDedicatedMethod("1"), y,0,1) > "") {
+      retVal = false;
+      alert("Payment method " + y + " cannot be used for expense type " + x + ".");
+    }
+  }  
+  return retVal;
+}  
+
+
+</script>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="50%"></td>
+    <td width="50%"><p align="right"><a class="ExpenseLink" href="Javascript: void SubmitRec(1)" mysubst="901" onDblClick="dupFlagOK = false">
+    Save and enter more receipts</a></p></td>
+  </tr>
+</table>
+<p align="center"><input type="button" value=" Finish Wizard - Add these items to report" name=" " mysubst="902" onClick="Javascript: void SubmitRec(0)" onDblClick="dupFlagOK = false"></p>
+</body>
+</html>

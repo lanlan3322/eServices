@@ -1,0 +1,158 @@
+<!--
+receipt12.html - returned for audit screen (duplicate of receipt8.html)
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Returned payment</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="Javascript: void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('htrans8.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0" class="offsetColor">
+  <tr>
+    <td width="50%"><h1>Returned Funds</h1></td>
+  </tr>
+</table>
+
+<form>
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+  <input type="hidden" name="RCPTTYPE" value>
+  <input type="hidden" name="VOUCHER" value>
+  <input type="hidden" name="RECEIPT" value>
+  <input type="hidden" name="CHARGE" value> 
+  <input type="hidden" name="CRE_DATE" value>  
+  <input type="hidden" name="XRATE" value>
+  <input type="hidden" name="XDATE" value>
+  <input type="hidden" name="RATETYPE" value>
+  <input type="hidden" name="XSOURCE" value>
+  <input type="hidden" name="OK_STAT" value>
+  <input type="hidden" name="OK_REF" value>
+  <input type="hidden" name="SCAN_REF" value>
+  
+  <input type="hidden" name="persistance" value="none">
+    <tr>
+      <td class="ExpenseTagOffset" width="20%" class="offsetColor">Current Date:</td>
+      <td width="30%" class="offsetColor"><input type="text" name="REC_DATE" tabindex="1" size="13"><a HREF="javascript:doNothing()" tabindex="2" onClick="setDateField(document.forms[0].REC_DATE);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><span class="ExpenseTinyLink">Popup Calendar</span></td>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Currency:</div></td>
+      <td width="30%" class="offsetColor"><input type="text" name="UNITS" size="16" readOnly="yes"><a class="ExpenseLink" href="javascript:doNothing()" tabindex="3" onClick="setFgnLocalVars(document.forms[0].REC_AMT,document.forms[0].AMOUNT,'REC_AMT','AMOUNT')">Select Currency</a></td>
+    </tr>
+    <tr>
+      <td class="ExpenseTag" width="20%">Amount Returned:</td>
+      <td width="30%"><input type="text" name="AMOUNT" size="9" value="0.00" tabindex="3" onChange="CheckAmount(this.form.AMOUNT)"></td>
+      <td width="20%"><div class="ExpenseTag">Foreign Amount:</div></td>
+      <td width="30%"><input type="text" name="REC_AMT" size="9" value tabindex="5" onChange="FXConvert();setSingleExpense();CheckAmountAndDisburse(this.form.AMOUNT,this.form.expenselist,'AMOUNT',this.form.expense_1_disburse)" readOnly="yes"></td>
+    </tr>
+    <tr>
+      <td class="ExpenseTagOffset" width="20%" class="offsetColor">Check #:</td>
+      <td width="30%" class="offsetColor"><input type="text" name="REFER" tabindex="4" size="15" onChange="CheckRequired(this.form.REFER,'Need to supply the advance reference number in this field')"></td>
+      <td width="20%" class="offsetColor"></td>
+      <td width="30%" class="offsetColor"></td>
+    </tr>
+  </table>
+  <div align="center"><center><p><input type="button" value="Add returned payment to report" name=" " tabindex="5" onClick="Javascript: void SubmitRec()" onDblClick="parent.contents.dupFlagOK = false"></p>
+  </center></div>
+</form>
+
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void history.go(-2)" tabindex="6">Return to report display</a></p>
+
+<p align="center">&nbsp;</p>
+</body>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../fx1.js"></script>
+<script LANGUAGE="JavaScript">
+
+function SubmitRec() {
+  with (document.forms[0]) {
+    if (CheckAmount(AMOUNT)
+      && checkdate(REC_DATE)
+      && doDateChkToday(REC_DATE)
+      && CheckRequired(REFER, "You need to supply a reference number for this advance")) {
+      // get charge default and set it  
+      CHARGE.value = parent.contents.getReturnedDef();
+      REC_DATE.value = parent.contents.getNormalDate(REC_DATE.value);
+      CRE_DATE.value = parent.contents.getNormalDate(CRE_DATE.value);
+      applyUpdate(document.forms[0].persistance);
+      parent.contents.makeCurrency(AMOUNT);
+      parent.contents.iXMLB = true;
+      parent.contents.UpdateReport('2','receipt8');
+      parent.contents.iXMLB = false;
+      if (parent.contents.DirectEdit) {
+         parent.contents.NeedAReport(parent.contents.defaultHome + 'setReportItem.html')
+      } else {
+         parent.contents.ListDelay();
+      }
+    }
+  }
+}
+
+function applyUpdate(obj) {
+  if (parent.contents.isNew()) {
+    obj.value = "insert";
+  } else {
+    if (obj.value == "none") {
+      obj.value = "update";
+    }
+  }
+}
+
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+function CheckRequired(tag,msgtext) {
+  var Check = tag.value;
+  if (Check.length < 3) {
+     alert(msgtext);
+     tag.focus();
+     tag.select();
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function FillForm() {
+   //Sets the default dates
+   parent.contents.setDefaultDate(document.forms[0].REC_DATE,0);
+   parent.contents.setDefaultDate(document.forms[0].CRE_DATE,0);    
+   //Brings in any transaction information (note date above can be optimized against this later)
+   //Need to adjust FX for this form.
+   FXFormNames = ["UNITS","XRATE","RATETYPE","XDATE","XSOURCE","REC_AMT","AMOUNT"];
+   parent.contents.setTransaction(document.forms[0]);
+   if (parent.contents.isNew()) {  //changed 7/4/2002 
+      defCurrency();
+   } else {
+      if (isEmpty(document.forms[0].UNITS.value)) { //uncommented JH 2006-02-19
+         document.forms[0].REC_AMT.value = "";
+         setFgnProtected(true,"REC_AMT","AMOUNT");
+      }
+      fxCleanUp();
+      document.forms[0].RATETYPE.value = setRateTypeAuto(document.forms[0].AMOUNT.value,document.forms[0].REC_AMT.value,document.forms[0].XRATE.value);
+   }
+   
+   document.forms[0].REC_DATE.focus();
+}
+function fxCleanUp() {
+  setFgnProtected(isEmpty(document.forms[0].UNITS.value),"REC_AMT","AMOUNT");
+}
+
+
+</script>
+
+</html>

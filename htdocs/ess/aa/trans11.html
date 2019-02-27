@@ -1,0 +1,189 @@
+<!--
+trans11.html - Fleet simple charge 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Fleet Simple Charge</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="Javascript: void FillForm()">
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0" class="offsetColor">
+  <tr>
+    <td width="50%"><h1>Fleet Receipt</h1></td>
+  </tr>
+</table>
+
+<form>
+  <input type="hidden" name="rcpttype" value="5" )>
+  <input type="hidden" name="expense_1_amount" value>
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="16%" class="offsetColor"><div class="ExpenseTag">Receipt Date:</div></td>
+      <td width="20%" class="offsetColor"><input type="text" name="rcptdate" size="13" tabindex="1"><a HREF="javascript:doNothing()" tabindex="2" onClick="setDateField(document.forms[0].rcptdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+      <td width="11%" class="offsetColor"></td>
+      <td width="25%" class="offsetColor"></td>
+    </tr>
+    <tr>
+      <td width="16%"><div class="ExpenseTag"><script>document.write(parent.contents.getCurrencyLabel())</script>:</div></td>
+      <td width="20%"><input type="text" name="amount" size="12" value="0.00" tabindex="4" onChange="CheckAmount(this.form.amount)"></td>
+      <td width="11%"><div class="ExpenseTag">Quantity:</div></td>
+      <td width="25%"><input type="text" name="recamt" size="12" value="0" tabindex="4" onChange="CheckAmount(this.form.recamt)"></td>
+    </tr>
+    <tr>
+      <td width="16%" class="offsetColor"><div class="ExpenseTag">Expense Type: </div></td>
+      <td width="20%" class="offsetColor"><select name="expense_1_expensetype" size="1" tabindex="6" onChange="applyExp()">
+      </select></td>
+      <td width="11%" class="offsetColor"><div class="ExpenseTag">Merchant:</div></td>
+      <td width="25%" class="offsetColor"><select name="expense_1_merchant" size="1" tabindex="7">
+      </select> <a href="javascript:doNothing()" tabindex="8" onClick="setLocalObj(document.forms[0].expense_1_merchant);"><span class="ExpenseLink">New Merchant</span></a> </td>
+    </tr>
+    <tr>
+      <td width="16%"><div class="ExpenseTag">Paid By:</div></td>
+      <td width="20%"><select name="charge" size="1" tabindex="12">
+      </select></td>
+      <td width="11%"></td>
+      <td width="25%"></td>
+    </tr>
+  </table>
+  <table border="0" cellspacing="0" width="100%" cellpadding="0">
+    <tr>
+      <td width="22%" class="offsetColor"><div class="ExpenseTag">Comment:</div> </td>
+      <td width="84%" class="offsetColor"><input type="text" name="expense_1_comment" size="36" tabindex="9" onChange="CheckComment(this.form.expense_1_comment, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)">
+      </td>
+    </tr>
+  </table>
+  <div align="center"><center><p><input type="button" value="Update report with this receipt" name=" " tabindex="15" onClick="Javascript: void SubmitRec()" onDblClick="parent.contents.dupFlagOK = false"></p>
+  </center></div>
+</form>
+
+<p align="center"><a class="ExpenseReturnLink" href="javascript: void parent.contents.ListDelay()" tabindex="16">Return
+to receipt display</a></p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+</body>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../attendee.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript">
+
+function SubmitRec() {
+  with (document.forms[0]) {
+    if (CheckAmount(amount)
+      && checkdate(rcptdate)
+      && doDateChkToday(rcptdate)
+      && CheckExpType(expense_1_expensetype)
+      && CheckPaidBy(charge)
+      && CheckMerchant(expense_1_merchant, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text) 
+      && CheckComment(expense_1_comment, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)) 
+      {
+        parent.contents.makeCurrency(amount);
+        expense_1_amount.value = amount.value;
+        parent.contents.UpdateReport('2','trans11');
+        parent.defDateStr = document.forms[0].rcptdate.value;
+        parent.contents.ListDelay();
+    }
+  }
+}
+
+function CheckPaidBy(object) {
+  if (object.selectedIndex == 0) {
+     alert("A Payment Type is required.");
+     object.focus();
+     return false;
+  }  else {
+          return true;
+  }
+}
+
+function CheckExpType(object) {
+  if (object.selectedIndex == 0) {
+     alert("An Expense Type is required.");
+     object.focus();
+     return false;
+  }  else {
+          return true;
+  }
+}
+
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+function CheckComment(tag,expense) {
+  return CheckRequired(tag,expense,parent.contents.getCommentReq(),"Need to supply a comment in the comment field");
+}
+function CheckMerchant(tag,expense) {
+  return CheckRequired(tag,expense,parent.contents.getMerchantReq(),"Need to supply a merchant name in the merchant field");
+}
+function CheckRequired(tag,expense,validation, msgtext) {
+  var Check = "";
+  var n = false;
+  var CmtLen = parent.contents.getCommentLen();
+  expense = ";" + expense + ";";
+  if (validation.indexOf(expense) > -1) {
+    if (tag.type.indexOf("select") == 0) {
+      Check = tag.options[tag.selectedIndex].text;
+      if (Check.length > 2) n = true;     
+    } else { 
+      Check = tag.value;
+      if (Check.length >= CmtLen) n = true;
+    } 
+    if (!n) {
+      alert(msgtext);
+      tag.focus();
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+     return true;
+  }
+}
+
+function applyExp() {
+  with (document.forms[0]){
+  parent.contents.setListValue(parent.contents.getDedicatedMethod("1"), charge, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text);
+  }
+}
+
+function FillForm() {
+
+    //Gets a simple list found in personal.js
+    parent.contents.setList(document.forms[0].expense_1_expensetype, parent.contents.getExpenseTypes("3"));
+    parent.contents.setList(document.forms[0].charge, parent.contents.getPaymentTypes("1"));
+    parent.contents.setListDefault(document.forms[0].charge, parent.contents.getChargeDef());
+    document.forms[0].rcpttype.value = "5"
+    //Fills in the merchant array with the proper stuff
+    MerchantType = "merchant"
+    var merchArray = parent.contents.getMerchants("1");
+    var mArray = merchArray.concat(parent.contents.getDBResult(parent.PersDBase,MerchantType));
+    parent.contents.setList(document.forms[0].expense_1_merchant, mArray.sort());
+    //Sets the default dates
+    parent.contents.setRcptDefDate(document.forms[0].rcptdate,-1);
+    //Brings in any transaction information (note date above can be optimized against this later)
+    parent.contents.setTransaction(document.forms[0]);
+    document.forms[0].rcptdate.focus();
+  
+}
+
+
+</script>
+
+</html>

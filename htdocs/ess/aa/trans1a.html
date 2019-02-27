@@ -1,0 +1,133 @@
+<!--
+trans1a.html - simple petty cash
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<title>Simple Petty Cash</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="Javascript: void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('htrans1afx.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0" class="offsetColor">
+  <tr>
+    <td width="50%"><big><big><big><em><strong>Cash Receipt</strong></em></big></big></big></td>
+  </tr>
+</table>
+
+<form>
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Receipt Date:</div></td>
+      <td width="80%" class="offsetColor"><input type="text" name="rcptdate" size="13" tabindex="1"><a HREF="javascript:doNothing()" tabindex="2" onClick="setDateField(document.forms[0].rcptdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+    </tr>
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Amount:</div></td>
+      <td width="80%"><input type="text" name="amount" size="9" value="0.00" tabindex="3" onChange="CheckAmount(this.form.amount)"></td>
+    </tr>
+    <tr>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Expense Type: </div></td>
+      <td width="80%" class="offsetColor"><select name="expense_1_expensetype" size="1" tabindex="4">
+      </select></td>
+    </tr>
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Comment:</div> </td>
+      <td width="80%"><input type="text" name="expense_1_comment" size="36" tabindex="5" onChange="CheckComment(this.form.expense_1_comment)"></td>
+    </tr>
+    <tr>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Purpose:</div> </td>
+      <td width="80%" class="offsetColor"><select name="expense_1_purpose" size="1" tabindex="6" xref="expense_1_xref">
+      </select></td>
+    </tr>
+  </table>
+  <input type="hidden" name="charge" value>
+  <input type="hidden" name="rcpttype" value="3">
+  <input type="hidden" name="phyrec" value="1">
+  <p><input type="button" value="Update report with this receipt" name=" " tabindex="7" onClick="Javascript: void SubmitRec()" onDblClick="parent.contents.dupFlagOK = false"></p>
+</form>
+<p align="right"><a href="javascript: void parent.contents.ListDelay()"><em><strong>Return to report display</strong></em></a></p>
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+</body>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript">
+
+function SubmitRec() {
+  with (document.forms[0]) {
+  charge.value = parent.contents.getChargeDef();
+  if (CheckAmount(amount) 
+      && checkdate(rcptdate)
+      && doDateChkToday(rcptdate)
+      && CheckComment(expense_1_comment, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)
+      && checkExpType(expense_1_expensetype)) {
+              if (!isNaN(amount.value)) parent.contents.makeCurrency(amount);
+              parent.contents.UpdateReport('2','trans1a');
+              parent.defDateStr = document.forms[0].rcptdate.value;
+              parent.contents.ListDelay();
+      }
+  }
+}
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+function checkExpType(object) {
+  if (object.selectedIndex == 0) {
+     alert("Select an Expense Type.");
+     object.focus();
+     object.select();
+     return false;
+  } else {
+     return true;
+  }
+}
+var NeedComment = parent.contents.getCommentReq();
+function CheckComment(tag,expensetype) {
+  var Check = parent.contents.alltrim(tag.value);
+  expensetype = ";" + expensetype + ";";
+  if (NeedComment.indexOf(expensetype) > -1 && Check.length < 10) {
+     alert("Need to supply a comment of at least 10 characters");
+     tag.focus();
+     tag.select();
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function FillForm() {
+  if (parent.contents.HeadList.length > 0) {
+    document.forms[0].rcpttype.value = "3"
+    //Gets a simple list found in personal.js
+    parent.contents.setList(document.forms[0].expense_1_expensetype, parent.contents.getExpenseTypes(parent.Category));
+    //Sets the purpose pulldown from the HeadList
+    parent.contents.setDefaultFromHead(document.forms[0].expense_1_purpose);
+    parent.contents.setRcptDefDate(document.forms[0].rcptdate,-1);
+    //Brings in any transaction information (note date above can be optimized against this later)
+    parent.contents.setTransaction(document.forms[0]);
+    document.forms[0].rcptdate.focus();
+  } else {
+    alert("You must specify a purpose first, then choose Cash Receipt again.");
+    parent.contents.TransWindow(parent.contents.defaultHead + "head2.html");
+  }
+}
+
+</script>
+
+</html>

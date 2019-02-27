@@ -1,0 +1,329 @@
+<!--
+trans9.html - split receipt no fx, billing
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Split Receipt</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('htrans9.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<form method="POST" action="javascript: void SubmitRec()">
+  <input type="hidden" name="expense_1_persplit" value>
+  <input type="hidden" name="expense_2_persplit" value>
+  <input type="hidden" name="expense_3_persplit" value>
+  <input type="hidden" name="charge" value>
+  <table border="0" width="100%" cellpadding="0" cellspacing="0" class="offsetColor">
+    <tr>
+      <td width="50%"><big><big><big><em><strong>Split Receipt</strong></em></big></big></big></td>
+    </tr>
+  </table>
+  <p><br>
+  </p>
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Receipt Date:</div></td>
+      <td width="80%" class="offsetColor"><input type="text" name="rcptdate" mysubst="1" size="13"><a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].rcptdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+    </tr>
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Receipt Amount:</div></td>
+      <td width="80%"><input type="text" name="amount" size="9" value="0.00" mysubst="3" onChange="CheckAmount(this.form.amount)"></td>
+    </tr>
+    <tr>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Reference</div></td>
+      <td width="80%" class="offsetColor"><input type="text" name="refer" size="20" mysubst="5"></td>
+    </tr>
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Purpose:</div> </td>
+      <td width="80%"><select name="purpose" size="1" xref="xref" mysubst="6" onChange="cBillLoad()">
+      </select><!-- purpose and xref are expense items and must be populated --></td>
+    </tr>
+    <tr>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag"># of persons</div></td>
+      <td width="80%" class="offsetColor"><input type="text" name="persplit" size="5" mysubst="7"></td>
+    </tr>
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Amount remaining to distribute:</div></td>
+      <td width="80%"><input type="text" name="distribution" size="20" mysubst="-1" readOnly="yes"></td>
+    </tr>
+  </table>
+  <table border="0" width="100%" cellpadding="0">
+    <tr>
+          <td width="108" align="center" class="offsetColor"><div class="ExpenseTag">Expense Type</div></td>
+          <td width="92" align="center" class="offsetColor"><div class="ExpenseTag">Amount</div></td>
+          <td width="138" align="center" class="offsetColor"><div class="ExpenseTag">Depart.</div></td>
+          <td width="50" align="center" class="offsetColor"><div class="ExpenseTag">Bill</div></td>
+          <td width="372" align="left" class="offsetColor"><div class="ExpenseTag">Comment</div></td>
+    </tr>
+    <tr>
+          <td width="108"><select name="expense_1_expensetype" size="1" mysubst="8">
+          </select></td>
+          <td width="92"><input type="text" name="expense_1_amount" size="9" mysubst="9" subtype="nonzero" onChange="CheckAmount(this.form.expense_1_amount)"></td>
+          <td width="138" align="center"><select name="expense_1_departname" size="1" mysubst="10" xref="expense_1_depart">
+          </select></td>
+              <td width="50"><select name="expense_1_billtype" size="1" mysubst="11">
+              <option value="Yes">Yes</option>
+              <option selected value="No">No</option>
+              </select></td>
+          <td width="372"><input type="text" name="expense_1_comment" mysubst="12" size="36" onChange="CheckComment(this.form.expense_1_comment)"></td>
+    </tr>
+    <tr class="offsetColor">
+          <td width="108" class="offsetColor"><select name="expense_2_expensetype" size="1" mysubst="8">
+          </select></td>
+          <td width="92" class="offsetColor"><input type="text" name="expense_2_amount" size="9" subtype="nonzero" mysubst="14" onChange="CheckAmount(this.form.expense_2_amount)"></td>
+          <td width="138" align="center" class="offsetColor"><select name="expense_2_departname" mysubst="15" size="1" xref="expense_2_depart">
+          </select></td>
+          <td width="50" class="offsetColor"><select name="expense_2_billtype" size="1" mysubst="16">
+              <option value="Yes">Yes</option>
+              <option selected value="No">No</option>
+              </select></td>
+          <td width="372" class="offsetColor"><input type="text" name="expense_2_comment" mysubst="17" size="36" onChange="CheckComment(this.form.expense_2_comment)"></td>
+    </tr>
+    <tr>
+          <td width="108"><select name="expense_3_expensetype" size="1" mysubst="8">
+          </select></td>
+          <td width="91"><input type="text" name="expense_3_amount" size="9" subtype="nonzero" mysubst="19" onChange="CheckAmount(this.form.expense_3_amount)"></td>
+          <td width="138" align="center"><select name="expense_3_departname" mysubst="20" size="1" xref="expense_3_depart">
+          </select></td>
+          <td width="50"><select name="expense_3_billtype" size="1" mysubst="21">
+          <option value="Yes">Yes</option>
+          <option selected value="No">No</option>
+          </select></td>
+          <td width="372"><input type="text" name="expense_3_comment" mysubst="22" size="36" onChange="CheckComment(this.form.expense_3_comment)"></td>
+    </tr>
+  </table>
+  <p><input type="button" value="Update report with this receipt" name="Submit" mysubst="23" onClick="Javascript: void SubmitRec()" onDblClick="parent.contents.dupFlagOK = false"></p>
+</form>
+
+<p align="right"><a href="javascript: void parent.contents.ListDelay()"><em><strong>Return to report display</strong></em></a></p>
+</body>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript">
+
+function SubmitRec() {
+
+  if (document.forms[0].charge.selectedIndex < 1) {
+    alert("Must have a valid payment method");
+    return;
+  }
+
+  with (document.forms[0]) {
+  
+   if (CheckAmount(amount) 
+      && CheckComment(expense_1_comment, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)
+      && CheckComment(expense_2_comment, expense_2_expensetype.options[expense_2_expensetype.selectedIndex].text)
+      && CheckComment(expense_3_comment, expense_3_expensetype.options[expense_3_expensetype.selectedIndex].text)
+      && doDateChkToday(rcptdate)
+      && CheckTotals()
+      && cCheckBill()) {
+    if (!isNaN(amount.value)) parent.contents.makeCurrency(amount);
+    
+    ChkExtra2(expense_1_expensetype,expense_1_amount,expense_1_billtype);
+    ChkExtra2(expense_2_expensetype,expense_2_amount,expense_2_billtype);
+    ChkExtra2(expense_3_expensetype,expense_3_amount,expense_3_billtype);
+
+    if (ChkExtra1(expense_1_amount,expense_1_expensetype,expense_1_departname,expense_1_comment,expense_1_persplit)) parent.contents.makeCurrency(expense_1_amount);
+    if (ChkExtra1(expense_2_amount,expense_2_expensetype,expense_2_departname,expense_2_comment,expense_2_persplit)) parent.contents.makeCurrency(expense_2_amount);
+    if (ChkExtra1(expense_3_amount,expense_3_expensetype,expense_3_departname,expense_3_comment,expense_3_persplit)) parent.contents.makeCurrency(expense_3_amount);
+    
+    parent.contents.UpdateReport('2','trans9');
+    parent.contents.ListDelay();
+  } else
+    alert("Pls chk receipt - invalid data");
+  }
+}
+
+function CheckTotals(formObj) {
+   formObj = document.forms[0];
+   var recAmt = ChkTotal1(formObj.amount.value);
+   var exp1Amt = ChkTotal1(formObj.expense_1_amount.value);
+   var exp2Amt = ChkTotal1(formObj.expense_2_amount.value);
+   var exp3Amt = ChkTotal1(formObj.expense_3_amount.value);
+   var expAmt = exp1Amt + exp2Amt + exp3Amt;
+   if (recAmt - expAmt < 0.005 && expAmt - recAmt < 0.005) {
+     return true;
+   } else {
+     alert("Receipt is out of balance by " + (recAmt - (exp1Amt + exp2Amt + exp3Amt)));
+     return false;
+   } 
+}
+
+function disTotals() {
+  with(document.forms[0]) {
+    var Amt = ChkTotal1(amount.value);
+    var exp1Amt = ChkTotal1(expense_1_amount.value);
+    var exp2Amt = ChkTotal1(expense_2_amount.value);
+    var exp3Amt = ChkTotal1(expense_3_amount.value);
+    var expAmt = exp1Amt + exp2Amt + exp3Amt;
+    if (Amt - expAmt < 0) {
+      amount.value = expAmt;
+      parent.contents.makeCurrency(amount);
+      distribution.value = 0;
+      parent.contents.makeCurrency(distribution);
+    } else if (Amt - expAmt > 0){
+      distribution.value = Amt - expAmt;
+      parent.contents.makeCurrency(distribution);
+    } else {
+      distribution.value = 0;
+      parent.contents.makeCurrency(distribution);
+    }
+  }
+}
+
+function ChkTotal1(v1) {
+  if (isNaN(v1) || v1 == "") {
+    return 0;
+  }else{
+    return Number(v1);
+  }
+}
+
+function ChkExtra1(o1,o2,o3,o4,o5,o6) {
+  if (o1.value == "" || isNaN(o1.value) || o1 == 0) {
+    o1.value = "";
+    o2.selectedIndex = 0;
+    o3.selectedIndex = 0;
+    o4.value = "";
+    o5.value = "";
+    return false;
+  } else {
+    o5.value = document.forms[0].persplit.value;
+    return true;
+  }
+}
+
+
+function ChkExtra2(o1,o2,o3) {
+  if (o1.selectedIndex == 0) {
+    o2.value = "";
+    o3.length = 3;
+    o3.options[2].text = "";
+    o3.options[2].value = "";
+    o3.selectedIndex = 2;
+  }
+}
+function CheckAmount(tag) {
+  if (parent.contents.checkAmtFldOK(tag)) {
+    parent.contents.makeCurrency(tag);
+    disTotals();
+    return true;
+  } else {
+    return false;
+  }
+
+}
+
+
+function CheckComment(tag,expense) {
+  return CheckRequired(tag,expense,parent.contents.getCommentReq(),"Need to supply a comment in the comment field");
+}
+
+function CheckRequired(tag,expense,validation, msgtext) {
+  var Check = "";
+  var n = false 
+  var CmtLen = parent.contents.getCommentLen();
+  expense = ";" + expense + ";";
+  if (expense != "" && validation.indexOf(expense) > -1) {
+    if (tag.type.indexOf("select") == 0) {
+      Check = tag.options[tag.selectedIndex].text;
+      if (Check.length > 2) n = true;     
+    } else { 
+      Check = parent.contents.alltrim(tag.value);
+      if (Check.length >= CmtLen) n = true;
+    } 
+    if (!n) {
+      alert(msgtext);
+      tag.focus();
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+     return true;
+  }
+}
+
+function FillForm() {
+  if (parent.contents.HeadList.length > 0) {
+
+    document.forms[0].expense_1_amount.subtype = "nonzero";  //needed for Mozilla
+    document.forms[0].expense_2_amount.subtype = "nonzero";
+    document.forms[0].expense_3_amount.subtype = "nonzero";
+
+    //Gets a simple list found in personal.js
+    parent.contents.setList(document.forms[0].expense_1_expensetype, parent.contents.getExpenseTypes("1"),parent.contents.getLodgingDef(parent.Category) + ";" + parent.contents.getAttendeeReq() + ";" +parent.contents.getMerchantReq());
+    parent.contents.setList(document.forms[0].expense_2_expensetype, parent.contents.getExpenseTypes("1"),parent.contents.getLodgingDef(parent.Category) + ";" + parent.contents.getAttendeeReq() + ";" +parent.contents.getMerchantReq());
+    parent.contents.setList(document.forms[0].expense_3_expensetype, parent.contents.getExpenseTypes("1"),parent.contents.getLodgingDef(parent.Category) + ";" + parent.contents.getAttendeeReq() + ";" +parent.contents.getMerchantReq());
+    
+    parent.contents.setListWithKey(document.forms[0].expense_1_departname, parent.contents.getDeparts("1"));
+    parent.contents.setListWithKey(document.forms[0].expense_2_departname, parent.contents.getDeparts("1"));
+    parent.contents.setListWithKey(document.forms[0].expense_3_departname, parent.contents.getDeparts("1"));
+    
+
+    //Sets the payment types list
+    parent.contents.setList(document.forms[0].charge, parent.contents.getPaymentTypes("1"));
+    document.forms[0].charge.value = parent.contents.getChargeDef();
+    //Sets the purpose pulldown from the HeadList
+    parent.contents.setDfltFrmHdWSplit(document.forms[0].purpose);
+    //Sets the default dates
+    parent.contents.setRcptDefDate(document.forms[0].rcptdate,-7);
+    document.forms[0].persplit.value = "1";
+    cBillLoad();
+    //Brings in any transaction information (note date above can be optimized against this later)
+    parent.contents.setTransaction(document.forms[0]);
+    cBillAdjust()
+    document.forms[0].rcptdate.focus();
+  } else {
+    alert("You must specify a purpose first, then choose Split Receipt again.");
+    parent.contents.TransWindow(parent.contents.defaultHead + parent.contents.getPurposeHTML("head2"));
+  }
+}
+
+function cCheckBill() {
+  if (parent.contents.companyBillCheck) {
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_1_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_2_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    if (!parent.contents.companyBillCheck("trans1",document.forms[0].expense_3_billtype,document.forms[0].purpose.selectedIndex)) return false;
+    return true;
+  } else {
+    return true;
+  }
+}
+
+function cBillAdjust() {
+ with (document.forms[0]) {
+  if (parent.contents.companyBillLoad) {
+    if (expense_1_expensetype.selectedIndex == 0) parent.contents.companyBillLoad("trans1",expense_1_billtype, purpose.selectedIndex); 
+    if (expense_2_expensetype.selectedIndex == 0) parent.contents.companyBillLoad("trans1",expense_2_billtype, purpose.selectedIndex); 
+    if (expense_3_expensetype.selectedIndex == 0) parent.contents.companyBillLoad("trans1",expense_3_billtype, purpose.selectedIndex); 
+  }
+ }
+} 
+
+function cBillLoad() {
+  if (parent.contents.companyBillLoad) {
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_1_billtype,document.forms[0].purpose.selectedIndex);
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_2_billtype,document.forms[0].purpose.selectedIndex);
+     parent.contents.companyBillLoad("trans1",document.forms[0].expense_3_billtype,document.forms[0].purpose.selectedIndex);
+  }
+} 
+   
+</script>
+
+</html>

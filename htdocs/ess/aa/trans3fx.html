@@ -1,0 +1,236 @@
+<!--
+trans3fx.html - air/trans with FX - alpha
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Air/Train Entry with FX</title>
+<script LANGUAGE="JavaScript" SRC="../../default/calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../attendee.js"></script>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script LANGUAGE="JavaScript" SRC="../fx1.js"></script>
+<script language="JavaScript">
+<!-- Begin Script
+function FillForm() {
+  if (parent.contents.HeadList.length > 0) {
+    //Gets a simple list found in personal.js
+    parent.contents.setList(document.forms[0].expense_1_expensetype, parent.contents.getExpense4Trvl(parent.Category));
+    //Sets the purpose pulldown from the HeadList
+    parent.contents.setDefaultFromHead(document.forms[0].expense_1_purpose);
+    parent.contents.setList(document.forms[0].charge, parent.contents.getPaymentTypes("1"));
+    parent.contents.setListDefault(document.forms[0].charge, "CASH");
+    applyExp();
+    //Sets the airline merchant list
+    MerchantType = "airline"
+    var merchArray = new Array(1);
+    merchArray[0] = "";
+    var mArray = merchArray.concat(parent.contents.getDBResult(parent.PersDBase,MerchantType));
+    parent.contents.setList(document.forms[0].expense_1_merchant, mArray);
+    //Sets the default dates
+    document.forms[0].expense_1_expdate1.value = getPurpDate(parent.defPurpose);
+    document.forms[0].expense_1_expdate2.value = getPurpDate(parent.defPurpose);
+    //Brings in any transaction information (note date above can be optimized against this later)
+    parent.contents.setTransaction(document.forms[0]);
+    fxCleanUp();
+    document.forms[0].expense_1_expdate1.focus();
+  } else {
+    alert("You must specify a purpose first, then choose Airline Ticket again.");
+    parent.contents.TransWindow(parent.contents.defaultHead + "head2.html");
+  }
+}
+
+function applyExp() {
+  with (document.forms[0]){
+  parent.contents.setListValue(parent.contents.getDedicatedMethod("1"), charge, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text);
+  }
+}
+
+
+function fxCleanUp() {
+        checkCurrency('recamt','amount');
+}
+
+function checkCurrency(x,y){
+        var z = isEmpty(document.forms[0].xrate.value)
+        setFgnProtected(z, x, y);
+        FXConvert(x, y);
+}
+
+function SubmitRec() {
+  if (!isNaN(document.forms[0].amount.value)) parent.contents.makeCurrency(document.forms[0].amount); 
+  with (document.forms[0]) {
+    if (CheckAmount(amount)
+     && CheckRequired(from,"Origination of flight is required (minumun of 3 characters).") 
+     && CheckRequired(to,"Destination of flight is required (minumun of 3 characters).")
+     && checkdate(expense_1_expdate1)
+     && CheckAirline(expense_1_merchant) ) {
+      // get charge default and set it 
+      rcptdate.value = expense_1_expdate1.value
+      parent.contents.makeCurrency(amount); 
+      parent.contents.UpdateReport('2','trans3fx');
+      parent.contents.ListDelay();
+    }
+  }
+}
+function getPaymentType(formObj) {
+  var ch = formObj.options[formObj.selectedIndex].text;
+        if (ch == "AIR-PREPD") {
+                return "AIR-PREPD";
+        }
+        else {
+                return "CASH";
+        }
+}
+function CheckExpType(object) {
+  if (object.selectedIndex == 0) {
+     alert("A Category is required.");
+     object.focus();
+     return false;
+  }  else {
+          return true;
+  }
+}
+function CheckAirline(object) {
+  if (object.selectedIndex <= 0 ) {
+    alert("You must specify which airline.");
+    object.focus();
+    return false;
+  } else {
+    return true;
+  }
+}
+function CheckRequired(tag,msgtext) {
+  var Check = tag.value;
+  if (Check.length < 3) {
+     alert(msgtext);
+     tag.focus();
+     tag.select();
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+// end script -->
+</script>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="Javascript: void FillForm()">
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0" class="offsetColor">
+  <tr>
+    <td width="50%"><em><div class="ExpenseTag"><big><big>Airline Receipt </big></big></div></em></td>
+  </tr>
+</table>
+
+<form>
+  <input type="hidden" name="rcptdate" value><table border="0" width="100%" cellpadding="0" cellspacing="0">
+  <input type="hidden" name="ratetype" value>
+  <input type="hidden" name="xsource" value>
+  <input type="hidden" name="xrate" value>
+  <input type="hidden" name="xdate" value>
+  </table>
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="16%" class="offsetColor"><div class="ExpenseTag">Depart:</div></td>
+      <td width="20%" class="offsetColor"><input type="text" name="expense_1_expdate1" size="10" value tabindex="1" onBlur="checkdate(this.form.expense_1_expdate1)"><a HREF="javascript:doNothing()" tabindex="2" onClick="setDateField(document.forms[0].expense_1_expdate1);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"> </a></td>
+      <td width="11%" class="offsetColor"><div class="ExpenseTag">Return:</div></td>
+      <td width="25%" class="offsetColor"><input type="text" name="expense_1_expdate2" size="10" value tabindex="3" onBlur="checkdate(this.form.expense_1_expdate2)"><a HREF="javascript:doNothing()" tabindex="4" onClick="setDateField(document.forms[0].expense_1_expdate2);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"> </a></td>
+    </tr>
+    <tr>
+      <td width="16%"><div class="ExpenseTag"><script>document.write(parent.contents.getCurrencyLabel())</script>:</div></td>
+      <td width="20%"><input type="text" name="amount" size="12" value tabindex="5" onChange="CheckAmount(this.form.amount)"></td>
+      <td width="11%"><div class="ExpenseTag">Foreign Amount:</div></td>
+      <td width="25%"><input type="text" name="recamt" size="9" value tabindex="6" onChange="FXConvert()" readOnly="yes"></td>
+    </tr>
+    <tr>
+      <td width="16%"><div class="ExpenseTag">&nbsp;</div></td>
+      <td width="20%"><div class="ExpenseTag">&nbsp;</div></td>
+      <td width="11%"><div class="ExpenseTag">Currency:</div></td>
+      <td width="25%"><input type="text" name="units" size="16" readOnly="yes"><em><strong><small><font face="Arial" size="1"><a href="javascript:doNothing()" tabindex="7" onClick="setFgnLocalVars(document.forms[0].recamt,document.forms[0].amount);top.newWin = window.open('../fx1.html', 'fx', 'dependent=yes, width=520, height=360, screenX=580, screenY=420, titlebar=yes, status=yes')">
+      Use Foreign Currency</a></div></td>
+    </tr>
+</table>
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="22%" height="28" class="offsetColor"><div class="ExpenseTag">Category:</div></td>
+      <td width="80%" height="28" class="offsetColor"><select name="expense_1_expensetype" size="1" tabindex="8" onChange="applyExp()">
+      </select> </td>
+    </tr>
+    <tr>
+      <td width="22%" height="28"><div class="ExpenseTag">Purpose/Visit:</div></td>
+      <td width="80%" height="28"><select name="expense_1_purpose" size="1" tabindex="9" xref="expense_1_xref">
+      </select></td>
+    </tr>
+  </table>
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="16%" height="28" class="offsetColor"><div class="ExpenseTag">From:</div></td>
+      <td width="20%" height="28" class="offsetColor"><input type="text" name="from" size="15" tabindex="10"></td>
+      <td width="11%" height="28" class="offsetColor"><div class="ExpenseTag">To:</div></td>
+      <td width="25%" height="28" class="offsetColor"><input type="text" name="to" size="15" tabindex="11"></td>
+    </tr>
+  </table>
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="22%" height="28"><div class="ExpenseTag">Ticket Number:</div></td>
+      <td width="80%" height="28"><input type="text" name="ticketnum" size="16" tabindex="12"></td>
+    </tr>
+    <tr>
+      <td width="22%" height="28" class="offsetColor"><div class="ExpenseTag">Ticket Use:</div></td>
+      <td width="80%" height="28" class="offsetColor"><select name="ticketuse" size="1" tabindex="13">
+        <option value="Ticket Fully Used">Ticket Fully Used</option>
+        <option value="Ticket Not Fully Used">Ticket Not Fully Used</option>
+        <option value="Future Use Ticket">Future Use Ticket</option>
+      </select></td>
+    </tr>
+    <tr>
+      <td width="22%" height="28"><div class="ExpenseTag">Airline:</div></td>
+      <td width="80%" height="28"><select name="expense_1_merchant" size="1" tabindex="14"></select>
+      <a href="javascript:doNothing()" tabindex="15" onClick="setLocalObj(document.forms[0].expense_1_merchant);">
+      <div class="ExpenseLink">New Airline</div></a> </td>
+    </tr>
+    <tr>
+      <td width="22%" class="offsetColor"><div class="ExpenseTag">Paid By:</div></td>
+      <td width="84%" class="offsetColor"><select name="charge" size="1" tabindex="15">
+      </select></td>
+    </tr>
+    <tr>
+      <td width="22%" height="28"><div class="ExpenseTag">Comment:</div></td>
+      <td width="80%" height="28"><textarea rows="3" name="expense_1_comment" cols="30" tabindex="16"></textarea></td>
+    </tr>
+    <tr>
+      <td width="22%" height="28" class="offsetColor"><div class="ExpenseTag">Billable</div></td>
+      <td width="80%" height="28" class="offsetColor"><select name="expense_1_billtype" size="1" tabindex="17">
+        <option value="Yes">Yes</option>
+        <option selected value="No">No</option>
+      </select></td>
+    </tr>
+  </table>
+</form>
+<!--Control buttons - Save and Add another expense, Save expense, Clear and add another, Cancel expense input -->
+
+<p><input type="button" value="Update report with this receipt" name="B1" tabindex="18" onClick="Javascript: void SubmitRec()" onDblClick="parent.contents.dupFlagOK = false"></p>
+
+<p align="right"><a href="javascript: void parent.contents.ListDelay()" tabindex="19"><em><strong>Return
+to receipt display</strong></em></a></p>
+</body>
+</html>

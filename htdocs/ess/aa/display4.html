@@ -1,0 +1,143 @@
+<!--
+receipt4.html - mileage for audit
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Mileage</title>
+<script language="JavaScript">
+
+function init() {
+	document.getElementById("mileageCla").innerHTML = parent.contents.getJSX("mileageCla");
+	getElementByClass("No");
+	getElementByClass("Yes");
+	//document.getElementById("personal").innerHTML = parent.contents.getJSX("personal");
+	document.getElementById("mileageCla").innerHTML = parent.contents.getJSX("mileageCla");
+	document.getElementById("date").innerHTML = parent.contents.getJSX("date");
+	document.getElementById("rate").innerHTML = parent.contents.getJSX("rate");
+	//document.getElementById("setProRat").innerHTML = parent.contents.getJSX("setProRat");
+	document.getElementById("amount").innerHTML = parent.contents.getJSX("amount");
+	document.getElementById("purposeVis").innerHTML = parent.contents.getJSX("purposeVis");
+	document.getElementById("fromLoc").innerHTML = parent.contents.getJSX("fromLoc");
+	document.getElementById("toLoc").innerHTML = parent.contents.getJSX("toLoc");
+	document.getElementById("returnRepDis").innerHTML = parent.contents.getJSX("returnRepDis");
+	
+	//document.getElementById("butUpdateRepMilCla").value = parent.contents.getJSX("butUpdateRepMilCla");
+}
+
+var allHTMLTags = new Array();
+function getElementByClass(theClass) {
+    //Create Array of All HTML Tags
+    var allHTMLTags=document.getElementsByTagName("*");
+
+    //Loop through all tags using a for loop
+    for (i=0; i<allHTMLTags.length; i++) {
+		
+		//Get all tags with the specified class name.
+		if (allHTMLTags[i].className==theClass) {
+			
+			//Place any code you want to apply to all
+			//pages with the class specified.
+			//In this example is to "display:none;" them
+			//Making them all dissapear on the page.
+			allHTMLTags[i].innerHTML = parent.contents.getJSX(theClass);
+		}
+    }
+}
+
+function FillForm() {
+   parent.contents.setTransaction(document.forms[0]);
+    parent.contents.NewReport();  //JH 20070430 - Compensating for display only.
+    parent.contents.ProcessHeader(parent.Header);  //JH 20070430 - Compensating for display only.
+   with (document.forms[0]) {
+      expense_1_PURPOSE.value = parent.contents.getStringFmHeadWhere("PURPOSE", expense_1_PURPOSE.value, [["PURPOSE",0],["BEG_DATE",0],["END_DATE",0],["COMMENT",15]]);
+      expense_1_BILLTYPE.value = parent.contents.getBillXlate(expense_1_BILLTYPE.value);
+   }
+   parent.contents.DirectEdit = false;
+}
+
+
+</script>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript:void  init(); FillForm()">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%" class="offsetColor">
+  <tr>
+  <td width="100%"><big><big><big><em><strong><span id="mileageCla">Mileage Claim</span>&nbsp;</strong></em></big></big></big>
+  </tr>
+</table>
+
+<form name="mileage">
+  <input type="hidden" name="RCPTTYPE" value>
+  <input type="hidden" name="VOUCHER" value>
+  <input type="hidden" name="RECEIPT" value>
+  <input type="hidden" name="CRE_DATE" value>
+  <input type="hidden" name="expense_1_CRE_DATE" value>
+  <input type="hidden" name="expense_1_EXP_DATE" value>  
+  <input type="hidden" name="expense_1_RECEIPT" value>
+  <input type="hidden" name="expense_1_LINEITEM" value>  
+  <input type="hidden" name="expense_1_EXPENSE" value>
+
+  <input type="hidden" name="expense_1_AMOUNT" value>
+  <input type="hidden" name="expense_1_REC_AMT" value>
+
+  <input type="hidden" name="CHARGE" value> 
+  <input type="hidden" name="UNITS" value>
+  <input type="hidden" name="persistance" value="none">
+  <input type="hidden" name="expense_1_persistance" value="none">
+  <table border="0" width="73%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="0" cellpadding="2">
+    <tr>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag"><span id="date">Date</span>:</div></td>
+      <td width="90%" class="offsetColor"><input type="text" name="REC_DATE" size="10" readonly="yes" tabindex="1"></td>
+    </tr>
+    <tr>
+      <td width="10%"><div class="ExpenseTag"><script>document.write(parent.contents.getDistanceLabel())</script>:</div></td>
+      <td width="90%"><input type="text" name="REC_AMT"input type="text" readonly="yes" size="8" tabindex="3"></td>
+    </tr>
+    <tr>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag"><span id="rate">Rate</span>:</div></td>
+      <td width="90%" class="offsetColor"><input type="text" name="XRATE" readonly="yes" size="8" tabindex="4" onchange="checkXRate(mileage)">
+      </td>
+    </tr>
+    <tr>
+      <td width="10%"><div class="ExpenseTag"><span id="amount">Amount</span>:</div></td>
+      <td width="90%"><input type="text" name="AMOUNT" size="8" readonly="yes"></td>
+    </tr>
+    <tr>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag"><span id="purposeVis">Purpose/Visit</span>:</div></td>
+      <td width="90%" class="offsetColor"><input type="text" name="expense_1_PURPOSE" tabindex="5"size="45">
+      </select></td>
+    </tr>
+    <tr>
+      <td width="10%"><div class="ExpenseTag"><script>document.write(parent.contents.getBillableLabel())</script>:</div></td>
+      <td width="90%"><input type="text" name="expense_1_BILLTYPE" size="8" tabindex="6" listtype="value-in">
+      </td>
+    </tr>
+    <tr>
+    <td width="10%" height="28" class="offsetColor"><div class="ExpenseTag"><span id="fromLoc">From Location</span>:</div></td>
+    <td width="90%" height="28" class="offsetColor">
+    <table border="1" class="offsetColor" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" height="34">
+      <td width="35%" height="28" class="offsetColor"><input type="text" name="XSOURCE" size="25" tabindex="7"> </td>
+      <td width="15%" height="28" class="offsetColor"><div class="ExpenseTag"><span id="toLoc">To Location</span>:</div></td>
+      <td width="50%" height="28" class="offsetColor"><input type="text" name="expense_1_COMMENT" size="25" tabindex="8"> </td>
+    </table></td>
+    </tr>
+    </table>
+</form>
+<p align="right"><a href="javascript: void history.go(-2)"><em><strong><span id="returnRepDis">Return to report display</span></strong></em></a></p>
+</body>
+</html>

@@ -1,0 +1,709 @@
+<!--
+trans12fxn.html - flexible hotel, fx, no billing with protected purpose
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Hotel Bill Entry</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" src="../validation.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../attendee.js"></script>
+<script LANGUAGE="JavaScript" SRC="../fx1.js"></script>
+<script language="JavaScript">
+
+function FillForm() {
+  if (parent.contents.HeadList.length > 0) {
+
+    document.forms[0].expenselist.subtype = "list";  //needed for Mozilla
+    document.forms[0].expense_2_attendeelist.subtype = "nosave";
+    document.forms[0].expense_2_persplit.subtype = "nosave";
+    document.forms[0].expense_2_expdate.subtype = "nosave";
+    document.forms[0].expense_2_expensetype.subtype = "nosave";
+    document.forms[0].expense_2_billtype.subtype = "nosave";
+    document.forms[0].expense_2_amount.subtype = "nosave";
+    document.forms[0].expense_2_recamt.subtype = "nosave";
+    document.forms[0].expense_2_comment.subtype = "nosave";
+
+    //Gets a simple list found in personal.js
+    parent.contents.setList(document.forms[0].charge, parent.contents.getPaymentTypes("1"));
+    parent.contents.setListDefault(document.forms[0].charge, parent.contents.getChargeDef());
+    //Gets a simple list found in personal.js
+    var expArray = parent.contents.getExpenseTypes(parent.Category);
+    parent.contents.setList(document.forms[0].expense_2_expensetype, expArray.concat(parent.contents.getInclude("hotel")),parent.contents.getLodgingExc() + ";");
+    //Sets the number of perople default
+    document.forms[0].expense_1_persplit.value = "1";
+    //Sets in the default for the merchants
+    MerchantType = "hotel"
+    var merchArray = parent.contents.getMerchants("4");
+    var mArray = merchArray.concat(parent.contents.getDBResult(parent.PersDBase,MerchantType));
+    parent.contents.setList(document.forms[0].merchant, mArray.sort());
+    //Sets the purpose pulldown from the HeadList
+    parent.contents.setDefaultFromHead(document.forms[0].purpose);
+    //Sets the default dates
+    //parent.contents.setRcptDefDate(document.forms[0].begdate,-2);
+    //parent.contents.setRcptDefDate(document.forms[0].enddate,-1);
+    //Sets the default dates
+    //parent.contents.setRcptDefDate(document.forms[0].expense_2_expdate,-1);
+    //Brings in any transaction information (note date above can be optimized against this later)
+    parent.contents.setTransaction(document.forms[0]);
+    //parent.contents.setTransaction(document.forms[0]);
+    if (parent.contents.isNew()) {  //changed 7/4/2002 
+      defCurrency();
+    } else {
+      setFgnProtected(isEmpty(document.forms[0].xrate.value));
+    }
+    fxCleanUp();
+    popDates();  //********************4-12-05
+    resetDates();  //*******************4-12-05
+    document.forms[0].amount.focus();
+  } else {
+    alert("You must specify a purpose first, then choose hotel receipt again.");
+    parent.contents.TransWindow(parent.contents.defaultHead + parent.contents.getPurposeHTML("head2"));
+  }
+}
+function calcLodging(formObj) {
+        var recAmt = ChkTotal1(formObj.amount.value);
+        var exp2Amt = getTotals(formObj.expenselist,"amount");
+        var workNum = Math.round(100 * (recAmt - exp2Amt));
+        formObj.expense_1_amount.value = workNum / 100;
+        return;
+}
+
+function getTotals(yListObj, zItemName) {
+  var Sum = 0;
+  var x;
+  for (var i = 0; i < yListObj.length; i++) {
+    x = eval(yListObj.options[i].value);
+    Sum = Sum + parseFloat(parent.contents.getNumericValue(x,zItemName));
+  }
+  return Sum;
+}
+
+function SubmitRec() {
+  with (document.forms[0]) {
+
+   rcptdate.value = enddate.value;
+   expense_1_expdate.value = enddate.value;
+   expense_1_expensetype.value = parent.contents.getLodgingDef(parent.Category);  
+   subtype.value = "1";
+  
+   if (CheckRoomAmount(amount)
+      && checkdate(begdate)
+      && checkdate(enddate)
+      && doDateCheck(begdate.value,enddate.value)
+      && doDateChkToday(enddate)
+      && CheckAmount(expense_1_persplit)
+      && CheckPaidBy(charge)
+      && CheckTotals()
+      && CheckHotel()
+      && CheckPerSplit()
+      && CheckDedicated(expense_1_expensetype, charge)
+      && CheckMerchant(merchant, expense_1_expensetype)) {
+
+      if (!isNaN(amount.value)) parent.contents.makeCurrency(amount);
+
+      ChkExtra2(expense_1_expensetype,expense_1_amount,expense_1_billtype);
+      
+      calcRoomAmt(document.forms[0])
+      
+      if (ChkExtra1(expense_1_amount,expense_1_expensetype,expense_1_expdate,expense_1_comment)) parent.contents.makeCurrency(expense_1_amount);
+ 
+      if (expense_1_amount.value == null || expense_1_amount.value == "") {
+          expense_1_amount.value = "0.00";  //allows zero hotel items through - parameterize
+      } 
+ 
+      if (CheckTotals()) {
+        parent.contents.UpdateReport('2','trans12n');
+        parent.contents.ListDelay();
+      } else {
+        alert("Hotel bill is out of balance - pls review it.");  //12/13/02
+      }
+    }
+  }
+}
+
+function CheckPaidBy(object) {
+  if (object.selectedIndex == 0) {
+     alert("A Payment Type is required.");
+     object.focus();
+     return false;
+  }  else {
+     return true;
+  }
+}
+
+function CheckPerSplit() {
+  var retVal = true;
+  with (document.forms[0]) {
+    if (expense_1_persplit.value != "1" && expense_1_comment.value.length < 5) {
+      alert("If # persons is not 1, enter name of extra individual in comment box!");
+      retVal = false;
+      expense_1_persplit.focus();
+    }
+  }
+  return retVal;
+}
+
+function doCheapCheck(x) {
+//alert("step: " + x);
+return true;
+}
+
+function CheckTotals(formObj) {
+   formObj = document.forms[0];
+   var recAmt = ChkTotal1(formObj.amount.value);
+   var exp1Amt = ChkTotal1(formObj.expense_1_amount.value);
+   var exp2Amt = getTotals(formObj.expenselist,"amount");
+   var expAmt = exp1Amt + exp2Amt;
+   if (recAmt - expAmt < 0.005 && expAmt - recAmt < 0.005) {
+     if (exp1Amt >= 0) {    // was just > (allows zero hotel items through - parameterize)
+        return true;
+     } else {
+        alert("Room amount must be greater than zero")
+        return false;
+     }
+   } else {
+     alert("Receipt is out of balance by " + (recAmt - (exp1Amt + exp2Amt)));
+     return false;
+   } 
+}
+
+function ChkTotal1(v1) {
+  if (isNaN(v1) || v1 == "") {
+    return 0;
+  }else{
+    return Number(v1);
+  }
+}
+
+function ChkExtra1(o1,o2,o3,o4) {
+  if (isNaN(o1.value) || parent.contents.rtrim(o1.value) == "" || o1.value == 0) {
+    o1.value = "";
+    o2.selectedIndex = 0;
+    o3.value = "";
+    o4.value = "";
+    return false;
+  } else {
+    return true;
+  }
+}
+// eventually combine these 2 functions 12/13/02
+function ChkExtra2(o1,o2,o3,o4,o5) {
+  if (o1.selectedIndex == 0 || isNaN(o2.value) || parent.contents.rtrim(o2.value) == "" || o2.value == 0) {
+    o2.value = "";
+    o3.value = "";
+    if (o4 != null) o4.value = "";
+    if (o5 != null) o5.value = "";
+  }
+}
+
+function CheckDedicated(expObj, chgObj) {
+  var x = expObj.value;
+  var y = chgObj.options[chgObj.selectedIndex].text;
+  var retVal = true;
+  var dedicated = parent.contents.getDBValue(parent.contents.getDedicatedMethod("1"), x);
+  if (dedicated != "" && y != dedicated) { 
+    retVal = false;
+    alert("Invalid payment method " + y + " for expense type " + x + ". Need to use " + dedicated + ".");
+  } else {
+    if (y != dedicated && parent.contents.getDBValue(parent.contents.getDedicatedMethod("1"), y,0,1) > "") {
+      retVal = false;
+      alert("Payment method " + y + " cannot be used for expense type " + x + ".");
+    }
+  }  
+  return retVal;
+}  
+
+function ChkBtween(xType,rdateObj) {
+
+  if (xType.selectedIndex != 0) {
+    //alert("from: " + document.forms[0].begdate.value);
+    //alert("to: " + document.forms[0].enddate.value);
+    //alert("rcpt: " + rdateObj.value);
+    if (doBetweenChk(rdateObj.value,document.forms[0].begdate.value,document.forms[0].enddate.value)) {
+      return true;
+    } else {
+      rdateObj.focus();
+      return false;
+    } 
+  } else {
+    return true;
+  }
+}
+
+function CheckAttendee(tag,expense) {
+  var retVal = true;
+  if (expense.length > 0) {
+    var Check = tag.value;
+    var Xstr = parent.contents.getAttendeeReq();
+    if (Xstr.indexOf(";" + expense + ";") > -1 && Check.length < 3) {
+      alert("Need to supply attendee list for " + expense + " expense");
+      retVal = false;
+    }
+  }
+  return retVal;
+}
+
+function CheckRoomAmount(tag) {
+  if (isNaN(tag.value)) {
+     alert("Data in the Amount field is not a valid numeric value");
+     tag.focus();
+     tag.select();
+     return false;
+  } else {
+    var Check = parseFloat(tag.value);
+    if (Check < .00 || Check >= 25000 || ("" + Check) == "NaN") {
+      alert("Amount must be numeric, not negative and less than 25,000 dollars");
+      tag.focus();
+      tag.select();
+      return false;
+    } else {
+      return true;
+    }
+  }
+}
+
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+function CheckExpType(object) {
+  if (object.selectedIndex == 0) {
+     alert("An Expense Type is required.");
+     object.focus();
+     return false;
+  }  else {
+          return true;
+  }
+}
+
+var NeedComment = parent.contents.getCommentReq();
+function CheckComment(tag,expensetype) {
+  var Check =  parent.contents.alltrim(tag.value);
+  var CmtLen = parent.contents.getCommentLen();
+  var StrV = expensetype.options[expensetype.selectedIndex].text;
+  if (StrV != null && StrV != "" && NeedComment.indexOf(";" + StrV + ";") > -1 && Check.length < CmtLen) {
+     alert("Need to supply a comment of at least " + CmtLen + " characters");
+     tag.focus();
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function CheckHotel() {
+  return CheckRequired(document.forms[0].merchant,document.forms[0].expense_1_expensetype.value,parent.contents.getMerchantReq(),"Need to supply a merchant name in the hotel field");
+}
+
+
+function CheckMerchant(tag,expense) {
+  return CheckRequired(tag,expense,parent.contents.getMerchantReq(),"Need to supply a merchant name in the merchant field");
+}
+
+function CheckRequired(tag,expense,validation, msgtext) {
+  var Check = "";
+  var n = false 
+  var CmtLen = parent.contents.getCommentLen();
+  expense = ";" + expense + ";";
+  if (validation.indexOf(expense) > -1) {
+    if (tag.type.indexOf("select") == 0) {
+      Check = tag.options[tag.selectedIndex].text;
+      if (Check.length > 2) n = true;     
+    } else { 
+      Check =  parent.contents.alltrim(tag.value);
+      if (Check.length >= CmtLen) n = true;
+    } 
+    if (!n) {
+      alert(msgtext);
+      tag.focus();
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+     return true;
+  }
+}
+
+function resetDates() {    
+  with (document.forms[0]) {
+    if (!isDateLess(expense_2_expdate.value, enddate.value)) expense_2_expdate.value = enddate.value;
+  }
+}
+
+function doubleChk(x) {
+  if (checkdate(x)) resetDates();
+}
+
+function loadExpense() {
+  with (document.forms[0]) {  
+   if (expenselist.selectedIndex > -1) {
+     blankExpense();
+     var dBase = eval(expenselist.options[expenselist.selectedIndex].value);
+     dBase1 = dBase[1];
+     expense_2_expdate.value = parent.contents.getDBValue(dBase1, "expdate");
+     parent.contents.setListDefault(expense_2_expensetype,parent.contents.getDBValue(dBase1, "expensetype"));
+     expense_2_amount.value = parent.contents.getDBValue(dBase1, "amount");
+     expense_2_recamt.value = parent.contents.getDBValue(dBase1, "recamt");
+     expense_2_comment.value = parent.contents.getDBValue(dBase1, "comment");
+     expense_2_persplit.value = parent.contents.getDBValue(dBase1, "persplit");
+     expense_2_billtype.value = "No";
+   }
+  }
+}
+
+function newExpense() {
+  with (document.forms[0]) {  
+   if (expenselist.selectedIndex > -1) {
+     blankExpense();
+     expenselist.selectedIndex = -1;
+   }
+  }
+}
+
+function blankExpense() {
+ with (document.forms[0]) {
+   //expense_2_expdate.value = begdate.value; 
+   expense_2_expensetype.selectedIndex = 0;
+   expense_2_amount.value = "";
+   expense_2_recamt.value = "";
+   expense_2_comment.value = "";
+   expense_2_attendeelist.value = "[]";
+   expense_2_billtype.value = "No";
+   expense_2_persplit.value = "1";
+ }
+}
+
+
+function removeExpense() {
+  with (document.forms[0]) {  
+    if (expenselist.selectedIndex > -1) {
+      var y = expenselist.length;
+      for (var i = expenselist.selectedIndex; i < y - 1; i++) { 
+        expenselist.options[i].text = expenselist.options[i + 1].text;
+        expenselist.options[i].value = expenselist.options[i + 1].value;
+      }
+      expenselist.length = y - 1;
+      newExpense();
+      calcLodging(document.forms[0]);
+      //****CheckAmountAndDisburse(amount,expenselist,"amount",expense_1_disburse);
+    }
+  }
+}
+
+function addExpense() {
+ with (document.forms[0]) { 
+  if (CheckAmount(expense_2_amount)
+      && CheckExpType(expense_2_expensetype)
+      && checkdate(expense_2_expdate)
+      && ChkBtween(expense_2_expensetype,expense_2_expdate)
+      && CheckComment(expense_2_comment,expense_2_expensetype)) {
+     
+    if (ChkExtra1(expense_2_amount,expense_2_expensetype,expense_2_expdate,expense_2_comment)) parent.contents.makeCurrency(expense_2_amount);
+    ChkExtra2(expense_2_expensetype,expense_2_amount,expense_2_billtype,expense_2_persplit,expense_2_attendeelist);
+      
+
+    var dBase
+    var dBase1
+ 
+    if (expenselist.selectedIndex == -1) {
+        dBase = ["expense",[]]
+    } else {
+        dBase = eval(expenselist.options[expenselist.selectedIndex].value);
+    }
+    dBase1 = dBase[1];
+    //if (!isNaN(recamt.value)) parent.contents.makeCurrency(expense_2_recamt);
+    parent.contents.makeCurrency(expense_2_amount);
+    parent.contents.setDBPair(dBase1, "expdate",expense_2_expdate.value);
+    parent.contents.setDBPair(dBase1,"expensetype",expense_2_expensetype.options[expense_2_expensetype.selectedIndex].text);
+    parent.contents.setDBPair(dBase1, "amount",expense_2_amount.value);
+    parent.contents.setDBPair(dBase1, "recamt",expense_2_recamt.value);
+    parent.contents.setDBPair(dBase1, "comment",expense_2_comment.value);
+    if (expense_2_attendeelist.value == null) alert("attendeelist error\ncontact support");//expense_2_attendeelist.value = "[]";
+    parent.contents.setDBPair(dBase1, "attendeelist",eval(expense_2_attendeelist.value));
+    parent.contents.setDBPair(dBase1,"billtype",expense_2_billtype.value);
+    parent.contents.setDBPair(dBase1,"persplit",expense_2_persplit.value);
+
+    dBase[1] = dBase1;
+    if (expenselist.selectedIndex == -1) {
+      var j = expenselist.length;
+      expenselist.length = j + 1;
+      expenselist.selectedIndex = j;
+    } 
+    expenselist.options[expenselist.selectedIndex].value = parent.contents.setArray2Str(dBase);
+    var DD = "";
+    var xStr = "";
+    var x = parent.contents.getListDisplay("expenselist")
+    for (var i = 0; i < x.length; i++) {
+      xStr += DD + parent.contents.getNameValue(dBase1,x[i]);
+      DD = ": ";
+    }
+    expenselist.options[expenselist.selectedIndex].text = xStr;
+    calcLodging(document.forms[0]);
+    //***CheckAmountAndDisburse(document.forms[0].AMOUNT,document.forms[0].expenselist,"AMOUNT",document.forms[0].expense_1_disburse);
+  
+    newExpense();
+    expense_2_expdate.focus();
+
+  }
+ } 
+}
+
+function fxCleanUp() {
+   adjListFX(document.forms[0].expenselist);
+   fgnLodging(document.forms[0]);
+   checkCurrency('recamt','amount');
+   checkCurrency('expense_2_recamt','expense_2_amount');
+}
+
+function adjListFX(listObj) {
+  var x;
+  var fields;
+  var y_amt;
+  var z_rec;
+  var DD;
+  var xStr;
+  var disp;
+  var thisForm = document.forms[0];
+  if (thisForm.elements[FXFormNames[1]].value != null && thisForm.elements[FXFormNames[1]].value != "" && thisForm.elements[FXFormNames[2]].value != "") {
+    if (!isEmpty(document.forms[0].recamt) && !isEmpty(document.forms[0].amount)) {   
+      for (var k = 0; k < listObj.length; k++) {
+        if (listObj.options[k].value != null) {
+          x = eval(listObj.options[k].value);
+          fields = x[1];
+          y_amt = parent.contents.getDBValue(fields, "amount");
+          z_rec = parent.contents.getDBValue(fields, "recamt");
+          if (thisForm.elements[FXFormNames[2]].value == "0") { 
+            y_amt = parseFloat(z_rec) / parseFloat(thisForm.elements[FXFormNames[1]].value);
+          } else {
+            y_amt = parseFloat(z_rec) * parseFloat(thisForm.elements[FXFormNames[1]].value);
+          }  
+          y_amt = parent.contents.format(y_amt,2);
+          parent.contents.setDBPair(fields, "amount", "" + y_amt);        
+          x[1] = fields;        
+          listObj.options[k].value = parent.contents.setArray2Str(x);
+        
+          DD = "";
+          xStr = "";
+          disp = parent.contents.getListDisplay("expenselist")
+          for (var i = 0; i < disp.length; i++) {
+            xStr += DD + parent.contents.getNameValue(fields,disp[i]);
+            DD = ": ";
+          }
+          listObj.options[k].text = xStr;
+        }
+      }
+    }
+  }
+}
+
+function checkCurrency(x,y) {
+        var z = isEmpty(document.forms[0].xrate.value)
+        setFgnProtected(z, x, y);
+        FXConvert(x, y, true);
+}
+
+function fgnLodging(formObj) {
+        calcRoomAmt(formObj);
+        FXConvert('expense_1_recamt', 'expense_1_amount');
+        document.forms[0].expense_2_recamt.readOnly = false;
+        document.forms[0].expense_2_amount.readOnly = true;
+}
+
+function calcRoomAmt(formObj) {
+        var locAmt = ChkTotal1(formObj.recamt.value);
+        var exp2Amt = getTotals(formObj.expenselist,"recamt");
+        var workNum = Math.round(100 * (locAmt - exp2Amt));
+        formObj.expense_1_recamt.value = workNum / 100;
+}
+
+
+function popDates() {
+  with (document.forms[0]) {  
+      begdate.value = parent.contents.getItemValue(parent.contents.HeadList[purpose.selectedIndex], "begdate");
+      enddate.value = parent.contents.getItemValue(parent.contents.HeadList[purpose.selectedIndex], "enddate");
+      expense_2_expdate.value = begdate.value;
+  }
+}
+
+function launchAttendees() {
+ with (document.forms[0]) {
+  if (CheckAmount(expense_2_amount)
+      && CheckExpType(expense_2_expensetype)) {
+    initAttendeeList(document.forms[0].expense_2_attendeelist,document.forms[0].expense_2_persplit,document.forms[0].expense_2_expensetype); 
+    top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes');
+  } else {
+    alert("You must have valid expense info before adding attendees.\nPlease supply missing data!");
+  }
+ }
+}
+
+
+</script>
+
+
+<body onLoad="Javascript: void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('htrans12fx.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0" class="offsetColor">
+  <tr>
+    <td width="50%"><h1>Hotel Receipt</h1></td>
+  </tr>
+</table>
+
+<form>
+  <input type="hidden" name="expense_2_attendeelist" value="[]" subtype="nosave">
+  <input type="hidden" name="expense_2_persplit" value subtype="nosave">
+  <input type="hidden" name="expense_1_expensetype" value>
+  <input type="hidden" name="expense_1_expdate" value>
+  <input type="hidden" name="expense_1_recamt" value>
+  <input type="hidden" name="expense_2_recamt" value subtype="nosave">  
+  <input type="hidden" name="recamt" value subtype="nosave">  
+  <input type="hidden" name="rcptdate" value>
+  <input type="hidden" name="ratetype" value>
+  <input type="hidden" name="xsource" value>
+  <input type="hidden" name="xrate" value>
+  <input type="hidden" name="xdate" value>
+  <input type="hidden" name="expense_1_billtype" value="No">
+  <input type="hidden" name="expense_2_billtype" value="No" subtype="nosave">
+  <input type="hidden" name="subtype" value="1">
+  
+  <input type="hidden" name="okstatus" value>
+  <input type="hidden" name="okref" value>
+  <input type="hidden" name="refer" value>
+  
+  
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td>
+      <table border="0" width="100%" cellpadding="0" cellspacing="0" style="border: medium none">
+        <tr class="ExpenseTag">
+          <td width="20%" class="offsetColor"><font color="#808080">Check in:</font></td>
+          <td width="80%" class="offsetColor">
+          <input type="text" name="begdate" size="10" value maxlength="10" mysubst="1" readOnly="yes">
+          &nbsp;&nbsp;&nbsp;&nbsp;<font color="#808080">Check out:</font>&nbsp;
+          <input type="text" name="enddate" size="10" value maxlength="10" mysubst="3" readOnly="yes">
+          &nbsp;<span class="ExpenseBody">(dates are controlled by purpose)</span>  
+        </td>
+        </tr>
+        <tr class="ExpenseTag">
+          <td width="20%">Total Receipt Amount:</td>
+          <td width="80%"><input type="text" name="amount" size="9" value="0.00" mysubst="5" onChange="calcLodging(document.forms[0])">
+          </td>
+        </tr>
+        <tr>
+          <td width="20%" class="offsetColor"><div class="ExpenseTag">Purpose:</div></td>
+          <td width="80%" class="offsetColor"><select name="purpose" size="1" mysubst="7" xref="xref" onChange="popDates()">
+          </select></td>
+        </tr>
+        <tr>
+          <td width="20%"><div class="ExpenseTag"># Persons:</div></td>
+          <td width="80%"><input type="text" name="expense_1_persplit" size="2" maxlength="8" mysubst="8">&nbsp;<span class="ExpenseBody">(enter names of additional persons in comment box below)</span></td>
+        </tr>
+        <tr>
+          <td width="20%" class="offsetColor"><div class="ExpenseTag">Hotel Company:</div></td>
+          <td width="80%" class="offsetColor"><select name="merchant" size="1" mysubst="9">
+          </select> <a class="ExpenseLink" href="javascript:doNothing()" mysubst="11" onClick="setLocalObj(document.forms[0].merchant);">New Hotel</a>
+          </td>
+        </tr>
+        <tr>
+          <td width="20%"><div class="ExpenseTag">Comment:</div></td>
+          <td width="80%"><textarea rows="3" name="expense_1_comment" cols="38" mysubst="10" size="60"></textarea></td>
+        </tr>
+        <tr>
+          <td width="20%" class="offsetColor"><div class="ExpenseTag">Paid By:</div></td>
+          <td width="80%" class="offsetColor"><select name="charge" size="1">
+          </select></td>
+        </tr>
+        <tr>
+          <td width="20%"><div class="ExpenseTag"><font color="#808080">Room Amount:</font></div></td>
+          <td width="80%"><input type="text" name="expense_1_amount" size="8" readonly="yes"></td>
+        </tr>
+        <tr>
+          <td width="20%">&nbsp;</td>
+          <td width="80%"></td>
+        </tr>
+      </table>
+      <table border="0" cellpadding="0" width="100%">
+        <tr>
+          <td width="25%" class="offsetColor" align="left"><small><strong>Enter your non-room expenses from your
+          hotel bill in the non-room item detail area below. Click the &quot;Update non-room expenses&quot; button 
+          after entering each expense. 
+          Your non-room expenses will appear in the summary list on the right. </strong></small></td>
+          <td width="75%" class="offsetColor" align="left">
+          <table border="0" cellpadding="0">
+            <tr>
+              <td class="offsetColor" align="left"><div class="ExpenseTag">Non-room<br>Expenses:&nbsp;</div></td>
+              <td class="offsetColor" height="26" align="left">
+              <select name="expenselist" size="7" mysubst="2" subtype="list" softtype="list" onChange="loadExpense()">
+              </select></td>
+              <td class="offsetColor" align="left">
+              <br>
+              &nbsp;&nbsp;<input type="button" value="Remove" name="RemoveExpense" onClick="javascript: void removeExpense()"><br><br>
+              &nbsp;&nbsp;<input type="button" value="  New " name="clearExpense" onClick="javascript: void newExpense()">
+            </tr>
+          </table>
+          </td>
+        </tr>
+      </table>
+      <tr><td width="100%" height="12">&nbsp;
+      </td></tr>
+      <tr><td width="100%">
+      <h2>Non-Room Item Detail:</h2>
+      </td></tr>
+      <table border="0" cellpadding="0" width="100%">
+        <tr>
+          <td class="offsetColor">
+          <table width="100%" border="0" cellpadding="0" style="border: medium none">
+            <tr>
+              <td width="25%" align="left"><div class="ExpenseTag">Expense Date</div></td>
+              <td width="25%" align="left"><div class="ExpenseTag">Amount</div></td>
+              <td width="25%" align="left"><div class="ExpenseTag">Expense Type</div></td>
+              <td width="60%" align="left"><div class="ExpenseTag">Comment</div></td>
+            </tr>
+            <tr>
+              <td width="25%"><input type="text" name="expense_2_expdate" size="13" align="left" mysubst="12" onChange="checkdate(this.form.expense_2_expdate)" subtype="nosave"><a HREF="javascript:doNothing()" mysubst="13" onClick="setDateField(document.forms[0].expense_2_expdate);" subtype="nosave"><img SRC="../calendar.gif" BORDER="0" WIDTH="20" HEIGHT="16"></a></td>
+              <td width="25%"><input type="text" name="expense_2_amount" align="left" size="9" value="0.00" mysubst="14" onChange="calcLodging(this.form)" subtype="nosave"></td>
+              <td width="25%"><select name="expense_2_expensetype" align="left" size="1" mysubst="15" subtype="nosave">
+              </select></td>
+              <td width="60%"><input type="text" name="expense_2_comment" size="36" mysubst="17" subtype="nosave" size="60"></td>
+
+            </tr>
+            <tr>
+              <td width="25%"></td>
+              <td width="25%"></td>
+              <td width="25%"></td>
+              <td width="60%"><input type="button" value="Update non-room expenses" name="updateExpense" onClick="javascript: void addExpense()"></td>
+            </tr>
+          </table>
+          </td>
+        </tr>
+      </table>
+      </td> 
+    </tr>
+  </table>
+</form>
+<!--Control buttons - Save and Add another expense, Save expense, Clear and add another, Cancel expense input -->
+
+<p><input type="button" value="Update report with this receipt" name=" " mysubst="42" onClick="Javascript: void SubmitRec()" onDblClick="parent.contents.dupFlagOK = false"></p>
+
+<p align="right"><a href="javascript: void parent.contents.ListDelay()"><span class="ExpenseReturnLink">Return
+to report display</span></a></p>
+</body>
+</html>

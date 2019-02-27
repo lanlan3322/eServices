@@ -1,0 +1,295 @@
+<!--
+receipt4.html - mileage for audit
+Copyright (C) 2004,2014 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Mileage</title>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" src="../validation.js"></script>
+<script language="JavaScript">
+
+function init() {
+	document.getElementById("mileageCla").innerHTML = parent.contents.getJSX("mileageCla");
+	getElementByClass("No");
+	getElementByClass("Yes");
+	document.getElementById("personal").innerHTML = parent.contents.getJSX("personal");
+	document.getElementById("miles").innerHTML = parent.contents.getJSX("miles");
+	document.getElementById("miles").innerHTML = parent.contents.getJSX(parent.contents.getDistanceLabel());
+	document.getElementById("date").innerHTML = parent.contents.getJSX("date");
+	document.getElementById("rate").innerHTML = parent.contents.getJSX("rate");
+	document.getElementById("setProRat").innerHTML = parent.contents.getJSX("setProRat");
+	document.getElementById("amount").innerHTML = parent.contents.getJSX("amount");
+	document.getElementById("billable").innerHTML = parent.contents.getJSX("billable");
+	document.getElementById("purposeVis").innerHTML = parent.contents.getJSX("purposeVis");
+	document.getElementById("fromLoc").innerHTML = parent.contents.getJSX("fromLoc");
+	document.getElementById("toLoc").innerHTML = parent.contents.getJSX("toLoc");
+	document.getElementById("fromOdo").innerHTML = parent.contents.getJSX("fromOdo");
+	document.getElementById("toOdo").innerHTML = parent.contents.getJSX("toOdo");
+	document.getElementById("returnRepDis").innerHTML = parent.contents.getJSX("returnRepDis");
+	
+	document.getElementById("butUpdateRepMilCla").value = parent.contents.getJSX("butUpdateRepMilCla");
+}
+
+var allHTMLTags = new Array();
+function getElementByClass(theClass) {
+    //Create Array of All HTML Tags
+    var allHTMLTags=document.getElementsByTagName("*");
+
+    //Loop through all tags using a for loop
+    for (i=0; i<allHTMLTags.length; i++) {
+		
+		//Get all tags with the specified class name.
+		if (allHTMLTags[i].className==theClass) {
+			
+			//Place any code you want to apply to all
+			//pages with the class specified.
+			//In this example is to "display:none;" them
+			//Making them all dissapear on the page.
+			allHTMLTags[i].innerHTML = parent.contents.getJSX(theClass);
+		}
+    }
+}
+
+//is numeric input a positive or negative number
+function checkXRate(formObj) {
+        var newValue = formObj.XRATE.value
+        if (isNumber(newValue)) {
+                calcBarterAmount(mileage);
+        }
+        else {
+                xRateAlert(formObj.XRATE);
+                return false;
+        }
+}
+function xRateAlert(textObj) {
+        alert("Mileage Rate must be numeric.");
+        textObj.focus();
+        textObj.select();
+}
+function isNumber(inputVal) {
+        oneDecimal = false
+        inputStr = inputVal.toString()
+        for (var i = 0; i < inputStr.length; i++) {
+                var oneChar = inputStr.charAt(i)
+                if (i == 0 && oneChar == "-") {
+                        continue
+                }
+                if (oneChar == "." && !oneDecimal) {
+                        oneDecimal = true
+                        continue
+                }
+                if (oneChar < "0" || oneChar > "9") {
+                        return false
+                }
+        }
+        return true
+}
+        
+function calcBarterAmount(formObj) {  //look at amountVal???
+        var intAmount = parseFloat(formObj.REC_AMT.value);
+        var intRate = parseFloat(formObj.XRATE.value);
+        var totalAmt = intAmount * intRate;
+        formObj.AMOUNT.value = totalAmt;
+        amountVal(formObj.AMOUNT);
+        return;
+}
+function FillForm() {
+        if (parent.contents.HeadList.length > 0) {
+            parent.contents.setRcptDefDate(document.forms[0].REC_DATE,0,"BEG_DATE");
+            parent.contents.setDefaultDate(document.forms[0].CRE_DATE,-0)
+            setProperRate(document.forms[0].REC_DATE.value);
+            document.forms[0].XRATE.readOnly = false;
+            //document.forms[0].XRATE.readOnly = parent.contents.getMileageReadOnly();
+            document.forms[0].UNITS.value = parent.contents.getDistanceLabel();
+            //Sets the purpose pulldown from the HeadList
+            parent.contents.setDfltFrmHdWSplit(document.forms[0].expense_1_selpurp,"PURPOSE");
+            cBillLoad();
+            parent.contents.setTransaction(document.forms[0]);
+            document.forms[0].REC_DATE.focus();
+        } else {
+            alert("You must specify a purpose first, then choose mileage again.");
+            parent.contents.TransWindow(parent.contents.defaultHead + parent.contents.getPurposeHTML("head2"));
+        }
+}
+
+function setProperRate(cDate) {
+//     document.forms[0].XRATE.value = parent.contents.getMileageDefault(cDate,"rate",parent.contents.getNameValue(parent.contents.Header, "currency"),document.forms[0].UNITS.value);
+		document.forms[0].XRATE.value = parent.contents.getMileageDefault(cDate);
+     
+     calcBarterAmount(mileage)
+}
+
+function isOk(NumberButtons) {
+//        checkAllFields(NumberButtons);  //need to rewrite this check....
+//        if (updReportFlag == "yes") {
+                SubmitRec();
+//                parent.contents.UpdateReport('2','trans5',2);
+//        }
+        // debugData(NumberButtons);
+}
+
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+function cCheckBill() {
+  if (parent.contents.companyBillCheck) {
+    return parent.contents.companyBillCheck("trans1",document.forms[0].expense_1_BILLTYPE,document.forms[0].expense_1_selpurp.selectedIndex);
+  } else {
+    return true;
+  }
+}
+
+function cBillLoad() {
+  if (parent.contents.companyBillLoad) parent.contents.companyBillLoad("trans1",document.forms[0].expense_1_BILLTYPE,document.forms[0].expense_1_selpurp.selectedIndex);
+} 
+
+function applyUpdate(obj) {
+  if (parent.contents.isNew()) {
+    obj.value = "insert";
+  } else {
+    if (obj.value == "none") {
+      obj.value = "update";
+    }
+  }
+}
+
+function SubmitRec() {
+  // if (document.forms[0].expense_1_COMMENT.value.length > 1 && document.forms[0].XSOURCE.value.length > 1
+     if (checkdate(document.forms[0].REC_DATE) 
+     && doDateChkToday(document.forms[0].REC_DATE)
+     && CheckAmount(document.forms[0].REC_AMT)
+     && cCheckBill()) {
+    document.forms[0].expense_1_EXPENSE.value = parent.contents.getMileageType();
+    document.forms[0].expense_1_RECEIPT.value = document.forms[0].RECEIPT.value;
+    document.forms[0].CHARGE.value = parent.contents.getChargeDef();
+    parent.contents.makeCurrency(document.forms[0].AMOUNT);
+
+    document.forms[0].expense_1_AMOUNT.value = document.forms[0].AMOUNT.value;
+    document.forms[0].expense_1_REC_AMT.value = document.forms[0].REC_AMT.value;
+    
+    document.forms[0].REC_DATE.value = parent.contents.getNormalDate(document.forms[0].REC_DATE.value);
+    document.forms[0].CRE_DATE.value = parent.contents.getNormalDate(document.forms[0].CRE_DATE.value);
+    document.forms[0].expense_1_CRE_DATE.value = document.forms[0].CRE_DATE.value;
+    document.forms[0].expense_1_EXP_DATE.value = document.forms[0].REC_DATE.value;
+  // if (parent.contents.ListBuffer.length > 0) 
+    applyUpdate(document.forms[0].persistance);
+    applyUpdate(document.forms[0].expense_1_persistance);
+    parent.contents.iXMLB = true;
+    parent.contents.UpdateReport('2','receipt4');
+    parent.contents.iXMLB = false;
+    parent.defDateStr = document.forms[0].REC_DATE.value;            
+    if (parent.contents.DirectEdit) {
+       parent.contents.NeedAReport(parent.contents.defaultHome + 'setReportItem.html')
+    } else {
+       parent.contents.ListDelay();
+    }
+  } else {
+   alert("Form must be completely filled out");
+  }
+}
+
+</script>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript:void  init(); FillForm();">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%" class="offsetColor">
+  <tr>
+  <td width="100%"><big><big><big><em><strong><span id="mileageCla">Mileage Claim</span>&nbsp;</strong></em></big></big></big>
+  </tr>
+</table>
+
+<form name="mileage">
+  <input type="hidden" name="RCPTTYPE" value>
+  <input type="hidden" name="VOUCHER" value>
+  <input type="hidden" name="RECEIPT" value>
+  <input type="hidden" name="CRE_DATE" value>
+  <input type="hidden" name="expense_1_CRE_DATE" value>
+  <input type="hidden" name="expense_1_EXP_DATE" value>  
+  <input type="hidden" name="expense_1_RECEIPT" value>
+  <input type="hidden" name="expense_1_LINEITEM" value>  
+  <input type="hidden" name="expense_1_EXPENSE" value>
+
+  <input type="hidden" name="expense_1_AMOUNT" value>
+  <input type="hidden" name="expense_1_REC_AMT" value>
+
+  <input type="hidden" name="CHARGE" value> 
+  <input type="hidden" name="UNITS" value>
+  <input type="hidden" name="OK_STAT" value>
+  <input type="hidden" name="OK_REF" value>
+  <input type="hidden" name="SCAN_REF" value>  
+  <input type="hidden" name="persistance" value="none">
+  <input type="hidden" name="expense_1_persistance" value="none">
+  <table border="0" width="73%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="0" cellpadding="2">
+    <tr>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag"><span id="date">Date</span>:</div></td>
+      <td width="90%" class="offsetColor"><input type="text" name="REC_DATE" size="10" value tabindex="1" onChange="checkdate(this.form.REC_DATE)"> <a HREF="javascript:doNothing()" tabindex="2" onClick="setDateField(document.forms[0].REC_DATE);"><img SRC="../calendar.gif" BORDER="0" WIDTH="15" HEIGHT="15"></a></td>
+    </tr>
+    <tr>
+      <td width="10%"><div class="ExpenseTag"><span id=miles><script>document.write(parent.contents.getDistanceLabel())</script></span>:</div></td>
+      <td width="90%"><input type="text" name="REC_AMT" size="8" tabindex="3" onChange="calcBarterAmount(mileage)"></td>
+    </tr>
+    <tr>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag"><span id="rate">Rate</span>:</div></td>
+      <td width="90%" class="offsetColor"><input type="text" name="XRATE" size="8" tabindex="4" onChange="checkXRate(mileage)">
+      <a HREF="JavaScript: void setProperRate(document.forms[0].REC_DATE.value)"  class="ExpenseTag"><sm><em><span id="setProRat">Set Proper Rate!</span></em></sm></a> 
+    </td>
+    </tr>
+    <tr>
+      <td width="10%"><div class="ExpenseTag"><span id="amount">Amount</span>:</div></td>
+      <td width="90%"><input type="text" name="AMOUNT" size="8" onChange="amountVal(AMOUNT)" readonly="yes"></td>
+    </tr>
+    <tr>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag"><span id="purposeVis">Purpose/Visit</span>:</div></td>
+      <td width="90%" class="offsetColor"><select name="expense_1_selpurp" tabindex="5" xref="expense_1_PURPOSE" size="1" onChange="cBillLoad()">
+      </select></td>
+    </tr>
+    <tr>
+      <td width="10%"><div class="ExpenseTag"><span id="billable"><script>document.write(parent.contents.getBillableLabel())</script></span>:</div></td>
+      <td width="90%"><select name="expense_1_BILLTYPE" size="1" tabindex="6" listtype="value-in">
+        <option selected value="1" class="Yes">Yes</option>
+        <option value="2" class="No">No</option>
+        <option value="3" id="personal">Personal</option>
+      </select></td>
+    </tr>
+    <tr>
+    <td width="10%" height="28" class="offsetColor"><div class="ExpenseTag"><span id="fromLoc">From Location</span>:</div></td>
+    <td width="90%" height="28" class="offsetColor">
+    <table class="offsetColor" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" height="34">
+      <td width="35%" height="28" class="offsetColor"><input type="text" name="XSOURCE" size="25" tabindex="7"> </td>
+      <td width="15%" height="28" class="offsetColor"><div class="ExpenseTag"><span id="toLoc">To Location</span>:</div></td>
+      <td width="50%" height="28" class="offsetColor"><input type="text" name="expense_1_COMMENT" size="25" tabindex="8"> </td>
+    </table></td>
+    </tr>
+    <tr>
+    <td width="10%" height="28"><div class="ExpenseTag"><span id="fromOdo">Odometer Beginning</span>:</div></td>
+    <td width="90%" height="28">
+    <table height="34">
+      <td width="35%" height="28"><input type="text" name="REFER" size="10" tabindex="9"> </td>
+      <td width="15%" height="28"><div class="ExpenseTag"><span id="toOdo">Ending</span>:</div></td>
+      <td width="50%" height="28"><input type="text" name="OFFSET" size="10" tabindex="10"> </td>
+    </table></td>
+    </tr>
+    
+    </table>
+<!--Control buttons - Save and Add another expense, Save expense, Clear and add another, Cancel expense input -->
+  <p><input type="button" id="butUpdateRepMilCla" value="Update report with this mileage claim" name=" " tabindex="9" onClick="Javascript: isOk(1)" onDblClick="parent.contents.dupFlagOK = false"> </p>
+</form>
+<p align="right"><a href="javascript: void history.go(-2)"><em><strong><span id="returnRepDis">Return to report display</span></strong></em></a></p>
+</body>
+</html>

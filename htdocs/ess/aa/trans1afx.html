@@ -1,0 +1,263 @@
+<!--
+trans1afx.html - generic reciept with fx and billing (this is the basic expense entry)
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Generic Receipt with FX</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="Javascript: void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('htrans1afx.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0" class="offsetColor">
+  <tr>
+    <td width="50%"><h1>Receipt</h1></em></td>
+  </tr>
+</table>
+
+<form>
+  <input type="hidden" name="rcpttype" value="3">
+  <input type="hidden" name="expense_1_attendeelist" value="[]">
+  <input type="hidden" name="ratetype" value>
+  <input type="hidden" name="xsource" value>
+  <input type="hidden" name="xrate" value>
+  <input type="hidden" name="xdate" value>
+  <input type="hidden" name="expense_1_amount" value> 
+  <input type="hidden" name="expense_1_persplit" value>
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="16%" class="offsetColor"><div class="ExpenseTag">Receipt Date:</div></td>
+      <td width="20%" class="offsetColor"><input type="text" name="rcptdate" size="13" tabindex="1"><a HREF="javascript:doNothing()" tabindex="2" onClick="setDateField(document.forms[0].rcptdate)"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+      <td width="11%" class="offsetColor"><div class="ExpenseTag">Currency:</div></td>
+      <td width="25%" class="offsetColor"><input type="text" name="units" size="16" readOnly="yes">
+      <a class="ExpenseLink" href="javascript:doNothing()" tabindex="3" onClick="setFgnLocalVars(document.forms[0].recamt,document.forms[0].amount)">
+      Select Currency</a></td>
+    </tr>
+    <tr>
+      <td width="16%"><div class="ExpenseTag"><script>document.write(parent.contents.getCurrencyLabel())</script>:</div></td>
+      <td width="20%"><input type="text" name="amount" size="12" value="0.00" tabindex="4" onChange="CheckAmount(this.form.amount)"></td>
+      <td width="11%"><div class="ExpenseTag">Foreign Amount:</div></td>
+      <td width="25%"><input type="text" name="recamt" size="9" value tabindex="5" onChange="FXConvert()" readOnly="yes"></td>
+    </tr>
+    <tr>
+      <td width="16%" class="offsetColor"><div class="ExpenseTag">Expense Type: </div></td>
+      <td width="20%" class="offsetColor"><select name="expense_1_expensetype" size="1" tabindex="6" onChange="applyExp()">
+      </select></td>
+      <td width="11%" class="offsetColor"><div class="ExpenseTag">Merchant:</div></td>
+      <td width="25%" class="offsetColor"><select name="expense_1_merchant" size="1" tabindex="7"></select> 
+      <a class="ExpenseLink" href="javascript:doNothing()" tabindex="8" onClick="setLocalObj(document.forms[0].expense_1_merchant)">New Merchant</a> </td>
+    </tr>
+  </table>
+  <table border="0" cellspacing="0" width="100%" cellpadding="0">
+    <tr>
+      <td width="22%"><div class="ExpenseTag">Comment:</div> </td>
+      <td width="84%"><input type="text" name="expense_1_comment" size="36" tabindex="9" onChange="CheckComment(this.form.expense_1_comment, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)">
+      <a class="ExpenseLink" href="javascript:doNothing()" tabindex="10" onClick="initAttendeeList(document.forms[0].expense_1_attendeelist, document.forms[0].expense_1_persplit); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=580, height=540, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')">Attendee List</a></td>
+    </tr>
+    <tr>
+      <td width="22%" class="offsetColor"><div class="ExpenseTag">Purpose:</div> </td>
+      <td width="84%" class="offsetColor"><select name="expense_1_purpose" size="1" tabindex="11" xref="expense_1_xref" onChange="cBillLoad()">
+      </select></td>
+    </tr>
+    <tr>
+      <td width="22%"><div class="ExpenseTag">Paid By:</div></td>
+      <td width="84%"><select name="charge" size="1" tabindex="12">
+      </select></td>
+    </tr>
+    <tr>
+      <td width="22%" class="offsetColor"><div class="ExpenseTag">Billable:</div></td>
+      <td width="84%" class="offsetColor"><select name="expense_1_billtype" size="1" tabindex="13">
+        <option value="Yes">Yes</option>
+        <option selected value="No">No</option>
+      </select></td>
+    </tr>
+  </table>
+  <div align="center"><center><p><input type="button" value="Update report with this receipt" name=" " tabindex="15" onClick="Javascript: void SubmitRec()" onDblClick="parent.contents.dupFlagOK = false"></p>
+  </center></div>
+</form>
+
+<p align="center"><a class="ExpenseReturnLink" href="javascript: void parent.contents.ListDelay()" tabindex="16">Return to report display</a></p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+</body>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../attendee.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../fx1.js"></script>
+<script LANGUAGE="JavaScript">
+
+function SubmitRec() {
+  with (document.forms[0]) {
+    if (CheckAmount(amount)
+      && checkdate(rcptdate)
+      && doDateChkToday(rcptdate)
+      && CheckExpType(expense_1_expensetype)
+      && CheckPaidBy(charge)
+      && CheckDedicated(expense_1_expensetype, charge)
+      && CheckMerchant(expense_1_merchant, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text) 
+      && CheckComment(expense_1_comment, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)
+      && CheckAttendee(expense_1_attendeelist, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)
+      && cCheckBill()) {
+        parent.contents.makeCurrency(amount);
+        expense_1_amount.value = amount.value;
+        if (!isNaN(recamt.value)) parent.contents.makeCurrency(recamt);
+        parent.contents.UpdateReport('2','trans1afx');
+        parent.defDateStr = document.forms[0].rcptdate.value;
+        parent.contents.ListDelay();
+    }
+  }
+}
+
+function CheckPaidBy(object) {
+  if (object.selectedIndex == 0) {
+     alert("A Payment Type is required.");
+     object.focus();
+     return false;
+  }  else {
+          return true;
+  }
+}
+
+function CheckExpType(object) {
+  if (object.selectedIndex == 0) {
+     alert("An Expense Type is required.");
+     object.focus();
+     return false;
+  }  else {
+          return true;
+  }
+}
+
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+function CheckAttendee(tag,expense) {
+  var Check = tag.value;
+  var Xstr = parent.contents.getAttendeeReq();
+  if (Xstr.indexOf(";" + expense + ";") > -1 && Check.length < 3) {
+     alert("Need to supply attendee list for " + expense + " expense");
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function CheckComment(tag,expense) {
+  return CheckRequired(tag,expense,parent.contents.getCommentReq(),"Need to supply a comment in the comment field");
+}
+
+function CheckMerchant(tag,expense) {
+  return CheckRequired(tag,expense,parent.contents.getMerchantReq(),"Need to supply a merchant name in the merchant field");
+}
+
+function CheckRequired(tag,expense,validation, msgtext) {
+  var Check = "";
+  var n = false 
+  var CmtLen = parent.contents.getCommentLen();
+  expense = ";" + expense + ";";
+  if (validation.indexOf(expense) > -1) {
+    if (tag.type.indexOf("select") == 0) {
+      Check = tag.options[tag.selectedIndex].text;
+      if (Check.length > 2) n = true;     
+    } else { 
+      Check = parent.contents.alltrim(tag.value);
+      if (Check.length >= CmtLen) n = true;
+    } 
+    if (!n) {
+      alert(msgtext);
+      tag.focus();
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+     return true;
+  }
+}
+
+function applyExp() {
+  with (document.forms[0]){
+  parent.contents.setListValue(parent.contents.getDedicatedMethod("1"), charge, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text);
+  }
+}
+
+function CheckDedicated(expObj, chgObj) {
+  var x = expObj.options[expObj.selectedIndex].text;
+  var y = chgObj.options[chgObj.selectedIndex].text;
+  var retVal = true;
+  var dedicated = parent.contents.getDBValue(parent.contents.getDedicatedMethod("1"), x);
+  if (dedicated != "" && y != dedicated) { 
+    retVal = false;
+    alert("Invalid payment method " + y + " for expense type " + x);
+  }
+  return retVal;
+}
+
+function cCheckBill() {
+  if (parent.contents.companyBillCheck) {
+    return parent.contents.companyBillCheck("trans1",document.forms[0].expense_1_billtype,document.forms[0].expense_1_purpose.selectedIndex);
+  } else {
+    return true;
+  }
+}
+
+function cBillLoad() {
+  if (parent.contents.companyBillLoad) parent.contents.companyBillLoad("trans1",document.forms[0].expense_1_billtype,document.forms[0].expense_1_purpose.selectedIndex);
+}    
+
+function FillForm() {
+
+  if (parent.contents.HeadList.length > 0) {
+    document.forms[0].rcpttype.value = "3"
+    //Gets a simple list found in personal.js
+    parent.contents.setList(document.forms[0].expense_1_expensetype, parent.contents.getExpenseTypes(parent.Category));
+    parent.contents.setList(document.forms[0].charge, parent.contents.getPaymentTypes("1"));
+    parent.contents.setListDefault(document.forms[0].charge, parent.contents.getChargeDef());
+    //Sets the purpose pulldown from the HeadList
+    parent.contents.setDfltFrmHdWSplit(document.forms[0].expense_1_purpose);
+
+    //Fills in the merchant array with the proper stuff
+    MerchantType = "merchant"
+    var merchArray = parent.contents.getMerchants("1");
+    var mArray = merchArray.concat(parent.contents.getDBResult(parent.PersDBase,MerchantType));
+    parent.contents.setList(document.forms[0].expense_1_merchant, mArray.sort());
+
+    //Sets the default dates
+    parent.contents.setRcptDefDate(document.forms[0].rcptdate,-1);
+    //Brings in any transaction information (note date above can be optimized against this later)
+    document.forms[0].expense_1_persplit.value = "1";
+    cBillLoad();
+    parent.contents.setTransaction(document.forms[0]);
+    if (parent.contents.isNew()) {  //changed 7/4/2002 
+      defCurrency();
+    } else {
+      setFgnProtected(isEmpty(document.forms[0].xrate.value));
+    }
+    document.forms[0].rcptdate.focus();
+  } else {
+    alert("You must specify a purpose first, then choose Quick Receipt again.");
+    parent.contents.TransWindow(parent.contents.defaultHead + parent.contents.getPurposeHTML("head2"));
+  }
+}
+
+
+</script>
+
+</html>

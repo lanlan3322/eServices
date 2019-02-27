@@ -1,0 +1,766 @@
+<!--
+trans9afx.html - split receipt with FX
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Split Receipt with FX no drop down</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('htrans9afx.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<form method="POST" action="javascript: void SubmitRec()">
+  <input type="hidden" name="ratetype" value>
+  <input type="hidden" name="xsource" value>
+  <input type="hidden" name="xrate" value>
+  <input type="hidden" name="xdate" value>
+  <input type="hidden" name="persplit" value>
+  <input type="hidden" name="expense_1_persplit" value>
+  <input type="hidden" name="expense_2_persplit" value>
+  <input type="hidden" name="expense_3_persplit" value>
+  <input type="hidden" name="expense_4_persplit" value>
+  <input type="hidden" name="expense_5_persplit" value>
+  <input type="hidden" name="expense_6_persplit" value>
+  <input type="hidden" name="expense_7_persplit" value>
+  <input type="hidden" name="expense_8_persplit" value>
+  <input type="hidden" name="expense_9_persplit" value>
+  <input type="hidden" name="expense_10_persplit" value>
+  <input type="hidden" name="expense_1_attendeelist" value="[]">
+
+  <table border="0" width="100%" cellpadding="0" cellspacing="0" class="offsetColor">
+    <tr>
+      <td width="50%"><h1>Split Receipt</h1></td>
+    </tr>
+  </table>
+  <p><br>
+  </p>
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Receipt Date:</div></td>
+      <td width="20%" class="offsetColor"><input type="text" name="rcptdate" size="13" mysubst="1"><a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].rcptdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+      <td width="15%" class="offsetColor"><div class="ExpenseTag">Currency:</div></td>
+      <td width="45%" class="offsetColor"><input type="text" name="units" size="16" readOnly="yes"><a class="ExpenseLink" href="javascript:doNothing()" mysubst="3" onClick="setFgnLocalVars(document.forms[0].recamt,document.forms[0].amount)">
+      Select Currency</a></td>
+    </tr>
+    <tr>
+      <td width="20%"><div class="ExpenseTag"><script>document.write(parent.contents.getCurrencyLabel())</script>:</div></td>
+      <td width="20%"><input type="text" name="amount" size="12" value mysubst="4" onChange="CheckAmount(this.form.amount)"></td>
+      <td width="15%"><div class="ExpenseTag">Foreign Amount:</div></td>
+      <td width="45%"><input type="text" name="recamt" size="9" value mysubst="5" onBlur="FXConvert();swFgnProtect()" readOnly="yes"></td>
+    </tr>
+    <tr>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Payment Method:</div></td>
+      <td width="20%" class="offsetColor">
+      <select name="charge" size="1" mysubst="6">
+      </select></td>
+      <td width="15%" class="offsetColor"><div class="ExpenseTag">Merchant:</div></td>
+      <td width="45%" class="offsetColor"><select name="merchant" size="1" mysubst="9">
+      </select> <a class="ExpenseLink" href="javascript:doNothing()" mysubst="11" onClick="setLocalObj(document.forms[0].merchant);">New&nbsp;Merchant</a>
+      </td>
+    </tr>
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Reference:</div></td>
+      <td width="20%"><input type="text" name="refer" size="20" mysubst="7"></td>
+      <td width="15%"></td>
+      <td width="45%"></td>
+
+    </tr>
+    <tr>
+      <td width="20%" class="offsetColor"><div class="ExpenseTag">Purpose:</div> </td>
+      <td width="20%" class="offsetColor"><select name="purpose" size="1" xref="xref" mysubst="8">
+      </select><!-- purpose and xref are expense items and must be populated --></td>
+      <td width="15%" class="offsetColor"><a class="ExpenseLink" href="javascript:doNothing()" mysubst="10" onClick="initSplitAttendeeList(document.forms[0].expense_1_attendeelist, document.forms[0].persplit); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=580, height=540, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')">&nbsp;&nbsp;&nbsp;&nbsp;Attendee&nbsp;List</a></td>
+      <td width="45%" class="offsetColor"></td>
+    </tr>
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Amount remaining to distribute:</div></td>
+      <td width="20%"><input type="text" name="distribution" size="20" mysubst="-1" readOnly="yes"></td>
+      <td width="15%"></td>
+      <td width="45%"><input type="text" name="FXdist" size="20" mysubst="-1" readOnly="yes"></td>
+    </tr>
+  </table>
+  <table border="0" width="100%" cellpadding="0">
+    <tr>
+      <td width="100%"><table class="offsetColor" border="0" width="780" cellpadding="0">
+        <tr>
+          <td width="115" align="center"><div class="ExpenseTag">Expense Type</div></td>
+          <td width="100" align="center"><div class="ExpenseTag"><script>document.write(parent.contents.getCurrencyLabel())</script></div></td>
+          <td width="100" align="center"><div class="ExpenseTag">Foreign Amount</div></td>
+          <td width="100" align="center"><div class="ExpenseTag">Dept Code</div></td>
+          <td width="100" align="center"><div class="ExpenseTag">Dept Name</div></td>
+          <td width="350" align="center"><div class="ExpenseTag">Comment</div></td>
+        </tr>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%">
+        <tr>
+          <td width="115"><select name="expense_1_expensetype" size="1" mysubst="100">
+          </select></td>
+          <td width="100"><input type="text" name="expense_1_amount" size="9" mysubst="101" subtype="nonzero" onChange="CheckAmount(this.form.expense_1_amount)"></td>
+          <td width="100"><input type="text" name="expense_1_recamt" readonly="yes" size="9" mysubst="102" subtype="nonzero" onBlur="fxdo('expense_1_recamt', 'expense_1_amount');CheckAmount(this.form.expense_1_amount)"></td>
+          <td width="100"><input type="text" name="expense_1_depart" size="8" mysubst="103" onChange="departMapping(expense_1_depart, expense_1_departname)"></td>
+          <td width="100"><input type="text" name="expense_1_departname" size="24" mysubst="-1" readOnly="yes"></td>
+          <td width="350"><input type="text" name="expense_1_comment" mysubst="104" size="36" onChange="CheckComment(this.form.expense_1_comment)"></td>
+        </tr>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%" class="offsetColor">
+        <tr>
+          <td width="115" class="offsetColor"><select name="expense_2_expensetype" size="1" mysubst="200">
+          </select></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_2_amount" size="9" subtype="nonzero" mysubst="201" onChange="CheckAmount(this.form.expense_2_amount)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_2_recamt" readonly="yes" size="9" subtype="nonzero" mysubst="203" onBlur="fxdo('expense_2_recamt', 'expense_2_amount');CheckAmount(this.form.expense_2_amount)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_2_depart" mysubst="204" size="8" onChange="departMapping(expense_2_depart, expense_2_departname)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_2_departname" size="24" mysubst="-1" readOnly="yes"></td>
+          <td width="350" class="offsetColor"><input type="text" name="expense_2_comment" mysubst="205" size="36" onChange="CheckComment(this.form.expense_2_comment)"></td>
+        </tr>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%">
+        <tr>
+          <td width="115"><select name="expense_3_expensetype" size="1" mysubst="300">
+          </select></td>
+          <td width="100"><input type="text" name="expense_3_amount" size="9" subtype="nonzero" mysubst="301" onChange="CheckAmount(this.form.expense_3_amount)"></td>
+          <td width="100"><input type="text" name="expense_3_recamt" readonly="yes" size="9" subtype="nonzero" mysubst="302" onBlur="fxdo('expense_3_recamt', 'expense_3_amount');CheckAmount(this.form.expense_3_amount)"></td>
+          <td width="100"><input type="text" name="expense_3_depart" mysubst="303" size="8" onChange="departMapping(expense_3_depart, expense_3_departname)"></td>
+          <td width="100"><input type="text" name="expense_3_departname" size="24" mysubst="-1" readOnly="yes"></td>
+          <td width="350"><input type="text" name="expense_3_comment" mysubst="304" size="36" onChange="CheckComment(this.form.expense_3_comment)"></td>
+        </tr>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="100%" class="offsetColor">
+        <tr>
+          <td width="115" class="offsetColor"><select name="expense_4_expensetype" size="1" mysubst="400">
+          </select></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_4_amount" size="9" subtype="nonzero" mysubst="401" onChange="CheckAmount(this.form.expense_4_amount)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_4_recamt" readonly="yes" size="9" subtype="nonzero" mysubst="402" onBlur="fxdo('expense_4_recamt', 'expense_4_amount');CheckAmount(this.form.expense_4_amount)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_4_depart" mysubst="403" size="8" onChange="departMapping(expense_4_depart, expense_4_departname)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_4_departname" size="24" mysubst="-1" readOnly="yes"></td>
+          <td width="350" class="offsetColor"><input type="text" name="expense_4_comment" mysubst="404" size="36" onChange="CheckComment(this.form.expense_4_comment)"></td>
+        </tr>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="100%">
+        <tr>
+          <td width="115"><select name="expense_5_expensetype" size="1" mysubst="500">
+          </select></td>
+          <td width="100"><input type="text" name="expense_5_amount" size="9" subtype="nonzero" mysubst="501" onChange="CheckAmount(this.form.expense_3_amount)"></td>
+          <td width="100"><input type="text" name="expense_5_recamt" readonly="yes" size="9" subtype="nonzero" mysubst="502" onBlur="fxdo('expense_5_recamt', 'expense_5_amount');CheckAmount(this.form.expense_5_amount)"></td>
+          <td width="100"><input type="text" name="expense_5_depart" mysubst="503" size="8" onChange="departMapping(expense_5_depart, expense_5_departname)"></td>
+          <td width="100"><input type="text" name="expense_5_departname" size="24" mysubst="-1" readOnly="yes"></td>
+          <td width="350"><input type="text" name="expense_5_comment" mysubst="504" size="36" onChange="CheckComment(this.form.expense_5_comment)"></td>
+        </tr>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="100%" class="offsetColor">
+        <tr>
+          <td width="115" class="offsetColor"><select name="expense_6_expensetype" size="1" mysubst="600">
+          </select></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_6_amount" size="9" subtype="nonzero" mysubst="601" onChange="CheckAmount(this.form.expense_6_amount)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_6_recamt" readonly="yes" size="9" subtype="nonzero" mysubst="602" onBlur="fxdo('expense_6_recamt', 'expense_6_amount');CheckAmount(this.form.expense_6_amount)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_6_depart" mysubst="603" size="8" onChange="departMapping(expense_6_depart, expense_6_departname)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_6_departname" size="24" mysubst="-1" readOnly="yes"></td>
+          <td width="350" class="offsetColor"><input type="text" name="expense_6_comment" mysubst="604" size="36" onChange="CheckComment(this.form.expense_6_comment)"></td>
+        </tr>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="100%">
+        <tr>
+          <td width="115"><select name="expense_7_expensetype" size="1" mysubst="700">
+          </select></td>
+          <td width="100"><input type="text" name="expense_7_amount" size="9" subtype="nonzero" mysubst="701" onChange="CheckAmount(this.form.expense_7_amount)"></td>
+          <td width="100"><input type="text" name="expense_7_recamt" readonly="yes" size="9" subtype="nonzero" mysubst="702" onBlur="fxdo('expense_7_recamt', 'expense_7_amount');CheckAmount(this.form.expense_7_amount)"></td>
+          <td width="100"><input type="text" name="expense_7_depart" mysubst="703" size="8" onChange="departMapping(expense_7_depart, expense_7_departname)"></td>
+          <td width="100"><input type="text" name="expense_7_departname" size="24" mysubst="-1" readOnly="yes"></td>
+          <td width="350"><input type="text" name="expense_7_comment" mysubst="704" size="36" onChange="CheckComment(this.form.expense_7_comment)"></td>        </tr>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="100%" class="offsetColor">
+        <tr>
+          <td width="115" class="offsetColor"><select name="expense_8_expensetype" size="1" mysubst="800">
+          </select></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_8_amount" size="9" subtype="nonzero" mysubst="801" onChange="CheckAmount(this.form.expense_8_amount)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_8_recamt" readonly="yes" size="9" subtype="nonzero" mysubst="802" onBlur="fxdo('expense_8_recamt', 'expense_8_amount');CheckAmount(this.form.expense_8_amount)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_8_depart" mysubst="803" size="8" onChange="departMapping(expense_8_depart, expense_8_departname)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_8_departname" size="24" mysubst="-1" readOnly="yes"></td>
+          <td width="350" class="offsetColor"><input type="text" name="expense_8_comment" mysubst="804" size="36" onChange="CheckComment(this.form.expense_8_comment)"></td>
+        </tr>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="100%">
+        <tr>
+          <td width="115"><select name="expense_9_expensetype" size="1" mysubst="900">
+          </select></td>
+          <td width="100"><input type="text" name="expense_9_amount" size="9" subtype="nonzero" mysubst="901" onChange="CheckAmount(this.form.expense_9_amount)"></td>
+          <td width="100"><input type="text" name="expense_9_recamt" readonly="yes" size="9" subtype="nonzero" mysubst="902" onBlur="fxdo('expense_9_recamt', 'expense_9_amount');CheckAmount(this.form.expense_9_amount)"></td>
+          <td width="100"><input type="text" name="expense_9_depart" mysubst="903" size="8" onChange="departMapping(expense_9_depart, expense_9_departname)"></td>
+          <td width="100"><input type="text" name="expense_9_departname" size="24" mysubst="-1" readOnly="yes"></td>
+          <td width="350"><input type="text" name="expense_9_comment" mysubst="904" size="36" onChange="CheckComment(this.form.expense_9_comment)"></td>
+        </tr>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="100%" class="offsetColor">
+        <tr>
+          <td width="115" class="offsetColor"><select name="expense_10_expensetype" size="1" mysubst="950">
+          </select></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_10_amount" size="9" subtype="nonzero" mysubst="951" onChange="CheckAmount(this.form.expense_10_amount)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_10_recamt" readonly="yes" size="9" subtype="nonzero" mysubst="952" onBlur="fxdo('expense_10_recamt', 'expense_10_amount');CheckAmount(this.form.expense_10_amount)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_10_depart" mysubst="953" size="8" onChange="departMapping(expense_10_depart, expense_10_departname)"></td>
+          <td width="100" class="offsetColor"><input type="text" name="expense_10_departname" size="24" mysubst="-1" readOnly="yes"></td>
+          <td width="350" class="offsetColor"><input type="text" name="expense_10_comment" mysubst="954" size="36" onChange="CheckComment(this.form.expense_10_comment)"></td>
+        </tr>
+      </td>
+    </tr>
+
+  </table> 
+  <p><input type="button" value="Update report with this receipt" name="Submit" mysubst="900" onClick="Javascript: void SubmitRec()" onDblClick="parent.contents.dupFlagOK = false"></p>
+</form>
+
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void parent.contents.ListDelay()" mysubst="901">Return
+to receipt display</a></p>
+</body>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../attendee.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../fx1.js"></script>
+<script LANGUAGE="JavaScript">
+
+function SubmitRec() {
+
+  if (document.forms[0].charge.selectedIndex < 1) {
+    alert("Must have a valid payment method");
+    document.forms[0].charge.focus();
+    return;
+  }
+     
+
+  with (document.forms[0]) {    
+    
+   ChkExtra2(expense_1_expensetype,expense_1_amount);
+   ChkExtra2(expense_2_expensetype,expense_2_amount);
+   ChkExtra2(expense_3_expensetype,expense_3_amount);
+   ChkExtra2(expense_4_expensetype,expense_4_amount);
+   ChkExtra2(expense_5_expensetype,expense_5_amount);
+   ChkExtra2(expense_6_expensetype,expense_6_amount);
+   ChkExtra2(expense_7_expensetype,expense_7_amount);
+   ChkExtra2(expense_8_expensetype,expense_8_amount);
+   ChkExtra2(expense_9_expensetype,expense_9_amount);
+   ChkExtra2(expense_10_expensetype,expense_10_amount);
+ 
+   var ExType4Merchant = RepresentativeType(parent.contents.getMerchantReq());
+   var ExType4Attendee = RepresentativeType(parent.contents.getAttendeeReq());
+   
+   if (CheckAmount(amount)
+      && fxCheck()
+      && checkdate(rcptdate) 
+      && doDateChkToday(rcptdate)
+      && CheckMerchant(merchant, ExType4Merchant.options[ExType4Merchant.selectedIndex].text) 
+      && CheckAttendee(expense_1_attendeelist, ExType4Attendee.options[ExType4Attendee.selectedIndex].text)
+      && CheckComment(expense_1_comment, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)
+      && CheckComment(expense_2_comment, expense_2_expensetype.options[expense_2_expensetype.selectedIndex].text)
+      && CheckComment(expense_3_comment, expense_3_expensetype.options[expense_3_expensetype.selectedIndex].text)
+      && CheckComment(expense_4_comment, expense_4_expensetype.options[expense_4_expensetype.selectedIndex].text)
+      && CheckComment(expense_5_comment, expense_5_expensetype.options[expense_5_expensetype.selectedIndex].text)
+      && CheckComment(expense_6_comment, expense_6_expensetype.options[expense_6_expensetype.selectedIndex].text)
+      && CheckComment(expense_7_comment, expense_7_expensetype.options[expense_7_expensetype.selectedIndex].text)
+      && CheckComment(expense_8_comment, expense_8_expensetype.options[expense_8_expensetype.selectedIndex].text)
+      && CheckComment(expense_9_comment, expense_9_expensetype.options[expense_9_expensetype.selectedIndex].text)
+      && CheckComment(expense_10_comment, expense_10_expensetype.options[expense_10_expensetype.selectedIndex].text)
+      && CheckDedicated(expense_1_expensetype, charge)
+      && CheckDedicated(expense_2_expensetype, charge)
+      && CheckDedicated(expense_3_expensetype, charge)
+      && CheckDedicated(expense_4_expensetype, charge)
+      && CheckDedicated(expense_5_expensetype, charge)
+      && CheckDedicated(expense_6_expensetype, charge)
+      && CheckDedicated(expense_7_expensetype, charge)
+      && CheckDedicated(expense_8_expensetype, charge)
+      && CheckDedicated(expense_9_expensetype, charge)
+      && CheckDedicated(expense_10_expensetype, charge)
+      && CheckTotals() && ChkFgnBalance() && deptNameCheck()) {
+    if (!isNaN(amount.value)) parent.contents.makeCurrency(amount);
+    if (ChkExtra1(expense_1_amount,expense_1_expensetype,expense_1_depart,expense_1_comment,expense_1_persplit)) parent.contents.makeCurrency(expense_1_amount);
+    if (ChkExtra1(expense_2_amount,expense_2_expensetype,expense_2_depart,expense_2_comment,expense_2_persplit)) parent.contents.makeCurrency(expense_2_amount);
+    if (ChkExtra1(expense_3_amount,expense_3_expensetype,expense_3_depart,expense_3_comment,expense_3_persplit)) parent.contents.makeCurrency(expense_3_amount);
+    if (ChkExtra1(expense_4_amount,expense_4_expensetype,expense_4_depart,expense_4_comment,expense_4_persplit)) parent.contents.makeCurrency(expense_4_amount);
+    if (ChkExtra1(expense_5_amount,expense_5_expensetype,expense_5_depart,expense_5_comment,expense_5_persplit)) parent.contents.makeCurrency(expense_5_amount);
+    if (ChkExtra1(expense_6_amount,expense_6_expensetype,expense_6_depart,expense_6_comment,expense_6_persplit)) parent.contents.makeCurrency(expense_6_amount);
+    if (ChkExtra1(expense_7_amount,expense_7_expensetype,expense_7_depart,expense_7_comment,expense_7_persplit)) parent.contents.makeCurrency(expense_7_amount);
+    if (ChkExtra1(expense_8_amount,expense_8_expensetype,expense_8_depart,expense_8_comment,expense_8_persplit)) parent.contents.makeCurrency(expense_8_amount);
+    if (ChkExtra1(expense_9_amount,expense_9_expensetype,expense_9_depart,expense_9_comment,expense_9_persplit)) parent.contents.makeCurrency(expense_9_amount);
+    if (ChkExtra1(expense_10_amount,expense_10_expensetype,expense_10_depart,expense_10_comment,expense_10_persplit)) parent.contents.makeCurrency(expense_10_amount);
+   
+    parent.contents.UpdateReport('2','trans9afx');
+    parent.contents.ListDelay();
+   } else {
+    //alert("Pls chk receipt - invalid data");
+   }
+  }
+}
+
+function fxdo(fxamtstr,localamtstr) {
+    if ( isEmpty(document.forms[0].elements[fxamtstr].value)) {
+        if (!isEmpty(document.forms[0].xrate.value)) document.forms[0].elements[localamtstr].value = "";
+    } else {
+        FXConvert(fxamtstr,localamtstr);
+    }
+}
+
+function fxCheck() {
+  with (document.forms[0]) {     
+   if ( CheckFGNAmount(recamt)
+      && (isEmpty(expense_1_recamt.value) || CheckFGNAmount(expense_1_recamt))
+      && (isEmpty(expense_2_recamt.value) || CheckFGNAmount(expense_2_recamt))
+      && (isEmpty(expense_3_recamt.value) || CheckFGNAmount(expense_3_recamt))
+      && (isEmpty(expense_4_recamt.value) || CheckFGNAmount(expense_4_recamt))
+      && (isEmpty(expense_5_recamt.value) || CheckFGNAmount(expense_5_recamt))
+      && (isEmpty(expense_6_recamt.value) || CheckFGNAmount(expense_6_recamt))
+      && (isEmpty(expense_7_recamt.value) || CheckFGNAmount(expense_7_recamt))
+      && (isEmpty(expense_8_recamt.value) || CheckFGNAmount(expense_8_recamt))
+      && (isEmpty(expense_9_recamt.value) || CheckFGNAmount(expense_9_recamt))
+      && (isEmpty(expense_10_recamt.value) || CheckFGNAmount(expense_10_recamt))){
+        return true;
+      } else {
+        return false;
+      }
+  }
+}
+
+function fxCleanUp() {
+        checkCurrency('recamt','amount');
+        checkCurrency('expense_1_recamt','expense_1_amount');
+        checkCurrency('expense_2_recamt','expense_2_amount');
+        checkCurrency('expense_3_recamt','expense_3_amount');
+        checkCurrency('expense_4_recamt','expense_4_amount');
+        checkCurrency('expense_5_recamt','expense_5_amount');
+        checkCurrency('expense_6_recamt','expense_6_amount');
+        checkCurrency('expense_7_recamt','expense_7_amount');
+        checkCurrency('expense_8_recamt','expense_8_amount');
+        checkCurrency('expense_9_recamt','expense_9_amount');
+        checkCurrency('expense_10_recamt','expense_10_amount');
+}
+
+function deptNameCheck() {
+  with (document.forms[0]) {
+    if (deptNotValid(expense_1_departname)) return false;
+    if (deptNotValid(expense_2_departname)) return false;
+    if (deptNotValid(expense_3_departname)) return false;
+    if (deptNotValid(expense_4_departname)) return false;
+    if (deptNotValid(expense_5_departname)) return false;
+    if (deptNotValid(expense_6_departname)) return false;
+    if (deptNotValid(expense_7_departname)) return false;
+    if (deptNotValid(expense_8_departname)) return false;
+    if (deptNotValid(expense_9_departname)) return false;
+    if (deptNotValid(expense_10_departname)) return false;
+  }
+  return true;
+}
+
+function deptNotValid(obj) {
+  if (obj.value == "Not Valid") {
+    alert("Invalid department number - please correct");
+    obj.focus()
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+function checkCurrency(x,y){
+        var z = isEmpty(document.forms[0].xrate.value)
+        setFgnProtected(z, x, y);
+        FXConvert(x, y, true);
+}
+
+function CheckTotals(formObj) {
+   formObj = document.forms[0];
+           var Amt = ChkTotal1(formObj.amount.value);
+           var exp1Amt = ChkTotal1(formObj.expense_1_amount.value);
+           var exp2Amt = ChkTotal1(formObj.expense_2_amount.value);
+           var exp3Amt = ChkTotal1(formObj.expense_3_amount.value);
+           var exp4Amt = ChkTotal1(formObj.expense_4_amount.value);
+           var exp5Amt = ChkTotal1(formObj.expense_5_amount.value);
+           var exp6Amt = ChkTotal1(formObj.expense_6_amount.value);
+           var exp7Amt = ChkTotal1(formObj.expense_7_amount.value);
+           var exp8Amt = ChkTotal1(formObj.expense_8_amount.value);
+           var exp9Amt = ChkTotal1(formObj.expense_9_amount.value);
+           var exp10Amt = ChkTotal1(formObj.expense_10_amount.value);
+
+           var expAmt = exp1Amt + exp2Amt + exp3Amt +exp4Amt + exp5Amt + exp6Amt +exp7Amt + exp8Amt + exp9Amt + exp10Amt;
+           if (Amt - expAmt < 0.005 && expAmt - Amt < 0.005) {
+                   return true;
+           } else {
+                   alert("Receipt is out of balance by " + (Amt - (exp1Amt + exp2Amt + exp3Amt)));
+                   return false;
+           }
+}
+
+function disTotals() {
+  with(document.forms[0]) {
+    var Amt = ChkTotal1(amount.value);
+    var exp1Amt = ChkTotal1(expense_1_amount.value);
+    var exp2Amt = ChkTotal1(expense_2_amount.value);
+    var exp3Amt = ChkTotal1(expense_3_amount.value);
+    var exp4Amt = ChkTotal1(expense_4_amount.value);
+    var exp5Amt = ChkTotal1(expense_5_amount.value);
+    var exp6Amt = ChkTotal1(expense_6_amount.value);
+    var exp7Amt = ChkTotal1(expense_7_amount.value);
+    var exp8Amt = ChkTotal1(expense_8_amount.value);
+    var exp9Amt = ChkTotal1(expense_9_amount.value);
+    var exp10Amt = ChkTotal1(expense_10_amount.value);
+    var expAmt = exp1Amt + exp2Amt + exp3Amt +exp4Amt + exp5Amt + exp6Amt +exp7Amt + exp8Amt + exp9Amt + exp10Amt;
+    var expDif = Amt - expAmt;
+    if (expDif < 0&&  expDif > -0.015) {
+      distribution.value = 0;
+      parent.contents.makeCurrency(distribution);
+      expense_1_amount.value = exp1Amt + expDif;
+      parent.contents.makeCurrency(expense_1_amount);
+    } else if (expDif < 0) {
+      alert("Warning - Total amount is being changed to reflect the\nsum of the individual expenses");
+      amount.value = expAmt;
+      parent.contents.makeCurrency(amount);
+      distribution.value = 0;
+      parent.contents.makeCurrency(distribution);
+    } else if (expDif > 0 &&  expDif < .015){
+      distribution.value = 0;
+      parent.contents.makeCurrency(distribution);
+      expense_1_amount.value = exp1Amt + expDif;
+      parent.contents.makeCurrency(expense_1_amount);
+    } else if (expDif > 0){
+      distribution.value = expDif;
+      parent.contents.makeCurrency(distribution);
+    } else {
+      distribution.value = 0;
+      parent.contents.makeCurrency(distribution);
+    }
+  }
+}
+
+function disFXTotals() {
+  with(document.forms[0]) {
+    var Amt = ChkTotal1(recamt.value);
+    var exp1Amt = ChkTotal1(expense_1_recamt.value);
+    var exp2Amt = ChkTotal1(expense_2_recamt.value);
+    var exp3Amt = ChkTotal1(expense_3_recamt.value);
+    var exp4Amt = ChkTotal1(expense_4_recamt.value);
+    var exp5Amt = ChkTotal1(expense_5_recamt.value);
+    var exp6Amt = ChkTotal1(expense_6_recamt.value);
+    var exp7Amt = ChkTotal1(expense_7_recamt.value);
+    var exp8Amt = ChkTotal1(expense_8_recamt.value);
+    var exp9Amt = ChkTotal1(expense_9_recamt.value);
+    var exp10Amt = ChkTotal1(expense_10_recamt.value);
+    var expAmt = exp1Amt + exp2Amt + exp3Amt +exp4Amt + exp5Amt + exp6Amt +exp7Amt + exp8Amt + exp9Amt + exp10Amt;
+    var expDif = Amt - expAmt;
+    if (expDif < 0&&  expDif > -0.015) {
+      FXdist.value = 0;
+      parent.contents.makeCurrency(FXdist);
+      expense_1_recamt.value = exp1Amt + expDif;
+      parent.contents.makeCurrency(expense_1_recamt);
+    } else if (expDif < 0) {
+      recamt.value = expAmt;
+      parent.contents.makeCurrency(recamt);
+      distribution.value = 0;
+      parent.contents.makeCurrency(FXdist);
+    } else if (expDif > 0 &&  expDif < .015){
+      FXdist.value = 0;
+      parent.contents.makeCurrency(FXdist);
+      expense_1_recamt.value = exp1Amt + expDif;
+      parent.contents.makeCurrency(expense_1_recamt);
+    } else if (expDif > 0){
+      FXdist.value = expDif;
+      parent.contents.makeCurrency(FXdist);
+    } else {
+      FXdist.value = 0;
+      parent.contents.makeCurrency(FXdist);
+    }
+  }
+}
+
+function ChkTotal1(v1) {
+  if (isNaN(v1) || v1 == "") {
+    return 0;
+  }else{
+    return Number(v1);
+  }
+}
+
+function ChkExtra1(o1,o2,o3,o4,o5) {
+  if (o1.value == "" || isNaN(o1.value) || o1 == 0) {
+    o1.value = "";
+    o2.selectedIndex = 0;
+    o3.selectedIndex = 0;
+    o4.value = "";
+    o5.value = "";
+    return false;
+  } else {
+    o5.value = document.forms[0].persplit.value;
+    return true;
+  }
+}
+
+function ChkExtra2(o1,o2) {
+  if (o1.selectedIndex == 0) {
+    o2.value = "";
+  }
+}
+
+function ChkFgnBalance(x) {
+  var flag = true;
+  if (document.forms[0].xrate.value != "") {
+    if (chkf1(document.forms[0].expense_1_recamt.value, document.forms[0].expense_1_amount.value)) flag = false;
+    if (chkf1(document.forms[0].expense_2_recamt.value, document.forms[0].expense_2_amount.value)) flag = false;
+    if (chkf1(document.forms[0].expense_3_recamt.value, document.forms[0].expense_3_amount.value)) flag = false;
+    if (chkf1(document.forms[0].expense_4_recamt.value, document.forms[0].expense_4_amount.value)) flag = false;
+    if (chkf1(document.forms[0].expense_5_recamt.value, document.forms[0].expense_5_amount.value)) flag = false;
+    if (chkf1(document.forms[0].expense_6_recamt.value, document.forms[0].expense_6_amount.value)) flag = false;
+    if (chkf1(document.forms[0].expense_7_recamt.value, document.forms[0].expense_7_amount.value)) flag = false;
+    if (chkf1(document.forms[0].expense_8_recamt.value, document.forms[0].expense_8_amount.value)) flag = false;
+    if (chkf1(document.forms[0].expense_9_recamt.value, document.forms[0].expense_9_amount.value)) flag = false;
+    if (chkf1(document.forms[0].expense_10_recamt.value, document.forms[0].expense_10_amount.value)) flag = false;
+  } 
+  if (!flag) {
+    alert("Cannot mix foreign and non-foreign transactions on this form");
+  }
+  return flag;
+}
+
+function chkf1(x,y) {
+  if (x == "" && y != "") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+function CheckAmount(tag) {
+  if (parent.contents.checkAmtFldOK(tag)) {
+    parent.contents.makeCurrency(tag);
+    disTotals();
+    if (document.forms[0].xrate.value != "") disFXTotals();
+    return true;
+  } else {
+    return false;
+  }
+
+}
+function CheckAttendee(tag,expense) {
+  var Check = tag.value;
+  var Xstr = parent.contents.getAttendeeReq();
+  if (Xstr.indexOf(";" + expense + ";") > -1 && Check.length < 3) {
+     alert("Need to supply attendee list for " + expense + " expense");
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function CheckComment(tag,expense) {
+  return CheckRequired(tag,expense,parent.contents.getCommentReq(),"Need to supply a comment in the comment field");
+}
+
+function CheckMerchant(tag,expense) {
+  return CheckRequired(tag,expense,parent.contents.getMerchantReq(),"Need to supply a merchant name in the merchant field");
+}
+
+function CheckRequired(tag,expense,validation, msgtext) {
+  var Check = "";
+  var n = false 
+  var CmtLen = parent.contents.getCommentLen();
+  expense = ";" + expense + ";";
+  if (validation.indexOf(expense) > -1) {
+    if (tag.type.indexOf("select") == 0) {
+      Check = tag.options[tag.selectedIndex].text;
+      if (Check.length > 2) n = true;     
+    } else { 
+      Check =  parent.contents.alltrim(tag.value);
+      if (Check.length >= CmtLen) n = true;
+    } 
+    if (!n) {
+      alert(msgtext);
+      tag.focus();
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+     return true;
+  }
+}
+
+function CheckDedicated(expObj, chgObj) {
+  var x = expObj.options[expObj.selectedIndex].text;
+  var y = chgObj.options[chgObj.selectedIndex].text;
+  var retVal = true;
+  var dedicated = parent.contents.getDBValue(parent.contents.getDedicatedMethod("1"), x);
+  if (dedicated != "" && y != dedicated) { 
+    retVal = false;
+    alert("Invalid payment method " + y + " for expense type " + x + ". Need to use " + dedicated + ".");
+  } else {
+    if (y != dedicated && parent.contents.getDBValue(parent.contents.getDedicatedMethod("1"), y,0,1) > "") {
+      retVal = false;
+      alert("Payment method " + y + " cannot be used for expense type " + x + ".");
+    }
+  }  
+  return retVal;
+}   
+
+function FillForm() {
+  if (parent.contents.HeadList.length > 0) {
+
+    document.forms[0].expense_1_amount.subtype = "nonzero";  //needed for Mozilla
+    document.forms[0].expense_2_amount.subtype = "nonzero";
+    document.forms[0].expense_3_amount.subtype = "nonzero";
+    document.forms[0].expense_4_amount.subtype = "nonzero";
+    document.forms[0].expense_5_amount.subtype = "nonzero";
+    document.forms[0].expense_6_amount.subtype = "nonzero";
+    document.forms[0].expense_7_amount.subtype = "nonzero";
+    document.forms[0].expense_8_amount.subtype = "nonzero";
+    document.forms[0].expense_9_amount.subtype = "nonzero";
+    document.forms[0].expense_10_amount.subtype = "nonzero";
+    document.forms[0].expense_1_recamt.subtype = "nonzero";
+    document.forms[0].expense_2_recamt.subtype = "nonzero";
+    document.forms[0].expense_3_recamt.subtype = "nonzero";
+    document.forms[0].expense_4_recamt.subtype = "nonzero";
+    document.forms[0].expense_5_recamt.subtype = "nonzero";
+    document.forms[0].expense_6_recamt.subtype = "nonzero";
+    document.forms[0].expense_7_recamt.subtype = "nonzero";
+    document.forms[0].expense_8_recamt.subtype = "nonzero";
+    document.forms[0].expense_9_recamt.subtype = "nonzero";
+    document.forms[0].expense_10_recamt.subtype = "nonzero";
+
+    //Gets a simple list found in personal.js
+    parent.contents.setList(document.forms[0].expense_1_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getExclude("split"));
+    parent.contents.setList(document.forms[0].expense_2_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getExclude("split"));
+    parent.contents.setList(document.forms[0].expense_3_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getExclude("split"));
+    parent.contents.setList(document.forms[0].expense_4_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getExclude("split"));
+    parent.contents.setList(document.forms[0].expense_5_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getExclude("split"));
+    parent.contents.setList(document.forms[0].expense_6_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getExclude("split"));
+    parent.contents.setList(document.forms[0].expense_7_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getExclude("split"));
+    parent.contents.setList(document.forms[0].expense_8_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getExclude("split"));
+    parent.contents.setList(document.forms[0].expense_9_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getExclude("split"));
+    parent.contents.setList(document.forms[0].expense_10_expensetype, parent.contents.getExpenseTypes(parent.Category),parent.contents.getExclude("split"));
+    document.forms[0].persplit.value = "1";
+    //Sets in the default for the merchants
+    MerchantType = "merchant"
+    var merchArray = parent.contents.getMerchants("1");
+    var mArray = merchArray.concat(parent.contents.getDBResult(parent.PersDBase,MerchantType));
+    parent.contents.setList(document.forms[0].merchant, mArray.sort());
+    FillDepartsEtAl();
+    document.forms[0].rcptdate.focus();
+  } else {
+    alert("You must specify a purpose first, then choose Split Receipt again.");
+    parent.contents.TransWindow(parent.contents.defaultHead + parent.contents.getPurposeHTML("head2"));
+  }
+}
+var departList = parent.contents.getDeparts("1");
+function FillDepartsEtAl() {
+    //Sets the payment types list
+    parent.contents.setList(document.forms[0].charge, parent.contents.getPaymentTypes("1"));
+    parent.contents.setListDefault(document.forms[0].charge, parent.contents.getChargeDef());
+    //Sets the purpose pulldown from the HeadList
+    parent.contents.setDefaultFromHead(document.forms[0].purpose);
+    //Sets the default dates
+    parent.contents.setRcptDefDate(document.forms[0].rcptdate,0);
+    document.forms[0].persplit.value = "1";
+    //Brings in any transaction information (note date above can be optimized against this later)
+    parent.contents.setTransaction(document.forms[0]);
+    if (parent.contents.isNew()) {  //changed 7/4/2002 
+      defCurrency();
+    } else {
+      setFgnProtected(isEmpty(document.forms[0].xrate.value));
+    }
+
+    fxCleanUp();
+    swFgnProtect();
+}
+
+function swFgnProtect() {
+    // 1st variable was false originally
+    setFgnProtected(isEmpty(document.forms[0].xrate.value), 'expense_1_recamt', 'expense_1_amount');
+    setFgnProtected(isEmpty(document.forms[0].xrate.value), 'expense_2_recamt', 'expense_2_amount');
+    setFgnProtected(isEmpty(document.forms[0].xrate.value), 'expense_3_recamt', 'expense_3_amount');
+    setFgnProtected(isEmpty(document.forms[0].xrate.value), 'expense_4_recamt', 'expense_4_amount');
+    setFgnProtected(isEmpty(document.forms[0].xrate.value), 'expense_5_recamt', 'expense_5_amount');
+    setFgnProtected(isEmpty(document.forms[0].xrate.value), 'expense_6_recamt', 'expense_6_amount');
+    setFgnProtected(isEmpty(document.forms[0].xrate.value), 'expense_7_recamt', 'expense_7_amount');
+    setFgnProtected(isEmpty(document.forms[0].xrate.value), 'expense_8_recamt', 'expense_8_amount');
+    setFgnProtected(isEmpty(document.forms[0].xrate.value), 'expense_9_recamt', 'expense_9_amount');
+    setFgnProtected(isEmpty(document.forms[0].xrate.value), 'expense_10_recamt', 'expense_10_amount');
+}
+
+function departMapping(obj1, obj2) {
+  if (obj1.value <= "    ") {
+    obj1.value = "";
+    obj2.value = "";
+  } else {
+    var DepartName = parent.contents.getDBString(departList,obj1.value,"Not Valid");
+    obj2.value = DepartName;
+  }
+}
+
+function initSplitAttendeeList(xList,ySplit) {
+  var checkList = parent.contents.getAttendeeReq();  
+  var zXType = RepresentativeType(checkList)
+  initAttendeeList(xList, ySplit, zXType);
+}
+
+function RepresentativeType(RequireList) {
+ with (document.forms[0]) {
+  var zXType = expense_1_expensetype;
+  zXType = ifFoundInList(RequireList,expense_2_expensetype,zXType);
+  zXType = ifFoundInList(RequireList,expense_3_expensetype,zXType);
+  zXType = ifFoundInList(RequireList,expense_4_expensetype,zXType);
+  zXType = ifFoundInList(RequireList,expense_5_expensetype,zXType);
+  zXType = ifFoundInList(RequireList,expense_6_expensetype,zXType);
+  zXType = ifFoundInList(RequireList,expense_7_expensetype,zXType);
+  zXType = ifFoundInList(RequireList,expense_8_expensetype,zXType);
+  zXType = ifFoundInList(RequireList,expense_9_expensetype,zXType);
+  zXType = ifFoundInList(RequireList,expense_10_expensetype,zXType);
+ }
+ return zXType;
+}
+
+function ifFoundInList(Xstr,xExpenseType,xDefault) {
+  var Xsearch = ";" + xExpenseType.options[xExpenseType.selectedIndex].text + ";";
+  var retExpenseType = xDefault;
+  if (Xstr.indexOf(Xsearch) > -1) retExpenseType = xExpenseType;
+  return retExpenseType;
+}
+
+
+</script>
+
+</html>
