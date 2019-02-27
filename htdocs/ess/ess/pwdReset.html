@@ -1,0 +1,134 @@
+<!--
+pwdReset.html - password reset by support
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Password Reset Screen</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginheight="0" marginwidth="0" link="#000000" vlink="#000000" alink="#FFFFA4">
+<strong>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" height="104">
+  <tr>
+    <td width="10%"><table border="0" cellpadding="0" cellspacing="0" width="100%" height="12">
+      <tr>
+        <td height="62" valign="middle" align="left">&nbsp;<img src="../images/Login.gif" alt="Expenseservices.com" HEIGHT="80%"></td>
+      </tr>
+    </table>
+    </td>
+    <td width="90%"><table border="0" cellpadding="0" cellspacing="0" width="100%" height="12">
+      <tr>
+        <td height="62"></td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td width="100%" height="1" align="center"><p align="center"><em><big><big>Password Change
+    Screen</big></big></em></td>
+  </tr>
+  <tr>
+    <td width="100%" height="13"></td>
+  </tr>
+  <tr>
+    <td><table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#FFFFFF">
+      <tr>
+        <td width="30%"><table border="0" cellpadding="0" cellspacing="0" width="71%" height="12">
+          <tr>
+            <td width="27%" height="1"></td>
+            <td width="68%" height="1"></td>
+            <td width="5%" height="1"></td>
+          </tr>
+          <tr>
+            <td width="27%" height="21"></td>
+            <td width="68%" height="21"><big>First enter your email address and password. Then enter
+            the email address of the person who needs their password reset and a new password.</big></td>
+            <td width="5%" height="21"></td>
+          </tr>
+          <tr>
+            <td width="27%" height="21"></td>
+            <td width="68%" height="21"></td>
+            <td width="5%" height="21"></td>
+          </tr>
+        </table>
+        </td>
+        <td width="70%"><form method="POST" action="http://127.0.0.1:8101/ess-app/ResetPassword.jsp">
+          <input type="hidden" name="company" value="f1"><input type="hidden" name="database" value="jdbc:odbc:f1"><table border="0" cellpadding="0" cellspacing="0" width="100%" height="39" class="offsetColor">
+            <tr>
+              <td width="33%" height="26"><font color="#000000">Your email:&nbsp; </font></td>
+              <td width="67%" height="26"><input type="text" name="email" size="25"></td>
+            </tr>
+            <tr>
+              <td width="33%" height="26"><font color="#000000">Your Password:</font></td>
+              <td width="67%" height="26"><input type="password" name="password" size="13"></td>
+            </tr>
+            <tr align="center">
+              <td width="33%" height="13"><div align="left"></div></td>
+              <td width="67%" height="13"><div align="left"></div></td>
+            </tr>
+            <tr>
+              <td width="33%" height="13"><font color="#000000">Reset email:&nbsp; </font></td>
+              <td width="67%" height="13"><input type="text" name="resetUser" size="25"></td>
+            </tr>
+            <tr>
+              <td width="33%" height="13"><font color="#000000">Reset Password:</font></td>
+              <td width="67%" height="13"><input type="text" name="resetPassword" size="13" value=""></td>
+            </tr>
+          </table>
+          <div align="center"><center><p><input type="button" value="Reset password" name=" " tabindex="15" onClick="Javascript: void submitRec()"></p>
+          </center></div>
+        </form>
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+</strong>
+
+<script language="Javascript" src="../ESSProfile.js">
+</script>
+
+<script LANGUAGE="JavaScript" SRC="../trim.js"></script>
+
+<script langauge="JavaScript">
+
+function submitRec() {
+  with (document.forms[0]) {
+
+    if (resetPassword.value.length < 5) {
+      alert("New password must be at least 5 characters long");
+      newPwd1.focus;
+      return;
+    }
+    document.forms[0].database.value = getDatabase();
+    document.forms[0].action = getAppServer() + "/" + getAppFolder() + "/" + "ChangePwd.jsp";
+    submit();
+  }
+}
+
+</script>
+
+
+<p align="right"><a href="Login.html"><em><strong>Goto login screen</strong></em></a></p>
+</body>
+</html>

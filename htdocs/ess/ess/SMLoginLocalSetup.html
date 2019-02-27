@@ -1,0 +1,49 @@
+<!--
+LoginLocalSetup.html - Login for disconnected system
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+
+<html>
+<head>
+<title>SM Login Setup screen</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body bgcolor="#FFFFFF" onLoad="formInit()">
+
+
+<p><div class="ExpenseTag"><strong>Downloading your user information from the central system...
+</strong></div>
+</p>
+
+<form method="POST" action="SMReloginLocal.jsp">
+  <input type="hidden" name="company" value="ess">
+  <input type="hidden" name="database" value="jdbc:odbc:adisoft">
+  <input type="hidden" name="profiledate" value="">
+  <input type="hidden" name="lessscreen" value="no">
+</form>
+<!--- site specific lists, generated from tables --->
+<script language="Javascript" src="../ESSProfile.js">
+</script>
+<script language="javascript">
+function formInit() {
+  document.forms[0].action = getAppServer() + "/" + getAppFolder() + "/" + "SMReloginLocal.jsp";
+  document.forms[0].database.value = getDatabase();
+  document.forms[0].company.value = "k1"; //omit??
+  document.forms[0].submit();
+}
+</script> 
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!--
+banner.html - top frame 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Banner</title>
+<base target="main">
+<style type="text/css">
+a { TEXT-DECORATION: none; }
+</style>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body bgcolor="#FFFFFF" text="#000000" link="#000000" vlink="#000000" alink="#000000" onLoad="loadImageAJAX(); init(); ">
+
+<table border="0" cellspacing="0" width="100%" cellpadding="0">
+
+  <tr>
+    <td width="240" valign="top" align="center"><span id="bannerLogo" class="ESSName">eClaim System</span></td>
+  </tr>
+</table>
+</body>
+<script language="javascript">
+
+function init() {
+	setTimeout('initForm()', 200);
+ }
+
+function initForm() {
+    if (parent.contents.getJSX) {
+	document.getElementById("logout").innerHTML = parent.contents.getJSX("logout");
+    } else {
+        init();
+    }
+ }
+  
+function Memory() {
+  if (parent.contents.getAuditEdit()) {
+    var LReport = parent.contents.getNameValue(parent.PersDBase,"last_report");
+    if (LReport != null && LReport != "") {
+       var Xecute = "";
+       if (parent.contents.DirectEdit) {
+          Xecute = parent.contents.PersGetCreate(parent.contents.defaultApps + "AuditReport.jsp?voucher=" + LReport + "&reference=" + parent.contents.getNameValue(parent.Header,"persnum"));
+       } else {
+          Xecute = parent.contents.PersGetCreate(parent.contents.defaultApps + "HistoryReport.jsp?voucher=" + LReport + "&reference=" + parent.contents.getNameValue(parent.Header,"persnum"));
+       }   
+       parent.contents.TransWindow(Xecute); 
+    } else {
+      alert("Currently there is no report active!");
+    }
+  } else {
+    parent.contents.ListMemory();
+  }
+}
+
+var httpXMLObj;
+
+function loadImageAJAX() {
+  httpXMLObj = GetXmlHttpObject();
+  getInfo(httpXMLObj, parent.appServer + "/" + parent.appFolder + "/GetLogo.jsp", stateChanged, true);
+}
+
+function stateChanged() {
+  var x = httpXMLObj.readyState;
+  // alert("State change: " + x);
+  if ( x == 4 )
+  { 
+       var newLogo = httpXMLObj.responseText;
+       document.getElementById("bannerLogo").innerHTML = newLogo;
+  }
+}
+
+// AJAX functions for communicating with the server 1/29/2008
+// xmlHttp -> HTTP Request Object, define globally in calling object/script (i.e., var xmlHttp;)
+// url -> url to execute (i.e., var url="/ess-app/AJAXTest.jsp";)
+// stateChanged -> name of routine to run
+// aSync -> true runs asynchronously (i.e., parallel), false run serially
+function getInfo(xmlHttp, url, stateChanged, aSync)
+{
+  if (aSync == null) aSync = true;
+  // xmlHttp=GetXmlHttpObject();
+  if (xmlHttp==null)
+  {
+    alert ("Your browser does not support AJAX!");
+    return;
+  } 
+  xmlHttp.onreadystatechange=stateChanged;
+  xmlHttp.open("GET",url,aSync);
+  xmlHttp.send(null);
+} 
+
+// Example - need to check for the readyState == 4
+//function stateChanged() {
+//  if (xmlHttp.readyState==4)
+//  { 
+//     document.forms[0].Test.value = xmlHttp.responseText;
+//  }
+
+function GetXmlHttpObject()
+{
+  var xmlHttp=null;
+  try
+  {
+  // Firefox, Opera 8.0+, Safari
+    xmlHttp=new XMLHttpRequest();
+  }
+  catch (e)
+  {
+  // Internet Explorer
+  try
+    {
+      xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+    }
+    catch (e)
+    {
+      xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+  }
+return xmlHttp;
+}
+
+
+</script>
+</html>

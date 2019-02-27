@@ -1,0 +1,122 @@
+<!--
+backroom8.html - audit menu - supervisor
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Backroom</title>
+<base target="main">
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body>
+<script>
+
+var defaultHome = parent.webServer + "/" + parent.webFolder + "/";
+var defaultHead = parent.webServer + "/" + parent.webFolder + "/ess/";
+var defaultTrans = parent.webServer + "/" + parent.webFolder + "/aa/";  
+var defaultApps = parent.appServer + "/" + parent.appFolder + "/";
+
+var DirectEdit = true;
+
+</script>
+         <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="25" height="28" valign="top"></td>
+                <td width="140" height="28" class="MenuLink" valign="top"><script>document.write("Hello " + parent.Header[1][1] + "<br>")</script>
+                  </td>
+              </tr>
+
+
+              <tr> 
+                <td height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td height="14" valign="top" class="MenuLink">User File:</td>
+              </tr>
+              <tr> 
+                <td height="28" valign="top">&nbsp;</td>
+                <td height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/userprimary.html')">User&nbsp;Primary</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/userbankinfo.html')">User&nbsp;ACH&nbsp;Info</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/userfleetinfo.html')">User&nbsp;Fleet&nbsp;Info</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/userother.html')">User&nbsp;Misc&nbsp;Info</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/userNew.html')">Create&nbsp;A&nbsp;New&nbsp;User</a></td>
+                    </tr>
+                    <tr> 
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table></td>
+              </tr>
+              
+              <tr> 
+                <td height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td height="14" valign="top" class="MenuLink">System Admin:</td>
+              </tr>
+              <tr> 
+                <td height="28" valign="top">&nbsp;</td>
+                <td height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWindow(parent.contents.defaultApps + 'LogView.jsp')">Current&nbsp;Usage</a></td>
+                    </tr>
+                    <tr>
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + '/documentation/index.html')">Documentation</a></td>
+                    </tr>
+                  </table></td>
+              </tr>
+             
+            </table>
+<form name="Userdata">
+  <input type="hidden" class="userData" style="behavior:url(#default#userdata)" id="ReportData" name="ReportData">
+</form>
+
+<script>
+function runPurgeFromMenu()
+{
+   if (confirm("This option will permanently delete reports that users have removed from their register file.  Continue?"))
+   {
+      parent.contents.PersWindow(parent.contents.defaultApps + 'PurgeLaunch.jsp');
+   }  
+}
+</script>
+<!--- Common script code for all sites --->
+<script language="JavaScript" src="../shared1.js">
+</script>
+<script language="JavaScript" src="../shared2.js">
+</script>
+<!--- site specific lists, generated from tables --->
+<script language="Javascript" src="/ess-app/ajax/AuditProfile.jsp">
+</script>
+<script language="Javascript" id="companyScript" src="/ess-app/ajax/Company.jsp">
+</script>
+    <script language="Javascript" src="/ess-app/ajax/JSXlation.jsp">
+    </script>
+</body>
+</html>

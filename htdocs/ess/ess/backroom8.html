@@ -1,0 +1,429 @@
+<!--
+backroom8.html - audit menu - supervisor
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Backroom</title>
+<base target="main">
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body>
+<script>
+
+var defaultHome = parent.webServer + "/" + parent.webFolder + "/";
+var defaultHead = parent.webServer + "/" + parent.webFolder + "/ess/";
+var defaultTrans = parent.webServer + "/" + parent.webFolder + "/aa/";  
+var defaultApps = parent.appServer + "/" + parent.appFolder + "/";
+
+var DirectEdit = true;
+
+</script>
+         <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="25" height="28" valign="top"></td>
+                <td width="140" height="28" class="MenuLink" valign="top"><script>document.write("Hello " + parent.Header[1][1] + "<br>")</script>
+                  </td>
+              </tr>
+             <tr> 
+                <td height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td height="14" valign="top" class="MenuLink">Approver:</td>
+              </tr>
+                <td height="28" valign="top">&nbsp;</td>
+                <td height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.PersWithDBase(parent.contents.defaultApps + 'AuditList.jsp?downlevel=','approvallevel','1')">Verify&nbsp;and&nbsp;Approve</a></td>
+                    </tr>
+<!--
+                    <tr> 
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.PersWithDBase(parent.contents.defaultApps + 'AuditListFastTrack.jsp?downlevel=','approvallevel','1')">Fast&nbsp;Track</a></td>
+                    </tr>
+					<tr>
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'reportAuditDisplay.html')">Report&nbsp;Selection</a></td>
+                    </tr>
+                    <tr> 
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.PersWindow(parent.contents.defaultApps + 'receipts/UploadSelectAudit.jsp')">Attach&nbsp;Receipts</a></td>
+                    </tr>
+-->
+                    <tr> 
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table></td>
+              </tr>
+
+             <tr> 
+                <td height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td height="14" valign="top" class="MenuLink">Finance:</td>
+              </tr>
+              <tr> 
+                <td height="28" valign="top">&nbsp;</td>
+                <td height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWithDBase(parent.contents.defaultApps + 'ReleaseList.jsp?downlevel=','approvallevel','1')">Release&nbsp;for&nbsp;Payment</a></td>
+                    </tr>
+<!--                    
+					<tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWithDBase(parent.contents.defaultApps + 'eod/EODList.jsp?downlevel=','approvallevel','1')">EOD&nbsp;Feed&nbsp;Creation</a></td>
+                    </tr>
+-->
+                    <tr> 
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.PersWindow(parent.contents.defaultApps + 'MessageList.jsp')">Payment&nbsp;Messages</a></td>
+                    </tr>
+<!--
+                    <tr> 
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.PersWindow(parent.contents.defaultApps + 'DelinquentList.jsp')">Follow-up&nbsp;Notifications</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWithDBase(parent.contents.defaultApps + 'nacha/PrenoteList.jsp?downlevel=','approvallevel','1')">Prenote&nbsp;Users</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWithDBase(parent.contents.defaultApps + 'nacha/StatusList.jsp?downlevel=','approvallevel','1')">OK&nbsp;Prenoting</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWithDBase(parent.contents.defaultApps + 'eod/EODReport.jsp?downlevel=','approvallevel','1')">Latest&nbsp;EOD&nbsp;Journal</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWithDBase(parent.contents.defaultApps + 'eod/PaymentReport.jsp?downlevel=','approvallevel','1')">Latest&nbsp;Payments</a></td>
+                    </tr>
+-->
+                    <tr> 
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr> 
+                <td width="25" height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td width="140" height="14" class="MenuLink" valign="top">Finance Tools:</td>
+              </tr>
+              <tr> 
+                <td width="25" height="28" valign="top">&nbsp;</td>
+                <td width="140" height="28" valign="top"> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'reportAuditDisplay.html')">Reports&nbsp;Enquiry</a></td>
+                    </tr>
+                    <tr>
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultApps + 'SimpleReports.jsp')">Reports&nbsp;Summary</a></td>
+                    </tr>
+<!--
+                    <tr>
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'reportSQL.html')">SQL&nbsp;Selection</a></td>
+                    </tr>
+-->
+                    <tr> 
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table></td>
+              </tr>
+
+<!--
+              <tr> 
+                <td height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td height="14" valign="top" class="MenuLink">Misc:</td>
+              </tr>
+              
+              <tr> 
+                <td height="28" valign="top">&nbsp;</td>
+                <td height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.helpWindow('hmenuAudit.html')">Menu Contents</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'editother.html')">Manage&nbsp;Personal&nbsp;Data</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.Logout()">Logout</a></td>
+                    </tr>
+                    <tr> 
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table></td>
+              </tr>
+
+              <tr> 
+                <td height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td height="14" valign="top" class="MenuLink">User File:</td>
+              </tr>
+              <tr> 
+                <td height="28" valign="top">&nbsp;</td>
+                <td height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/userprimary.html')">User&nbsp;Primary</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/userbankinfo.html')">User&nbsp;ACH&nbsp;Info</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/usernewcardinfo.html')">User&nbsp;Card&nbsp;Info</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/userfleetinfo.html')">User&nbsp;Fleet&nbsp;Info</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/userother.html')">User&nbsp;Misc&nbsp;Info</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/userNew.html')">Create&nbsp;A&nbsp;New&nbsp;User</a></td>
+                    </tr>
+                    <tr> 
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table></td>
+              </tr>
+              
+
+              <tr> 
+                <td height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td height="14" valign="top" class="MenuLink">Effective Rates:</td>
+              </tr>
+              <tr> 
+                <td height="28" valign="top">&nbsp;</td>
+                <td height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/mileage.html')">Mileage Rates</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/fx.html')">Exchange Rates</a></td>
+                    </tr>
+                    <tr> 
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table></td>
+              </tr>
+-->
+<!--
+              <tr> 
+                <td height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td height="14" valign="top" class="MenuLink">File Editors:</td>
+              </tr>
+              <tr> 
+                <td height="28" valign="top">&nbsp;</td>
+                <td height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/reportheaderinfo.html')">Reports</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/register.html')">Register&nbsp;Entries</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/receiptscan.html')">Receipt&nbsp;Management</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/address.html')">Scan&nbsp;Addresses</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/client.html')">Clients</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/department.html')">Departments</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/expenseType.html')">Expense&nbsp;Types</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/paymentType.html')">Payments</a></td>
+                    </tr>
+
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/project.html')">Projects</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/merchant.html')">Merchants</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/company.html')">Company&nbsp;Codes</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/city.html')">Locations/Cities</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/guideline.html')">Guidelines</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/state.html')">State Table</a></td>
+                    </tr>
+                   <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/currency.html')">Currency Table</a></td>
+                    </tr>
+                   <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/synonym.html')">Mobile Synonyms</a></td>
+                    </tr>
+                    <tr> 
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr> 
+                <td height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td height="14" valign="top" class="MenuLink">Pre-populated Items:</td>
+              </tr>
+              <tr> 
+                <td height="28" valign="top">&nbsp;</td>
+                <td height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'prepopulatedDisplay.html')">Database Access</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/prepopulated.html')">Add New Item</a></td>
+                    </tr>
+                    <tr> 
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultApps + 'prepopulated/Reconcilement.jsp')">Reconcilement</a></td>
+                    </tr>
+                    <tr> 
+                      <td valign="top"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink"  href="javascript: void parent.contents.TransWindow(parent.contents.PersGetCreate(parent.contents.defaultApps + 'prepopulated/ImportSelect.jsp'))">Import&nbsp;a&nbsp;File</a></td>
+                    </tr>
+                    <tr> 
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.PersWindow(parent.contents.defaultApps + 'prepopulated/ItemNotificationList.jsp')">Open&nbsp;Item&nbsp;Notification</a></td>
+                    </tr>
+                    <tr> 
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table></td>
+              </tr>
+-->
+<!--
+              <tr> 
+                <td height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td height="14" valign="top" class="MenuLink">System Admin:</td>
+              </tr>
+              <tr> 
+                <td height="28" valign="top">&nbsp;</td>
+                <td height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+-->
+                  <!--  <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'ShutdownMessage.html')">Shutdown Message</a></td>
+                    </tr> -->
+<!--
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWindow(parent.contents.defaultApps + 'eod/EODReset.jsp')">EOD&nbsp;Reset</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWindow(parent.contents.defaultApps + 'LogView.jsp')">Current&nbsp;Usage</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWindow(parent.contents.defaultApps + 'LogSetDetail.jsp')">Toggle&nbsp;Log&nbsp;Detail</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWindow(parent.contents.defaultApps + 'diagnostic.jsp')">Diagnostic</a></td>
+                    </tr>
+                    <tr>
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + '/documentation/index.html')">Documentation</a></td>
+                    </tr>
+                    <tr>
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.webServer + '/reports')">Reports&nbsp;Directoy</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void runPurgeFromMenu()">Register&nbsp;Purge</a></td>
+                    </tr>
+                    <tr> 
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table></td>
+              </tr>
+ -->
+            
+            </table>
+<form name="Userdata">
+  <input type="hidden" class="userData" style="behavior:url(#default#userdata)" id="ReportData" name="ReportData">
+</form>
+
+<script>
+function runPurgeFromMenu()
+{
+   if (confirm("This option will permanently delete reports that users have removed from their register file.  Continue?"))
+   {
+      parent.contents.PersWindow(parent.contents.defaultApps + 'PurgeLaunch.jsp');
+   }  
+}
+</script>
+<!--- Common script code for all sites --->
+<script language="JavaScript" src="../shared1.js">
+</script>
+<script language="JavaScript" src="../shared2.js">
+</script>
+<!--- site specific lists, generated from tables --->
+<script language="Javascript" src="/ess-app/ajax/AuditProfile.jsp">
+</script>
+<script language="Javascript" id="companyScript" src="/ess-app/ajax/Company.jsp">
+</script>
+    <script language="Javascript" src="/ess-app/ajax/JSXlation.jsp">
+    </script>
+</body>
+</html>

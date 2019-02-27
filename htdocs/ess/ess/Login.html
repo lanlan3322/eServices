@@ -1,0 +1,100 @@
+<!--
+Login.html - Reporter login screen
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Login</title>
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="stylesheet" href="../expense.css" type="text/css">
+</head>
+
+<body onLoad="init()">
+
+<table border="0" cellpadding="0" width="100%" style="border: 2px solid rgb(0,128,128)">
+  <tr>
+    <td width="21%"><p align="center"><img src="../images/Login.gif" width="105" height="106"
+    alt></td>
+    <td width="79%"><p align="left"><strong><em>Welcome<br>
+    <br>
+    <big></big></em></strong></td>
+  </tr>
+  <tr>
+    <td width="21%"></td>
+    <td width="79%"><table border="0" cellpadding="0" width="100%">
+      <tr>
+        <td width="72%" style="margin-left: 6px; margin-right: 6px"><p align="center"><em><strong>The
+        This will let you create an expense report from your
+        travel/expense receipts and submit the report for approval and payment. If you are a
+        manager, it will also let you review and approve reports. You'll receive email messages on
+        your report status or you can check the status online. You will also be emailed if any
+        reports require your attention. </strong></em></td>
+        <td width="28%" style="border: 2px solid rgb(0,128,128)" bordercolor="#008080"
+        bgcolor="#C0C0C0">&nbsp;<form method="POST" action="Login.jsp">
+          <input type="hidden" name="company" value="ess"><input type="hidden" name="database" value><div
+          class="ExpenseTag" align="center"><p>Enter Login Info</p>
+          </div><div align="center"><center><p><small><strong>E-mail Address</strong></small></p>
+          </center></div><div align="center"><center><p><strong>&nbsp;</strong><input type="text"
+          name="email" size="20"></p>
+          </center></div><div align="center"><center><p><strong><small>Password</small></strong></p>
+          </center></div><div align="center"><center><p><input type="password" name="password"
+          size="14"></p>
+          </center></div><div align="center"><center><p><input type="submit" value="Enter ESS"
+          name="B1"></p>
+          </center></div>
+        </form>
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+
+<p align="left">&nbsp;</p>
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+<!---
+<p align="center"><small><strong><em>Expense
+Submittal System</em> is a trademark of <em>R. James Holton</em></strong></small> <br>
+</p>
+ site specific lists, generated from tables --->
+<script>
+function init() {
+  document.forms[0].action = "/ess-app/" + "Login.jsp";
+  document.forms[0].email.focus();
+}
+</script>
+
+</body>
+</html>

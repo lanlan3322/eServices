@@ -1,0 +1,179 @@
+<!--
+helpRequestWithForm.html - Help request with submission form
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Help Request Page</title>
+<link rel="stylesheet" href="../expense.css" type="text/css">
+</head>
+
+<body onLoad="StartUp()">
+
+<h1>Getting Started:</h1>
+
+<ol>
+  <li>ESS has several different menus available.&nbsp; Your options may be slightly different
+    from those described here.</li>
+  <li>Use the options under &quot;Create A Report&quot; to create your report.</li>
+  <li>First enter a purpose with &quot;Click Here to Start&quot;.</li>
+  <li>Then add your expense receipts with one of the various &quot;Add...&quot; options.</li>
+  <li>After you've added all your receipts, use &quot;Submit for Approval&quot; to submit
+    for payment.</li>
+  <li>Under &quot;Other Tasks&quot;, the &quot;Approve Reports&quot; options lets managers
+    approve subordinates work.</li>
+</ol>
+
+<h1>Need Help?: </h1>
+
+<p>Take a look at the tips in the &quot;Technical Troubleshooting&quot; section below the
+following form.&nbsp; If you still need help, fill out the form and submit it.&nbsp; The
+support group will be in contact with you shortly.</p>
+
+<form method="POST" action="SubmitFormN.jsp">
+  <input type="hidden" name="appName" value><input type="hidden" name="appVersion" value><input
+  type="hidden" name="userAgent" value><input type="hidden" name="platform" value><input
+  type="hidden" name="cookieEnabled" value><input type="hidden" name="rcpt2" value><table
+  border="4" cellpadding="0" width="69%" class="offsetColor" cellspacing="0">
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" class="offsetColor"
+      style="border: medium none rgb(255,255,0)">&nbsp;</td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong><big>Help
+      / Support Request</big></strong></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" class="offsetColor"
+      style="border: medium none rgb(255,255,0)">&nbsp;</td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" class="offsetColor"
+      style="border: medium none rgb(255,255,0)"><strong><font color="#808080">Date:</font></strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input
+      type="text" name="FormDate" size="30" readOnly="yes"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" class="offsetColor"
+      style="border: medium none rgb(255,255,0)"><strong>Name: </strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input
+      type="text" name="Name" size="38"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong>Department/Location:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input
+      type="text" name="Company" size="38"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong>Phone:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input
+      type="text" name="Phone" size="20"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong>Email
+      Address:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input
+      type="text" name="Email" size="38"></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><strong>Problem/Issue/Comment:</strong></td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><textarea
+      rows="4" name="Text" cols="62"></textarea></td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="22%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)">&nbsp;</td>
+      <td width="78%" bordercolor="#FFFFFF" style="border: medium none rgb(255,255,0)"><input
+      type="submit" value="Submit" name="Submit"></td>
+    </tr>
+  </table>
+  <div align="left"><p>&nbsp;</p>
+  </div>
+</form>
+
+<h1>Technical Troubleshooting</h1>
+
+<p class="BodyCopy">The following bullet points describe some of the more technical
+features and requirements of the Expense Submittal System.&nbsp; If you're experiencing
+problems, they may help you out. 
+
+<ul>
+  <li class="TableData"><p class="BodyCopy">Ensure that your browser has Javascript enabled.</p>
+  </li>
+  <li class="TableData"><p class="BodyCopy">To use the safety recovery feature, you need to
+    have cookies enabled.</p>
+  </li>
+  <li class="TableData"><p class="BodyCopy">To recover a report that you had previously been
+    working on, click <a
+    href="javascript: void parent.contents.GetLocal(); parent.contents.ListMemory()">Recovery</a>.</p>
+  </li>
+  <li class="TableData"><p class="BodyCopy">To manually save your report to a cookie, click <a
+    href="javascript: void parent.contents.SetLocal(); parent.contents.ListMemory()">Save</a>.</p>
+  </li>
+  <li class="TableData"><p class="BodyCopy">To test your communications link, click <a
+    href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'submitXMLTest.html')">Test
+    Link/XML</a>.&nbsp;&nbsp; An XML version of your report will be displayed if the link and
+    application processor is functioning.&nbsp; If your browser is not XML enabled, it will
+    ask you if you want to run or save the application. &nbsp; You can click cancel.</p>
+  </li>
+  <li class="TableData" class="TableData"><p class="BodyCopy">If your require technical
+    assistance, you may be asked to use the links at the bottom of this page.</p>
+  </li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p align="center"><a class="ExpenseLink"
+href="javascript: void parent.contents.SetLocal(); parent.contents.ListMemory()">Save</a>
+&nbsp;&nbsp;&nbsp; <a class="ExpenseLink"
+href="javascript: void parent.contents.GetLocal(); parent.contents.ListMemory()">Recovery</a>
+&nbsp;&nbsp;&nbsp; <a class="ExpenseLink"
+href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'submitXMLTest.html')">Test
+Link/XML</a> &nbsp;&nbsp;&nbsp; <a class="ExpenseLink"
+href="javascript: void parent.contents.PrintPersXML(parent.PersDBase)">View Personal Data</a>
+&nbsp;&nbsp;&nbsp; </p>
+
+<p align="center"><a class="ExpenseLink"
+href="javascript: void parent.contents.PrintPersXML(parent.WorkDBase)">View Work Data</a>
+&nbsp;&nbsp;&nbsp; <a class="ExpenseLink"
+href="javascript: void parent.contents.PrintXML()">View Local Report</a>&nbsp;&nbsp; <a
+class="ExpenseLink" href="../editother.html">Manage Personal Data</a></p>
+
+<p align="center">******</p>
+<script language="JavaScript">
+function StartUp() {
+  var today = new Date();
+  document.forms[0].FormDate.value = today.toString();
+  document.forms[0].appName.value = navigator.appName;
+  document.forms[0].appVersion.value = navigator.appVersion;
+  document.forms[0].userAgent.value = navigator.userAgent;
+  document.forms[0].platform.value = navigator.platform;
+  if (document.forms[0].cookieEnabled) {
+    document.forms[0].cookieEnabled.value = "true";
+  } else {
+    document.forms[0].cookieEnabled.value = "false";
+  }
+  document.forms[0].rcpt2.value = "service" + "@";
+  document.forms[0].rcpt2.value += "expenseservices.com";
+  document.forms[0].action = parent.contents.defaultApps + "SubmitFormN.jsp";
+}
+</script>
+
+</body>
+</html>

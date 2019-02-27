@@ -1,0 +1,192 @@
+<!--
+head1b.html - header with linakge to database
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Report Header Information</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void loadValues()">
+<big><big>
+
+<p><h1>Report Header Information</h1></p>
+
+<form onReset="return HandleReset()"> 
+  <input type="hidden" name="company" value>
+  <input type="hidden" name="currency" value>
+  <table border="0" width="100%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="1" cellpadding="0">
+    <tr>
+      <td width="25%" class="offsetColor"><div class="ExpenseTag">Personnel Number:</div></td>
+      <td width="75%" class="offsetColor"><input type="text" name="persnum" size="12" class="ProtectedField" readOnly=true>
+      </td>
+    </tr>
+    <tr>
+      <td width="25%"><div class="ExpenseTag">Name:</div></td>
+      <td width="75%"><input type="text" name="name" size="26" class="ProtectedField" readOnly=true></td>
+    </tr>
+    <tr>
+      <td width="25%" class="offsetColor"><div class="ExpenseTag">Phone:</div></td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor"><input type="text" name="phone" size="17"></td>
+    </tr>
+    <tr>
+      <td width="25%"><div class="ExpenseTag">Location:</div></td>
+      <td width="75%"><input type="text" name="location" size="20" class="ProtectedField" readOnly=true></td>
+    </tr>
+    <tr>
+      <td width="25%" class="offsetColor"><div class="ExpenseTag">Department:</div></td>
+      <td width="75%" class="offsetColor"><input type="text" name="depart" size="20" class="ProtectedField" readOnly="true">
+      <a class="ExpenseLink" href="javascript:doNothing()"
+          onClick="setDepartObj(document.forms[0].depart,document.forms[0].departname,'CompanyDepartSelect',400,300);MerchantType = 'depart'"><sm><em>Lookup!</em></sm></a>
+      &nbsp;&nbsp;<input type="text" name="departname" size="24" tabindex="-1" class="ProtectedField" readOnly="true">
+      </td>
+    </tr>
+    <tr>
+      <td width="25%"><div class="ExpenseTag">Report Date:</div></td>
+      <td width="75%"><input type="text" name="credate" size="16" class="ProtectedField" readOnly=true></td>
+    </tr>
+    <tr>
+      <td width="25%" class="offsetColor"><div class="ExpenseTag">Comment:</div></td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor"><input type="text" name="comment" size="35"></td>
+    </tr>
+  </table>
+  <p><input type="button" value="OK - Accept any Changes" name=" " tabindex onClick="Javascript: void updateValues()"><input type="reset" value="Reset" name="B2" tabindex></p>
+</form>
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void parent.contents.ListDelay()">Return to report display</a></p>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../adddepart.js"></script>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script language="Javascript">
+
+function CheckRequired(tag, CmtLen, msgtext) {
+  var Check = "";
+  var n = false 
+  Check = parent.contents.alltrim(tag.value);
+  if (Check.length >= CmtLen) n = true;
+  if (!n) {
+    alert(msgtext);
+    tag.focus();
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function loadValues() {
+  
+  document.forms[1].action = parent.contents.defaultApps + "UserList.jsp";
+
+  document.forms[0].persnum.value = parent.contents.getNameValue(parent.contents.Header, "persnum");
+  document.forms[0].name.value = parent.contents.getNameValue(parent.contents.Header, "name");
+  document.forms[0].phone.value = parent.contents.getNameValue(parent.contents.Header, "phone");
+  document.forms[0].location.value = parent.contents.getNameValue(parent.contents.Header, "location");
+  document.forms[0].depart.value = parent.contents.getNameValue(parent.contents.Header, "depart");
+  
+  document.forms[0].company.value = parent.contents.getNameValue(parent.contents.Header, "company");
+  departMapping(document.forms[0].depart, document.forms[0].departname, document.forms[0].company);
+  
+  document.forms[0].credate.value = parent.contents.getNameValue(parent.contents.Header, "credate");
+  document.forms[0].comment.value = parent.contents.getNameValue(parent.contents.Header, "comment");
+  
+  document.forms[0].currency.value = parent.contents.getNameValue(parent.currency.Header, "currency");
+}
+
+function HandleReset() {
+  loadValues();
+  return false;
+}
+
+function updateValues() {
+ with (document.forms[0]) {
+  if ((deptNotValid(departname)== false) &&
+  CheckRequired(depart,1,"Department field cannot be blank") &&
+  CheckRequired(phone,4,"Must supply a vaild phone number") &&
+  CheckRequired(location,3, "Must supply a valid location") &&
+  CheckRequired(name ,4, "Must supply a valid name") &&
+  checkdate(credate) &&
+  dateNotGreaterDays(credate,15) &&
+  parent.contents.setNameValue(parent.contents.Header, "persnum", persnum.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "name", name.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "phone", phone.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "location", location.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "depart", depart.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "credate",credate.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "comment", comment.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "currency", currency.value)) {
+     parent.contents.setGeneralLimit(currency.value);
+     parent.contents.ListMemory();
+  } else {
+     alert("Please correct data entry");
+  }
+ }
+}
+
+function setMyList(FormObj,xvalue) {
+   var k;        //location of m in string
+   var n;        // recover value
+   var m = ": "; //delimiter for recover values
+   var j = 0;
+   var z = true;
+   do {
+     if (FormObj.options[j].text == xvalue) {
+         FormObj.selectedIndex = j;
+         z = false;
+     }
+     j = j + 1;
+   } while (z && j < FormObj.length); 
+   if (z) {  
+     FormObj.length = j + 1; 
+     FormObj.options[j].text = xvalue;
+     n = xvalue;
+     k = n.indexOf(m);
+     if (k > 0) n = n.substring(0,k);
+     FormObj.options[j].value = n;
+     FormObj.selectedIndex = j;
+   }
+}      
+
+</script>
+  <form method="POST" action="UserList.jsp" onSubmit="return SubmitSearch()">
+    <h2>Access the central database for employee information.<br><br>Select last names starting with:&nbsp;
+    <input type="text" name="lastname" size="16" value=""> 
+    <input type="submit" value= "Search" name="Search"></h2>
+    <input type="hidden" name="email" value>
+    <input type="hidden" name="ccode" value>
+    <input type="hidden" name="database" value>
+  </form>
+  <script language=JavaScript>
+  function SubmitSearch() {
+    with(document.forms[1]) {
+    var xyz = parent.contents.alltrim(lastname.value);
+    if (xyz.length >= 1) {
+       email.value = parent.contents.getNameValue(parent.Header, "email");
+       database.value = parent.database;
+       ccode.value = parent.CCode;
+       return true;  
+    } else {
+      alert("You must limit the search to at least one alphabetic letter");
+      return false;
+    }
+    }
+  }
+  </script>
+
+
+
+</body>
+</html>

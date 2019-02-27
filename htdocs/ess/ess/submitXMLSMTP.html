@@ -1,0 +1,91 @@
+<!--
+submitXMLSMTP.html - submit directly with no guide check
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Submit XML Test </title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body>
+
+<form method="post" action="SubmitDbase.jsp">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="report" value>
+  <input type="hidden" name="status" value>
+  <input type="hidden" name="reference" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="xaction" value>
+  <input type="hidden" name="comment" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="endproc" value="blankOutReport()">
+  <div align="center"><div align="center"></div><div align=\"left\"><p><big>This screen will send your report to the Expense mailbox to initiate electronic approval in preparation for reimbursement processing.  Please make sure that you:</big></p><p><big>1. Place all required receipts, if applicable, in a receipt envelope.</big></p><p><big>2. Write your Name, Dept. No.,  Personnel No., Personal reference no. and Date Created on the envelope.</big></p><p><big>3. Forward your envelope to the expense report processing department.</big></p><p><big>Click on the button below . . .</big></p><p>&nbsp;</p></div>
+  <p><input type="button" value="Submit expense report for approval and reimbursement" name="B1" onClick="Javascript: void Submit()"></p>
+  </div>
+</form>
+<script language="JavaScript">
+var submitSafetyFlag = true;
+function Submit() {
+//investigate using submitfromguide.html instead of launching directly from here.
+ if (parent.contents.HeadList.length > 0) {
+   if (submitSafetyFlag) {
+    submitSafetyFlag = false;
+    document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+    var status = parent.contents.getNameValue(parent.contents.Header,"status");
+    if (status == "") status = "New";
+    document.forms[0].status.value = status;
+    var reference = parent.contents.getNameValue(parent.contents.Header, "reference");
+
+    //The following has to be resolved/may have to add an error check for == ""
+    //if (reference == "") reference = <%= SaveXML.getLastReference()%>;
+
+    document.forms[0].reference.value = reference;
+
+    if (status == "New") {
+       parent.contents.setNameValue(parent.contents.Header,"xref",reference);
+       parent.contents.setNameValue(parent.contents.Header,"reference",reference);
+    }
+
+    var subdate = parent.contents.getNameValue(parent.contents.Header, "subdate");
+    if (subdate == "") {
+       parent.contents.setNameValue(parent.contents.Header,"subdate",parent.contents.setDateStr(0));
+       parent.contents.setNameValue(parent.contents.Header,"subtime",parent.contents.setTimeStr());
+    }
+
+    document.forms[0].xaction.value = "Submit";
+
+    parent.contents.setTotalValues();
+   
+    var DateObj = new Date();
+    parent.contents.setDBPair(parent.PersDBase,"last_submit",DateObj.toString());
+    document.forms[0].database.value = parent.database;
+    document.forms[0].report.value = parent.contents.CreateXML();
+    document.forms[0].ccode.value = parent.CCode;
+    document.forms[0].comment.value = parent.contents.rtrim(parent.contents.getNameValue(parent.contents.Header,"comment"));
+    parent.contents.SetLocal()
+    document.forms[0].action = parent.contents.defaultApps + "SubmitDbase.jsp";
+    document.forms[0].submit();
+   }
+ } else {
+   alert("You cannot proceed with this option!\n\nThe current report doesn't contain any report purpose.\nIf you have entered data on a form, ensure\nthat you have clicked the grey button.\nOtherwise you will lose your data.");
+ }
+}
+
+</script>
+
+</body>
+</html>

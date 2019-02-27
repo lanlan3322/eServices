@@ -1,0 +1,299 @@
+<!--
+head2d.html - purpose with internal and external project reference numbers
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Expense Purpose</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript:void FillForm()">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%" class="offsetColor">
+  <tr>
+    <td width="100%"><big><em><div class="ExpenseTag"><big>Enter a purpose for this report </big></div></em></big></td>
+  </tr>
+</table>
+
+<p>(you can enter multiple purposes for a single report) </p>
+
+<form>
+  <input type="hidden" name="xref" value>
+  <input type="hidden" name="billtype" value="No">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td width="23%" class="offsetColor" height="25"><div class="ExpenseTag">Visit From:</div></td>
+          <td width="77%" class="offsetColor" height="25"><input type="text" name="begdate" size="8" value="mm/dd/yy" mysubst="1" onChange="checkdate(document.forms[0].begdate)"><a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].begdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+        </tr>
+        <tr>
+          <td width="23%" height="25"><div class="ExpenseTag">To:</div></td>
+          <td width="77%" height="25"><input type="text" name="enddate" size="8" value="mm/dd/yy" mysubst="3" onChange="checkdate(document.forms[0].enddate)"><a HREF="javascript:doNothing()" mysubst="4" onClick="setDateField(document.forms[0].enddate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+        </tr>
+        <tr>
+          <td width="23%" class="offsetColor"><div class="ExpenseTag">Charge Entity:</div></td>
+          <td width="77%" class="offsetColor">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="20%">
+          <select name="company" size="1" mysubst="5" onChange="populate(document.forms[0].company,document.forms[0].companyname);populateAccross(document.forms[0].company,document.forms[0].clientno,document.forms[0].client)">
+          </select>
+          </td><td with="80%" class="offsetColor">  
+          <select name="companyname" size="1" mysubst="5" onChange="populateNo(document.forms[0].company,document.forms[0].companyname);populateAccross(document.forms[0].company,document.forms[0].clientno,document.forms[0].client)">
+          </select>
+          </td></tr></table>
+        </td>
+        </tr>
+        <tr>
+          <td width="23%" height="25"><div class="ExpenseTag">Client:</div></td>
+          <td width="77%" height="25">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="20%">
+          <select name="clientno" size="1" mysubst="5" onChange="populateName(document.forms[0].clientno,document.forms[0].client)">
+          </select>
+          </td><td with="80%">  
+          <select name="client" size="1" mysubst="7" onChange="populateNo(document.forms[0].clientno,document.forms[0].client)">
+          </select>
+          </td></tr></table>
+          </td>
+        </tr>
+        <tr>
+          <td width="23%" class="offsetColor"><div class="ExpenseTag">Int Ref #:</div></td>
+          <td width="77%" class="offsetColor"><select name="projectname" size="1" mysubst="5" xref="project">
+          </select>
+          <a href="javascript:doNothing()" class="ExpenseLink" onClick="setLocalObj(document.forms[0].projectname,'addproject2',400,200); MerchantType = 'file';" title="Add Ref #">&nbsp;New&nbsp;Reference</div></a>
+          </td>
+        </tr>
+        <tr>
+          <td width="23%"><div class="ExpenseTag">Ext Ref #:</div></td>
+          <td width="77%"><input type="text" name="stepno" size="20" mysubst="6"></td>
+        </tr>
+        <tr>
+          <td width="23%" height="26" class="offsetColor"><div class="ExpenseTag">Location:</div></td>
+          <td width="77%" height="26" class="offsetColor"><select name="location" size="1" mysubst="10">
+          </select>
+          <a href="javascript:doNothing()" class="ExpenseLink" mysubst="11" onClick="setLocalObj(document.forms[0].location); MerchantType = 'location'; top.newWin = window.open('../addmerchant.html', 'merchant', 'dependent=yes, width=200, height=150, screenX=100, screenY=100, titlebar=yes, menubar=no, status=no')">&nbsp;New&nbsp;Location</a>
+          </td>
+        </tr>
+        <tr>
+          <td width="23%" height="80" <div class="ExpenseTag">Purpose or Individuals: </div></td>
+          <td width="77%" height="80"><textarea rows="4" name="comment" cols="37" mysubst="8"></textarea></td>
+        </tr>
+<!--        <tr>          <td width="23%"><div class="ExpenseTag">Split%/Weight:</div></td>          <td width="77%"><input type="text" name="weight" size="3" mysubst="6"><a href="javascript:doNothing()" onClick="window.open('../helpWeight.html', 'help', 'dependent=yes, width=400, height=250, screenX=100, screenY=100, titlebar=no, menubar=no, status=no, scrollbars=yes')" title="Help"><div class="ExpenseLink">What's This</div></a>          </td>        </tr>-->
+        <input type="hidden" name="weight" value>
+
+</table>
+  <p><input type="button" value="Update report with this purpose" name=" " mysubst="9" onClick="Javascript: void SubmitRec()" onDblClick="parent.contents.dupFlagOK = false"></p>
+</form>
+<p align="right"><a href="javascript: void parent.contents.ListDelay()" mysubst="10"><em><strong>Return to report display</strong></em></a></p>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script language="javascript">
+function FillForm() {
+  parent.contents.setListWKeyWPers(document.forms[0].projectname,parent.contents.getProjectNos("1"),"file","project","title");
+
+  parent.contents.setListWithValue(document.forms[0].clientno, parent.contents.getClientNos("1"));
+  parent.contents.setListWithValue(document.forms[0].client, parent.contents.getClientNos("2"));
+
+  parent.contents.setDefaultDate(document.forms[0].begdate,-2);
+  parent.contents.setDefaultDate(document.forms[0].enddate,-1);
+  MerchantType = "location";
+  parent.contents.setListWithPers(document.forms[0].location, parent.contents.getLocations("1"),MerchantType);
+
+  parent.contents.setListWithKey(document.forms[0].company,parent.contents.getEntities("1"),"0","");
+  parent.contents.setListWithKey(document.forms[0].companyname,parent.contents.getEntities("2"),"1","");
+
+  document.forms[0].xref.value = "XXX";
+  parent.contents.setTransaction(document.forms[0]);
+  document.forms[0].begdate.focus();
+}
+
+function populateNill() {
+    document.forms[0].billtype = "No";
+}             
+
+function populate(xno, x) { 
+   var looking4 = xno.options[xno.selectedIndex].value;
+   for (var i = 0; i < x.length; i++) {
+      if (x.options[i].value == looking4) {
+         x.selectedIndex =  i;
+         i = x.length;
+      }
+   }
+}             
+
+function populateName(xno, x) { 
+   var looking4 = xno.options[xno.selectedIndex].text;
+   for (var i = 0; i < x.length; i++) {
+      if (x.options[i].value == looking4) {
+         x.selectedIndex =  i;
+         i = x.length;
+      }
+   }
+}    
+
+function populateNo(x, xno) { 
+   var looking4 = xno.options[xno.selectedIndex].value;
+   for (var i = 0; i < x.length; i++) {
+      if (x.options[i].text == looking4) {
+         x.selectedIndex =  i;
+         i = x.length;
+      }
+   }
+}   
+
+function old_populateAccross(xno, x, y) {
+  if (x.selectedIndex == 0) {
+     var looking4 = xno.options[xno.selectedIndex].text;
+     for (var i = 0; i < x.length; i++) {
+        if (x.options[i].text == looking4) {
+           x.selectedIndex =  i;
+           i = x.length;
+           populate(x, y);
+        }
+     }
+  }
+}
+
+function populateAccross(xno, x, y) {
+  skipThis = false;
+  if (parent.contents.getRequiredItem) skipThis = parent.contents.getRequiredItem("skipPopulate");
+  if (!skipThis && x.selectedIndex == 0) {
+     var looking4 = xno.options[xno.selectedIndex].text;
+     for (var i = 0; i < x.length; i++) {
+        if (x.options[i].text == looking4) {
+           x.selectedIndex =  i;
+           i = x.length;
+           populateName(x, y);
+        }
+     }
+  }
+}
+
+function checkChargeClient(Xcharge, Xclient) {
+  if (Xclient.selectedIndex == -1) Xclient.selectedIndex = 0;
+  if (Xcharge.selectedIndex == -1) Xcharge.selectedIndex = 0;
+  if (Xcharge.selectedIndex == 0){
+    alert("Chargeable entity number is required");
+    Xcharge.focus();
+    return false;
+  }  
+  if (Xclient.selectedIndex == 0){
+    alert("Client number is required");
+    Xclient.focus();
+    return false;
+  }  
+  var ClientNumber = Xclient.options[Xclient.selectedIndex].text;
+  var ChargeNumber = Xcharge.options[Xcharge.selectedIndex].text;
+  if (ClientNumber == ChargeNumber) {
+    return true;
+  } else {
+    for (var i = 0; i < Xcharge.length; i++) {
+       if (Xcharge.options[i].text == ClientNumber) {
+          alert("Client entity cannot be different entity from Chargeable Entity");
+          Xclient.focus();
+          return false;
+       }
+    }
+  }
+  return true;
+}
+
+function SubmitRec() {
+  if (checkChargeClient(document.forms[0].company,document.forms[0].clientno) &&
+      CheckWeight(document.forms[0].weight) &&
+      CheckAmong(document.forms[0].weight) &&
+      checkdate(document.forms[0].begdate) &&
+      checkdate(document.forms[0].enddate) &&
+      doDateCheck(document.forms[0].begdate.value, document.forms[0].enddate.value) &&
+      checkPurpComment(document.forms[0].comment)) {   //edit check would go here
+    if (document.forms[0].xref.value == "XXX") document.forms[0].xref.value = "" + parent.contents.NextXref();
+    document.forms[0].weight.value = parent.contents.rtrim(parent.contents.ltrim(document.forms[0].weight.value));
+    parent.contents.UpdateReport('1','head2d'); 
+    if (parent.contents.HeadList.length == 1) {
+       var r = parent.contents.setNameValue(parent.contents.Header, "comment", document.forms[0].comment.value);     
+    }
+    parent.contents.ListDelay();
+  }
+}
+
+function checkPurpComment(object) {
+        check = parent.contents.alltrim(object.value);
+        if (check.length > 9) {
+                return true;
+        } else
+        alert("Need to supply a purpose of at least 10 characters");
+        object.focus();
+        object.select();
+}
+
+function populateClientNo() {
+  with (document.forms[0]) {
+    if (clientLookup.selectedIndex > 0) {  
+      parent.contents.setListDefault(clientno, clientLookup.options[clientLookup.selectedIndex].value);
+      populateClientLoc();
+    }
+  }
+}
+
+function LookupCleanup() {
+  document.forms[0].clientLookup.selectedIndex = 0;
+}
+
+function CheckWeight(tag) {
+  if (isNaN(tag.value) && tag.value != "" ) {
+     alert("Data in the Percent % / Weight field is not a valid numeric value");
+     tag.focus();
+     tag.select();
+     return false;
+  } else {
+    var Check = parseFloat(tag.value);
+    if (Check < .01 || Check >= 1000) {
+      alert("Percent % / Weight field must be greater than .01 and less than 1,000 if present");
+      tag.focus();
+      tag.select();
+      return false;
+    } else {
+      return true;
+    }
+  }
+}
+
+function CheckAmong(tag) {
+  retval = true;
+  var Check = tag.value;
+  if (isNaN(Check) || Check == "" ) {
+     Check = 0;
+  } else {
+     Check = parseFloat(Check);
+     if (isNaN(Check)) Check = 0;
+  }
+  with (parent.contents) {
+    if (!isNew() && Check == 0) {
+      var xThis = getNumericValue(HeadList[ListIndex],"weight");  //checking for weight being orphaned
+      var xTotal = getTotalValueFor(HeadList,"weight");
+      var SearchStr = "Weight;"
+      if (xThis > 0 && xThis == xTotal) {
+        if (getTotalValueFor(TailList,'amount','xref',SearchStr) > 0 || getTotalValueFor(TailList,'amount','expense_1_xref',SearchStr) > 0) {
+          alert("Cannot zero the percent % / Weight field!\nThere are still items being split among purposes");
+          retval = false;
+        }
+      }
+    }
+  } 
+  return retval;
+}
+
+</script>
+
+</body>
+</html>

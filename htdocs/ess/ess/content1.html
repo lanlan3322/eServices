@@ -1,0 +1,173 @@
+<!--
+content3.html - menu level 3
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Content</title>
+<base target="main">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../expense.css" type="text/css">
+</head>
+
+
+<body topmargin="0" leftmargin="0">
+<script>
+var defaultHome = parent.webServer + "/" + parent.webFolder + "/";
+var defaultHead = parent.webServer + "/" + parent.webFolder + "/" + parent.customFolder + "/";
+var defaultTrans = parent.webServer + "/" + parent.webFolder + "/aa/";  
+var defaultApps = parent.appServer + "/" + parent.appFolder + "/";
+</script>
+<!--- Common script code for all sites --->
+<script language="JavaScript">
+</script>
+
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="25" height="28" valign="top"></td>
+                <td width="140" height="28" class="MenuLink" valign="top"><script>document.write("Hello " + parent.Header[1][1] + "<br>")</script>
+                  </td>
+              </tr>
+              <tr> 
+                <td width="25" height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td width="140" height="14" class="MenuLink" valign="top">Create&nbsp;A&nbsp;Report</td>
+              </tr>
+              <tr> 
+                <td width="25" height="61" valign="top">&nbsp;</td>
+                <td width="140" height="61" valign="top"> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.helpWindow('hmenuSimple3a.html')">Instructions/Help</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="13%" valign="top"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="87%"><a class="SubMenuLink"  href="javascript: void parent.contents.Newie(parent.contents.defaultHome + 'ess/head2j.html', true)">Click&nbsp;Here&nbsp;To&nbsp;Start</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="13%" valign="top"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="87%"><a class="SubMenuLink"  href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'aa/multi1fxnj.html')">Add&nbsp;Some&nbsp;Receipts</a></td>
+                    </tr>
+                     <tr> 
+                      <td width="12%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="88%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'aa/trans5j.html')">Add&nbsp;Mileage</a></td>
+                    </tr>
+                     <tr> 
+                      <td width="12%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="88%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'aa/trans12fxnj.html')">Add&nbsp;Hotel&nbsp;Receipt</a></td>
+                    </tr>
+                    <tr> 
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultTrans + 'trans7.html')">Enter&nbsp;an&nbsp;Advance</a></td>
+                    </tr>
+                    <tr> 
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultTrans + 'trans8.html')">Advance&nbsp;Money&nbsp;Returned</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="12%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="88%"><a class="SubMenuLink" href="javascript: void parent.contents.OnlyIfChanged(parent.contents.defaultHome + 'saveXMLFile.html')">Save&nbsp;Report&nbsp;For&nbsp;Later</a></td>
+                    </tr>
+                      <td height="10" valign="top">&nbsp;</td>
+                      <td height="10">&nbsp;</td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr> 
+                <td width="25" height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td width="140" height="14" valign="top" class="MenuLink">Get&nbsp;Your&nbsp;Reimbursement</td>
+              </tr>
+              <tr> 
+                <td height="28" valign="top">&nbsp;</td>
+                <td height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.helpWindow('hmenuSimple3b.html')">Instructions/Help</a></td>
+                    </tr>
+                     <tr> 
+                      <td width="12%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="88%"><a class="SubMenuLink" href="javascript: void parent.contents.OnlyIfEditable(parent.contents.defaultHead + 'submitWithGuide.html')">Send&nbsp;For&nbsp;Approval</a></td>
+                    </tr>
+                    <tr> 
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr> 
+                <td height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td height="14" valign="top" class="MenuLink">Other Tasks</td>
+              </tr>
+              <tr> 
+                <td height="28" valign="top">&nbsp;</td>
+                <td height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.helpWindow('hmenuSimple3c.html')">Instructions/Help</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="12%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="88%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWithDBase(parent.contents.defaultApps + '/ApproveList.jsp?downlevel=','approvallevel','1')">Approve&nbsp;Reports</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="12%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="88%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWindow(parent.contents.defaultApps + '/Intro.jsp')">Access&nbsp;A&nbsp;Report</a></td>
+                    </tr>
+
+                    <tr> 
+                      <td width="12%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="88%"><a class="SubMenuLink" href="javascript: void parent.contents.NeedAReport(parent.contents.defaultHome + 'ess/selectXMLReport.html')">Print&nbsp;Report</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="12%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="88%"><a class="SubMenuLink" href="javascript: void parent.contents.Copie()">Copy&nbsp;Report</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="12%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="88%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'editother.html')">Manage&nbsp;Personal&nbsp;Data</a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.Logout(parent.contents.defaultHead + 'pwdChange.html')">Change&nbsp;Password</a></td>
+                    </tr>
+               </table></td>
+              </tr>
+              <tr> 
+                <td width="25" height="75" valign="top">&nbsp;</td>
+                <td width="140" height="75" valign="top">&nbsp;</td>
+              </tr>
+            </table>
+
+<form name="Userdata">
+  <input type="hidden" class="userData" style="behavior:url(#default#userdata)" id="ReportData" name="ReportData">
+</form>
+
+<!--- general formatting routines --->
+<script language="Javascript" src="../shared1.js">
+</script>
+<!--- site specific error check routines --->
+<script language="Javascript" src="../shared2.js">
+</script>
+<!--- site specific lists, generated from tables --->
+<script language="Javascript" src="/ess-app/ajax/ESSProfile.jsp">
+</script>
+<script language="Javascript" id="companyScript" src="/ess-app/ajax/Company.jsp">
+</script>
+    <script language="Javascript" src="/ess-app/ajax/JSXlation.jsp">
+    </script>
+
+</body>
+</html>

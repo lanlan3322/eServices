@@ -1,0 +1,485 @@
+<!--
+head2e.html - purpose for multiple clients with billing, internal and external references
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Multi Purpose</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript:void FillForm()">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%" class="offsetColor">
+  <tr>
+    <td width="100%"><big><em><div class="ExpenseTag"><big>Enter a purpose for this report </big></div></em></big></td>
+  </tr>
+</table>
+
+<p>(you can enter multiple purposes for a single report) </p>
+
+<form>
+  <input type="hidden" name="xref" value>
+  <input type="hidden" name="multiclient" value>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td width="23%" class="offsetColor" height="25"><div class="ExpenseTag">Visit From:</div></td>
+      <td width="77%" class="offsetColor" height="25"><input type="text" name="begdate" size="8" value="mm/dd/yy" mysubst="1" onChange="checkdate(document.forms[0].begdate)"><a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].begdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+    </tr>
+    <tr>
+      <td width="23%" height="25"><div class="ExpenseTag">To:</div></td>
+      <td width="77%" height="25"><input type="text" name="enddate" size="8" value="mm/dd/yy" mysubst="3" onChange="checkdate(document.forms[0].enddate)"><a HREF="javascript:doNothing()" mysubst="4" onClick="setDateField(document.forms[0].enddate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+    </tr>
+    <tr>
+      <td width="23%" class="offsetColor"><div class="ExpenseTag">Int Ref #:</div></td>
+      <td width="77%" class="offsetColor"><select name="projectname" size="1" mysubst="5" xref="project">
+      </select> <a href="javascript:doNothing()" class="ExpenseLink" onClick="setLocalObj(document.forms[0].projectname,'addproject2',400,200); MerchantType = 'file';" title="Add Ref #">&nbsp;New&nbsp;Reference</a>
+      </td>
+    </tr>
+    <tr>
+      <td width="23%"><div class="ExpenseTag">Ext Ref #:</div></td>
+      <td width="77%"><input type="text" name="stepno" size="20" mysubst="6"></td>
+    </tr>
+    <tr>
+      <td width="23%" height="26" class="offsetColor"><div class="ExpenseTag">Location:</div></td>
+      <td width="77%" height="26" class="offsetColor"><select name="location" size="1" mysubst="10">
+      </select> <a href="javascript:doNothing()" class="ExpenseLink" mysubst="11" onClick="setLocalObj(document.forms[0].location); MerchantType = 'location'; top.newWin = window.open('../addmerchant.html', 'merchant', 'dependent=yes, width=200, height=150, screenX=100, screenY=100, titlebar=yes, menubar=no, status=no')">&nbsp;New&nbsp;Location</a> </td>
+    </tr>
+    <tr>
+      <td width="23%" height="80"><div class="ExpenseTag">Purpose or Individuals: </div></td>
+      <td width="77%" height="80"><textarea rows="4" name="comment" cols="37" mysubst="8"></textarea></td>
+    </tr>
+    <tr>
+      <td width="23%" height="25" class="offsetColor"></td>
+      <td width="77%" height="25" class="offsetColor"></td>
+    </tr>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td width="20%" align="center"><div align="center"><center><p><div class="ExpenseTag">Charge</div></td>
+      <td width="20%" align="center"><div align="center"><center><p><div class="ExpenseTag">Entity Name</div></td>
+      <td width="20%" align="center"><div align="center"><center><p><div class="ExpenseTag">Client #</div></td>
+      <td width="20%" align="center"><div align="center"><center><p><div class="ExpenseTag">Client Name</div></td>
+      <td width="20%" align="center"><div align="center"><center><p><div class="ExpenseTag">Billable</div></td>
+      <td width="20%" align="center"><div align="center"><center><p><div class="ExpenseTag">Split%</div></td>
+    </tr>
+    <tr align="center">
+      <td width="20%" align="center" class="offsetColor"><select name="split_1_company" size="1" mysubst="5" onChange="populate(document.forms[0].split_1_company,document.forms[0].split_1_companyname);populateAccross(document.forms[0].split_1_company,document.forms[0].split_1_clientno,document.forms[0].split_1_client)">
+      </select></td>
+      <td width="20%" align="center" class="offsetColor"><select name="split_1_companyname" size="1" mysubst="5" onChange="populateNo(document.forms[0].split_1_company,document.forms[0].split_1_companyname);populateAccross(document.forms[0].split_1_company,document.forms[0].split_1_clientno,document.forms[0].split_1_client)">
+      </select></td>
+      <td width="20%" align="center" class="offsetColor"><select name="split_1_clientno" size="1" mysubst="5" onChange="populateName(document.forms[0].split_1_clientno,document.forms[0].split_1_client)">
+      </select></td>
+      <td width="20%" align="center" class="offsetColor"><select name="split_1_client" size="1" mysubst="7" onChange="populateNo(document.forms[0].split_1_clientno,document.forms[0].split_1_client)">
+      </select></td>
+      <td width="20%" align="center" class="offsetColor"><select name="split_1_billtype" size="1" mysubst="13">
+        <option value="Yes">Yes</option>
+        <option selected value="No">No</option>
+      </select></td>
+      <td width="20%" align="center" class="offsetColor"><input type="text" name="split_1_weight" size="3" mysubst="6"></td>
+    </tr>
+    <tr align="center">
+      <td width="20%" align="center"><select name="split_2_company" size="1" mysubst="5" onChange="populate(document.forms[0].split_2_company,document.forms[0].split_2_companyname);populateAccross(document.forms[0].split_2_company,document.forms[0].split_2_clientno,document.forms[0].split_2_client)">
+      </select></td>
+      <td width="20%" align="center"><select name="split_2_companyname" size="1" mysubst="5" onChange="populateNo(document.forms[0].split_2_company,document.forms[0].split_2_companyname);populateAccross(document.forms[0].split_2_company,document.forms[0].split_2_clientno,document.forms[0].split_2_client)">
+      </select></td>
+      <td width="20%" align="center"><select name="split_2_clientno" size="1" mysubst="5" onChange="populateName(document.forms[0].split_2_clientno,document.forms[0].split_2_client)">
+      </select></td>
+      <td width="20%" align="center"><select name="split_2_client" size="1" mysubst="7" onChange="populateNo(document.forms[0].split_2_clientno,document.forms[0].split_2_client)">
+      </select></td>
+      <td width="20%" align="center"><select name="split_2_billtype" size="1" mysubst="13">
+        <option value="Yes">Yes</option>
+        <option selected value="No">No</option>
+      </select></td>
+      <td width="20%" align="center"><input type="text" name="split_2_weight" size="3" mysubst="6"></td>
+    </tr>
+    <tr align="center">
+      <td width="20%" align="center" class="offsetColor"><select name="split_3_company" size="1" mysubst="5" onChange="populate(document.forms[0].split_3_company,document.forms[0].split_3_companyname);populateAccross(document.forms[0].split_3_company,document.forms[0].split_3_clientno,document.forms[0].split_3_client)">
+      </select></td>
+      <td width="20%" align="center" class="offsetColor"><select name="split_3_companyname" size="1" mysubst="5" onChange="populateNo(document.forms[0].split_3_company,document.forms[0].split_3_companyname);populateAccross(document.forms[0].split_3_company,document.forms[0].split_3_clientno,document.forms[0].split_3_client)">
+      </select></td>
+      <td width="20%" align="center" class="offsetColor"><select name="split_3_clientno" size="1" mysubst="5" onChange="populateName(document.forms[0].split_3_clientno,document.forms[0].split_3_client)">
+      </select></td>
+      <td width="20%" align="center" class="offsetColor"><select name="split_3_client" size="1" mysubst="7" onChange="populateNo(document.forms[0].split_3_clientno,document.forms[0].split_3_client)">
+      </select></td>
+      <td width="20%" align="center" class="offsetColor"><select name="split_3_billtype" size="1" mysubst="13">
+        <option value="Yes">Yes</option>
+        <option selected value="No">No</option>
+      </select></td>
+      <td width="20%" align="center" class="offsetColor"><input type="text" name="split_3_weight" size="3" mysubst="6"></td>
+    </tr>
+    <tr align="center">
+      <td width="20%" align="center"><select name="split_4_company" size="1" mysubst="5" onChange="populate(document.forms[0].split_4_company,document.forms[0].split_4_companyname);populateAccross(document.forms[0].split_4_company,document.forms[0].split_4_clientno,document.forms[0].split_4_client)">
+      </select></td>
+      <td width="20%" align="center"><select name="split_4_companyname" size="1" mysubst="5" onChange="populateNo(document.forms[0].split_4_company,document.forms[0].split_4_companyname);populateAccross(document.forms[0].split_4_company,document.forms[0].split_4_clientno,document.forms[0].split_4_client)">
+      </select></td>
+      <td width="20%" align="center"><select name="split_4_clientno" size="1" mysubst="5" onChange="populateName(document.forms[0].split_4_clientno,document.forms[0].split_4_client)">
+      </select></td>
+      <td width="20%" align="center"><select name="split_4_client" size="1" mysubst="7" onChange="populateNo(document.forms[0].split_4_clientno,document.forms[0].split_4_client)">
+      </select></td>
+      <td width="20%" align="center"><select name="split_4_billtype" size="1" mysubst="13">
+        <option value="Yes">Yes</option>
+        <option selected value="No">No</option>
+      </select></td>
+      <td width="20%" align="center"><input type="text" name="split_4_weight" size="3" mysubst="6"></td>
+    </tr>
+  </table>
+  <div align="center"><center><p><input type="button" value="Update report with this purpose" name=" " mysubst="9" onClick="Javascript: void SubmitRec()" onDblClick="parent.contents.dupFlagOK = false"></p>
+  </center></div>
+</form>
+
+<p align="center"><a href="javascript: void parent.contents.ListDelay()" mysubst="10"><em><strong>Return
+to receipt display</strong></em></a></p>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script language="javascript">
+function FillForm() {
+  parent.contents.setListWKeyWPers(document.forms[0].projectname,parent.contents.getProjectNos("1"),"file","project","title");
+  
+  parent.contents.setListWithValue(document.forms[0].split_1_clientno, parent.contents.getClientNos("1"));
+  document.forms[0].split_1_clientno.selectedIndex = 0;
+  parent.contents.setListWithValue(document.forms[0].split_1_client, parent.contents.getClientNos("2"));
+  document.forms[0].split_1_client.selectedIndex = 0;
+
+  parent.contents.setListWithValue(document.forms[0].split_2_clientno, parent.contents.getClientNos("1"));
+  document.forms[0].split_2_clientno.selectedIndex = 0;
+  parent.contents.setListWithValue(document.forms[0].split_2_client, parent.contents.getClientNos("2"));
+  document.forms[0].split_2_client.selectedIndex = 0;
+  
+  parent.contents.setListWithValue(document.forms[0].split_3_clientno, parent.contents.getClientNos("1"));
+  document.forms[0].split_3_clientno.selectedIndex = 0;
+  parent.contents.setListWithValue(document.forms[0].split_3_client, parent.contents.getClientNos("2"));
+  document.forms[0].split_3_client.selectedIndex = 0;
+
+  parent.contents.setListWithValue(document.forms[0].split_4_clientno, parent.contents.getClientNos("1"));
+  document.forms[0].split_4_clientno.selectedIndex = 0;
+  parent.contents.setListWithValue(document.forms[0].split_4_client, parent.contents.getClientNos("2"));
+  document.forms[0].split_4_client.selectedIndex = 0;
+
+  parent.contents.setDefaultDate(document.forms[0].begdate,-2);
+  parent.contents.setDefaultDate(document.forms[0].enddate,-1);
+  MerchantType = "location";
+  parent.contents.setListWithPers(document.forms[0].location, parent.contents.getLocations("1"),MerchantType);
+
+  parent.contents.setListWithKey(document.forms[0].split_1_companyname,parent.contents.getEntities("2"),"1","");
+  document.forms[0].split_1_companyname.selectedIndex = 0;
+  parent.contents.setListWithKey(document.forms[0].split_2_companyname,parent.contents.getEntities("2"),"1","");
+  document.forms[0].split_2_companyname.selectedIndex = 0;
+  parent.contents.setListWithKey(document.forms[0].split_3_companyname,parent.contents.getEntities("2"),"1","");
+  document.forms[0].split_3_companyname.selectedIndex = 0;
+  parent.contents.setListWithKey(document.forms[0].split_4_companyname,parent.contents.getEntities("2"),"1","");
+  document.forms[0].split_4_companyname.selectedIndex = 0;
+
+  parent.contents.setListWithKey(document.forms[0].split_1_company,parent.contents.getEntities("1"),"0","");
+  document.forms[0].split_1_company.selectedIndex = 0;
+  parent.contents.setListWithKey(document.forms[0].split_2_company,parent.contents.getEntities("1"),"0","");
+  document.forms[0].split_2_company.selectedIndex = 0;
+  parent.contents.setListWithKey(document.forms[0].split_3_company,parent.contents.getEntities("1"),"0","");
+  document.forms[0].split_3_company.selectedIndex = 0;
+  parent.contents.setListWithKey(document.forms[0].split_4_company,parent.contents.getEntities("1"),"0","");
+  document.forms[0].split_4_company.selectedIndex = 0;
+   
+  //document.forms[0].split_1_weight.value = 100;
+
+  document.forms[0].xref.value = "XXX";
+  parent.contents.setTransaction(document.forms[0]);
+  document.forms[0].begdate.focus();
+}
+
+function populateClientLoc() {
+  if (document.forms[0].clientno.selectedIndex == 0) {
+    document.forms[0].client.readOnly = false;
+    document.forms[0].location.readOnly = false;
+    document.forms[0].billtype.selectedIndex = 1;
+  } else {
+    document.forms[0].client.value = document.forms[0].clientno.options[document.forms[0].clientno.selectedIndex].value;
+    document.forms[0].client.readOnly = true;
+    document.forms[0].billtype.selectedIndex = 0;
+  }
+}             
+
+function SubmitRec() {
+  if (checkdate(document.forms[0].begdate) &&
+      checkdate(document.forms[0].enddate) &&
+      CheckWeight() &&
+      CheckAmong() &&
+      checkChargeClient(document.forms[0].split_1_company,document.forms[0].split_1_clientno,true) &&
+      checkChargeClient(document.forms[0].split_2_company,document.forms[0].split_2_clientno,false) &&
+      checkChargeClient(document.forms[0].split_3_company,document.forms[0].split_3_clientno,false) &&
+      checkChargeClient(document.forms[0].split_4_company,document.forms[0].split_4_clientno,false) &&
+      doDateCheck(document.forms[0].begdate.value, document.forms[0].enddate.value) &&
+      checkPurpComment(document.forms[0].comment)) {   //edit check would go here
+
+    normalSplit();
+
+    ChkExtra2(document.forms[0].split_1_clientno,document.forms[0].split_1_billtype);
+    ChkExtra2(document.forms[0].split_2_clientno,document.forms[0].split_2_billtype);
+    ChkExtra2(document.forms[0].split_3_clientno,document.forms[0].split_3_billtype);
+    ChkExtra2(document.forms[0].split_4_clientno,document.forms[0].split_4_billtype);
+
+    if (document.forms[0].xref.value == "XXX") document.forms[0].xref.value = "" + parent.contents.NextXref();
+    parent.contents.UpdateReport('1','head2e'); 
+    if (parent.contents.HeadList.length == 1) {
+       var r = parent.contents.setNameValue(parent.contents.Header, "comment", document.forms[0].comment.value);     
+    }
+    parent.contents.ListDelay();
+  }
+}
+
+function normalSplit() {
+  with (document.forms[0]) {
+    if (split_1_clientno.selectedIndex == 0) {
+      // 
+    } 
+  }
+}
+  
+function checkPurpComment(object) {
+        check = parent.contents.alltrim(object.value);
+        if (check.length > 9) {
+                return true;
+        } else
+        alert("Need to supply a purpose of at least 10 characters");
+        object.focus();
+        object.select();
+}
+
+function LookupCleanup() {
+  document.forms[0].clientLookup.selectedIndex = 0;
+}
+
+function populate(xno, x) { 
+   var looking4 = xno.options[xno.selectedIndex].value;
+   for (var i = 0; i < x.length; i++) {
+      if (x.options[i].value == looking4) {
+         x.selectedIndex =  i;
+         i = x.length;
+      }
+   }
+}             
+
+function populateNo(x, xno) { 
+   var looking4 = xno.options[xno.selectedIndex].value;
+   for (var i = 0; i < x.length; i++) {
+      if (x.options[i].text == looking4) {
+         x.selectedIndex =  i;
+         i = x.length;
+      }
+   }
+}   
+
+function populateName(xno, x) { 
+   var looking4 = xno.options[xno.selectedIndex].text;
+   for (var i = 0; i < x.length; i++) {
+      if (x.options[i].value == looking4) {
+         x.selectedIndex =  i;
+         i = x.length;
+      }
+   }
+}
+
+function populateAccross(xno, x, y) {
+  skipThis = false;
+  if (parent.contents.getRequiredItem) skipThis = parent.contents.getRequiredItem("skipPopulate");
+  if (!skipThis && x.selectedIndex == 0) {
+     var looking4 = xno.options[xno.selectedIndex].text;
+     for (var i = 0; i < x.length; i++) {
+        if (x.options[i].text == looking4) {
+           x.selectedIndex =  i;
+           i = x.length;
+           populateName(x, y);
+        }
+     }
+  }
+}
+
+function checkChargeClient(Xcharge, Xclient, firstSplit) {
+  if (firstSplit) {
+    if (Xcharge.selectedIndex == 0){
+      alert("Chargeable entity number is required");
+      Xcharge.focus();
+      return false;
+    } 
+    if (Xclient.selectedIndex == 0){
+      alert("Client number is required");
+      Xclient.focus();
+      return false;
+    }
+  } else {
+    if (Xcharge.selectedIndex > 0) {
+      if (Xclient.selectedIndex == 0){
+        alert("Client number is required");
+        Xclient.focus();
+        return false;
+      }
+    } else {
+      if (Xclient.selectedIndex > 0) {
+        alert("Cannot have client without chargeable entity");
+        Xclient.focus();
+        return false;
+      }
+    }  
+  } 
+  var ClientNumber = Xclient.options[Xclient.selectedIndex].text;
+  var ChargeNumber = Xcharge.options[Xcharge.selectedIndex].text;
+  if (ClientNumber == ChargeNumber) {
+    return true;
+  } else {
+    for (var i = 0; i < Xcharge.length; i++) {
+       if (Xcharge.options[i].text == ClientNumber) {
+          alert("Client entity cannot be different entity from Chargeable Entity");
+          Xclient.focus();
+          return false;
+       }
+    }
+  }
+  return true;
+}
+
+function CheckWeight() {
+  with (document.forms[0]) {
+    var retVal = true;
+
+    split_1_weight.value = parent.contents.rtrim(parent.contents.ltrim(split_1_weight.value));
+    split_2_weight.value = parent.contents.rtrim(parent.contents.ltrim(split_2_weight.value));
+    split_3_weight.value = parent.contents.rtrim(parent.contents.ltrim(split_3_weight.value));
+    split_4_weight.value = parent.contents.rtrim(parent.contents.ltrim(split_4_weight.value));
+   
+    if (isNaN(split_1_weight.value) && split_1_weight.value != "" ) retVal = false;
+    if (isNaN(split_2_weight.value) && split_2_weight.value != "" ) retVal = false;
+    if (isNaN(split_3_weight.value) && split_3_weight.value != "" ) retVal = false;
+    if (isNaN(split_4_weight.value) && split_4_weight.value != "" ) retVal = false;
+    if (!retVal) {
+      alert("Invalid data in the 'split %' fields");
+    } else {
+      var total = 0;
+      if (split_1_weight.value != "" ) {
+             total += Number(split_1_weight.value);
+      }
+      if (split_2_weight.value != "" ) {
+             total += Number(split_2_weight.value);
+      }
+      if (split_3_weight.value != "" ) {
+             total += Number(split_3_weight.value);
+      } 
+      if (split_4_weight.value != "" ) {
+         total += Number(split_4_weight.value);
+      }
+      if (total != 0 && total != 100) {
+        alert("'Split %' must either be zero or total 100\n You have a total of " + total);
+        retVal = false;
+      } else {
+        if (total == 100) {
+          multiclient.value = "Yes";
+        } else {
+          if (splitevenly() == -1) {
+             multiclient.value = "No";
+          } else {
+             multiclient.value = "Yes";
+          }
+        } 
+      }
+    }
+    return retVal; 
+  }
+}
+
+
+function ChkExtra2(o1,o3) {
+  if (o1.selectedIndex == 0) {
+    o3.length = 3;
+    o3.options[2].text = "";
+    o3.options[2].value = "";
+    o3.selectedIndex = 2;
+  }
+}
+
+function CheckAmong() {
+  retval = true;
+  with (document.forms[0]) {
+    //if (split_1_clientno.selectedIndex == 0 && split_1_company.selectedIndex != 0) retval = false;
+    if (split_1_clientno.selectedIndex <= 0 && split_1_company.selectedIndex > 0) retval = false;
+    if (split_2_clientno.selectedIndex <= 0 && split_2_company.selectedIndex > 0) retval = false;
+    if (split_3_clientno.selectedIndex <= 0 && split_3_company.selectedIndex > 0) retval = false;
+    if (split_4_clientno.selectedIndex <= 0 && split_4_company.selectedIndex > 0) retval = false;
+    if (!retval) {
+      alert("Need client for a entity charge selection");
+    } else {
+      if (split_1_clientno.selectedIndex > 0 && split_1_company.selectedIndex <= 0) retval = false;
+      if (split_2_clientno.selectedIndex > 0 && split_2_company.selectedIndex <= 0) retval = false;
+      if (split_3_clientno.selectedIndex > 0 && split_3_company.selectedIndex <= 0) retval = false;
+      if (split_4_clientno.selectedIndex > 0 && split_4_company.selectedIndex <= 0) retval = false;
+      if (!retval) {
+        alert("Need charge entity for a client selection");
+      } else {
+        if (split_1_clientno.selectedIndex <= 0 && !isNaN(split_1_weight.value) && split_1_weight.value != 0) retval = false;
+        if (split_2_clientno.selectedIndex <= 0 && !isNaN(split_2_weight.value) && split_2_weight.value != 0) retval = false;
+        if (split_3_clientno.selectedIndex <= 0 && !isNaN(split_3_weight.value) && split_3_weight.value != 0) retval = false;
+        if (split_4_clientno.selectedIndex <= 0 && !isNaN(split_4_weight.value) && split_4_weight.value != 0) retval = false;
+        if (!retval) {
+          alert("Invalid data in the split % field!\nNeed client if percent is present.");
+        } else {
+          //if (split_1_clientno.selectedIndex != 0 && (isNaN(split_1_weight.value) || split_1_weight.value == 0)) retval = false;
+          if (split_1_clientno.selectedIndex > 0 && (isNaN(split_1_weight.value) || split_1_weight.value == 0)) retval = false;
+          if (split_2_clientno.selectedIndex > 0 && (isNaN(split_2_weight.value) || split_2_weight.value == 0)) retval = false;
+          if (split_3_clientno.selectedIndex > 0 && (isNaN(split_3_weight.value) || split_3_weight.value == 0)) retval = false;
+          if (split_4_clientno.selectedIndex > 0 && (isNaN(split_4_weight.value) || split_4_weight.value == 0)) retval = false;
+          if (!retval) {
+            alert("Invalid data in the client or split % fields!\nNeed percent if client is present.");
+          }
+        }
+      }
+    }   
+  }
+  return retval;
+}
+
+
+function splitevenly() {
+    var splits = [["100"],["50","50"],["33","33","34"],["25","25","25","25"]];
+    var n = -1;
+    with (document.forms[0]) {
+      if (checkPresent(split_1_clientno,split_1_company)) n++;
+      if (checkPresent(split_2_clientno,split_2_company)) n++;
+      if (checkPresent(split_3_clientno,split_3_company)) n++;
+      if (checkPresent(split_4_clientno,split_4_company)) n++;
+      if (n > -1) {
+         var i = 0;
+         if (checkPresent(split_1_clientno,split_1_company)) split_1_weight.value = splits[n][i++];
+         if (checkPresent(split_2_clientno,split_2_company)) split_2_weight.value = splits[n][i++];
+         if (checkPresent(split_3_clientno,split_3_company)) split_3_weight.value = splits[n][i++];
+         if (checkPresent(split_4_clientno,split_4_company)) split_4_weight.value = splits[n][i++];
+      }
+    }
+    return n;
+}
+
+function checkPresent(x,y) {
+    var retVal = false;
+    if (chkindividual(x) ||chkindividual(y)) retVal = true; 
+    return retVal;
+}
+
+function chkindividual(x) {
+    var retVal = false;
+    if (x.selectedIndex > 0) retVal = true;
+    return retVal;
+}
+
+
+</script>
+
+</body>
+</html>

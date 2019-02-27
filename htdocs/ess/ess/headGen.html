@@ -1,0 +1,312 @@
+<!--
+HeadGen.html - purpose screen for audit 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Expense Purpose</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript:void FillForm(); init();">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%" class="offsetColor">
+  <tr>
+    <td width="100%"><big><em><div class="ExpenseTag"><big><span id="expensePur">Expense Purpose</span></big></div></em></big></td>
+  </tr>
+</table>
+
+<form>
+<input type="hidden" name="PURPOSE" value="XXX">
+<input type="hidden" name="VOUCHER" value>
+<input type="hidden" name="DAYS" value>
+<input type="hidden" name="NIGHTS" value>
+<input type="hidden" name="EXTENDED" value>
+<input type="hidden" name="TIMESLIP" value>
+<input type="hidden" name="persistance" value>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%"
+      height="240">
+        <tr>
+          <td width="25%" class="offsetColor" height="25"><div class="ExpenseTag"><p><span id="visitFro">Visit From</span>:</p>
+          </div></td>
+          <td width="40%" class="offsetColor" height="25"><input type="text" name="BEG_DATE" size="8"
+          value="mm/dd/yy" mysubst="1" onChange="checkdate(document.forms[0].BEG_DATE)"><a
+          HREF="javascript:doNothing()" mysubst="2"
+          onClick="setDateField(document.forms[0].BEG_DATE); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+          SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+          <td width="35%" class="offsetColor"><div align="right"></div></td>
+        </tr>
+        <tr>
+          <td width="25%" height="25"><div class="ExpenseTag"><p><span id="to">To</span>:</p>
+          </div></td>
+          <td width="40%" height="25"><input type="text" name="END_DATE" size="8" value="mm/dd/yy"
+          mysubst="3" onChange="checkdate(document.forms[0].END_DATE)"><a
+          HREF="javascript:doNothing()" mysubst="4"
+          onClick="setDateField(document.forms[0].END_DATE); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img
+          SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+          <td width="35%"></td>
+        </tr>
+        <tr>
+          <td width="25%" class="offsetColor"><div class="ExpenseTag"><p><span id="acctProNum">Acct/Project #</span>:</p>
+          </div></td>
+          <td width="40%" class="offsetColor"><input type="text" name="PROJECT" size="12" mysubst="5" onChange="clientFromProjectNo()">
+          </td>
+          <td width="35%" class="offsetColor" align="right"><a class="ExpenseLink"
+          href="javascript:doNothing()" mysubst="6"
+          onClick="setLocalObj(document.forms[0].projectname,'addproject2',400,200); MerchantType = 'file'; top.newWin = window.open('../addproject2.html', 'merchant', 'dependent=yes, width=360, height=200 screenX=100, screenY=100, titlebar=yes, menubar=no, status=no')"><span id="newAcctProj">New&nbsp;Acct/Project&nbsp;</span></a>
+          <select name="projectname" size="1" mysubst="5" onChange="populateProject()"
+          onReturn="populateProject()" subtype="nosave">
+          </select> </td>
+        </tr>
+        <tr>
+          <td width="25%" height="26"><div class="ExpenseTag"><p><span id="clientNum">Client #</span>:</p>
+          </div></td>
+          <td width="40%" height="26"><input type="text" name="CLIENTNO" size="12" mysubst="7"
+          onChange="clientFromClientNo()"> </td>
+          <td width="35%" align="right"><a class="ExpenseLink" href="javascript:doNothing()"
+          mysubst="8"
+          onClick="setLocalObj(document.forms[0].clientLookup,'addclient',400,450); MerchantType = 'client'; top.newWin = window.open('../addclient.html', 'merchant', 'dependent=yes, width=400, height=400, screenX=100, screenY=100, titlebar=yes, menubar=no, status=no')"><span id="newClientNum">New&nbsp;Client&nbsp;</span></a>
+          <select name="clientLookup" size="1" mysubst="5" onChange="populateClient()"
+          onReturn="populateClient()">
+          </select> </td>
+        </tr>
+        <tr>
+          <td width="25%" class="offsetColor" height="25"><div class="ExpenseTag"><p><span id="clientNam">Client Name</span>:</p>
+          </div></td>
+          <td width="40%" class="offsetColor" height="25"><input type="text" name="CLIENT" size="31"
+          mysubst="9"></td>
+          <td width="35%" class="offsetColor"></td>
+        </tr>
+        <tr>
+          <td width="25%" height="26"><div class="ExpenseTag"><p><span id="location">Location</span>:</p>
+          </div></td>
+          <td width="40%" height="26"><input type="text" name="LOCATION" size="30" mysubst="10"> </td>
+          <td width="35%" align="right"><a class="ExpenseLink" href="javascript:doNothing()"
+          mysubst="11"
+          onClick="setLocalObj(document.forms[0].locationname); MerchantType = 'location'; top.newWin = window.open('../addmerchant.html', 'merchant', 'dependent=yes, width=200, height=150, screenX=100, screenY=100, titlebar=yes, menubar=no, status=no')"><span id="newLocation">New&nbsp;Location&nbsp;</span></a>
+          <select name="locationname" size="1" mysubst="10" onChange="populateLocation()"
+          onReturn="populateLocation()" subtype="nosave">
+          </select> </td>
+        </tr>
+        <tr>
+          <td width="25%" class="offsetColor" height="113"><div class="ExpenseTag"><p><span id="tripPurReaExp">Trip Purpose or
+          Reason for Expense</span>:</p>
+          </div></td>
+          <td width="40%" class="offsetColor" height="113"><textarea rows="4" name="COMMENT" cols="37"
+          mysubst="12"></textarea></td>
+          <td width="35%" class="offsetColor"></td>
+        </tr>
+        <tr>
+          <td width="25%"><div class="ExpenseTag"><span id="stepNo"><script>document.write(parent.contents.getStepName())</script></span>:</div></td>
+          <td width="40%"><select name="STEPNO" size="1">
+          </select>
+          </td>
+          <td width="35%"></td>
+        </tr>
+</table>
+  <p><input type="button" value="Update report with this purpos" name="headChgSubmit" id="headChgSubmit" mysubst="9" onClick="Javascript: void SubmitRec()"></p>
+</form>
+<p align="right"><a href="javascript: void history.go(-2)" mysubst="10"><em><strong><span id="returnRepDis">Return to report display</span></strong></em></a></p>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script language="javascript">
+
+function init() {
+    document.getElementById("expensePur").innerHTML = parent.contents.getJSX("expensePur");
+	document.getElementById("visitFro").innerHTML = parent.contents.getJSX("beginningDate");
+	document.getElementById("to").innerHTML = parent.contents.getJSX("endingDate");
+	document.getElementById("acctProNum").innerHTML = parent.contents.getJSX("Project/Acct");
+	document.getElementById("newAcctProj").innerHTML = parent.contents.getJSX("newAcctProj");
+	document.getElementById("clientNum").innerHTML = parent.contents.getJSX("clientno");
+	document.getElementById("newClientNum").innerHTML = parent.contents.getJSX("newClient");
+	document.getElementById("clientNam").innerHTML = parent.contents.getJSX("client");
+	document.getElementById("location").innerHTML = parent.contents.getJSX("location");
+	document.getElementById("newLocation").innerHTML = parent.contents.getJSX("newLocation");
+	document.getElementById("tripPurReaExp").innerHTML = parent.contents.getJSX("purpose");
+	document.getElementById("stepNo").innerHTML = parent.contents.getJSX("stepNo");
+	
+	document.getElementById("returnRepDis").innerHTML = parent.contents.getJSX("returnRepDis");
+	document.getElementById("headChgSubmit").value = parent.contents.getJSX("updateWithPurpose");
+}
+
+function getJSX(xTrans)
+{
+	var xx = parent.contents.getJSX(xTrans);
+	return xx;
+}
+
+
+function FillForm() {
+  document.forms[0].projectname.subtype = "nosave";  //needed for Mozilla
+  document.forms[0].locationname.subtype = "nosave";
+
+  document.forms[0].PURPOSE.value = "XXX";
+
+// Need to 
+
+  parent.contents.setListWKeyWPers(document.forms[0].projectname,parent.contents.getProjectNos("1"),"file","project","title");
+  //parent.contents.setListWKeyWPersW2nd(document.forms[0].projectname,parent.contents.getProjectNos("1"),"file","project","title",parent.contents.getDeparts("1"));
+
+  parent.contents.setList(document.forms[0].STEPNO,parent.contents.getStepNos("1"));
+
+  //parent.contents.setListDefault(document.forms[0].STEPNO, parent.contents.getDefault("head2a.stepno"));
+
+  parent.contents.setClientLookup(document.forms[0].clientLookup);
+
+  parent.contents.setDefaultDate(document.forms[0].BEG_DATE,-2);
+  parent.contents.setDefaultDate(document.forms[0].END_DATE,-1);
+  MerchantType = "location";
+  parent.contents.setListWithPers(document.forms[0].locationname, parent.contents.getLocations("1"),MerchantType);
+  document.forms[0].persistance.value = "none";
+  parent.contents.setTransaction(document.forms[0]);
+  document.forms[0].BEG_DATE.focus();
+}
+
+function applyUpdate(obj) {
+  if (parent.contents.isNew()) {
+    obj.value = "insert";
+  } else {
+    if (obj.value == "none") {
+      obj.value = "update";
+    }
+  }
+}
+
+function SubmitRec() {
+  if (checkdate(document.forms[0].BEG_DATE) &&
+      checkdate(document.forms[0].END_DATE) &&
+      doDateCheck(document.forms[0].BEG_DATE.value, document.forms[0].END_DATE.value) &&
+      checkPurpComment(document.forms[0].COMMENT)) { 
+       if (document.forms[0].PURPOSE.value == "XXX") document.forms[0].PURPOSE.value = "" + parent.contents.NextXref("PURPOSE",8); 
+    applyUpdate(document.forms[0].persistance);
+    parent.contents.UpdateReport('1','headGen'); 
+    if (parent.contents.DirectEdit) {
+       parent.contents.NeedAReport(parent.contents.defaultHome + 'setReportItem.html');
+    } else {
+       parent.contents.ListDelay();
+    }
+  }
+}
+//==============  
+  
+function checkPurpComment(object) {
+        check = parent.contents.alltrim(object.value);
+        if (check.length > 9) {
+                return true;
+        } else
+        alert("Need to supply a purpose of at least 10 characters");
+        object.focus();
+        object.select();
+        return false;
+}
+
+function checkProject(x) {
+  return parent.contents.checkProject(x);
+}
+
+function checkClientNo(x) {
+  return parent.contents.checkClientNo(x);
+}
+
+
+function LookupCleanup() {
+  document.forms[0].clientLookup.selectedIndex = 0;
+}
+
+function clientFromProjectNo() {
+    var Project = document.forms[0].PROJECT;
+    for (var i = 0; i < document.forms[0].projectname.options.length; i++) {
+        if (Project.value == document.forms[0].projectname.options[i].value) {
+            document.forms[0].projectname.selectedIndex = i;
+            populateProject();
+            i = document.forms[0].projectname.options.length;
+        }
+    }
+}
+
+
+function clientFromClientNo() {
+    var Clientno = document.forms[0].CLIENTNO;
+    var Client = document.forms[0].CLIENTNO;
+    for (var i = 0; i < document.forms[0].clientLookup.options.length; i++) {
+        if (Clientno.value == document.forms[0].clientLookup.options[i].value) {
+            document.forms[0].clientLookup.selectedIndex = i;
+            populateClient();
+            i = document.forms[0].clientLookup.options.length;
+        }
+    }
+}
+
+function populateClient() {
+  if (document.forms[0].clientLookup.selectedIndex > -1) {
+    document.forms[0].CLIENTNO.value = document.forms[0].clientLookup.options[document.forms[0].clientLookup.selectedIndex].value;
+    document.forms[0].CLIENT.value = document.forms[0].clientLookup.options[document.forms[0].clientLookup.selectedIndex].text;
+    var X = parent.contents.getDBSingle(parent.PersDBase,"client","clientno",document.forms[0].CLIENTNO.value);
+    var Y;
+    if (X[0] && X[0].length != null) {
+    for (var i = 0; i < X[0].length; i++) {
+      Y = X[0][i][0];
+      if(Y == "location") {
+        document.forms[0].LOCATION.value = X[0][i][1];
+      }
+    }
+    }
+    document.forms[0].clientLookup.selectedIndex = 0;
+  }
+}   
+
+function populateLocation() {
+  with (document.forms[0]) {
+    if (locationname.selectedIndex > -1) {  
+      LOCATION.value = locationname.options[locationname.selectedIndex].text;
+      locationname.selectedIndex = 0;
+    }
+  }
+}  
+  
+//==============
+function populateProject() {
+  if (document.forms[0].projectname.selectedIndex > -1) {
+    document.forms[0].PROJECT.value = document.forms[0].projectname.options[document.forms[0].projectname.selectedIndex].value;
+    var X = parent.contents.getDBSingle(parent.PersDBase,"file","project",document.forms[0].PROJECT.value);
+    var Y;
+    if (X[0] && X[0].length != null) {
+      for (var i = 0; i < X[0].length; i++) {
+        Y = X[0][i][0];
+        if(Y == "clientno") {
+            document.forms[0].CLIENTNO.value = X[0][i][1];
+            i = X[0].length;
+        }
+      }
+    }
+    for (var i = 0; i < document.forms[0].clientLookup.options.length; i++) {
+        if (document.forms[0].CLIENTNO.value == document.forms[0].clientLookup.options[i].value) {
+            document.forms[0].clientLookup.selectedIndex = i;
+            populateClient();
+            i = document.forms[0].clientLookup.options.length;
+        }
+    }
+    document.forms[0].projectname.selectedIndex = 0;
+  }
+}
+
+
+</script>
+
+</body>
+</html>

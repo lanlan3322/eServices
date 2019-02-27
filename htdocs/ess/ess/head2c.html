@@ -1,0 +1,166 @@
+<!--
+head2c.html - purpose with billing option
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Expense Purpose</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript:void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('hhead2as.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%" class="offsetColor">
+  <tr>
+    <td width="100%"><big><em><div class="ExpenseTag"><big>Enter a purpose for this report </big></div></em></big></td>
+  </tr>
+</table>
+
+<p>(you can enter multiple purposes for a single report) </p>
+
+<form>
+  <input type="hidden" name="xref" value>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td width="23%" class="offsetColor" height="25"><div class="ExpenseTag">Visit From:</div></td>
+          <td width="77%" class="offsetColor" height="25"><input type="text" name="begdate" size="8" value="mm/dd/yy" mysubst="1" onChange="checkdate(document.forms[0].begdate)"><a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].begdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+        </tr>
+        <tr>
+          <td width="23%" height="25"><div class="ExpenseTag">To:</div></td>
+          <td width="77%" height="25"><input type="text" name="enddate" size="8" value="mm/dd/yy" mysubst="3" onChange="checkdate(document.forms[0].enddate)"><a HREF="javascript:doNothing()" mysubst="4" onClick="setDateField(document.forms[0].enddate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+        </tr>
+        <tr>
+          <td width="23%" height="25" class="offsetColor"><div class="ExpenseTag">Client #:</div></td>
+          <td width="77%" height="25" class="offsetColor">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+          <td width="33%">
+          <select name="clientno" size="1" mysubst="5" onChange="populateClientLoc()">
+          </select>
+          </td>
+          <td class="ExpenseLink" width="67%" align="right">Lookup&nbsp;: 
+          <select name="clientLookup" size="1" mysubst="5" onChange="populateClientNo()" onBlur="LookupCleanup()">
+          </select>
+          </td>
+          </tr></table>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="23%" height="25"><div class="ExpenseTag">Client Name:</div></td>
+          <td width="77%" height="25"><input type="text" name="client" size="40" mysubst="6">
+          </select></td>
+        </tr>
+        <tr>
+          <td width="23%" height="26" class="offsetColor"><div class="ExpenseTag">Location:</div></td>
+          <td width="77%" height="26" class="offsetColor"><select name="location" size="1" mysubst="10">
+          </select>
+          <a class="ExpenseLink" href="javascript:doNothing()" mysubst="11" onClick="setLocalObj(document.forms[0].location); MerchantType = 'location';">&nbsp;New Location</a>
+          </td>
+        </tr>
+        <tr>
+          <td width="23%" height="113"><div class="ExpenseTag">Purpose or Individuals: </div></td>
+          <td width="77%" height="113"><textarea rows="4" name="comment" cols="37" mysubst="8"></textarea></td>
+        </tr>
+        <tr>
+          <td width="23%" height="25" class="offsetColor"><div class="ExpenseTag">Client Billable:</div></td>
+          <td width="77%" height="25" class="offsetColor"><select name="billtype" size="1" mysubst="13">
+            <option value="Yes">Yes</option>
+            <option selected value="No">No</option>
+          </select></td>
+        </tr>
+</table>
+  <p><input type="button" value="Update report with this purpose" name=" " mysubst="9" onClick="Javascript: void SubmitRec()" onDblClick="parent.contents.dupFlagOK = false"></p>
+</form>
+<p align="right"><a href="javascript: void parent.contents.ListDelay()" mysubst="10"><em><strong>Return to report display</strong></em></a></p>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script language="javascript">
+function FillForm() {
+  document.forms[0].xref.value = "XXX";    
+  parent.contents.setListWithValue(document.forms[0].clientno, parent.contents.getClientNos("1"));
+  parent.contents.setClientLookup(document.forms[0].clientLookup);
+  parent.contents.setDefaultDate(document.forms[0].begdate,-2);
+  parent.contents.setDefaultDate(document.forms[0].enddate,-1);
+  MerchantType = "location";
+  parent.contents.setListWithPers(document.forms[0].location, parent.contents.getLocations("1"),MerchantType);
+  parent.contents.setTransaction(document.forms[0]);
+  document.forms[0].begdate.focus();
+}
+
+function populateClientLoc() {
+  if (document.forms[0].clientno.selectedIndex == 0) {
+    document.forms[0].client.readOnly = false;
+    document.forms[0].location.readOnly = false;
+    document.forms[0].billtype.selectedIndex = 1;
+  } else {
+    document.forms[0].client.value = document.forms[0].clientno.options[document.forms[0].clientno.selectedIndex].value;
+    document.forms[0].client.readOnly = true;
+    document.forms[0].billtype.selectedIndex = 0;
+  }
+}             
+
+function SubmitRec() {
+  if (checkBillable() &&
+      checkdate(document.forms[0].begdate) &&
+      checkdate(document.forms[0].enddate) &&
+      doDateCheck(document.forms[0].begdate.value, document.forms[0].enddate.value) &&
+      checkPurpComment(document.forms[0].comment)) {   //edit check would go here
+    if (document.forms[0].xref.value == "XXX") document.forms[0].xref.value = "" + parent.contents.NextXref();
+    parent.contents.UpdateReport('1','head2a'); 
+    if (parent.contents.HeadList.length == 1) {
+       var r = parent.contents.setNameValue(parent.contents.Header, "comment", document.forms[0].comment.value);     
+    }
+    parent.contents.ListDelay();
+  }
+}
+
+function checkBillable() {
+  with (document.forms[0]) {
+    if (billtype.options[billtype.selectedIndex].text == "Yes" && clientno.selectedIndex == 0) {
+      alert("Must specifiy client number if billable is 'Yes'");
+      return false;
+    }
+  }
+  return true;
+}
+  
+function checkPurpComment(object) {
+        check = parent.contents.alltrim(object.value);
+        if (check.length > 9) {
+                return true;
+        } else
+        alert("Need to supply a purpose of at least 10 characters");
+        object.focus();
+        object.select();
+}
+
+function populateClientNo() {
+  with (document.forms[0]) {
+    if (clientLookup.selectedIndex > 0) {  
+      parent.contents.setListDefault(clientno, clientLookup.options[clientLookup.selectedIndex].value);
+      populateClientLoc();
+    }
+  }
+}
+
+function LookupCleanup() {
+  document.forms[0].clientLookup.selectedIndex = 0;
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!--
+submitWithGuide.html - submits to the guide check which links to a report
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Submit XML Test </title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="XSubmit()">
+
+<form method="post" action="SubmitwithGuide.jsp">
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="report" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="displayText" value>
+  <input type="hidden" name="status" value>
+  <input type="hidden" name="reference" value>
+  <input type="hidden" name="ccode" value>
+  <input type="hidden" name="submitMethod" value>
+
+  <p>Accessing server to fetch submit screen...</p>
+
+</form>
+<script language="JavaScript">
+
+function Submit() {
+  if (parent.contents.HeadList.length > 0) {
+    var DateObj = new Date();
+    parent.contents.setDBPair(parent.PersDBase,"last_save",DateObj.toString());
+    var status = parent.contents.getNameValue(parent.contents.Header,"status");
+    if (status == "" || status == "Not Saved") status = "New";
+    document.forms[0].status.value = status;
+    var reference = parent.contents.getNameValue(parent.contents.Header, "reference");
+    document.forms[0].reference.value = reference;
+    document.forms[0].ccode.value = parent.CCode;
+    document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+    document.forms[0].database.value = parent.database;
+    document.forms[0].report.value = parent.contents.CreateXML();
+    document.forms[0].displayText.value ="<div align=\"left\"><p><big>This screen will send your report to the Expense mailbox to initiate electronic approval in preparation for reimbursement processing.  Please make sure that you:</big></p><p><big>1. Place all required receipts, if applicable, in a receipt envelope.</big></p><p><big>2. Write your Name, Dept. No.,  Personnel No., Personal reference no. and Date Created on the envelope.</big></p><p><big>3. Forward your envelope to the expense report processing department.</big></p><p><big>Click on the button below . . .</big></p><p>&nbsp;</p></div>"
+    document.forms[0].submitMethod.value = "submitFromGuideChk.html";
+    parent.contents.SetLocal()
+    document.forms[0].action = parent.contents.defaultApps + "SubmitwithGuide.jsp";
+    document.forms[0].submit();
+  } else {
+    alert("You cannot proceed with this option!\n\nThe current report doesn't contain any report purpose.\nIf you have entered data on a form, ensure\nthat you have clicked the grey button.\nOtherwise you will lose your data.");
+  }
+}
+
+function XSubmit() {
+var x = setTimeout("Submit()",2000);
+}
+</script>
+
+</body>
+</html>

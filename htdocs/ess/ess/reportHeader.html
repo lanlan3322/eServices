@@ -1,0 +1,342 @@
+<!--
+reportHeader.html - Edit the report header by Audit
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Report Header Information</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void loadValues(); init();">
+<big><big>
+
+<p><h1><span id="reportHedInf">Report Header Information</span></h1></p>
+
+<form onReset="return HandleReset()"> 
+  <table border="0" width="100%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="1" cellpadding="0">
+    <input type="hidden" name="RP_STAT" value>
+    <input type="hidden" name="COMPANY" value>
+    <input type="hidden" name="persistance" value>
+    <tr>
+      <td width="39%"><div class="ExpenseTag"><span id="reportStatus">Report Status</span>:</div></td>
+      <td width="61%"><select name="reportStatus" nosave="yes" size="1"></select></td>
+    </tr>
+    <tr>
+      <td width="39%" class="offsetColor"><div class="ExpenseTag"><span id="persnum">Personnel Number</span>:</div></td>
+      <td width="61%" class="offsetColor"><input type="text" name="PERS_NUM" size="14" readOnly="true">
+      <a class="ExpenseLink" href="javascript:doNothing()"
+          onClick="setLocalJsp(document.forms[0].PERS_NUM,'UserInfo',900,300);MerchantType = 'user'"><sm><em><span id="correctIt">Correct it!</span></em></sm></a>
+    </td>
+    </tr>
+    <tr>
+      <td width="39%"><div class="ExpenseTag"><span id="name">Name</span>:</div></td>
+      <td width="61%"><input type="text" name="NAME" size="26" readOnly="true"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="offsetColor"><div class="ExpenseTag"><span id="phone">Phone</span>:</div></td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor"><input type="text" name="PHONE" size="17"></td>
+    </tr>
+    <tr>
+      <td width="25%"><div class="ExpenseTag"><span id="location">Location</span>:</div></td>
+      <td width="75%"><input type="text" name="LOCATION" size="20"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="offsetColor"><div class="ExpenseTag"><span id="departement">Department</span>:</div></td>
+      <td width="75%" class="offsetColor"><input type="text" name="DEPART" size="20" onChange="departMapping(DEPART, departname)">
+      <a class="ExpenseLink" href="javascript:doNothing()"
+          onClick="setDepartObj(document.forms[0].DEPART,document.forms[0].departname,'DepartmentSelect',900,300,document.forms[0].COMPANY);MerchantType = 'depart'"><sm><em><span id="lookUp">Lookup!</span></em></sm></a>
+      &nbsp;&nbsp;<input type="text" name="departname" size="24" tabindex="-1" readOnly="yes">
+      </td>
+    </tr>
+    <tr>
+      <td width="25%"><div class="ExpenseTag"><span id="reportDate">Report Date</span>:</div></td>
+      <td width="75%"><input type="text" name="CRE_DATE" size="16"><a HREF="javascript:doNothing()" tabindex onClick="setDateField(document.forms[0].CRE_DATE); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+    </tr>
+    <tr>
+      <td width="25%" class="offsetColor"><div class="ExpenseTag"><span id="comment">Comment</span>:</div></td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor"><input type="text" name="COMMENT" size="35"></td>
+    </tr>
+    <tr>
+      <td width="25%"><div class="ExpenseTag"><span id="receiptsRec">Receipts Received</span>:</div></td>
+      <td width="75%"><input type="text" name="RECEIVED" size="10" value tabindex="1" onChange="checkdate(this.form.RECEIVED)"> <a HREF="javascript:doNothing()" onClick="setDateField(document.forms[0].RECEIVED);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"> </a></td>
+    </tr>
+    <tr>
+      <td width="25%" class="offsetColor"><div class="ExpenseTag"><span id="weekEnd">Week Ending</span>:</div></td>
+      <td width="75%" class="offsetColor"><input type="text" name="WEEKEND" size="10" value tabindex="1" onChange="checkdate(this.form.WEEKEND)"> <a HREF="javascript:doNothing()" onClick="setDateField(document.forms[0].WEEKEND);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"> </a></td>
+    </tr>
+    <tr>
+      <td width="25%"><div class="ExpenseTag"><span id="vehiclleNo">Vehicle No.</span>:</div></td>
+      <td width="75%"><input type="text" name="VEHICLE" size="8" tabindex="3"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="offsetColor"><div class="ExpenseTag"><span id="dateSer">Date Put In Service</span>:</div></td>
+      <td width="75%" class="offsetColor"><input type="text" name="SERVDATE" size="10" value tabindex="4" onChange="checkdate(this.form.SERVDATE)"> <a HREF="javascript:doNothing()" tabindex="5" onClick="setDateField(document.forms[0].SERVDATE);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"> </a></td>
+    </tr>
+    <tr>
+      <td width="25%"><div class="ExpenseTag"><span id="reportCur">Report Currency</span>:</div></td>
+      <td width="75%"><select name="CURRENCY" size="1"></select></td>
+    </tr>
+
+    </table>
+    <p><span id="enterOdoInf">(Enter odometer information)</span></p>
+    <table class="offsetColor" border="0" width="73%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" height="34">
+    <tr>
+      <td width="25%" height="28" class="offsetColor"><div class="ExpenseTag"><span id="start2">Start</span>:</div></td>
+      <td width="20%" height="28" class="offsetColor"><input type="text" name="START" value="0" onChange="calcAdj(this.form.START, this.form.FINISH); calcAdd(this.form.START, this.form.FINISH, this.form.odototal)" size="10" tabindex="6"> </td>
+      <td width="20%" height="28" class="offsetColor"><div class="ExpenseTag"><span id="finish">Finish</span>:</div></td>
+      <td width="35%" height="28" class="offsetColor"><input type="text" name="FINISH" value="0" size="10" tabindex="7" onChange="calcAdd(this.form.START, this.form.FINISH, this.form.odototal)"> </td>
+    </tr>
+  </table>
+  <table border="0" width="73%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="0" cellpadding="2">
+    <tr>
+      <td width="25%"><div class="ExpenseTag"><span id="total">Total</span>:</div></td>
+      <td width="75%"><input type="text" name="odototal" size="8" readonly="yes"></td>
+    </tr>
+    <tr>
+      <td width="25%" class="offsetColor"><div class="ExpenseTag"><span id="business">Business</span>:</div></td>
+      <td width="75%" class="offsetColor"><input type="text" name="BUSINESS" size="8" tabindex="8"></td>
+    </tr>
+
+
+
+  </table>
+  <p>
+  	<input id="butOkAcc" type="button" value="OK - Accept any Changes" name=" " tabindex onClick="Javascript: void updateValues()">
+  	<input id="butReset" type="reset" value="Reset" name="B2" tabindex>
+  </p>
+</form>
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void history.go(-2)"><span id="returnRepDis">Return to report display</span></a></p>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../adddepart.js"></script>
+<script language="Javascript">
+
+function init() {
+	document.getElementById("reportHedInf").innerHTML = parent.contents.getJSX("reportHedInf");
+	document.getElementById("reportStatus").innerHTML = parent.contents.getJSX("reportStatus");
+	document.getElementById("persnum").innerHTML = parent.contents.getJSX("persnum");
+	document.getElementById("correctIt").innerHTML = parent.contents.getJSX("correctIt");
+	document.getElementById("name").innerHTML = parent.contents.getJSX("name");
+	document.getElementById("phone").innerHTML = parent.contents.getJSX("phone");
+	document.getElementById("location").innerHTML = parent.contents.getJSX("location");
+	document.getElementById("departement").innerHTML = parent.contents.getJSX("departement");
+	document.getElementById("lookUp").innerHTML = parent.contents.getJSX("lookUp");
+	document.getElementById("reportDate").innerHTML = parent.contents.getJSX("reportDate");
+	document.getElementById("comment").innerHTML = parent.contents.getJSX("comment");
+	document.getElementById("receiptsRec").innerHTML = parent.contents.getJSX("receiptsRec");
+	document.getElementById("weekEnd").innerHTML = parent.contents.getJSX("weekEnd");
+	document.getElementById("vehiclleNo").innerHTML = parent.contents.getJSX("vehiclleNo");
+	document.getElementById("dateSer").innerHTML = parent.contents.getJSX("dateSer");
+	document.getElementById("reportCur").innerHTML = parent.contents.getJSX("reportCur");
+	document.getElementById("enterOdoInf").innerHTML = parent.contents.getJSX("enterOdoInf");
+	document.getElementById("start2").innerHTML = parent.contents.getJSX("start2");
+	document.getElementById("finish").innerHTML = parent.contents.getJSX("finish");
+	document.getElementById("total").innerHTML = parent.contents.getJSX("total");
+	document.getElementById("business").innerHTML = parent.contents.getJSX("business");
+	document.getElementById("returnRepDis").innerHTML = parent.contents.getJSX("returnRepDis");
+	document.getElementById("accessCenDatEmp").innerHTML = parent.contents.getJSX("accessCenDatEmp");
+	document.getElementById("selectLasNamSta").innerHTML = parent.contents.getJSX("selectLasNamSta");
+	
+	document.getElementById("butOkAcc").value = parent.contents.getJSX("butOkAcc");
+	document.getElementById("butReset").value = parent.contents.getJSX("butReset");
+	document.getElementById("butSea").value = parent.contents.getJSX("butSea");
+}
+
+function loadValues() {
+//  parent.contents.setListWithValue(document.forms[0].reportStatus, parent.contents.getStatusTable(),1,0);
+  parent.contents.setXLationWithValue (document.forms[0].reportStatus, parent.contents.statusTable, 1, 0);
+  var xstat = parent.contents.getNameValue(parent.contents.Header, "RP_STAT");
+  parent.contents.setListDfltWVal(document.forms[0].reportStatus,xstat);
+  document.forms[0].PERS_NUM.value = parent.contents.getNameValue(parent.contents.Header, "PERS_NUM");
+  var merchArray = new Array(1);  //Probably want to change this field type....
+  merchArray[0] = parent.contents.getDBValue(parent.Header,"persnum");
+  var workArray = parent.contents.getDBResult(parent.PersDBase,"reporter");
+  for (var i = 0; i < workArray.length; i++) {
+    workArray[i] = workArray[i][0][1];
+  }
+  var mArray = merchArray.concat(workArray);
+  document.forms[0].NAME.value = parent.contents.getNameValue(parent.contents.Header, "NAME");
+  document.forms[0].PHONE.value = parent.contents.getNameValue(parent.contents.Header, "PHONE");
+  document.forms[0].LOCATION.value = parent.contents.getNameValue(parent.contents.Header, "LOCATION");
+  document.forms[0].DEPART.value = parent.contents.getNameValue(parent.contents.Header, "DEPART");
+  document.forms[0].COMPANY.value = parent.contents.getNameValue(parent.contents.Header, "COMPANY");
+  departMapping(document.forms[0].DEPART, document.forms[0].departname,document.forms[0].COMPANY);
+  document.forms[0].CRE_DATE.value = parent.contents.getNameValue(parent.contents.Header, "CRE_DATE");
+  document.forms[0].COMMENT.value = parent.contents.getNameValue(parent.contents.Header, "COMMENT");
+  document.forms[0].RECEIVED.value = parent.contents.getNameValue(parent.contents.Header, "RECEIVED");
+  document.forms[0].WEEKEND.value = parent.contents.getNameValue(parent.contents.Header, "WEEKEND");
+  document.forms[0].VEHICLE.value = parent.contents.getNameValue(parent.contents.Header, "VEHICLE");
+  document.forms[0].SERVDATE.value = parent.contents.getNameValue(parent.contents.Header, "SERVDATE");
+  parent.contents.setList(document.forms[0].CURRENCY, parent.contents.getCurrencies("1"));
+  var xcur = parent.contents.getNameValue(parent.contents.Header, "CURRENCY");
+  parent.contents.setListDefault(document.forms[0].CURRENCY,xcur);
+  document.forms[0].START.value = parent.contents.getNameValue(parent.contents.Header, "START");
+  document.forms[0].FINISH.value = parent.contents.getNameValue(parent.contents.Header, "FINISH");
+  document.forms[0].BUSINESS.value = parent.contents.getNameValue(parent.contents.Header, "BUSINESS");
+  document.forms[0].persistance.value = parent.contents.getNameValue(parent.contents.Header, "persistance");
+  if (document.forms[0].persistance.value == "") document.forms[0].persistance.value = "update";
+  calcAdd(document.forms[0].START,document.forms[0].FINISH,document.forms[0].odototal);
+}
+
+function HandleReset() {
+  loadValues();
+  return false;
+}
+
+function updateValues() {
+ with (document.forms[0]) {
+  if ((deptNotValid(departname)== false) 
+  && calcAdd(START,FINISH,odototal)
+  && ifMileagePresent(odototal,BUSINESS)
+  && businessOK(odototal,BUSINESS)
+  && parent.contents.setNameValue(parent.contents.Header, "RP_STAT", reportStatus.options[reportStatus.selectedIndex].value)
+  && parent.contents.setNameValue(parent.contents.Header, "PERS_NUM", PERS_NUM.value)
+  && parent.contents.setNameValue(parent.contents.Header, "NAME", NAME.value)
+  && parent.contents.setNameValue(parent.contents.Header, "PHONE", PHONE.value)
+  && parent.contents.setNameValue(parent.contents.Header, "LOCATION", LOCATION.value)
+  && parent.contents.setNameValue(parent.contents.Header, "DEPART", DEPART.value)
+  && parent.contents.setNameValue(parent.contents.Header, "CRE_DATE", CRE_DATE.value)
+  && parent.contents.setNameValue(parent.contents.Header, "COMMENT", COMMENT.value)
+  && parent.contents.setNameValue(parent.contents.Header, "RECEIVED", RECEIVED.value)
+  && parent.contents.setNameValue(parent.contents.Header, "WEEKEND", WEEKEND.value)
+  && parent.contents.setNameValue(parent.contents.Header, "VEHICLE", VEHICLE.value)
+  && parent.contents.setNameValue(parent.contents.Header, "SERVDATE", SERVDATE.value)
+  && parent.contents.setNameValue(parent.contents.Header, "CURRENCY", CURRENCY.options[CURRENCY.selectedIndex].text)
+  
+  && parent.contents.setNameValue(parent.contents.Header, "START", START.value)
+  && parent.contents.setNameValue(parent.contents.Header, "FINISH", FINISH.value)
+  && parent.contents.setNameValue(parent.contents.Header, "BUSINESS", BUSINESS.value)
+  && parent.contents.setNameValue(parent.contents.Header, "persistance", persistance.value)) {
+     parent.contents.setGeneralLimit(CURRENCY.options[CURRENCY.selectedIndex].text);
+     if (parent.contents.DirectEdit) {
+       parent.contents.NeedAReport(parent.contents.defaultHome + 'setReportItem.html')
+     } else {
+       parent.contents.ListDelay();  //was ListMemory
+     }
+  } else {
+     alert("Please correct data entry");
+  }
+ }
+}
+
+
+
+
+
+function calcAdj(tag1,tag2) {
+  var val1 = parseFloat(tag1.value);
+  var val2 = parseFloat(tag2.value);
+  if (val1 > 0 && val2 == 0) tag2.value = tag1.value;
+} 
+
+function businessOK(total1,business1) {
+  retVal = true;
+  var val1 = parseFloat(total1.value);
+  var val2 = parseFloat(business1.value);
+  if (val2 > val1 ||( isNaN(val1) && val2 > 0 ) ) {
+    alert("Business miles cannot be greater that the total miles!");
+    retVal = false;
+  } else if ( isNaN(val2) && parent.contents.rtrim(business1.value) != "") {
+    alert("Business miles field cannot have non-numeric data!");
+    retVal = false;  
+  }
+  
+  return retVal;
+}
+
+function checkVehicle(object) {
+        check = object.value;
+        if (check.length > 4) {
+                return true;
+        } else
+        alert("Need to supply a vehicle number of at least 5 characters");
+        object.focus();
+        object.select();
+        return false;
+}
+
+
+function ifMileagePresent(total1,business1) {
+ var retVal = true;
+ with (document.forms[0]) {
+  var val1 = parseFloat(total1.value);
+  var val2 = parseFloat(business1.value);
+  if (val2 > val1 ||( isNaN(val1) && val2 > 0 ) ) {
+    if (checkdate(WEEKEND)
+       && CheckSaturday(WEEKEND.value)
+       && checkVehicle(VEHICLE)
+       && doDateChkToday(SERVDATE)
+       && checkdate(SERVDATE)) {
+     retVal = false;
+    }
+  }
+ }
+ return retVal;
+}
+
+function calcAdd(tag1,tag2,tag3) {
+   var retVal = true;
+   var val1 = parseFloat(tag1.value);
+   var val2 = parseFloat(tag2.value);
+   var val3 = "0";
+   val3 = (val2 - val1);
+   if (isNaN(tag1.value) || isNaN(tag2.value) || val3 < "0") {
+       alert("Odometer Start value must be less than Finish value and be numeric." + val1 + ", " + val2 + ", " + val3);
+       retVal = false;
+   }
+   else {
+       if (isNaN(val3)) {
+         tag3.value = "";
+       } else {  
+         tag3.value = val3;
+         retVal = true;
+       } 
+   }
+   return retVal;
+}
+
+</script>
+  <form method="POST" action="UserSelect.jsp" onSubmit="SubmitSearch()">
+    <h2><span id="accessCenDatEmp">Access the central database for employee information.</span>
+    <br><br>
+    <span id="selectLasNamSta">Select last names starting with:&nbsp;</span>
+    <input type="text" name="lastname" size="16" value="A"> 
+    <input id="butSea" type="submit" value= "Search" name="Search"></h2>
+    <input type="hidden" name="email" value>
+    <input type="hidden" name="ccode" value>
+    <input type="hidden" name="database" value>
+  </form>
+  <script language=JavaScript>
+  function SubmitSearch() {
+    with(document.forms[1]) {
+    if (lastname.value.length >= 1 && lastname.value.substr(0,1) != "%") {
+       email.value = parent.contents.getNameValue(parent.Header, "email");
+       database.value = parent.database;
+       ccode.value = parent.CCode;
+       document.forms[1].action = parent.contents.defaultApps + "UserSelect.jsp";
+       return true;
+    } else {
+      alert("You must limit the search to at least one alphabetic letter");
+      return false;
+    }
+    }
+  }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!--
+selectXMLReport.html - requests the abbridged hardcopy
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Report hardcopy </title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="Javascript: void submitX()">
+
+<form method="POST" action="PrintReport.jsp">
+  <input type="hidden" name="report" value>
+  <input type="hidden" name="database" value>
+
+  <input type="hidden" name="email" value>
+  <input type="hidden" name="ccode" value>
+
+  <input type="hidden" name="ReportTitle" value="Yes">
+  <input type="hidden" name="ReportHead" value="Yes">
+  <input type="hidden" name="ReportTrip" value="Yes">
+  <input type="hidden" name="FleetExpenses" value="No">
+  <input type="hidden" name="AdvanceItems" value="Yes">
+  <input type="hidden" name="ReportRcpts" value="Yes">
+  <input type="hidden" name="ReportSumm" value="No">
+  <input type="hidden" name="ReportDept" value="No">
+  <input type="hidden" name="ReportGrid" value="No">
+  <input type="hidden" name="ReportGuide" value="No">
+  <input type="hidden" name="MoneyDue" value="Yes">
+  <input type="hidden" name="ReportAppr" value="No">
+  <div align="center"><p><div class="ExpenseTag"><em>The server is formatting your report...</em></div></p>
+  <p>&nbsp;</p>
+  </div>
+</form>
+<script language="JavaScript">
+
+function submitX() {
+  parent.contents.setTotalValues();
+
+  document.forms[0].database.value = parent.database;
+  document.forms[0].email.value = parent.contents.getNameValue(parent.Header, "email");
+  document.forms[0].ccode.value = parent.CCode;
+
+  parent.contents.SetLocal()
+  document.forms[0].report.value = parent.contents.CreateXML();
+  document.forms[0].action = parent.contents.defaultApps + "PrintReport.jsp";
+
+  document.forms[0].submit();
+}
+
+
+</script>
+
+</body>
+</html>

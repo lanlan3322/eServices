@@ -1,0 +1,442 @@
+<!--
+head2k.html - multiple client purpose with pre-approval
+Copyright (C) 2004,2008 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Multi-Project Purpose</title>
+<link rel="stylesheet" href="../expense.css" type="text/css">
+</head>
+
+<body onLoad="javascript:void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('hhead2b.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%" class="offsetColor">
+  <tr>
+    <td width="100%"><h1>Enter a purpose for this report<h1></td>
+  </tr>
+</table>
+
+<p>Use this screen to split any items attached to this prupose across several projects.<br>You can enter multiple purposes on a single report.</p>
+
+<form>
+  <input type="hidden" name="xref" value>
+  <input type="hidden" name="multiclient" value>
+
+  <input type="hidden" name="split_1_billtype">
+  <input type="hidden" name="split_2_billtype">
+  <input type="hidden" name="split_3_billtype">
+  <input type="hidden" name="split_4_billtype">
+
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td width="15%" class="offsetColor" height="25"><div class="ExpenseTag">Visit From:</div></td>
+      <td width="35%" class="offsetColor" height="25"><input type="text" name="begdate" size="8" value="mm/dd/yy" mysubst="1" onChange="checkdate(document.forms[0].begdate)"><a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].begdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><span class="ExpenseTinyLink">Popup Calendar</span></td>
+      <td width="50%" class="offsetColor" height="25" align="right">
+          <a class="ExpenseLink" href="javascript:doNothing()" mysubst="6" onClick="setLocalObj(document.forms[0].projectname,'addproject2',400,200); MerchantType = 'file'; top.newWin = window.open('../addproject2.html', 'merchant', 'dependent=yes, width=360, height=200 screenX=100, screenY=100, titlebar=yes, menubar=no, status=no')">New&nbsp;Acct/Project&nbsp;</a>
+          <select name="projectname" size="1" mysubst="5" onChange="populateProject()" onReturn="populateProject()" subtype="nosave">
+          </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="15%" height="25"><div class="ExpenseTag">To:</div></td>
+      <td width="35%" height="25"><input type="text" name="enddate" size="8" value="mm/dd/yy" mysubst="3" onChange="checkdate(document.forms[0].enddate)"><a HREF="javascript:doNothing()" mysubst="4" onClick="setDateField(document.forms[0].enddate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><span class="ExpenseTinyLink">Popup Calendar</span></td>
+      <td width="50%" height="25" align="right">
+          <a class="ExpenseLink" href="javascript:doNothing()" mysubst="8" onClick="setLocalObj(document.forms[0].clientLookup,'addclient',400,450); MerchantType = 'client'; top.newWin = window.open('../addclient.html', 'merchant', 'dependent=yes, width=400, height=400, screenX=100, screenY=100, titlebar=yes, menubar=no, status=no')">New&nbspClient&nbsp;</a>
+          <select name="clientLookup" size="1" mysubst="5" onChange="populateClient()" onReturn="populateClient()" subtype="nosave">
+          </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="15%" height="26" class="offsetColor"><div class="ExpenseTag">Location:</div></td>
+      <td width="35%" height="26" class="offsetColor"><input type="text" name="location" size="30" mysubst="10">
+      </td>
+      <td width="50%" class="offsetColor" height="25" align="right">
+          <a class="ExpenseLink" href="javascript:doNothing()" mysubst="11" onClick="setLocalObj(document.forms[0].locationname); MerchantType = 'location'; top.newWin = window.open('../addmerchant.html', 'merchant', 'dependent=yes, width=200, height=150, screenX=100, screenY=100, titlebar=yes, menubar=no, status=no')">New&nbsp;Location&nbsp;</a>
+          <select name="locationname" size="1" mysubst="10" onChange="populateLocation()" onReturn="populateLocation()" subtype="nosave">
+          </select>
+      </td>
+    </tr>
+    <tr>
+      <td width="15%" height="80"><div class="ExpenseTag">Trip Purpose or Reason for Expense:</div></td>
+      <td width="35%" height="80"><textarea rows="4" name="comment" cols="30" mysubst="8"></textarea></td>
+      <td width="50%" height="25">
+         <table border="0" cellpadding="0" cellspacing="0" width="100%">
+         <tr>
+           <td width="25%"></td>
+           <td width="75%">
+              <span class="ExpenseBody">To update a project or client number field below from the above lists, simply click on the field you want to update and then select an item from the appropriate list.  Indicate the percent in the split field or leave all split fields blank to split expenses evenly among the projects and clients.</span>
+           </td>             
+         </tr>
+         </table>
+      </td>
+    </tr>
+    <tr>
+       <td width="15%" class="offsetColor"><div class="ExpenseTag">Pre-approved:</div></td>
+       <td width="35%" class="offsetColor"><select name="stepno" size="1">
+            <option selected>No</option>
+            <option>Yes</option> 
+       </select>
+       </td>
+       <td width="50%" class="offsetColor"></td>
+    </tr>
+    <tr>
+      <td width="15%" height="25"></td>
+      <td width="35%" height="25"></td>
+      <td width="50%" height="25"></td>
+    </tr>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td width="25%" align="center"><div class="ExpenseTag">Acct/Project</div></td>
+      <td width="20%" align="center"><div class="ExpenseTag">Client #</div></td>
+      <td width="40%" align="center"><div class="ExpenseTag">Client Name</div></td>
+      <td width="15%" align="center"><div class="ExpenseTag">Split%</div></td>
+    </tr>
+    <tr align="center">
+      <td width="25%" class="offsetColor"><input type="text" name="split_1_project" size="16" mysubst="5" onChange="clientFromProjectNo(document.forms[0].split_1_project,document.forms[0].split_1_clientno,document.forms[0].split_1_client)" onBlur="saveProject(document.forms[0].split_1_project, document.forms[0].split_1_clientno, document.forms[0].split_1_client)">
+      </td>
+      <td width="20%" height="26" class="offsetColor"><input type="text" name="split_1_clientno" size="12" mysubst="7" onChange="clientFromClientNo(document.forms[0].split_1_clientno,document.forms[0].split_1_client)" onBlur="saveClient(document.forms[0].split_1_clientno, document.forms[0].split_1_client)">
+      </td>
+          <td width="40%" class="offsetColor" height="25"><input type="text" name="split_1_client" size="31" mysubst="9"></td>
+      <td width="15%" align="center" class="offsetColor"><input type="text" name="split_1_weight" size="3" mysubst="6"></td>
+    </tr>
+    <tr align="center">
+      <td width="25%" class="offsetColor"><input type="text" name="split_2_project" size="16" mysubst="5" onChange="clientFromProjectNo(document.forms[0].split_2_project,document.forms[0].split_2_clientno,document.forms[0].split_2_client)" onBlur="saveProject(document.forms[0].split_2_project, document.forms[0].split_2_clientno, document.forms[0].split_2_client)">
+      </td>
+      <td width="20%" height="26" class="offsetColor"><input type="text" name="split_2_clientno" size="12" mysubst="7" onChange="clientFromClientNo(document.forms[0].split_2_clientno,document.forms[0].split_2_client)" onBlur="saveClient(document.forms[0].split_2_clientno, document.forms[0].split_2_client)">
+      </td>
+      <td width="40%" class="offsetColor" height="25"><input type="text" name="split_2_client" size="31" mysubst="9"></td>
+      <td width="15%" align="center" class="offsetColor"><input type="text" name="split_2_weight" size="3" mysubst="6"></td>
+    </tr>
+    <tr align="center">
+      <td width="25%" class="offsetColor"><input type="text" name="split_3_project" size="16" mysubst="5" onChange="clientFromProjectNo(document.forms[0].split_3_project,document.forms[0].split_3_clientno,document.forms[0].split_3_client)" onBlur="saveProject(document.forms[0].split_3_project, document.forms[0].split_3_clientno, document.forms[0].split_3_client)">
+      </td>
+      <td width="20%" height="26" class="offsetColor"><input type="text" name="split_3_clientno" size="12" mysubst="7" onChange="clientFromClientNo(document.forms[0].split_3_clientno,document.forms[0].split_3_client)" onBlur="saveClient(document.forms[0].split_3_clientno, document.forms[0].split_3_client)">
+      </td>
+      <td width="40%" class="offsetColor" height="25"><input type="text" name="split_3_client" size="31" mysubst="9"></td>
+      <td width="15%" align="center" class="offsetColor"><input type="text" name="split_3_weight" size="3" mysubst="6"></td>
+    </tr>
+    <tr align="center">
+      <td width="25%" class="offsetColor"><input type="text" name="split_4_project" size="16" mysubst="5" onChange="clientFromProjectNo(document.forms[0].split_4_project,document.forms[0].split_4_clientno,document.forms[0].split_4_client)" onBlur="saveProject(document.forms[0].split_4_project, document.forms[0].split_4_clientno, document.forms[0].split_4_client)">
+      </td>
+      <td width="20%" height="26" class="offsetColor"><input type="text" name="split_4_clientno" size="12" mysubst="7" onChange="clientFromClientNo(document.forms[0].split_4_clientno,document.forms[0].split_4_client)" onBlur="saveClient(document.forms[0].split_4_clientno, document.forms[0].split_4_client)">
+      </td>
+      <td width="40%" class="offsetColor" height="25"><input type="text" name="split_4_client" size="31" mysubst="9"></td>
+      <td width="15%" align="center" class="offsetColor"><input type="text" name="split_4_weight" size="3" mysubst="6"></td>
+    </tr>
+  </table>
+  <div align="center"><center><p><input type="button" value="Update report with this purpose" name=" " mysubst="9" onClick="Javascript: void SubmitRec()" onDblClick="parent.contents.dupFlagOK = false"></p>
+  </center></div>
+</form>
+
+<a href="javascript: void parent.contents.ListDelay()" mysubst="10"><div align="center" class="ExpenseReturnLink">Return to report</div></a>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script language="javascript">
+
+
+var lastClientno = document.forms[0].split_1_clientno;
+var lastClient = document.forms[0].split_1_client;
+var lastProject = document.forms[0].split_1_project;
+
+function saveClient (objClientno, objClient) {
+    lastClientno = objClientno;
+    lastClient = objClient;
+}
+function saveProject(objProject, x, y) {
+    lastProject = objProject;
+    saveClient(x,y);
+}
+
+function FillForm() {
+  document.forms[0].projectname.subtype = "nosave";  //needed for Mozilla
+  document.forms[0].locationname.subtype = "nosave";
+  document.forms[0].clientLookup.subtype = "nosave";
+
+  document.forms[0].xref.value = "XXX";
+  parent.contents.setDefaultDate(document.forms[0].begdate,-2);
+  parent.contents.setDefaultDate(document.forms[0].enddate,-1);
+  // parent.contents.setListWKeyWPers(document.forms[0].projectname,parent.contents.getProjectNos("1"),"file","project","title");
+  parent.contents.setListWKeyWPersW2nd(document.forms[0].projectname,parent.contents.getProjectNos("1"),"file","project","title",[]);
+  parent.contents.setClientLookup(document.forms[0].clientLookup);
+  parent.contents.setListDefault(document.forms[0].stepno, parent.contents.getDefault("head2k.stepno"));
+  MerchantType = "location";
+  parent.contents.setListWithPers(document.forms[0].locationname, parent.contents.getLocations("1"),MerchantType);
+  parent.contents.setTransaction(document.forms[0]);
+  document.forms[0].begdate.focus();
+}
+
+function SubmitRec() {
+  if ((document.forms[0].xref.value.length == 0 || document.forms[0].xref.value == "XXX") && parent.contents.TailList.length > 0 && parent.contents.ListBuffer.length > 0) {
+    alert("Page load error has been detected\nYou cannot save this purpose\nPlease access menu item and try again\nIf problem persists, contact support");
+  } else {
+
+    var projx1 = parent.contents.rtrim(document.forms[0].split_1_project.value);
+    var projx2 = parent.contents.rtrim(document.forms[0].split_2_project.value);
+    var projx3 = parent.contents.rtrim(document.forms[0].split_3_project.value);
+    var projx4 = parent.contents.rtrim(document.forms[0].split_4_project.value);
+
+    if (checkdate(document.forms[0].begdate) &&
+      checkdate(document.forms[0].enddate) &&
+      CheckWeight() &&
+      doDateCheck(document.forms[0].begdate.value, document.forms[0].enddate.value) &&
+      (projx1.length == 0 || checkProject(projx1)) &&
+      (projx2.length == 0 || checkProject(projx2)) &&
+      (projx3.length == 0 || checkProject(projx3)) &&
+      (projx4.length == 0 || checkProject(projx4)) &&
+      checkPurpComment(document.forms[0].comment)) {   //edit check would go here
+        if (document.forms[0].xref.value == null || document.forms[0].xref.value == "XXX") document.forms[0].xref.value = "" + parent.contents.NextXref();
+        parent.contents.UpdateReport('1','head2k'); 
+        if (parent.contents.HeadList.length == 1) {
+          var r = parent.contents.setNameValue(parent.contents.Header, "comment", document.forms[0].comment.value);     
+        }
+        parent.contents.ListDelay();
+    }
+  }
+}
+
+function checkProject(x) {
+  return parent.contents.checkProject(x);
+}
+
+function checkClientNo(x) {
+  return parent.contents.checkClientNo(x);
+}
+
+function checkPurpComment(object) {
+        check = parent.contents.alltrim(object.value);
+        if (check.length > 9) {
+                return true;
+        } else
+        alert("Need to supply a purpose of at least 10 characters");
+        object.focus();
+        object.select();
+        return false;
+}
+
+function LookupCleanup() {
+  document.forms[0].clientLookup.selectedIndex = 0;
+}
+function populateClient() {
+  if (document.forms[0].clientLookup.selectedIndex > -1) {
+    lastClientno.value = document.forms[0].clientLookup.options[document.forms[0].clientLookup.selectedIndex].value;
+    lastClient.value = document.forms[0].clientLookup.options[document.forms[0].clientLookup.selectedIndex].text;
+    var X = parent.contents.getDBSingle(parent.PersDBase,"client","clientno",lastClientno.value);
+    var Y;
+    if (X[0] && X[0].length != null) {
+    for (var i = 0; i < X[0].length; i++) {
+      Y = X[0][i][0];
+      if(Y == "location") {
+        document.forms[0].location.value = X[0][i][1];
+      }
+    }
+    }
+    document.forms[0].clientLookup.selectedIndex = -1; //Changed from 0 2008-06-20
+  }
+}   
+
+function populateLocation() {
+  with (document.forms[0]) {
+    if (locationname.selectedIndex > -1) {  
+      location.value = locationname.options[locationname.selectedIndex].text;
+      locationname.selectedIndex = -1; //Changed from 0 2008-06-20
+    }
+  }
+}
+
+function populateProject() {
+  if (document.forms[0].projectname.selectedIndex > -1) {
+    lastProject.value = document.forms[0].projectname.options[document.forms[0].projectname.selectedIndex].value;
+    var X = parent.contents.getDBSingle(parent.PersDBase,"file","project",lastProject.value);
+    var Y;
+    if (X[0] && X[0].length != null) {
+      for (var i = 0; i < X[0].length; i++) {
+        Y = X[0][i][0];
+        if(Y == "clientno") {
+            lastClientno.value = X[0][i][1];
+            i = X[0].length;
+        }
+      }
+    }
+    for (var i = 0; i < document.forms[0].clientLookup.options.length; i++) {
+        if (this.lastClientno.value == document.forms[0].clientLookup.options[i].value) {
+            document.forms[0].clientLookup.selectedIndex = i;
+            populateClient();
+            i = document.forms[0].clientLookup.options.length;
+        }
+    }
+    document.forms[0].projectname.selectedIndex = -1; //Changed from 0 2008-06-20
+  }
+}   
+
+function clientFromClientNo(Clientno,Client) {
+    this.lastClientno = Clientno;
+    this.lastClient = Client;
+    for (var i = 0; i < document.forms[0].clientLookup.options.length; i++) {
+        if (this.lastClientno.value == document.forms[0].clientLookup.options[i].value) {
+            document.forms[0].clientLookup.selectedIndex = i;
+            populateClient();
+            i = document.forms[0].clientLookup.options.length;
+        }
+    }
+}
+function clientFromProjectNo(Project,Clientno,Client) {
+    this.lastProject = Project;
+    this.lastClientno = Clientno;
+    this.lastClient = Client;
+    for (var i = 0; i < document.forms[0].projectname.options.length; i++) {
+        if (this.lastProject.value == document.forms[0].projectname.options[i].value) {
+            document.forms[0].projectname.selectedIndex = i;
+            populateProject();
+            i = document.forms[0].projectname.options.length;
+        }
+    }
+}
+
+function populate(xno, x) { 
+   var looking4 = xno.options[xno.selectedIndex].value;
+   for (var i = 0; i < x.length; i++) {
+      if (x.options[i].value == looking4) {
+         x.selectedIndex =  i;
+         i = x.length;
+      }
+   }
+}             
+
+function populateNo(x, xno) { 
+   var looking4 = xno.options[xno.selectedIndex].value;
+   for (var i = 0; i < x.length; i++) {
+      if (x.options[i].text == looking4) {
+         x.selectedIndex =  i;
+         i = x.length;
+      }
+   }
+}   
+
+function populateAccross(xno, x, y) {
+  if (x.selectedIndex == 0) {
+     var looking4 = xno.options[xno.selectedIndex].text;
+     for (var i = 0; i < x.length; i++) {
+        if (x.options[i].text == looking4) {
+           x.selectedIndex =  i;
+           i = x.length;
+           populate(x, y);
+        }
+     }
+  }
+}
+
+function CheckWeight() {
+  with (document.forms[0]) {
+    var retVal = true;
+
+    split_1_weight.value = parent.contents.rtrim(parent.contents.ltrim(split_1_weight.value));
+    split_2_weight.value = parent.contents.rtrim(parent.contents.ltrim(split_2_weight.value));
+    split_3_weight.value = parent.contents.rtrim(parent.contents.ltrim(split_3_weight.value));
+    split_4_weight.value = parent.contents.rtrim(parent.contents.ltrim(split_4_weight.value));
+   
+    if (isNaN(split_1_weight.value) && split_1_weight.value != "" ) retVal = false;
+    if (isNaN(split_2_weight.value) && split_2_weight.value != "" ) retVal = false;
+    if (isNaN(split_3_weight.value) && split_3_weight.value != "" ) retVal = false;
+    if (isNaN(split_4_weight.value) && split_4_weight.value != "" ) retVal = false;
+    if (!retVal) {
+      alert("Invalid data in the 'split %' fields");
+    } else {
+      var total = 0;
+// Not good but works to piggyback the billtype - only for Kohler otherwise corrected 
+// in the XML2 ADP and we can get rid of billtypes for the next release here too.
+      document.forms[0].split_1_billtype.value = "";
+      document.forms[0].split_2_billtype.value = "";
+      document.forms[0].split_3_billtype.value = "";
+      document.forms[0].split_4_billtype.value = "";
+
+      if (split_1_weight.value != "" ) {
+             document.forms[0].split_1_billtype.value = "2";
+             total += Number(split_1_weight.value);
+      }
+      if (split_2_weight.value != "" ) {
+             document.forms[0].split_2_billtype.value = "2";
+             total += Number(split_2_weight.value);
+      }
+      if (split_3_weight.value != "" ) {
+             document.forms[0].split_3_billtype.value = "2";
+             total += Number(split_3_weight.value);
+      } 
+      if (split_4_weight.value != "" ) {
+         document.forms[0].split_4_billtype.value = "2";
+         total += Number(split_4_weight.value);
+      }
+      if (total != 0 && total != 100) {
+        alert("'Split %' must either be zero or total 100\n You have a total of " + total);
+        retVal = false;
+      } else {
+        if (total == 100) {
+          multiclient.value = "Yes";
+        } else {
+          if (splitevenly() == -1) {
+             multiclient.value = "No";
+          } else {
+             multiclient.value = "Yes";
+          }
+        } 
+      }
+    }
+    return retVal; 
+  }
+}
+
+function xxxpopulateClient(xClientno, yClient) { 
+  yClient.value = xClientno.options[xClientno.selectedIndex].value;
+}
+
+function splitevenly() {
+    var splits = [["100"],["50","50"],["33","33","34"],["25","25","25","25"]];
+    var n = -1;
+    with (document.forms[0]) {
+      if (checkPresent(split_1_clientno,split_1_client,split_1_project)) n++;
+      if (checkPresent(split_2_clientno,split_2_client,split_2_project)) n++;
+      if (checkPresent(split_3_clientno,split_3_client,split_3_project)) n++;
+      if (checkPresent(split_4_clientno,split_4_client,split_4_project)) n++;
+      if (n > -1) {
+         var i = 0;
+         if (checkPresent(split_1_clientno,split_1_client,split_1_project)) split_1_weight.value = splits[n][i++];
+         if (checkPresent(split_2_clientno,split_2_client,split_2_project)) split_2_weight.value = splits[n][i++];
+         if (checkPresent(split_3_clientno,split_3_client,split_3_project)) split_3_weight.value = splits[n][i++];
+         if (checkPresent(split_4_clientno,split_4_client,split_4_project)) split_4_weight.value = splits[n][i++];
+      }
+    }
+    return n;
+}
+
+function checkPresent(x,y,z) {
+    var retVal = false;
+    if (chkindividual(x) ||chkindividual(y)|| chkindividual(z)) retVal = true; 
+    return retVal;
+}
+
+function chkindividual(x) {
+    var retVal = false;
+    if (x.value != null & x.value != "") retVal = true;
+    return retVal;
+}
+
+
+
+</script>
+
+</body>
+</html>

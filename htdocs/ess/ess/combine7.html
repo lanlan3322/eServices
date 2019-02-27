@@ -1,0 +1,581 @@
+<!--- Copyright 2002, R. James Holton, All rights reserved --->
+<!--- Do not edit with FrontPage --->
+
+<html>
+
+<head>
+<title>Multi-Purpose Report</title>
+<link rel="stylesheet" href="../expense.css" type="text/css">
+</head>
+
+<body onLoad="javascript:void FillForm()">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%" class="offsetColor">
+  <tr>
+    <td width="100%"><big><em><div class="ExpenseTag"><big>Enter trip purpose and receipts:</big></div></em></big></td>
+  </tr>
+</table>
+<small><strong><em><font face="Arial">Click a grey button at the bottom of this form to add this work to your report before selecting another menu option.&nbsp; <font color="#FF0000">*</font>&nbsp;indicates a required field.&nbsp; <br></font></em><strong></small>
+<p>
+<h2><em>Trip Purpose</em></h2>
+</p>
+<form name="topside">
+  <input type="hidden" name="xref" value="XXX">
+  <input type="hidden" name="billtype" value="No">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td width="23%" class="offsetColor" height="25"><div class="ExpenseTag">Visit From:<font color="#FF0000">*</font></div></td>
+          <td width="77%" class="offsetColor" height="25"><input type="text" name="begdate" size="8" value="mm/dd/yy" mysubst="1" onBlur="resetDate(document.forms[0].begdate)" onChange=" checkdate(document.forms[0].begdate)"><a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].begdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+        </tr>
+        <tr>
+          <td width="23%" height="25"><div class="ExpenseTag">To:<font color="#FF0000">*</font></div></td>
+          <td width="77%" height="25"><input type="text" name="enddate" size="8" value="mm/dd/yy" mysubst="3" onChange="checkdate(document.forms[0].enddate)"><a HREF="javascript:doNothing()" mysubst="4" onClick="setDateField(document.forms[0].enddate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+        </tr>
+        <tr>
+          <td width="23%" class="offsetColor"><div class="ExpenseTag">Charge Entity:<font color="#FF0000">*</font></div></td>
+          <td width="77%" class="offsetColor">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr class="offsetColor"><td width="20%">
+          <select name="company" size="1" mysubst="5" onChange="populate(document.forms[0].company,document.forms[0].companyname);populateAccross(document.forms[0].company,document.forms[0].clientno,document.forms[0].client)">
+          </select>
+          </td><td with="80%" class="offsetColor">  
+          <select name="companyname" size="1" mysubst="5" onChange="populateNo(document.forms[0].company,document.forms[0].companyname);populateAccross(document.forms[0].company,document.forms[0].clientno,document.forms[0].client)">
+          </select>
+          </td></tr></table>
+        </td>
+        </tr>
+        <tr>
+          <td width="23%" height="25"><div class="ExpenseTag">Client:<font color="#FF0000">*</font></div></td>
+          <td width="77%" height="25">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td width="20%">
+          <select name="clientno" size="1" mysubst="5" onChange="populateName(document.forms[0].clientno,document.forms[0].client);populateClientLoc()">
+          </select>
+          </td><td with="80%">  
+          <select name="client" size="1" mysubst="7" onChange="populateNo(document.forms[0].clientno,document.forms[0].client);populateClientLoc()">
+          </select>
+          </td></tr></table>
+          </td>
+        </tr>
+        <tr>
+          <td width="23%" class="offsetColor"><div class="ExpenseTag">Int Ref #:</div></td>
+          <td width="77%" class="offsetColor"><select name="projectname" size="1" mysubst="5" xref="project">
+          </select><a href="javascript:doNothing()" class="ExpenseLink" onClick="setLocalObj(document.forms[0].projectname,'addproject2',400,200); MerchantType = 'file';" title="Add Ref #">&nbsp;New&nbsp;Reference</a>
+          </td>
+        </tr>
+        <tr>
+          <td width="23%"><div class="ExpenseTag">Ext Ref #:</div></td>
+          <td width="77%"><input type="text" name="stepno" size="20" mysubst="6"></td>
+        </tr>
+        <tr>
+          <td width="23%" height="26" class="offsetColor"><div class="ExpenseTag">Location:</div></td>
+          <td width="77%" height="26" class="offsetColor"><select name="location" size="1" mysubst="10">
+          </select>
+          <a href="javascript:doNothing()" class="ExpenseLink" mysubst="11" onClick="setLocalObj(document.forms[0].location); MerchantType = 'location';">&nbsp;New&nbsp;Location</a>
+          </td>
+        </tr>
+        <tr>
+          <td width="23%" height="80"><div class="ExpenseTag">Purpose or Individuals:<font color="#FF0000">*</font></div></td>
+          <td width="77%" height="80"><textarea rows="4" name="comment" cols="37" mysubst="8"></textarea></td>
+        </tr>
+</table>
+</form>
+
+<p>
+<h2>Car Mileage Section</h2>
+</p>
+<table border="0" width="92%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="0" cellpadding="2">
+  <form name="mileage1">
+    <input type="hidden" name="rcpttype" value="4">
+    <input type="hidden" name="expense_1_expensetype" value>
+    <input type="hidden" name="charge" value>
+    <input type="hidden" name="units" value>
+    <input type="hidden" name="expense_1_purpose" value="wizard">
+    <input type="hidden" name="expense_1_xref" value>
+    <tr>
+      <td width="15%" class="offsetColor" align="center"><div class="ExpenseTag">Date</div></td>
+      <td width="10%" class="offsetColor" align="center"><div class="ExpenseTag"><script>document.write(parent.contents.getDistanceLabel())</script></div></td>
+      <td width="10%" class="offsetColor" align="center"><div class="ExpenseTag">Rate</div></td>
+      <td width="10%" class="offsetColor" align="center"><div class="ExpenseTag">Amount</div></td>
+      <td width="10%" class="offsetColor" align="center"><div class="ExpenseTag">Bill</div></td>
+      <td width="10%" class="offsetColor" align="center"><div class="ExpenseTag">From</div></td>
+      <td width="10%" class="offsetColor" align="center"><div class="ExpenseTag">To</div></td>
+    </tr>
+    <tr>
+      <td width="15%"><input type="text" name="rcptdate" size="10" value mysubst="10" onChange="checkdate(this.form.rcptdate)" onBlur="setProperRate(this.form.rcptdate.value,this.form)"><a HREF="javascript:doNothing()" mysubst="11" onClick="setDateField(document.forms[1].rcptdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+      <td width="10%"><div class="ExpenseTag"></div><input type="text" name="recamt" size="8" mysubst="12" onchange="calcBarterAmount(mileage1)"><div class="ExpenseTag"></div></td>
+      <td width="10%"><div class="ExpenseTag"></div><input type="text" name="xrate" size="8" mysubst="13" onchange="calcBarterAmount(mileage1)" readonly><div class="ExpenseTag"></div></td>
+      <td width="10%"><div class="ExpenseTag"></div><input type="text" name="amount" value="0.00" size="8" onchange="amountVal(amount)" readonly="yes"><div class="ExpenseTag"></div></td>
+      <td width="10%"><div class="ExpenseTag"></div><select name="expense_1_billtype" size="1" mysubst="14">
+        <option value="Yes">Yes</option>
+        <option selected value="No">No</option>
+      </select><div class="ExpenseTag"></div></td>
+      <td width="10%"><div class="ExpenseTag"></div><input type="text" name="xsource" size="20" mysubst="15"><div class="ExpenseTag"></div></td>
+      <td width="10%"><div class="ExpenseTag"></div><input type="text" name="expense_1_comment" size="20" mysubst="16"><div class="ExpenseTag"></div></td>
+    </tr>
+  </form>
+  <form name="mileage2">
+    <input type="hidden" name="rcpttype" value="4">
+    <input type="hidden" name="expense_1_expensetype" value>
+    <input type="hidden" name="charge" value>
+    <input type="hidden" name="units" value>
+    <input type="hidden" name="expense_1_purpose" value="wizard">
+    <input type="hidden" name="expense_1_xref" value>
+    <tr>
+      <td width="15%" class="offsetColor"><input type="text" name="rcptdate" size="10" value mysubst="17" checkdate(this.form.rcptdate)" onBlur="setProperRate(this.form.rcptdate.value,this.form)"><a HREF="javascript:doNothing()" mysubst="18" onClick="setDateField(document.forms[2].rcptdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a></td>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag"></div><input type="text" name="recamt" size="8" mysubst="19" onchange="calcBarterAmount(mileage2)"><div class="ExpenseTag"></div></td>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag"></div><input type="text" name="xrate" size="8" mysubst="20" onchange="calcBarterAmount(mileage2)" readonly><div class="ExpenseTag"></div></td>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag"></div><input type="text" name="amount" value="0.00" size="8" onchange="amountVal(amount)" readonly="yes"><div class="ExpenseTag"></div></td>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag"></div><select name="expense_1_billtype" size="1" mysubst="21">
+        <option value="Yes">Yes</option>
+        <option selected value="No">No</option>
+      </select><div class="ExpenseTag"></div></td>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag"></div><input type="text" name="xsource" size="20" mysubst="22"><div class="ExpenseTag"></div></td>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag"></div><input type="text" name="expense_1_comment" size="20" mysubst="23"><div class="ExpenseTag"></div></td>
+    </tr>
+  </form>
+</table>
+
+<p>
+<h2><em>Expenses</em></h2>
+</p>
+<table border="0" width="100%" cellpadding="0">
+  <tr class="offsetColor">
+        <td width="150" align="center"><div class="ExpenseTag">Receipt Date</div></td>
+        <td width="100" align="center"><div class="ExpenseTag">Amount</div></td>
+        <td width="130" align="center"><div class="ExpenseTag">Expense Type</div></td>
+        <td width="50" align="center"><div class="ExpenseTag">Bill</div></td>
+        <td width="400" align="left"><div class="ExpenseTag">Comment</div></td>
+  </tr>
+  <tr>
+    <form name="bottom1">
+        <td width="150"><input type="text" name="rcptdate" size="13" mysubst="24"><a HREF="javascript:doNothing()" mysubst="25" onClick="setDateField(document.forms[3].rcptdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="100"><input type="text" name="amount" size="9" value="0.00" mysubst="26"></td>
+        <td width="130"><select name="expense_1_expensetype" size="1" mysubst="27">
+        </select></td>
+        <td width="50" height="25"><select name="expense_1_billtype" size="1" mysubst="28">
+            <option value="Yes">Yes</option>
+            <option selected value="No">No</option>
+        </select></td>
+        <td width="400"><input type="text" name="expense_1_comment" size="25" mysubst="29">
+        <a href="javascript:doNothing()" mysubst="30" class="ExpenseLink" onClick="initAttendeeList(document.forms[3].expense_1_attendeelist,document.forms[3].expense_1_persplit,document.forms[3].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=580, height=540, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')">&nbsp;Attendee&nbsp;List</a>       
+        </td> 
+        <input type="hidden" name="rcpttype" value="3">
+        <input type="hidden" name="expense_1_purpose" value="wizard">
+        <input type="hidden" name="expense_1_xref" value>
+        <input type="hidden" name="charge" value>
+        <input type="hidden" name="expense_1_attendeelist" value="[]">
+        <input type="hidden" name="expense_1_persplit" value>
+        <input type="hidden" name="expense_1_amount" value> 
+    </form>
+  </tr>
+  <tr>
+    <form name="bottom2">
+        <td width="150" class="offsetColor"><input type="text" name="rcptdate" size="13" mysubst="31"><a HREF="javascript:doNothing()" mysubst="32" onClick="setDateField(document.forms[4].rcptdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="100" class="offsetColor"><input type="text" name="amount" size="9" value="0.00" mysubst="33"></td>
+        <td width="130" class="offsetColor"><select name="expense_1_expensetype" size="1" mysubst="34">
+        </select></td>
+        <td width="50" height="25" class="offsetColor"><select name="expense_1_billtype" size="1" mysubst="35">
+            <option value="Yes">Yes</option>
+            <option selected value="No">No</option>
+        </select></td>
+        <td width="400" class="offsetColor"><input type="text" name="expense_1_comment" size="25" mysubst="36">
+        <a href="javascript:doNothing()" mysubst="37" class="ExpenseLink" onClick="initAttendeeList(document.forms[4].expense_1_attendeelist,document.forms[4].expense_1_persplit,document.forms[4].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')">&nbsp;Attendee&nbsp;List</a>       
+        </td>
+        <input type="hidden" name="rcpttype" value="3">
+        <input type="hidden" name="expense_1_purpose" value="wizard">
+        <input type="hidden" name="expense_1_xref" value>
+        <input type="hidden" name="charge" value>
+        <input type="hidden" name="expense_1_persplit" value>
+        <input type="hidden" name="expense_1_attendeelist" value="[]">
+        <input type="hidden" name="expense_1_amount" value> 
+    </form>
+  </tr>
+  <tr>
+    <form name="bottom3">
+        <td width="150"><input type="text" name="rcptdate" size="13" mysubst="38"><a HREF="javascript:doNothing()" mysubst="39" onClick="setDateField(document.forms[5].rcptdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="100"><input type="text" name="amount" size="9" value="0.00" mysubst="40"></td>
+        <td width="130"><select name="expense_1_expensetype" size="1" mysubst="41">
+        </select></td>
+        <td width="50" height="25"><select name="expense_1_billtype" size="1" mysubst="42">
+            <option value="Yes">Yes</option>
+            <option selected value="No">No</option>
+        </select></td>
+        <td width="400"><input type="text" name="expense_1_comment" size="25" mysubst="43">
+        <a href="javascript:doNothing()" mysubst="44" class="ExpenseLink" onClick="initAttendeeList(document.forms[5].expense_1_attendeelist,document.forms[5].expense_1_persplit,document.forms[5].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')">&nbsp;Attendee&nbsp;List</a>       
+        </td>
+        <input type="hidden" name="rcpttype" value="3">
+        <input type="hidden" name="expense_1_purpose" value="wizard">
+        <input type="hidden" name="expense_1_xref" value>
+        <input type="hidden" name="charge" value>
+        <input type="hidden" name="expense_1_attendeelist" value="[]">
+        <input type="hidden" name="expense_1_persplit" value>
+        <input type="hidden" name="expense_1_amount" value> 
+    </form>
+  </tr>
+  <tr>
+    <form name="bottom4">
+        <td width="150" class="offsetColor"><input type="text" name="rcptdate" size="13" mysubst="45"><a HREF="javascript:doNothing()" mysubst="46" onClick="setDateField(document.forms[6].rcptdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="100" class="offsetColor"><input type="text" name="amount" size="9" value="0.00" mysubst="47"></td>
+        <td width="130" class="offsetColor"><select name="expense_1_expensetype" size="1" mysubst="48">
+        </select></td>
+        <td width="50" height="25" class="offsetColor"><select name="expense_1_billtype" size="1" mysubst="49">
+            <option value="Yes">Yes</option>
+            <option selected value="No">No</option>
+        </select></td>
+        <td width="400" class="offsetColor"><input type="text" name="expense_1_comment" size="25" mysubst="50">
+        <a href="javascript:doNothing()" mysubst="51" class="ExpenseLink" onClick="initAttendeeList(document.forms[6].expense_1_attendeelist,document.forms[6].expense_1_persplit,document.forms[6].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')">&nbsp;Attendee&nbsp;List</a>       
+        </td>
+        <input type="hidden" name="rcpttype" value="3">
+        <input type="hidden" name="expense_1_purpose" value="wizard">
+        <input type="hidden" name="expense_1_xref" value>
+        <input type="hidden" name="charge" value>
+        <input type="hidden" name="expense_1_attendeelist" value="[]">
+        <input type="hidden" name="expense_1_persplit" value>
+        <input type="hidden" name="expense_1_amount" value> 
+    </form>
+  </tr>
+  <tr>
+    <form name="bottom5">  
+        <td width="150"><input type="text" name="rcptdate" size="13" mysubst="52"><a HREF="javascript:doNothing()" mysubst="53" onClick="setDateField(document.forms[7].rcptdate);"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="100"><input type="text" name="amount" size="9" value="0.00" mysubst="54"></td>
+        <td width="130"><select name="expense_1_expensetype" size="1" mysubst="55">
+        </select></td>
+        <td width="50" height="25"><select name="expense_1_billtype" size="1" mysubst="56">
+            <option value="Yes">Yes</option>
+            <option selected value="No">No</option>
+        </select></td>
+        <td width="400"><input type="text" name="expense_1_comment" size="25" mysubst="57">
+        <a href="javascript:doNothing()" mysubst="58" class="ExpenseLink" onClick="initAttendeeList(document.forms[7].expense_1_attendeelist,document.forms[7].expense_1_persplit,document.forms[7].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=540, screenX=605, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')">&nbsp;Attendee&nbsp;List</a>       
+        </td>
+        <input type="hidden" name="rcpttype" value="3">
+        <input type="hidden" name="expense_1_purpose" value="wizard">
+        <input type="hidden" name="expense_1_xref" value>
+        <input type="hidden" name="charge" value>
+        <input type="hidden" name="expense_1_attendeelist" value="[]">
+        <input type="hidden" name="expense_1_persplit" value>
+        <input type="hidden" name="expense_1_amount" value> 
+    </form>
+  </tr>
+</table>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script LANGUAGE="JavaScript" SRC="../attendee.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script language="javascript">
+
+function FillForm() {
+  document.forms[0].xref.value = "XXX";
+  parent.contents.setListWKeyWPers(document.forms[0].projectname,parent.contents.getProjectNos("1"),"file","project","title");
+
+  parent.contents.setListWithValue(document.forms[0].clientno, parent.contents.getClientNos("1"));
+  parent.contents.setListWithValue(document.forms[0].client, parent.contents.getClientNos("2"));
+
+  parent.contents.setDefaultDate(document.forms[0].begdate,-2);
+  parent.contents.setDefaultDate(document.forms[0].enddate,-1);
+  MerchantType = "location";
+  parent.contents.setListWithPers(document.forms[0].location, parent.contents.getLocations("1"),MerchantType);
+
+  parent.contents.setListWithKey(document.forms[0].company,parent.contents.getEntities("1"),"0","");
+  parent.contents.setListWithKey(document.forms[0].companyname,parent.contents.getEntities("2"),"1","");
+
+  document.forms[0].billtype.value = "No"; 
+
+  parent.contents.setDefaultDate(document.forms[1].rcptdate,-1);
+  parent.contents.setDefaultDate(document.forms[2].rcptdate,-1);
+  setProperRate(document.forms[1].rcptdate.value, document.forms[1]);
+  document.forms[1].xrate.readOnly = parent.contents.getMileageReadOnly();
+  document.forms[1].units.value = parent.contents.getDistanceLabel();
+  document.forms[1].rcpttype.value = "3"
+  setProperRate(document.forms[2].rcptdate.value, document.forms[2]);
+  document.forms[2].xrate.readOnly = parent.contents.getMileageReadOnly();
+  document.forms[2].units.value = parent.contents.getDistanceLabel();
+  document.forms[2].rcpttype.value = "3"
+  for (var i = 3; i < document.forms.length; i++) { 
+    document.forms[i].rcpttype.value = "3"
+    parent.contents.setList(document.forms[i].expense_1_expensetype, parent.contents.getExpenseTypes(parent.Category), parent.contents.getMerchantReq());
+    parent.contents.setDefaultDate(document.forms[i].rcptdate,-1);
+  }
+  document.forms[0].begdate.focus();
+}
+
+function setProperRate(cDate, FF) {
+   if (FF == null) FF = document.forms[0];  
+   FF.xrate.value = parent.contents.getMileageDefault(cDate);
+}
+
+function CheckMilesOK(xx) {
+  var retval = true;
+  if (!CheckZero(xx.amount) || !isNaN(xx.recamt)) {
+   if ( xx.xsource.value.length < 1) {
+     retval = false;
+     alert("'From' field not filled out correctly");
+     xx.xsource.focus();
+   } else if (xx.expense_1_comment.value.length < 1) {
+     retval = false;
+     alert("'To' field not filled out correctly");
+     xx.expense_1_comment.focus();
+   }
+  }
+  return retval;
+}
+
+function SubmitRec(nContinue) {
+
+var PostScreen = true;
+
+// do purpose form check here and set to false if failed
+with (document.forms[0]) {
+        if (CheckPurp(comment) && checkChargeClient(company,clientno)
+        && checkdate(begdate)
+        && checkdate(enddate)
+        && checkdate(document.forms[1].rcptdate) && doDateChkToday(document.forms[1].rcptdate)
+        && checkdate(document.forms[2].rcptdate) && doDateChkToday(document.forms[2].rcptdate)
+        && CheckMilesOK(document.forms[1]) && CheckMilesOK(document.forms[2])) {
+                PostScreen = true;
+        } else {
+                PostScreen = false;
+                return;
+        }
+}
+// do expense grid check here and set to false if failed
+  var i = 3; 
+  do {
+     with (document.forms[i]) { 
+     if (CheckZero(amount)
+         || CheckAmount(amount)
+         && CheckExpType(expense_1_expensetype, amount)
+         && checkdate(rcptdate) 
+         && doDateChkToday(rcptdate)
+         && CheckAttendee(expense_1_attendeelist, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)
+         && CheckComment(amount, expense_1_comment, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)) {
+        i = i + 1; 
+     } else {    
+        PostScreen = false;
+     }  
+     }
+  } while (PostScreen == true && i < document.forms.length);
+
+  if (PostScreen == true) {
+  // post report purpose
+    if (document.forms[0].xref.value == "XXX") document.forms[0].xref.value = "" + parent.contents.NextXref();
+    parent.contents.UpdateReport('1','head2d',document.forms[0]);
+    if (parent.contents.HeadList.length == 1) {
+       var r = parent.contents.setNameValue(parent.contents.Header, "comment", document.forms[0].comment.value);     
+    }
+    //var nvflag;
+    //if (document.forms[0].depart.selectedIndex > 0) {
+    //   nvflag = parent.contents.setNameValue(parent.contents.Header, "depart", document.forms[0].depart.options[document.forms[0].depart.selectedIndex].value);
+    //} else {
+    //   nvflag =  parent.contents.setNameValue(parent.contents.Header, "depart", parent.contents.getDBValue(parent.Header,"depart"));
+    //}
+    var thisPurpose = parent.contents.getStringFmHead(parent.contents.HeadList.length - 1);
+  // post mileage transaction
+    for (var j = 1; j < 3; j++) {
+      if (!CheckZero(document.forms[j].amount) || !isNaN(document.forms[j].recamt)) {
+            document.forms[j].expense_1_expensetype.value = parent.contents.getMileageType();
+            document.forms[j].charge.value = parent.contents.getChargeDef();
+            document.forms[j].expense_1_purpose.value = thisPurpose;
+            document.forms[j].expense_1_xref.value = document.forms[0].xref.value;
+            parent.contents.UpdateReport('2','trans5',document.forms[j]);
+      }
+    }
+    // post expense grid transactions
+    for (var j = 3; j < document.forms.length; j++) {
+      if (!CheckZero(document.forms[j].amount)) {
+         if (!isNaN(document.forms[j].amount.value)) parent.contents.makeCurrency(document.forms[j].amount);
+         document.forms[j].charge.value = parent.contents.getChargeDef();
+         document.forms[j].expense_1_purpose.value = thisPurpose;
+         document.forms[j].expense_1_xref.value = document.forms[0].xref.value;
+         document.forms[j].expense_1_amount.value = document.forms[j].amount.value;
+         parent.contents.UpdateReport('2','trans1afx',document.forms[j]);
+      }
+    }
+    if (nContinue == 1) {
+       parent.contents.TransWindow(parent.contents.defaultHead + "combine7ax.html");
+    } else if (nContinue == 2) {
+       parent.contents.TransWindow(parent.contents.defaultHead + "combine7ay.html");
+    } else {
+       parent.contents.ListDelay();
+    }
+  } 
+}
+
+function CheckAttendee(tag,expense) {
+  var Check = tag.value;
+  var Xstr = parent.contents.getAttendeeReq();
+  if (Xstr.indexOf(expense) > -1 && Check.length < 3) {
+     alert("Need to supply attendee list for " + expense + " expense");
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function CheckExpType(tag1, tag2) {
+        if (!CheckZero(tag2) && (tag1.selectedIndex == 0)) {
+     alert("Select an Expense Type.");
+     tag1.focus();
+     return false;
+  } else {
+     return true;
+  }
+}
+function CheckPurp(obj) {
+  Check = parent.contents.alltrim(obj.value);
+  if (Check.length > 9) {
+          return true;
+  } else {
+          alert("Need to supply a Purpose or Individuals of at least 10 characters.");
+          obj.focus();
+          obj.select();
+          return false;
+  }
+}
+function CheckZero(tag) {
+  var Check = parseFloat(tag.value);
+  if (Check == 0) {
+     return true;
+  } else {
+     return false;
+  }
+}
+
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+
+var NeedComment = parent.contents.getCommentReq();
+function CheckComment(val,tag,expensetype) {
+  var CmtLen = parent.contents.getCommentLen();
+  var Check = tag.value;
+  if (!CheckZero(val) && expensetype != "" && NeedComment.indexOf(expensetype) > -1 && Check.length < CmtLen) {
+     alert("Need to supply a comment of at least " + CmtLen +" characters");
+     tag.focus();
+     return false;
+  } else {
+     return true;
+  }
+}
+
+
+function calcBarterAmount(formObj) {
+        var intAmount = parseFloat(formObj.recamt.value);
+        var intRate = parseFloat(formObj.xrate.value);
+        var totalAmt = intAmount * intRate;
+        formObj.amount.value = totalAmt;
+        amountVal(formObj.amount);
+        //formObj.amount.value = amountVal(formObj.amount);
+        return;
+}
+function updDefaultDate(formObj) {
+       document.forms[1].rcptdate.value = formObj.value;
+       for (var j = 2; j < document.forms.length; j++) {
+               document.forms[j].rcptdate.value = formObj.value;
+       }
+}
+
+function populateClientLoc() { 
+  if (document.forms[0].clientno.selectedIndex != 0) {
+// Why this??
+//    document.forms[0].client.value = document.forms[0].clientno.options[document.forms[0].clientno.selectedIndex].value;
+  }
+}             
+
+function populate(xno, x) { 
+   var looking4 = xno.options[xno.selectedIndex].value;
+   for (var i = 0; i < x.length; i++) {
+      if (x.options[i].value == looking4) {
+         x.selectedIndex =  i;
+         i = x.length;
+      }
+   }
+}             
+
+function populateName(xno, x) { 
+   var looking4 = xno.options[xno.selectedIndex].text;
+   for (var i = 0; i < x.length; i++) {
+      if (x.options[i].value == looking4) {
+         x.selectedIndex =  i;
+         i = x.length;
+      }
+   }
+}    
+
+function populateNo(x, xno) { 
+   var looking4 = xno.options[xno.selectedIndex].value;
+   for (var i = 0; i < x.length; i++) {
+      if (x.options[i].text == looking4) {
+         x.selectedIndex =  i;
+         i = x.length;
+      }
+   }
+}   
+
+function populateAccross(xno, x, y) {
+  skipThis = false;
+  if (parent.contents.getRequiredItem) skipThis = parent.contents.getRequiredItem("skipPopulate");
+  if (!skipThis && x.selectedIndex == 0) {
+     var looking4 = xno.options[xno.selectedIndex].text;
+     for (var i = 0; i < x.length; i++) {
+        if (x.options[i].text == looking4) {
+           x.selectedIndex =  i;
+           i = x.length;
+           populateName(x, y);
+        }
+     }
+  }
+}
+
+function checkChargeClient(Xcharge, Xclient) {
+  if (Xcharge.selectedIndex == 0){
+    alert("Chargeable entity number is required");
+    Xcharge.focus();
+    return false;
+  }  
+  if (Xclient.selectedIndex == 0){
+    alert("Client number is required");
+    Xclient.focus();
+    return false;
+  }  
+  var ClientNumber = Xclient.options[Xclient.selectedIndex].text;
+  var ChargeNumber = Xcharge.options[Xcharge.selectedIndex].text;
+  if (ClientNumber == ChargeNumber) {
+    return true;
+  } else {
+    for (var i = 0; i < Xcharge.length; i++) {
+       if (Xcharge.options[i].text == ClientNumber) {
+          alert("Client entity cannot be different entity from Chargeable Entity");
+          Xclient.focus();
+          return false;
+       }
+    }
+  }
+  return true;
+}
+
+
+function LookupCleanup() {
+  document.forms[0].clientLookup.selectedIndex = 0;
+}
+
+
+
+
+function resetDate() {
+ document.forms[0].enddate.value = document.forms[0].begdate.value;
+ for (var i = 1; i < document.forms.length; i++) { 
+    document.forms[i].rcptdate.value = document.forms[0].begdate.value;
+ }
+}
+
+
+</script>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="50%"><p align="right"><input type="button" value=" Click to add another purpose" name=" " onClick="Javascript: void SubmitRec(2)" mysubst="59"></p></td>
+    <td width="50%"><p align="left"><input type="button" value=" Click to add another expense" name=" " onClick="Javascript: void SubmitRec(1)" mysubst="60"></p></td>
+  </tr>
+</table>
+<p align="center"><input type="button" value=" Finish Wizard and return to receipt list" name=" " mysubst="61" onClick="Javascript: void SubmitRec(0)"></p>
+</body>
+</html>

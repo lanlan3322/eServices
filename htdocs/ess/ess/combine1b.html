@@ -1,0 +1,217 @@
+<!--
+combine1b.html - day trip report wizard
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Simple Trip</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript:void FillForm()">
+
+<form name="topside">
+  <table border="1" width="626" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF">
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Project #:</div></td>
+      <td width="30%"><select name="project" size="1" tabindex="1">
+      </select></td>
+      <td width="20%"><div class="ExpenseTag">Step #:</div></td>
+      <td width="30%"><select name="stepno" size="1" tabindex="3">
+      </select></td>
+    </tr>
+  </table>
+  <table border="1" width="626" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF">
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Client #:</div></td>
+      <td width="80%"><select name="clientno" size="1" tabindex="2" onChange="populateClient()">
+      </select></td>
+    </tr>
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Client Name:</div></td>
+      <td width="80%"><input type="text" name="client" size="40" tabindex="4"></td>
+    </tr>
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Location:</div></td>
+      <td width="80%"><select name="location" size="1" tabindex="5">
+      </select></td>
+    </tr>
+    <tr>
+      <td width="20%"><div class="ExpenseTag">Purpose or Individuals: </div></td>
+      <td width="80%"><textarea rows="2" name="comment" cols="33" tabindex="6"></textarea></td>
+    </tr>
+  </table>
+  <table border="1" width="626" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" height="107">
+    <tr>
+      <td width="25%" height="37"><div class="ExpenseTag">Visit From:</div></td>
+      <td width="25%" height="37"><input type="text" name="beg_date" size="8" value="mm/dd/yy" tabindex="7" onChange="checkdate(document.forms[0].begdate)"><a HREF="javascript:doNothing()" onClick="setDateField(document.forms[0].beg_date); top.newWin = window.open('calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+      <td width="25%" height="37"><div class="ExpenseTag">To:</div></td>
+      <td width="25%" height="37"><input type="text" name="end_date" size="8" value="mm/dd/yy" tabindex="8" onChange="checkdate(document.forms[0].enddate)"><a HREF="javascript:doNothing()" onClick="setDateField(document.forms[0].end_date); top.newWin = window.open('calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><font size="1">Popup Calendar</font></td>
+    </tr>
+    <tr>
+      <td width="25%" height="58"><div class="ExpenseTag">Days:</div></td>
+      <td width="25%" height="58"><div align="left"><p><input type="text" name="days" size="3" tabindex="9"></td>
+      <td width="25%" height="58"><div class="ExpenseTag">Nights:</div></td>
+      <td width="25%" height="58"><input type="text" name="days1" size="3" tabindex="10"><p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</td>
+    </tr>
+  </table>
+</form>
+
+<p>this is a test case </p>
+
+<table border="0" width="100%" cellpadding="0">
+  <tr>
+    <td width="100%" class="offsetColor"><table border="0" width="780" cellpadding="0" style="border: medium none">
+      <tr>
+        <td width="149"><div class="ExpenseTag">Receipt Date</div></td>
+        <td width="91"><div class="ExpenseTag">Amount:</div></td>
+        <td width="103"><div class="ExpenseTag">Expense Type</div></td>
+        <td width="363"><div class="ExpenseTag">Comment</div></td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td width="100%" bgcolor="#FFFFFF"></td>
+  </tr>
+  <tr>
+    <form name="bottom1">
+    <td width="100%"><table border="0" width="780" cellpadding="0">
+      <tr>
+        <td width="150"><input type="text" name="Rcptdate" size="13"><a HREF="javascript:doNothing()" onClick="setDateField(document.forms[1].Rcptdate); top.newWin = window.open('calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="100"><input type="text" name="Amount" size="9" value="0.00" tabindex="1" onChange="CheckAmount(this.form.Amount)"></td>
+        <td width="110"><select name="expense_1_ExpenseType" size="1" tabindex="2">
+        </select></td>
+        <td width="400"><input type="text" name="expense_1_Comment" size="36" onChange="CheckComment(this.form.Comment)"></td>
+        <hidden name="expense_1_Purpose" value=" ">
+        <hidden name="expense_1_xref" value="0">
+      </tr></table>
+    </td>
+    </form>
+  </tr>
+  <tr>
+    <form name="bottom2">
+    <td width="100%" class="offsetColor"><table border="0" width="780" cellpadding="0">
+      <tr>
+        <td width="150"><input type="text" name="Rcptdate" size="13"><a HREF="javascript:doNothing()" onClick="setDateField(document.forms[2].Rcptdate); top.newWin = window.open('calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="100"><input type="text" name="Amount" size="9" value="0.00" tabindex="1" onChange="CheckAmount(this.form.Amount)"></td>
+        <td width="110"><select name="expense_1_ExpenseType" size="1" tabindex="2">
+        </select></td>
+        <td width="400"><input type="text" name="expense_1_Comment" size="36" onChange="CheckComment(this.form.Comment)"></td>
+        <hidden name="expense_1_Purpose" value=" ">
+        <hidden name="expense_1_xref" value="0">
+      </tr></table>
+    </td>
+    </form>
+  </tr>
+  <tr>
+    <form name="bottom3">
+    <td width="100%"><table border="0" width="780" cellpadding="0">
+      <tr>
+        <td width="150"><input type="text" name="Rcptdate" size="13"><a HREF="javascript:doNothing()" onClick="setDateField(document.forms[3].Rcptdate); top.newWin = window.open('calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="100"><input type="text" name="Amount" size="9" value="0.00" tabindex="1" onChange="CheckAmount(this.form.Amount)"></td>
+        <td width="110"><select name="expense_1_ExpenseType" size="1" tabindex="2">
+        </select></td>
+        <td width="400"><input type="text" name="expense_1_Comment" size="36" onChange="CheckComment(this.form.Comment)"></td>
+        <hidden name="expense_1_Purpose" value=" ">
+        <hidden name="expense_1_xref" value="0">
+      </tr></table>
+    </td>
+    </form>
+  </tr>
+  <tr>
+    <form name="bottom4">
+    <td width="100%" class="offsetColor"><table border="0" width="780" cellpadding="0">
+      <tr>
+        <td width="150" class="offsetColor"><input type="text" name="Rcptdate" size="13"><a HREF="javascript:doNothing()" onClick="setDateField(document.forms[4].Rcptdate); top.newWin = window.open('calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="100" class="offsetColor"><input type="text" name="Amount" size="9" value="0.00" tabindex="1" onChange="CheckAmount(this.form.Amount)"></td>
+        <td width="110" class="offsetColor"><select name="expense_1_ExpenseType" size="1" tabindex="2">
+        </select></td>
+        <td width="400" class="offsetColor"><input type="text" name="expense_1_Comment" size="36" onChange="CheckComment(this.form.Comment)"></td>
+        <hidden name="expense_1_Purpose" value=" ">
+        <hidden name="expense_1_xref" value="0">
+      </tr></table>
+    </td>
+    </form>
+  </tr>
+  <tr>
+    <form name="bottom5">  
+    <td width="100%"><table border="0" width="780" cellpadding="0">
+      <tr>
+        <td width="150"><input type="text" name="Rcptdate" size="13"><a HREF="javascript:doNothing()" onClick="setDateField(document.forms[5].Rcptdate); top.newWin = window.open('calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="100"><input type="text" name="Amount" size="9" value="0.00" tabindex="1" onChange="CheckAmount(this.form.Amount)"></td>
+        <td width="110"><select name="expense_1_ExpenseType" size="1" tabindex="2">
+        </select></td>
+        <td width="400"><input type="text" name="expense_1_Comment" size="36" onChange="CheckComment(this.form.Comment)"></td>
+        <hidden name="expense_1_Purpose" value="wizard">
+        <hidden name="expense_1_xref" value="0">
+      </tr></table>
+    </td>
+    </form>
+  </tr>
+</table>
+<script LANGUAGE="JavaScript" SRC="../../default/calendar.js"></script>
+<script language="javascript">
+
+function FillForm() {
+  parent.contents.setListWithKey(document.forms[0].project, parent.contents.getProjectNos("1"));
+  parent.contents.setList(document.forms[0].stepno, parent.contents.getStepNos("1"));
+  parent.contents.setListWithValue(document.forms[0].clientno, parent.contents.getClientNos("1"));
+  parent.contents.setList(document.forms[0].location, parent.contents.getLocations("1"));
+  parent.contents.setDefaultDate(document.forms[0].beg_date,-2);
+  parent.contents.setDefaultDate(document.forms[0].end_date,-1);
+  for (var i = 1; i < 6; i++) { 
+    parent.contents.setList(document.forms[i].expense_1_ExpenseType, parent.contents.getExpenseTypes("1"));
+    parent.contents.setDefaultDate(document.forms[i].Rcptdate,-7);
+  }
+}
+
+function SubmitRec() {
+  if (CheckAmount(document.forms[1].Amount) 
+      && CheckComment(document.forms[1].Comment)) {
+    parent.contents.UpdateReport('1','head2',document.forms[0])
+    parent.contents.UpdateReport('2','trans1a',document.forms[1]);
+    parent.contents.ListDelay();
+  } 
+}
+
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+function CheckComment(tag) {
+  var Check = tag.value;
+  if (Check.length < 10) {
+     alert("Need to supply a comment of at least 10 characters");
+     tag.focus();
+     tag.select();
+     return false;
+  } else {
+     return true;
+  }
+}
+function populateClient() { 
+  document.forms[0].client.value = document.forms[0].clientno.options[document.forms[0].clientno.selectedIndex].value;
+}             
+
+</script>
+
+
+<p><input type="button" value=" Finish Wizard - Add these items to report" name=" " tabindex="3" onClick="Javascript: void SubmitRec()"></p>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!--
+head1.html - report header type 1 - open and now linkage to database
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Report Header Information</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void loadValues()">
+<big><big>
+
+<p><em><div class="ExpenseTag">Report Header Information</div></em></big></big></p>
+
+<form onReset="return HandleReset()">
+  <table border="0" width="73%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF"
+  bordercolordark="#FFFFFF" cellspacing="1" cellpadding="0">
+    <tr>
+      <td width="39%" class="offsetColor"><div class="ExpenseTag">Personnel Number:</div></td>
+      <td width="61%" class="offsetColor"><input type="text" name="persnum" size="14"></td>
+    </tr>
+    <tr>
+      <td width="39%"><div class="ExpenseTag">Name:</div></td>
+      <td width="61%"><input type="text" name="name" size="26"></td>
+    </tr>
+    <tr>
+      <td width="39%" class="offsetColor"><div class="ExpenseTag">Phone:</div></td>
+      <td width="61%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF"
+      class="offsetColor"><input type="text" name="phone" size="17"></td>
+    </tr>
+    <tr>
+      <td width="39%"><div class="ExpenseTag">Location:</div></td>
+      <td width="61%"><input type="text" name="location" size="20"></td>
+    </tr>
+    <tr>
+      <td width="39%" class="offsetColor"><div class="ExpenseTag">Department:</div></td>
+      <td width="61%" class="offsetColor"><input type="text" name="depart" size="20"></td>
+    </tr>
+    <tr>
+      <td width="39%"><div class="ExpenseTag">Report Date:</div></td>
+      <td width="61%"><input type="text" name="credate" size="16"></td>
+    </tr>
+  </table>
+  <p><input type="button" value="OK - Accept any Changes" name=" " tabindex="3"
+  onClick="Javascript: void updateValues()"><input type="reset" value="Reset" name="B2"
+  tabindex="4"></p>
+</form>
+<p align="right"><a href="javascript: void parent.contents.ListDelay()"><em><strong>Return to report display</strong></em></a></p>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script language="Javascript">
+function loadValues() {
+  document.forms[0].persnum.value = parent.contents.getNameValue(parent.contents.Header, "persnum");
+  document.forms[0].name.value = parent.contents.getNameValue(parent.contents.Header, "name");
+  document.forms[0].phone.value = parent.contents.getNameValue(parent.contents.Header, "phone");
+  document.forms[0].location.value = parent.contents.getNameValue(parent.contents.Header, "location");
+  document.forms[0].depart.value = parent.contents.getNameValue(parent.contents.Header, "depart");
+  document.forms[0].credate.value = parent.contents.getNameValue(parent.contents.Header, "credate");
+}
+
+function HandleReset() {
+  loadValues();
+  return false;
+}
+
+function updateValues() {
+ with (document.forms[0]) {
+  if (
+  dateNotGreaterDays(credate,15) &&
+  parent.contents.setNameValue(parent.contents.Header, "persnum", persnum.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "name", name.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "phone", phone.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "location", location.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "depart", depart.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "credate",credate.value)) {
+     parent.contents.ListMemory();
+  } else {
+     alert("Invalid information - please correct");
+  }
+ }
+}
+
+</script>
+
+</body>
+</html>

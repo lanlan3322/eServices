@@ -1,0 +1,80 @@
+<!--
+approveReport.html - show report for approval
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Report approval hardcopy</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="Javascript: void submitX()">
+
+<form method="POST" action="ApproveReport.jsp">
+  <input type="hidden" name="reference" value>
+  <input type="hidden" name="database" value>
+  <input type="hidden" name="ReportTitle" value="Yes">
+  <input type="hidden" name="ReportHead" value="Yes">
+  <input type="hidden" name="ReportTrip" value="Yes">
+  <input type="hidden" name="ReportRcpts" value="Yes">
+  <input type="hidden" name="ReportSumm" value="No">
+  <input type="hidden" name="ReportDept" value="No">
+  <input type="hidden" name="ReportGrid" value="No">
+  <input type="hidden" name="ReportGuide" value="No">
+  <input type="hidden" name="ReportAppr" value="No">
+  <div align="center"><p><div class="ExpenseTag"><em>The server is accessing the report...</em></div></p>
+  <p>&nbsp;</p>
+  </div>
+</form>
+<script language="JavaScript">
+
+with (parent.contents) {
+//These totals are slightly different from the ones that we use internally
+  var Sum1 = getTotalValueFor(TailList,'amount');
+  var Sum2 = getTotalValueFor(TailList,'amount','charge',getReimburseReq());
+  Sum2 = Sum2 - getTotalValueFor(TailList,'expense_1_amount','expense_1_expensetype',getPersonalReq());
+  Sum2 = Sum2 - getTotalValueFor(TailList,'expense_2_amount','expense_2_expensetype',getPersonalReq());
+  Sum2 = Sum2 - getTotalValueFor(TailList,'expense_3_amount','expense_3_expensetype',getPersonalReq());
+  Sum2 = Sum2 - getTotalValueFor(TailList,'expense_4_amount','expense_4_expensetype',getPersonalReq());
+  Sum2 = Sum2 - getTotalValueFor(TailList,'expense_5_amount','expense_5_expensetype',getPersonalReq());
+  Sum2 = Sum2 - getTotalValueFor(TailList,'expense_6_amount','expense_6_expensetype',getPersonalReq());
+  Sum2 = Sum2 - getTotalValueFor(TailList,'expense_7_amount','expense_7_expensetype',getPersonalReq());
+  Sum2 = Sum2 - getTotalValueFor(TailList,'expense_8_amount','expense_8_expensetype',getPersonalReq());
+  Sum2 = Sum2 - getTotalValueFor(TailList,'expense_9_amount','expense_9_expensetype',getPersonalReq());
+  Sum2 = Sum2 - getTotalValueFor(TailList,'expense_10_amount','expense_10_expensetype',getPersonalReq());
+  Sum2 = Sum2 - getTotalValueFor(TailList,'expense_11_amount','expense_11_expensetype',getPersonalReq());
+  var Sum3 = getTotalValueFor(TailList,'amount','charge',getAdvanceReq());
+  var Sum4 = getTotalValueFor(TailList,'amount','charge',getReturnedReq());
+  var Sum5 = Sum2 + Sum4 - Sum3;  
+  var Sum6 = Sum1 - (Sum4 + Sum3);
+  setNameValue(Header,"rcamt",format(Sum6.toString(10),2));
+  setNameValue(Header,"reamt",format(Sum5.toString(10),2));
+  setNameValue(Header,"adamt", format(Sum3.toString(10),2));
+}
+document.forms[0].database.value = parent.database;
+parent.contents.SetLocal()
+document.forms[0].report.value = parent.contents.CreateXML();
+document.forms[0].action = parent.contents.defaultApps + "ApproveReport.jsp";
+
+function submitX() {
+  document.forms[0].submit();
+}
+
+
+</script>
+
+</body>
+</html>

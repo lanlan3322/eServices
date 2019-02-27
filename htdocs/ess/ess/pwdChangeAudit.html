@@ -1,0 +1,125 @@
+<!--
+pwdChange.html - password change screen
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Password Change Screen</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<link rel="stylesheet" href="../expense.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginheight="0" marginwidth="0"
+link="#000000" vlink="#000000" alink="#FFFFA4" onLoad="init()">
+<strong>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" height="104"
+bgcolor="#FFFFFF">
+  <tr>
+    <td width="14%" valign="top"></td>
+    <td width="86%" valign="middle"><em><font face="Arial"><big><big>eClaim System</big></big></font></em></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td width="100%" height="1" align="center"><p align="center"><font face="Arial"><em><big><big>Password
+    Change Screen</big></big></em></font></td>
+  </tr>
+  <tr>
+    <td width="100%" height="13"></td>
+  </tr>
+  <tr>
+    <td><table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#FFFFFF">
+      <tr>
+        <td width="30%"><table border="0" cellpadding="0" cellspacing="0" width="71%" height="12">
+          <tr>
+            <td width="27%" height="1"></td>
+            <td width="68%" height="1"></td>
+            <td width="5%" height="1"></td>
+          </tr>
+          <tr>
+            <td width="27%" height="21"></td>
+            <td width="68%" height="21"><div class="ExpenseTag"><p>Enter your email address, current
+            password and then enter your new password twice to change from your current password to a
+            new password.</p>
+            </div></td>
+            <td width="5%" height="21"></td>
+          </tr>
+          <tr>
+            <td width="27%" height="21"></td>
+            <td width="68%" height="21"></td>
+            <td width="5%" height="21"></td>
+          </tr>
+        </table>
+        </td>
+        <td width="70%"><form method="POST" action="ChangePwd.jsp">
+          <input type="hidden" name="company" value="ess"><input type="hidden" name="database"
+          value="jdbc:odbc:adisoft"><input type="hidden" name="changeScreen" value><table border="1"
+          width="100%" height="39" class="offsetColor" cellpadding="0" bordercolordark="#000000">
+            <tr>
+              <td width="33%" height="26"><font color="#000000"><strong>Email Address:&nbsp; </strong></font></td>
+              <td width="67%" height="26"><input type="text" name="email" size="25"></td>
+            </tr>
+            <tr align="center">
+              <td width="33%" height="13"><div align="left"><p><font color="#000000"><strong>Current
+              Password:</strong></font></td>
+              <td width="67%" height="13"><div align="left"><p><input type="password" name="password"
+              size="13"></td>
+            </tr>
+            <tr>
+              <td width="33%" height="13"></td>
+              <td width="67%" height="13"></td>
+            </tr>
+            <tr>
+              <td width="33%" height="13"><font color="#000000"><strong>New Password:</strong></font></td>
+              <td width="67%" height="13"><input type="password" name="newPwd1" size="13"></td>
+            </tr>
+            <tr>
+              <td width="33%" height="13"><font color="#000000"><strong>New Password Again:</strong></font></td>
+              <td width="67%" height="13"><input type="password" name="newPwd2" size="13"></td>
+            </tr>
+          </table>
+          <div align="center"><center><p><input type="button" value="Change password" name=" "
+          tabindex="15" onClick="Javascript: void submit()"></p>
+          </center></div>
+        </form>
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+</strong>
+<!--- site specific lists, generated from tables --->
+<script language="Javascript" src="/ess-app/ajax/ESSProfile.jsp">
+</script>
+<script language="Javascript" id="companyScript" src="/ess-app/ajax/Company.jsp">
+</script>
+<script
+LANGUAGE="JavaScript" SRC="../trim.js"></script>
+<script>
+function init() {
+
+    document.forms[0].database.value = getDatabase();
+    document.forms[0].action = getAppServer() + "/" + getAppFolder() + "/" + "ChangePwd.jsp";
+    document.forms[0].changeScreen.value = "pwdChangeAudit.html";
+
+}
+</script>
+
+</body>
+</html>

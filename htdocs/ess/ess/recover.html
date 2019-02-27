@@ -1,0 +1,209 @@
+<!--
+recover.html - Executes when user doesn't logout and there is a report that needs to be 'cookied' 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Content</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="Submit()">
+<p>Logging exit action and report contents...</p>
+<form name="Userdata">
+  <input type="hidden" class="userData" style="behavior:url(#default#userdata)" id="ReportData" name="ReportData">
+</form>
+<form method="post" action="RecoverLog.jsp">
+  <input type="hidden" name="report" value>
+</form>
+
+<script language="JavaScript">
+var Header = "";                //Report header information
+var HeadList = "";              //Purposes, timesheets, odometer readings, etc
+var TailList = "";              //Receipts and expense transactions
+
+var $name$ = 0;            //Makes database array manipulation easier to read
+var $value$ = 1;
+var $type$ = 0;            //Good descriptions for items in the head and tail lists
+var $items$ = 1;
+
+function Submit() {
+  GetLocal(); 
+  document.forms[1].report.value = CreateXML();
+  document.forms[1].action = getAppServer() + "/ess-app/" + "RecoverLog.jsp";
+  document.forms[1].submit();
+}
+
+function GetLocal() {
+ var msg = "The previous report you were working on has been reclaimed.";
+ populateReport(GetCookie("ESSHead"), GetCookie("ESSPurp"), GetCookie("ESSRcpt"), msg);
+ ReportIsSaved = false;
+}
+
+function GetCookie(EntryName) {
+  if (navigator.appVersion.indexOf("MSIE") > -1) {   
+    document.forms[0].ReportData.load(EntryName);
+    var ThisCookie = document.forms[0].ReportData.getAttribute("data");
+    if (ThisCookie == null) ThisCookie = "";
+    return(ThisCookie);
+  } else { 
+    var search = EntryName + '=';
+    if (document.cookie.length > 0) {
+      offset = document.cookie.indexOf(search);
+      if (offset != -1) {
+        offset += search.length;
+        end = document.cookie.indexOf(';', offset);
+        if (end == -1) end = document.cookie.length;
+        return unescape(document.cookie.substring(offset, end));
+      }
+    }
+  }
+}
+
+function populateReport(HeadString, PurpString, RcptString, Msg) {
+//Used to create a page that will then update report arrays thru the ProcessRepList function
+if (HeadString.length > 0) {
+  Header = eval(HeadString);
+  HeadList = eval(PurpString);
+  TailList = eval(RcptString);     
+ } else {
+  alert("Cannot post report to server.");
+ }
+} 
+
+//The following functions are used to create XML formated strings for transmission to the host
+
+function CreateXML() {  // change name 2 CreateRepXML
+//Creates an xml file from the report arrays, the primary purpose is to submit/save reports
+//on the web server.  This xml file corresponds to how the browser's forms see the data.
+//there exists normalization and translation routines on the web serber.
+  var outstring = "<report>\n"; 
+  outstring += "<header>\n";
+  for (var i = 0; i < Header.length; i++) {
+    if (Header[i][$value$].length > 0) {
+      outstring += "<" + Header[i][$name$] + ">";   
+      outstring += XMLReplace(Header[i][$value$]); 
+      outstring += "</" + Header[i][$name$] + ">\n";
+    }
+  }
+  outstring += "</header>\n";
+  for (var j = 0; j < HeadList.length; j++){
+    outstring += "<" + getHLTagName() + " type=\"" + HeadList[j][$type$] + "\">\n";
+    outstring += CellDrill(HeadList[j][$items$]);
+    outstring += "</" + getHLTagName() + ">\n";
+  }
+  for (var j = 0; j < TailList.length; j++){  //could get modularized
+    outstring += "<" + getTLTagName() + " type=\"" + TailList[j][$type$] + "\">\n";
+    outstring += CellDrill(TailList[j][$items$]);
+    outstring += "</" + getTLTagName() + ">\n";
+  }
+  outstring += "</report>";
+  return outstring;
+}
+
+function CellDrill(items) {
+  var outstring = "";
+  for (var i = 0; i < items.length; i++) {
+    if (items[i][$value$].length > 0 && (typeof(items[i][$value$]) != "string" || items[i][$value$] != "[]")) {
+      outstring += "<" + items[i][$name$] + ">";
+      if (typeof(items[i][$value$]) == "string") {
+        outstring += XMLReplace(items[i][$value$]); 
+      } else {
+        outstring += "\n" + CellDrill(items[i][$value$]);
+      }
+      outstring += "</" + items[i][$name$] + ">\n";
+    }
+  }
+  return outstring;
+}
+
+
+function XMLReplace(x) {
+//replace later with a function that doesn't change a valid unicode (&...;)
+  var regexp = /&/g ;
+  x = x.replace(regexp,"&amp;");
+  regexp = /</g ;
+  x = x.replace(regexp,"&lt;");
+  regexp = /´/g ;
+  x = x.replace(regexp,"");  // was &#180;
+  regexp = />/g ;
+  x = x.replace(regexp,"&gt;");
+  regexp = /"/g ;
+  x = x.replace(regexp,"'");
+  regexp = /\n/g ;
+  x = x.replace(regexp,"&#10;");
+  regexp = /\r/g ;
+  x = x.replace(regexp,""); 
+  regexp = /\\/g ;
+  x = x.replace(regexp,"&#92;");
+
+  var z = 0;
+  var y = "";
+  for (var j = 0; j < x.length; j++) {
+     z = x.charCodeAt(j);
+     if (z > 127) {
+        if (z < 256) {
+           y = "&#" + z + ";";
+        } else {
+           y = "?";
+        }
+        x = x.substring(0,j) + y + x.substr(j+1);
+        j = j + y.length - 1;
+     }
+  }
+
+  //regexp = /\[/g ;
+  //x = x.replace(regexp,"&#91;");   
+  //regexp = /\]/g ;
+  //x = x.replace(regexp,"&#93;");   
+  return x;
+}
+
+function CreatePersDBXML(DBArray) {
+  var outString = "";
+  outString += "<personal>\n";
+  outString += CreateDBXML(DBArray);
+  outString += "</personal>\n";
+  return outString;
+}
+
+function CreateDBXML(DBArray) {
+  var outString = "";
+  for (var i = 0; i < DBArray.length; i++) {
+    outString += "<" + DBArray[i][0] + ">";
+    if ( typeof(DBArray[i][1]) == "string") {
+      outString += XMLReplace(DBArray[i][1]);
+    } else {
+      outString += "\n";
+      var copyArray = new Array();
+      for (var j = 0; j < DBArray[i][1].length; j++) {
+        copyArray[copyArray.length] = DBArray[i][1][j];
+      } 
+      outString += CreateDBXML(copyArray);
+    }
+    outString += "</" + DBArray[i][0] + ">\n";
+  }
+  return outString;
+}
+
+//End of XML stuff
+
+</script>
+<!--- site specific lists, generated from tables --->
+<script language="Javascript" src="../ESSProfile.js">
+</script>
+</body>
+</html>

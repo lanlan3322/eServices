@@ -1,0 +1,674 @@
+<!--
+combine2.html - day trip wizard
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+
+<html>
+
+<head>
+<title>Day Trip</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="JavaScript:void FillForm()">
+<div align="right"><a href="javascript: void parent.contents.helpWindow('hcombine2.html')"><span class="ExpenseLink">Screen Help?</span></a></div>
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%" class="offsetColor">
+  <tr>
+    <td width="100%"><h1>Enter trip purpose and receipts:</h1>
+  </tr>
+</table>
+<br>
+<h2>Trip Purpose</h2>
+
+<form name="topside">
+ <input type="hidden" name="xref" value="XXX">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td width="100%">
+       <table border="0" cellpadding="0" cellspacing="0" width="100%" height="240">
+       <tr>
+          <td width="25%" class="offsetColor" height="25"><div class="ExpenseTag">Visit From:</div></td>
+          <td width="40%" class="offsetColor" height="25"><input type="text" name="begdate" size="8" value="mm/dd/yy" mysubst="1" onBlur="resetDate()" onChange="checkdate(document.forms[0].begdate)"><a HREF="javascript:doNothing()" mysubst="2" onClick="setDateField(document.forms[0].begdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><span class="ExpenseTinyLink">Popup Calendar</span></td>
+          <td width="35%" class="offsetColor"></td>        
+       </tr>
+       <tr>
+          <td width="25%" height="25"><div class="ExpenseTag">To:</div></td>
+          <td width="40%" height="25"><input type="text" name="enddate" size="8" value="mm/dd/yy" mysubst="3" onChange="checkdate(document.forms[0].enddate)"><a HREF="javascript:doNothing()" mysubst="4" onClick="setDateField(document.forms[0].enddate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><span class="ExpenseTinyLink">Popup Calendar</span></td>
+          <td width="35%"></td>         
+       </tr>
+       <tr>
+          <td width="25%" class="offsetColor"><div class="ExpenseTag">Acct/Project #:</div></td>
+          <td width="40%" class="offsetColor"><input type="text" name="project" size="12" mysubst="5">
+          </td>
+          <td width="35%" class="offsetColor" align="right">
+          <a class="ExpenseLink" href="javascript:doNothing()" mysubst="6" onClick="setLocalObj(document.forms[0].projectname,'addproject2',400,200); MerchantType = 'file'; top.newWin = window.open('../addproject2.html', 'merchant', 'dependent=yes, width=360, height=200 screenX=100, screenY=100, titlebar=yes, menubar=no, status=no')">New&nbsp;Acct/Project&nbsp;</a>
+          <select name="projectname" size="1" mysubst="5" onChange="populateProject()" onReturn="populateProject()" subtype="nosave">
+          </select>
+          </td>     
+       </tr>
+       <tr>
+          <td width="25%" height="26"><div class="ExpenseTag">Client #:</div></td>
+          <td width="40%" height="26"><input type="text" name="clientno" size="12" mysubst="7" onChange="populateClient()">
+          </td>
+          <td width="35%" align="right">
+          <a class="ExpenseLink" href="javascript:doNothing()" mysubst="8" onClick="setLocalObj(document.forms[0].clientLookup,'addclient',400,450); MerchantType = 'client'; top.newWin = window.open('../addclient.html', 'merchant', 'dependent=yes, width=400, height=400, screenX=100, screenY=100, titlebar=yes, menubar=no, status=no')">New&nbsp;Client&nbsp;</a>
+          <select name="clientLookup" size="1" mysubst="5" onChange="populateClient()" onReturn="populateClient()">
+          </select>
+          </td>
+        </tr>
+        <tr>
+          <td width="25%" class="offsetColor" height="25"><div class="ExpenseTag">Client Name:</div></td>
+          <td width="40%" class="offsetColor" height="25"><input type="text" name="client" size="31" mysubst="9"></td>
+          <td width="25%" class="offsetColor"></td>
+        </tr>
+        <tr>
+          <td width="25%" height="26"><div class="ExpenseTag">Location:</div></td>
+          <td width="40%" height="26">
+          <input type="text" name="location" size="30" mysubst="10">
+          </td>
+          <td width="25%" align="right">
+          <a class="ExpenseLink" href="javascript:doNothing()" mysubst="11" onClick="setLocalObj(document.forms[0].locationname); MerchantType = 'location'; top.newWin = window.open('../addmerchant.html', 'merchant', 'dependent=yes, width=200, height=150, screenX=100, screenY=100, titlebar=yes, menubar=no, status=no')">New&nbsp;Location&nbsp;</a>
+          <select name="locationname" size="1" mysubst="10" onChange="populateLocation()" onReturn="populateLocation()" subtype="nosave">
+          </select>
+          </td>
+        </tr>
+        <tr>
+          <td width="25%" class="offsetColor" height="113"><div class="ExpenseTag">Trip Purpose or Reason for Expense:</div></td>
+          <td width="40%" class="offsetColor" height="113"><textarea rows="4" name="comment" cols="37" mysubst="12"></textarea></td>
+          <td width="25%" class="offsetColor"><div class="ExpenseTag">This screen is designed to submit expenses for a single client visit and for simplicity sake does not provide for all expense types.  To enter any expense types not found on this screen use the "Save and Add an Extra Receipt" link at the bottom right corner or after you have saved your entries on this screen, select an option from 'Expense Entry'.</div></td>
+        </tr>
+        <tr>
+          <td width="25%"><div class="ExpenseTag">Aircraft type:</div></td>
+          <td width="40%"><select name="stepno" size="1">
+            <option selected>None</option>
+            <option>Commercial</option> 
+            <option>Corporate</option>
+          </select>
+          </td>
+          <td width="25%"></td>
+        </tr>
+       </table>
+      </td>
+    </tr>
+  </table>
+</form>
+<h2>Car Mileage</h2>
+<form name="mileage">
+  <input type="hidden" name="expense_1_expensetype" value>
+  <input type="hidden" name="charge" value> 
+  <input type="hidden" name="units" value>
+  <input type="hidden" name="expense_1_billtype" value="No">
+  <table border="0" width="73%" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag">Date:</div></td>
+      <td width="90%" class="offsetColor"><input type="text" name="rcptdate" size="10" value mysubst="13" onChange="checkdate(this.form.rcptdate)"> <a HREF="javascript:doNothing()" mysubst="14" onClick="setDateField(document.forms[1].rcptdate);
+      top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"> </a><span class="ExpenseTinyLink">Popup Calendar</span></td>
+    </tr>
+    <tr>
+      <td width="10%"><div class="ExpenseTag"><script>document.write(parent.contents.getDistanceLabel())</script>:</div></td>
+      <td width="90%"><input type="text" name="recamt" size="8" mysubst="15" onchange="calcBarterAmount(mileage)"></td>
+    </tr>
+    <tr>
+      <td width="10%" class="offsetColor"><div class="ExpenseTag">Rate:</div></td>
+      <td width="90%" class="offsetColor"><input type="text" name="xrate" size="8" mysubst="16" onchange="checkXRate(mileage)" readonly></td>
+    </tr>
+    <tr>
+      <td width="10%"><div class="ExpenseTag">Amount:</div></td>
+      <td width="90%"><input type="text" name="amount" value="0.00" size="8" onchange="amountVal(amount)" readonly="yes"></td>
+    </tr>
+  </table>
+  <table width="73%" height="34">
+    <tr>
+      <td width="10%" height="28" class="offsetColor"><div class="ExpenseTag">From:</div></td>
+      <td width="20%" height="28" class="offsetColor"><input type="text" name="xsource" size="25" mysubst="18"> </td>
+      <td width="10%" height="28" class="offsetColor"><div class="ExpenseTag">To:</div></td>
+      <td width="60%" height="28" class="offsetColor"><input type="text" name="expense_1_comment" size="25" mysubst="19"> </td>
+    </tr>
+  </table>
+<input type="hidden" name="expense_1_purpose" value="wizard">
+<input type="hidden" name="expense_1_xref" value>
+</form>
+<h2>Expense Receipts</h2>
+<table border="0" width="100%" cellpadding="0">
+  <form name="bottom1">
+  <tr><table border="0" width="910" cellpadding="0" style="border: medium none">
+      <td width="60%"><p align="left"><small><bold>Enter individual receipts in the following forms.  For travel outside the U.S.
+      select which foreign currency used and enter foreign amounts in the Foreign Amount column.  For U.S. travel,
+      ignore the Foreign Amount column. For expense requiring a merchant be specified, use the "Save and add an extra expense" link.</bold></small></td>
+      <td width="20%"><div class="ExpenseTag">Currency:</div><input type="text" name="units" size="16" readOnly="yes">
+      <a href="javascript:doNothing()" mysubst="19" onClick="FormNumber = 2;top.newWin = window.open('../fx1.html', 'fx', 'dependent=yes, width=520, height=360, screenX=580, screenY=420, titlebar=yes, status=yes')"><span class="ExpenseLink">Select Currency</span></a></td>
+  </table></tr>
+  <tr>
+    <td width="100%"><table border="0" width="870" cellpadding="0">
+      <tr>
+        <td width="150" align="center"><div class="ExpenseTag">Receipt Date</div></td>
+        <td width="90" align="center"><div class="ExpenseTag"><script>document.write(parent.contents.getCurrencyLabel())</script></div></td>
+        <td width="90" align="center"><div class="ExpenseTag">Foreign Amount</div></td>
+        <td width="110" align="center"><div class="ExpenseTag">Expense Type</div></td>
+        <td width="300" align="center"><div class="ExpenseTag">Comment</div></td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td width="100%"></td>
+  </tr>
+  <tr>
+    <td width="100%"><table border="0" width="870" cellpadding="0">
+      <input type="hidden" name="rcpttype" value="3">
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_billtype" value="No">
+      <tr>
+        <td width="150" class="offsetColor"><input type="text" name="rcptdate" size="13" mysubst="100"><a HREF="javascript:doNothing()" mysubst="101" onClick="setDateField(document.forms[2].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="90" class="offsetColor"><input type="text" name="amount" size="9" value="0.00" mysubst="102" onChange="CheckAmount(this.form.amount)"></td>
+        <td width="90" class="offsetColor"><input type="text" name="recamt" size="12" value mysubst="103" onChange="FormNumber = 2;FXConvert()" readOnly="yes"></td>
+        <td width="110" class="offsetColor"><select name="expense_1_expensetype" size="1" mysubst="104">
+        </select></td>
+        <td width="300" class="offsetColor"><input type="text" name="expense_1_comment" size="36" mysubst="106" onChange="CheckComment(this.form.expense_1_comment)">
+        <a href="javascript:doNothing()" mysubst="108" onClick="initAttendeeList(document.forms[2].expense_1_attendeelist,document.forms[2].expense_1_persplit,document.forms[2].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=600, height=605, screenX=580, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')"><span class="ExpenseLink">Attendee List</span></a>       
+        </td>
+        <input type="hidden" name="expense_1_purpose" value="wizard">
+        <input type="hidden" name="expense_1_xref" value>
+        <input type="hidden" name="charge" value>
+      </tr>
+      </table>
+    </td>
+  </tr>
+  </form>
+  <tr>   
+    <td width="100%"><table border="0" width="870" cellpadding="0">
+      <form name="bottom2">
+      <input type="hidden" name="rcpttype" value="3">
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_billtype" value="No">
+      <tr>
+        <td width="150"><input type="text" name="rcptdate" size="13" mysubst="200"><a HREF="javascript:doNothing()" mysubst="201" onClick="setDateField(document.forms[3].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="90"><input type="text" name="amount" size="9" value="0.00" mysubst="202" onChange="CheckAmount(this.form.amount)"></td>
+        <td width="90"><input type="text" name="recamt" size="12" value mysubst="203" onChange="FormNumber = 3;FXConvert()" readOnly="yes"></td>
+        <td width="110"><select name="expense_1_expensetype" size="1" mysubst="204">
+        </select></td>
+        <td width="300"><input type="text" name="expense_1_comment" size="36" mysubst="206" onChange="CheckComment(this.form.expense_1_comment)">
+        <a class="ExpenseLink" href="javascript:doNothing()" mysubst="208" onClick="initAttendeeList(document.forms[3].expense_1_attendeelist,document.forms[3].expense_1_persplit,document.forms[3].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=580, height=600, screenX=605, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')">Attendee List</a>       
+        </td>
+        <input type="hidden" name="expense_1_purpose" value="wizard">
+        <input type="hidden" name="expense_1_xref" value>
+        <input type="hidden" name="charge" value>
+      </tr>
+      </form>
+      </table> 
+  </tr>
+  <tr>
+    <td width="100%"><table border="0" width="870" cellpadding="0">
+      <form name="bottom3">
+      <input type="hidden" name="rcpttype" value="3">
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_billtype" value="No">
+      <tr>
+        <td width="150" class="offsetColor"><input type="text" name="rcptdate" size="13" mysubst="300"><a HREF="javascript:doNothing()" mysubst="301" onClick="setDateField(document.forms[4].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="90" class="offsetColor"><input type="text" name="amount" size="9" value="0.00" mysubst="302" onChange="CheckAmount(this.form.amount)"></td>
+        <td width="90" class="offsetColor"><input type="text" name="recamt" size="12" value mysubst="303" onChange="FormNumber = 4;FXConvert()" readOnly="yes"></td>
+        <td width="110" class="offsetColor"><select name="expense_1_expensetype" size="1" mysubst="304">
+        </select></td>
+        <td width="300" class="offsetColor"><input type="text" name="expense_1_comment" size="36" mysubst="306" onChange="CheckComment(this.form.expense_1_comment)">
+        <a class="ExpenseLink" href="javascript:doNothing()" mysubst="308" onClick="initAttendeeList(document.forms[4].expense_1_attendeelist,document.forms[4].expense_1_persplit,document.forms[4].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=580, height=600, screenX=605, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')">Attendee List</a>       
+        </td>
+        <input type="hidden" name="expense_1_purpose" value="wizard">
+        <input type="hidden" name="expense_1_xref" value>
+        <input type="hidden" name="charge" value>
+      </tr>
+      </form>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td width="100%"><table border="0" width="870" cellpadding="0">
+      <form name="bottom4">
+      <input type="hidden" name="rcpttype" value="3">
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_billtype" value="No">
+      <tr>
+        <td width="150"><input type="text" name="rcptdate" size="13" mysubst="400"><a HREF="javascript:doNothing()" mysubst="401" onClick="setDateField(document.forms[5].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="90"><input type="text" name="amount" size="9" value="0.00" mysubst="402" onChange="CheckAmount(this.form.amount)"></td>
+        <td width="90"><input type="text" name="recamt" size="12" value mysubst="403" onChange="FormNumber = 5;FXConvert()" readOnly="yes"></td>
+        <td width="110"><select name="expense_1_expensetype" size="1" mysubst="404">
+        </select></td>
+        <td width="300"><input type="text" name="expense_1_comment" size="36" mysubst="406" onChange="CheckComment(this.form.expense_1_comment)">
+        <a class="ExpenseLink" href="javascript:doNothing()" mysubst="408" onClick="initAttendeeList(document.forms[5].expense_1_attendeelist,document.forms[5].expense_1_persplit,document.forms[5].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=580, height=600, screenX=605, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')">Attendee List</a>       
+        </td>
+        <input type="hidden" name="expense_1_purpose" value="wizard">
+        <input type="hidden" name="expense_1_xref" value>
+        <input type="hidden" name="charge" value>
+      </tr>
+      </form>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td width="100%"><table border="0" width="870" cellpadding="0">
+      <form name="bottom5">
+      <input type="hidden" name="rcpttype" value="3">
+      <input type="hidden" name="expense_1_attendeelist" value="[]">
+      <input type="hidden" name="units" value>
+      <input type="hidden" name="ratetype" value>
+      <input type="hidden" name="xsource" value>
+      <input type="hidden" name="xrate" value>
+      <input type="hidden" name="xdate" value>
+      <input type="hidden" name="expense_1_persplit" value>
+      <input type="hidden" name="expense_1_billtype" value="No">
+      <tr>
+        <td width="150" class="offsetColor"><input type="text" name="rcptdate" size="13" mysubst="500"><a HREF="javascript:doNothing()" mysubst="501" onClick="setDateField(document.forms[6].rcptdate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="27" HEIGHT="16"></a></td>
+        <td width="90" class="offsetColor"><input type="text" name="amount" size="9" value="0.00" mysubst="502" onChange="CheckAmount(this.form.amount)"></td>
+        <td width="90" class="offsetColor"><input type="text" name="recamt" size="12" value mysubst="503" onChange="FormNumber = 6;FXConvert()" readOnly="yes"></td>
+        <td width="110" class="offsetColor"><select name="expense_1_expensetype" size="1" mysubst="504">
+        </select></td>
+        <td width="300" class="offsetColor"><input type="text" name="expense_1_comment" size="36" mysubst="506" onChange="CheckComment(this.form.expense_1_comment)">
+        <a class="ExpenseLink" href="javascript:doNothing()" mysubst="508" onClick="initAttendeeList(document.forms[6].expense_1_attendeelist,document.forms[6].expense_1_persplit,document.forms[6].expense_1_expensetype); top.newWin = window.open('../attendee2a.html', 'attendee', 'dependent=yes, width=580, height=600, screenX=605, screenY=420, titlebar=yes, menubar=no, status=no, scrollbars=yes')">Attendee List</a>       
+        </td>
+        <input type="hidden" name="expense_1_purpose" value="wizard">
+        <input type="hidden" name="expense_1_xref" value>
+        <input type="hidden" name="charge" value>
+      </tr>
+      </form>
+    </table>
+    </td>
+  </tr>
+</table>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../attendee.js"></script>
+<script LANGUAGE="JavaScript" SRC="../fx1.js"></script>
+<script LANGUAGE="JavaScript">
+
+function FillForm() {
+
+  document.forms[0].projectname.subtype = "nosave";  //needed for Mozilla
+  document.forms[0].locationname.subtype = "nosave";
+
+  parent.contents.setDefaultDate(document.forms[0].begdate,-1);
+  parent.contents.setDefaultDate(document.forms[0].enddate,-1);
+  parent.contents.setDefaultDate(document.forms[1].rcptdate,-1);
+  document.forms[1].xrate.value = parent.contents.getMileageDefault();
+  document.forms[1].xrate.readOnly = parent.contents.getMileageReadOnly();
+  document.forms[1].units.value = parent.contents.getDistanceLabel();
+  document.forms[1].expense_1_billtype.value = "No";
+  parent.contents.setListWKeyWPers(document.forms[0].projectname,parent.contents.getProjectNos("1"),"file","project","title");
+  parent.contents.setListWValueWPers(document.forms[0].clientLookup, parent.contents.getClientNos("2"),"client","client","clientno")
+  MerchantType = "location";
+  parent.contents.setListWithPers(document.forms[0].locationname, parent.contents.getLocations("1"),MerchantType);
+  parent.contents.setListDefault(document.forms[0].stepno, parent.contents.getDefault("combine2.stepno"));
+  var xlist =  ";" + DedicatedList() + parent.contents.getMerchantReq();
+  for (var i = 2; i < document.forms.length; i++) { 
+    parent.contents.setList(document.forms[i].expense_1_expensetype, parent.contents.getExpenseTypes(parent.Category),xlist);
+    parent.contents.setDefaultDate(document.forms[i].rcptdate,-1);
+    document.forms[i].expense_1_billtype.value = "No";
+    document.forms[0].begdate.focus();
+  }
+}
+
+function DedicatedList() {
+//Remove expense types requiring other than cash.
+  var retVal = "";
+  var delimit = ";";
+  var x = parent.contents.getDedicatedMethod("1");
+  for (var i = 0; i < x.length; i++) {
+     if (x[i][1] != parent.contents.getChargeDef() && x[i][1] != "") {
+       retVal += delimit + x[i][0];
+     }
+  } 
+  return retVal;
+}
+
+var dupFlagOK = true;
+function SubmitRec(nContinue) {
+ if (dupFlagOK) {
+  dupFlagOK = false;
+
+  var PostScreen = true;
+  // do purpose form check here and set to false if failed
+  if (doDateCheck(document.forms[0].begdate.value, document.forms[0].enddate.value)
+     && checkdate(document.forms[0].begdate)
+     && checkdate(document.forms[0].enddate)
+     && checkProject(parent.contents.rtrim(document.forms[0].project.value))
+     && CheckMilesOK(document.forms[1])
+     && checkdate(document.forms[1].rcptdate)) { 
+    with (document.forms[0]) {
+      if (checkPurpComment(comment)) {
+         PostScreen = true;
+      } else {
+         PostScreen = false;
+      }
+    }
+    // do expense grid check here and set to false if failed
+    var i = 2; 
+    do {
+      with (document.forms[i]) { 
+        if (CheckZero(amount) 
+          || CheckAmount(amount) 
+          && checkdate(rcptdate)
+          && doDateChkToday(rcptdate)
+          && CheckExpType(expense_1_expensetype, amount)
+          && CheckDedicated(expense_1_expensetype,parent.contents.getChargeDef())
+          && CheckAttendee(expense_1_attendeelist, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)
+          && CheckComment(expense_1_comment, expense_1_expensetype.options[expense_1_expensetype.selectedIndex].text)) {
+          i = i + 1; 
+        } else {    
+          PostScreen = false;
+        }  
+      }
+    } while (PostScreen == true && i < document.forms.length);
+    if (PostScreen == true) {
+      // post report purpose
+      document.forms[0].xref.value = parent.contents.NextXref();
+      parent.contents.UpdateReport('1','head2a',document.forms[0]);
+      if (parent.contents.HeadList.length == 1) {
+        var r = parent.contents.setNameValue(parent.contents.Header, "comment", document.forms[0].comment.value);     
+      }
+      var thisPurpose = parent.contents.getStringFmHead(parent.contents.HeadList.length - 1);
+      // post mileage transaction
+      if (!CheckZero(document.forms[1].amount) || !isNaN(document.forms[1].recamt)) {
+        document.forms[1].expense_1_purpose.value = thisPurpose;
+        document.forms[1].expense_1_expensetype.value = parent.contents.getMileageType();
+        document.forms[1].charge.value = parent.contents.getChargeDef();
+        document.forms[1].expense_1_purpose.value = thisPurpose;
+        document.forms[1].expense_1_xref.value = document.forms[0].xref.value;
+        parent.contents.UpdateReport('2','trans5',document.forms[1]);
+      }
+      // post expense grid transactions
+      for (var j = 2; j < document.forms.length; j++) {
+        if (!CheckZero(document.forms[j].amount)) {
+          if (!isNaN(document.forms[j].amount.value)) parent.contents.makeCurrency(document.forms[j].amount);
+          document.forms[j].charge.value = parent.contents.getChargeDef();
+          document.forms[j].expense_1_purpose.value = thisPurpose;
+          document.forms[j].expense_1_xref.value = document.forms[0].xref.value;
+          document.forms[j].rcpttype.value = "3";
+          parent.contents.UpdateReport('2','trans1afxn',document.forms[j]);
+        }
+      }
+      dupFlagOK = true;
+      if (nContinue == 1) {
+        parent.contents.TransWindow(parent.contents.defaultHead + "combine4ax.html");
+      } else if (nContinue == 2) {
+        parent.contents.TransWindow(parent.contents.defaultHead + "combine2ay.html");
+      } else {
+        parent.contents.ListDelay();
+      }
+    } else {
+      dupFlagOK = true;
+    }
+   }
+   dupFlagOK = true;
+  } 
+}
+
+function CheckAttendee(tag,expense) {
+  var Check = tag.value;
+  var Xstr = parent.contents.getAttendeeReq();
+  if (Xstr.indexOf(";" + expense + ";") > -1 && Check.length < 3) {
+     alert("Need to supply attendee list for " + expense + " expense");
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function checkPurpComment(object) {
+        if (object.value.length > 9) {
+                return true;
+        } else
+        alert("Need to supply a purpose of at least 10 characters");
+        object.focus();
+        object.select();
+}
+
+function resetDate() {
+ document.forms[0].enddate.value = document.forms[0].begdate.value;
+ document.forms[1].rcptdate.value = document.forms[0].begdate.value;
+ for (var i = 2; i < document.forms.length; i++) { 
+    document.forms[i].rcptdate.value = document.forms[0].begdate.value;
+ }
+ parent.defDateStr = document.forms[0].begdate.value;
+}
+
+function CheckExpType(tag1, tag2) {
+        if (!CheckZero(tag2) && (tag1.selectedIndex == 0)) {
+     alert("Select an Expense Type.");
+     tag1.focus();
+     return false;
+  } else {
+     return true;
+  }
+}
+
+function CheckZero(tag) {
+  var Check = parseFloat(tag.value);
+  if (Check == 0) {
+     return true;
+  } else {
+     return false;
+  }
+}
+
+function CheckAmount(tag) {
+  return parent.contents.checkAmtFldOK(tag);
+}
+
+var NeedComment = parent.contents.getCommentReq();
+function CheckComment(tag,expensetype) {
+  var Check = tag.value;
+  if (NeedComment.indexOf(";" + expensetype + ";") > -1 && Check.length < 10) {
+     alert("Need to supply a comment of at least 10 characters");
+     tag.focus();
+     tag.select();
+     return false;
+  } else {
+     return true;
+  }
+}
+function calcBarterAmount(formObj) {
+        var intAmount = parseFloat(formObj.recamt.value);
+        var intRate = parseFloat(formObj.xrate.value);
+        var totalAmt = intAmount * intRate;
+        formObj.amount.value = totalAmt;
+        amountVal(formObj.amount);
+        //formObj.amount.value = amountVal(formObj.amount);
+        return;
+}
+function checkXRate(formObj) {
+        var newValue = formObj.xrate.value
+        if (isNumber(newValue)) {
+                calcBarterAmount(mileage);
+        } else {
+                xRateAlert(formObj.xrate);
+                return false;
+        }
+}
+function isNumber(inputVal) {
+        oneDecimal = false
+        inputStr = inputVal.toString()
+        for (var i = 0; i < inputStr.length; i++) {
+                var oneChar = inputStr.charAt(i)
+                if (i == 0 && oneChar == "-") {
+                        continue
+                }
+                if (oneChar == "." && !oneDecimal) {
+                        oneDecimal = true
+                        continue
+                }
+                if (oneChar < "0" || oneChar > "9") {
+                        return false
+                }
+        }
+        return true
+}
+function xRateAlert(textObj) {
+        alert("Mileage Rate must be numeric.");
+        textObj.focus();
+        textObj.select();
+}
+
+function checkProject(x) {
+  return parent.contents.checkProject(x);
+}
+
+function checkClientNo(x) {
+  return parent.contents.checkClientNo(x);
+}
+
+
+function LookupCleanup() {
+  document.forms[0].clientLookup.selectedIndex = 0;
+}
+
+function fxCleanUp() {
+        checkFCurrency(2);
+        checkFCurrency(3);
+        checkFCurrency(4);
+        checkFCurrency(5);
+        checkFCurrency(6);
+}
+
+function checkFCurrency(n){
+        FormNumber = n;
+        document.forms[n].xrate.value = document.forms[2].xrate.value;
+        document.forms[n].units.value = document.forms[2].units.value; 
+        document.forms[n].ratetype.value = document.forms[2].ratetype.value; 
+        document.forms[n].xsource.value = document.forms[2].xsource.value; 
+        document.forms[n].xdate.value = document.forms[2].xdate.value;     
+        var z = isEmpty(document.forms[n].xrate.value);
+        setFgnProtected(z, 'recamt', 'amount');
+        FXConvert('recamt', 'amount', true);
+}
+
+function populateClient() {
+  if (document.forms[0].clientLookup.selectedIndex > -1) {
+    document.forms[0].clientno.value = document.forms[0].clientLookup.options[document.forms[0].clientLookup.selectedIndex].value;
+    document.forms[0].client.value = document.forms[0].clientLookup.options[document.forms[0].clientLookup.selectedIndex].text;
+    var X = parent.contents.getDBSingle(parent.PersDBase,"client","clientno",document.forms[0].clientno.value);
+    var Y;
+    if (X[0] && X[0].length != null) {
+    for (var i = 0; i < X[0].length; i++) {
+      Y = X[0][i][0];
+      if(Y == "location") {
+        document.forms[0].location.value = X[0][i][1];
+      }
+    }
+    }
+    document.forms[0].clientLookup.selectedIndex = 0;
+  }
+}   
+
+function populateLocation() {
+  with (document.forms[0]) {
+    if (locationname.selectedIndex > -1) {  
+      location.value = locationname.options[locationname.selectedIndex].text;
+      locationname.selectedIndex = 0;
+    }
+  }
+}
+
+function populateProject() {
+  if (document.forms[0].projectname.selectedIndex > -1) {
+    document.forms[0].project.value = document.forms[0].projectname.options[document.forms[0].projectname.selectedIndex].value;
+    var X = parent.contents.getDBSingle(parent.PersDBase,"file","project",document.forms[0].project.value);
+    var Y;
+    if (X[0] && X[0].length != null) {
+      for (var i = 0; i < X[0].length; i++) {
+        Y = X[0][i][0];
+        if(Y == "clientno") {
+            document.forms[0].clientno.value = X[0][i][1];
+            i = X[0].length;
+        }
+      }
+    }
+    for (var i = 0; i < document.forms[0].clientLookup.options.length; i++) {
+        if (document.forms[0].clientno.value == document.forms[0].clientLookup.options[i].value) {
+            document.forms[0].clientLookup.selectedIndex = i;
+            populateClient();
+            i = document.forms[0].clientLookup.options.length;
+        }
+    }
+    document.forms[0].projectname.selectedIndex = 0;
+  }
+}   
+function CheckMilesOK(xx) {
+  var retval = true;
+  if (!CheckZero(xx.amount) || !isNaN(xx.recamt)) {
+   if ( xx.xsource.value.length < 2) {
+     retval = false;
+     alert("'From' field not filled out correctly");
+     xx.xsource.focus();
+   } else if (xx.expense_1_comment.value.length < 2) {
+     retval = false;
+     alert("'To' field not filled out correctly");
+     xx.expense_1_comment.focus();
+   }
+  }
+  return retval;
+}
+
+function CheckDedicated(expObj, chgObj) {
+  var x = expObj.options[expObj.selectedIndex].text;
+  var y = chgObj.value;
+  var retVal = true;
+  var dedicated = parent.contents.getDBValue(parent.contents.getDedicatedMethod("1"), x);
+  if (dedicated != "" && y != dedicated) { 
+    retVal = false;
+    alert("Invalid payment method " + y + " for expense type " + x + ". Need to use " + dedicated + ".");
+  } else {
+    if (y != dedicated && parent.contents.getDBValue(parent.contents.getDedicatedMethod("1"), y,0,1) > "") {
+      retVal = false;
+      alert("Payment method " + y + " cannot be used for expense type " + x + ".");
+    }
+  }  
+  return retVal;
+}     
+
+
+</script>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="50%"><a align="left" class="ExpenseLink" href="Javascript: void SubmitRec(2)" mysubst="900" onDblClick="dupFlagOK = false">Save and add another trip</a>
+    </td>
+    <td width="50%"><p align="right"><a class="ExpenseLink" href="Javascript: void SubmitRec(1)" mysubst="901" onDblClick="dupFlagOK = false">
+    Save and add an extra expense</a></p></td>
+  </tr>
+</table>
+<p align="center"><input type="button" value=" Finish Wizard - Add these items to report" name=" " mysubst="902" onClick="Javascript: void SubmitRec(0)" onDblClick="dupFlagOK = false"></p>
+</body>
+</html>

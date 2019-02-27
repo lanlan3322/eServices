@@ -1,0 +1,194 @@
+<!--
+head1a.html - report header - simple
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Report Header Information</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="javascript: void loadValues()">
+<big><big>
+
+<p><h1>Report Header Information</h1></p>
+
+<form onReset="return HandleReset()"> 
+  <input type="hidden" name="company" size="24" tabindex="-1" readOnly="yes" nosave="yes">
+  <table border="0" width="100%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" cellspacing="1" cellpadding="0">
+    <tr>
+      <td width="39%" class="offsetColor"><div class="ExpenseTag">Personnel Number:</div></td>
+      <td width="61%" class="offsetColor"><input type="text" name="persnum" size="14" class="ProtectedField" readOnly=true></td>
+    </tr>
+    <tr>
+      <td width="39%"><div class="ExpenseTag">Name:</div></td>
+      <td width="61%"><input type="text" name="name" size="26" class="ProtectedField" readOnly=true></td>
+    </tr>
+    <tr>
+      <td width="25%" class="offsetColor"><div class="ExpenseTag">Phone:</div></td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor"><input type="text" name="phone" size="17"></td>
+    </tr>
+    <tr>
+      <td width="25%"><div class="ExpenseTag">Location:</div></td>
+      <td width="75%"><input type="text" name="location" size="20"class="ProtectedField" readOnly=true></td>
+    </tr>
+    <tr>
+      <td width="25%" class="offsetColor"><div class="ExpenseTag">Department:</div></td>
+      <td width="75%" class="offsetColor"><input type="text" name="depart" size="20" onChange="departMapping(depart, departname)">
+      <a class="ExpenseLink" href="javascript:doNothing()"
+          onClick="setDepartObj(document.forms[0].depart,document.forms[0].departname,'CompanyDepartSelect',900,300);MerchantType = 'depart'"><sm><em>Lookup!</em></sm></a>
+      &nbsp;&nbsp;<input type="text" name="departname" size="24" tabindex="-1" readOnly="yes">
+      </td>
+    </tr>
+    <tr>
+      <td width="25%"><div class="ExpenseTag">Report Date:</div></td>
+      <td width="75%"><input type="text" name="credate" size="16"><a HREF="javascript:doNothing()" tabindex onClick="setDateField(document.forms[0].credate); top.newWin = window.open('../calendar.html', 'cal', 'dependent=yes, width=210, height=230, screenX=200, screenY=300, titlebar=yes')"><img SRC="../calendar.gif" BORDER="0" WIDTH="16" HEIGHT="16"></a><span class="ExpenseTinyLink">Popup Calendar</span></td>
+    </tr>
+    <tr>
+      <td width="25%" class="offsetColor"><div class="ExpenseTag">Comment:</div></td>
+      <td width="75%" bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" class="offsetColor"><input type="text" name="comment" size="35"></td>
+    </tr>
+  </table>
+  <p><input type="button" value="OK - Accept any Changes" name=" " tabindex onClick="Javascript: void updateValues()"><input type="reset" value="Reset" name="B2" tabindex></p>
+</form>
+<p align="right"><a class="ExpenseReturnLink" href="javascript: void parent.contents.ListDelay()">Return to report display</a></p>
+<script LANGUAGE="JavaScript" SRC="../calendar.js"></script>
+<script LANGUAGE="JavaScript" SRC="../addmerchant.js"></script>
+<script LANGUAGE="JavaScript" SRC="../adddepart.js"></script>
+<script LANGUAGE="JavaScript" SRC="../validation.js"></script>
+<script language="Javascript">
+
+
+
+function CheckRequired(tag, CmtLen, msgtext) {
+  var Check = "";
+  var n = false 
+  Check = parent.contents.alltrim(tag.value);
+  if (Check.length >= CmtLen) n = true;
+  if (!n) {
+    alert(msgtext);
+    tag.focus();
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function loadValues() {
+
+  document.forms[0].persnum.value = parent.contents.getNameValue(parent.contents.Header, "persnum");
+
+  // var merchArray = new Array(1);
+  // merchArray[0] = parent.contents.getDBValue(parent.Header,"persnum");
+  // var workArray = parent.contents.getDBResult(parent.PersDBase,"reporter");
+  // for (var i = 0; i < workArray.length; i++) {
+  //   workArray[i] = workArray[i][0][1];
+  // }
+  // var mArray = merchArray.concat(workArray);
+  
+  document.forms[0].name.value = parent.contents.getNameValue(parent.contents.Header, "name");
+  document.forms[0].phone.value = parent.contents.getNameValue(parent.contents.Header, "phone");
+  document.forms[0].location.value = parent.contents.getNameValue(parent.contents.Header, "location");
+
+  document.forms[0].depart.value = parent.contents.getNameValue(parent.contents.Header, "depart");
+  departMapping(document.forms[0].depart, document.forms[0].departname,document.forms[0].company);
+
+  document.forms[0].credate.value = parent.contents.getNameValue(parent.contents.Header, "credate");
+  document.forms[0].comment.value = parent.contents.getNameValue(parent.contents.Header, "comment");
+}
+
+function HandleReset() {
+  loadValues();
+  return false;
+}
+
+function updateValues() {
+ with (document.forms[0]) {
+  if ((deptNotValid(departname)== false) &&
+  CheckRequired(depart,1,"Department field cannot be blank") &&
+  CheckRequired(phone,4,"Must supply a vaild phone number") &&
+  CheckRequired(location,3, "Must supply a valid location") &&
+  CheckRequired(name ,4, "Must supply a valid name") &&
+  checkdate(credate) &&
+  parent.contents.setNameValue(parent.contents.Header, "persnum", persnum.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "name", name.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "phone", phone.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "location", location.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "depart", depart.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "credate",credate.value) &&
+  parent.contents.setNameValue(parent.contents.Header, "comment", comment.value)) {
+     parent.contents.ListMemory();
+  } else {
+     alert("Please correct data entry");
+  }
+ }
+}
+
+function setMyList(FormObj,xvalue) {
+   var k;        //location of m in string
+   var n;        // recover value
+   var m = ": "; //delimiter for recover values
+   var j = 0;
+   var z = true;
+   do {
+     if (FormObj.options[j].text == xvalue) {
+         FormObj.selectedIndex = j;
+         z = false;
+     }
+     j = j + 1;
+   } while (z && j < FormObj.length); 
+   if (z) {  
+     FormObj.length = j + 1; 
+     FormObj.options[j].text = xvalue;
+     n = xvalue;
+     k = n.indexOf(m);
+     if (k > 0) n = n.substring(0,k);
+     FormObj.options[j].value = n;
+     FormObj.selectedIndex = j;
+   }
+}      
+
+function populateReporter() {
+  if (document.forms[0].persnum.length > 0 && document.forms[0].persnum.selectedIndex > -1) {
+    var K = document.forms[0].persnum.options[document.forms[0].persnum.selectedIndex].text
+    if (K == parent.contents.getDBValue(parent.Header,"persnum")) {
+      document.forms[0].name.value = parent.contents.getDBValue(parent.Header,"name");
+      document.forms[0].phone.value = parent.contents.getDBValue(parent.Header,"phone");
+      document.forms[0].location.value = parent.contents.getDBValue(parent.Header,"location");
+      document.forms[0].depart.value = parent.contents.getDBValue(parent.Header,"depart");
+    } else {
+      var X = parent.contents.getDBSingle(parent.PersDBase,"reporter","persnum", K);
+      if (X == "") {
+        HandleReset();
+      } else {
+        var Y;
+        for (var i = 0; i < X[0].length; i++) {
+          Y = X[0][i][0];
+          if (Y == "persnum" || Y == "credate") {
+            // 
+          } else {
+            document.forms[0].elements[Y].value = X[0][i][1];
+          }
+        }
+      }
+    }
+    departMapping(document.forms[0].depart, document.forms[0].departname);
+  }
+}
+</script>
+
+</body>
+</html>

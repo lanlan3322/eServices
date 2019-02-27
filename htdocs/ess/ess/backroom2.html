@@ -1,0 +1,122 @@
+<!--
+backroom8.html - audit menu - supervisor
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Backroom</title>
+<base target="main">
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="initForm()">
+<script>
+
+var defaultHome = parent.webServer + "/" + parent.webFolder + "/";
+var defaultHead = parent.webServer + "/" + parent.webFolder + "/ess/";
+var defaultTrans = parent.webServer + "/" + parent.webFolder + "/aa/";  
+var defaultApps = parent.appServer + "/" + parent.appFolder + "/";
+
+var DirectEdit = true;
+
+</script>
+         <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="25" height="28" valign="top"></td>
+                <td width="140" height="28" class="MenuLink" valign="top"><script>document.write("<span id='hello'>Hello</span> " + parent.Header[1][1] + "<br>")</script>
+                  </td>
+              </tr>
+             <tr> 
+                <td height="14" valign="top"><img src="../images/leftmenu_graydown.gif" width="25" height="9"></td>
+                <td height="14" valign="top" class="MenuLink"><span id="audit">Audit:</span></td>
+              </tr>
+                <td height="28" valign="top">&nbsp;</td>
+                <td height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.PersWithDBase(parent.contents.defaultApps + 'AuditList.jsp?downlevel=','approvallevel','1')"><span id="editAudit">Edit&nbsp;and&nbsp;Audit</span></a></td>
+                    </tr>
+                    <tr>
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'reportAdminDisplay.html')"><span id="reportSel">Report&nbsp;Selection</span></a></td>
+                    </tr>
+                    <!--
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + 'edit/useradmin.html')"><span id="userLis">User&nbsp;List</span></a></td>
+                    </tr>
+                    -->
+                    <tr>
+                    <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultApps + 'SimpleReports.jsp')"><span id="simpleInq">Simple&nbsp;Inquiries</span></a></td>
+                    </tr>
+                    <tr> 
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.PersWithDBase(parent.contents.defaultApps + 'ReleaseList.jsp?downlevel=','approvallevel','1')">Release&nbsp;for&nbsp;Payment</a></td>
+                    </tr>
+                    
+                    <!--
+                    <tr>
+                      <td width="9%"><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td width="91%"><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + '/documentation/index.html')">Documentation</a></td>
+                    </tr>
+                    <tr>
+                      <td><img src="../images/left_arrow.gif" width="9" height="13"></td>
+                      <td><a class="SubMenuLink" href="javascript: void parent.contents.TransWindow(parent.contents.defaultHome + '/help/hmenuAuditExplained.html')"><span id="menuCon">Menu&nbsp;Contents</span></a></td>
+                    </tr>
+                    -->
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </table></td>
+              </tr>
+
+                  </table></td>
+              </tr>
+             
+            </table>
+<form name="Userdata">
+  <input type="hidden" class="userData" style="behavior:url(#default#userdata)" id="ReportData" name="ReportData">
+</form>
+
+<!--- Common script code for all sites --->
+<script language="Javascript">
+
+  function initForm() {
+	document.getElementById("hello").innerHTML = parent.contents.getJSX("hello");
+	document.getElementById("audit").innerHTML = parent.contents.getJSX("audit");
+	document.getElementById("editAudit").innerHTML = parent.contents.getJSX("editAudit");
+	document.getElementById("reportSel").innerHTML = parent.contents.getJSX("reportSel");
+	if(document.getElementById("process")) document.getElementById("process").innerHTML = parent.contents.getJSX("process");
+	if(document.getElementById("releasePay")) document.getElementById("releasePay").innerHTML = parent.contents.getJSX("releasePay");
+	document.getElementById("simpleInq").innerHTML = parent.contents.getJSX("simpleInq");
+	document.getElementById("userLis").innerHTML = parent.contents.getJSX("userLis");
+	document.getElementById("menuCon").innerHTML = parent.contents.getJSX("menuCon");
+ }
+ </script>
+<script language="JavaScript" src="../shared1.js">
+</script>
+<script language="JavaScript" src="../shared2.js">
+</script>
+<!--- site specific lists, generated from tables --->
+<script language="Javascript" src="/ess-app/ajax/AuditProfile.jsp">
+</script>
+<script language="Javascript" id="companyScript" src="/ess-app/ajax/Company.jsp">
+</script>
+    <script language="Javascript" src="/ess-app/ajax/JSXlation.jsp">
+    </script>
+</body>
+</html>
