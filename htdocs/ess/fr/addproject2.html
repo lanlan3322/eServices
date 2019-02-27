@@ -1,0 +1,104 @@
+<!--
+addproject2.html - add project to purpose and personal database    
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html> 
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Ajouter un fichier</title>
+<link rel="stylesheet" href="expense.css" type="text/css"></head>
+
+<body onLoad="FormInit()">
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%" class="bannerColor"><p align="center"><div class="ExpenseTag"><em>Ajouter à votre liste :</em></div></td>
+  </tr>
+  <tr>
+    <td width="100%" align="center"><form>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td width="30%"><strong><script>document.write(window.opener.parent.getFieldName("PROJECT"))</script>: </strong></td>
+          <td width="70%"><input type="text" name="project" size="9"></td>
+        </tr>
+        <tr>
+          <td width="30%" class="offsetColor"><strong>Titre :</strong></td>
+          <td width="70%" class="offsetColor"><input type="text" name="title" size="25"></td>
+        </tr>
+        <tr>
+          <td width="30%"><strong>Numéro de client :</strong></td>
+          <td width="70%"><input type="text" name="clientno" size="12"></td>
+        </tr>
+      </table>
+      <p><input type="button" value="Ajouter/Changer liste" name="OK"
+      onClick="JavaScript: void addItem()"> <input type="button" value="Supprimer" name="Cancel"
+      onClick="window.close()"></p>
+    </form>
+    </td>
+  </tr>
+</table>
+<script LANGUAGE="JavaScript">
+function addItem(){
+  var CheckFlag = true;
+  if (window.opener.checkProject) {
+    CheckFlag = window.opener.checkProject(document.forms[0].project.value); 
+  }
+
+  if (document.forms[0].project.value > " " && CheckFlag) {
+    var theinfo = new Array(3);
+    theinfo[0] = ["project",document.forms[0].project.value];
+    theinfo[1] = ["title",document.forms[0].title.value];
+    theinfo[2] = ["clientno",document.forms[0].clientno.value];
+    window.opener.setLocalMerchant(document.forms[0].project.value,theinfo,document.forms[0].title.value,"2");
+    window.close();
+  } else {
+    alert("Un numéro de référence valide est requis");
+    document.forms[0].project.focus();  
+  }
+}
+function FormInit(){
+  //window.resizeTo(360,250);
+  window.focus();
+  window.onresize = hdleResize;
+}
+
+function doNothing() {
+}
+
+function hdleResize() {
+//  note that ns6 also supports : body.clientWidth/Height 
+  var x = 0;
+  var y = 0;
+  if (document.documentElement.clientWidth && document.documentElement.clientWidth != 0) {
+    x = document.documentElement.clientWidth;  //IE 6 standard
+    y = document.documentElement.clientHeight;
+  } else if (document.body.clientWidth && document.body.clientWidth != 0) {
+    x = document.body.clientWidth;  // IE quirkie mode
+    y = document.body.clientHeight;
+  } else if (window.innerWidth && window.innerWidth != 0) {
+    x = window.innerWidth;  // NS
+    y = window.innerHeight;
+  }
+  
+  if(opener.parent.MerWinSize && opener.parent.main.MerWinSize != null) { 
+    opener.parent.MerWinSize(x,y,"addproject2");
+  }
+}
+
+</script>
+
+</body>
+</html>

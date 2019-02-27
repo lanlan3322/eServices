@@ -1,0 +1,103 @@
+<!--
+display5.html - Fleet simple charge 
+Copyright (C) 2004 R. James Holton
+
+This program is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 2 of the License, or (at your option) 
+any later version.  This program is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the Free Software Foundation, Inc., 
+675 Mass Ave, Cambridge, MA 02139, USA. 
+-->
+<html>
+
+<head>
+<title>Flotte de véhicules simple reçu</title>
+<link rel="stylesheet" href="../expense.css" type="text/css"></head>
+
+<body onLoad="Javascript: void FillForm()">
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0" class="offsetColor">
+  <tr>
+    <td width="50%"><h1>Reçu véhicule</h1></td>
+  </tr>
+</table>
+
+<form>
+  <input type="hidden" name="RCPTTYPE" value>
+  <input type="hidden" name="VOUCHER" value>
+  <input type="hidden" name="RECEIPT" value>
+  <input type="hidden" name="CRE_DATE" value>
+  <input type="hidden" name="expense_1_EXP_DATE" value>
+  <input type="hidden" name="expense_1_CRE_DATE" value>
+  <input type="hidden" name="expense_1_RECEIPT" value>
+  <input type="hidden" name="expense_1_LINEITEM" value>  
+  <input type="hidden" name="expense_1_AMOUNT" value>
+  <input type="hidden" name="expense_1_REC_AMT" value>
+  
+  <input type="hidden" name="UNITS" value>
+  <input type="hidden" name="persistance" value="none">
+  <input type="hidden" name="expense_1_persistance" value="none">
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="16%" class="offsetColor"><div class="ExpenseTag">Date du reçu:</div></td>
+      <td width="20%" class="offsetColor"><input type="text" name="REC_DATE" readonly="yes" size="13" tabindex="1"></td>
+      <td width="11%" class="offsetColor"></td>
+      <td width="25%" class="offsetColor"></td>
+    </tr>
+    <tr>
+      <td width="16%"><div class="ExpenseTag"><script>document.write(parent.contents.getCurrencyLabel())</script>:</div></td>
+      <td width="20%"><input type="text" name="AMOUNT" readonly="yes" size="12" value="0.00" tabindex="4" onChange="CheckAmount(this.form.AMOUNT)"></td>
+      <td width="11%"><div class="ExpenseTag">Quantité:</div></td>
+      <td width="25%"><input type="text" name="REC_AMT" readonly="yes" size="12" value="0" tabindex="4" onChange="CheckAmount(this.form.REC_AMT)"></td>
+    </tr>
+    <tr>
+      <td width="16%" class="offsetColor"><div class="ExpenseTag">Type de dépenses: </div></td>
+      <td width="20%" class="offsetColor"><input type="text" name="expense_1_EXPENSE" readonly="yes" size="1" tabindex="6" onChange="applyExp()">
+      </select></td>
+      <td width="11%" class="offsetColor"><div class="ExpenseTag">Marchand:</div></td>
+      <td width="25%" class="offsetColor"><input type="text" name="MERCHANT" readonly="yes" size="30" tabindex="7">
+      </td>
+    </tr>
+    <tr>
+      <td width="16%"><div class="ExpenseTag">Payé par :</div></td>
+      <td width="20%"><input type="text" name="CHARGE" readonly="yes" size="12" tabindex="12"></td>
+      <td width="11%"></td>
+      <td width="25%"></td>
+    </tr>
+  </table>
+  <table border="0" cellspacing="0" width="100%" cellpadding="0">
+    <tr>
+      <td width="22%" class="offsetColor"><div class="ExpenseTag">Commentaire :</div> </td>
+      <td width="84%" class="offsetColor"><input type="text" name="expense_1_COMMENT" size="36" tabindex="9">
+      </td>
+    </tr>
+  </table>
+</form>
+
+<p align="center"><a class="ExpenseReturnLink" href="javascript: void history.go(BackSpaceToReport)" tabindex="16">Revenir pour visualiser le reçu</a></p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+</body>
+<script LANGUAGE="JavaScript">
+
+var BackSpaceToReport = -2;
+
+
+function FillForm() {
+    parent.contents.setTransaction(document.forms[0]);
+    parent.contents.NewReport();  //JH 20070430 - Compensating for display only.
+    parent.contents.ProcessHeader(parent.Header);  //JH 20070430 - Compensating for display only.
+    parent.contents.DirectEdit = false;
+}
+
+</script>
+
+</html>
