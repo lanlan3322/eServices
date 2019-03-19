@@ -93,6 +93,7 @@ if (pFlag && PersFile.getChallengeCode().equals(CCode)) {
 			String itemCat = "";
 			String itemDesc = "";
 			String itemAmountold = "";
+			String catThreshold = "";
    String SQLCommand = "";
 
    //sign & cancel request start
@@ -324,7 +325,7 @@ if (pFlag && PersFile.getChallengeCode().equals(CCode)) {
 			Log.println("[500] InventoryConfirm.jsp - nominee cleared: " + newSQL);
 			subject = "Inventory stock check has been done by " + pername;
 		}	
-
+	String sStockWarning = "Warning:";
 	while (rp.hasMoreTokens()) {  
 		String singleChanged = rp.nextToken().trim() ;
 		String[] result = singleChanged.split(",");
@@ -351,12 +352,14 @@ if (pFlag && PersFile.getChallengeCode().equals(CCode)) {
 Log.println("[500] InventoryConfirm.jsp - item ref created: " + newSQL2);
 		
 			//get requested item details
-			SQLCommand = "SELECT * FROM db_item WHERE item_id = '" + itemNum + "'" + PersFile.getSQLTerminator();
+			SQLCommand = "SELECT db_item.item_name,db_item.item_category,db_item.item_desc,db_item.item_amount,db_category.cat_threshold FROM db_item JOIN db_category ON db_item.item_category = db_category.cat_name WHERE db_item.item_id = '" + itemNum + "'" + PersFile.getSQLTerminator();
 			if (Reg.setResultSet(SQLCommand)) { 
-				itemName = PersFile.getTrim(Reg.myResult.getString(2));
-				itemCat = PersFile.getTrim(Reg.myResult.getString(3));
-				itemDesc = PersFile.getTrim(Reg.myResult.getString(4));
-				itemAmountold = PersFile.getTrim(Reg.myResult.getString(5));
+				itemName = PersFile.getTrim(Reg.myResult.getString(1));
+				itemCat = PersFile.getTrim(Reg.myResult.getString(2));
+				itemDesc = PersFile.getTrim(Reg.myResult.getString(3));
+				itemAmountold = PersFile.getTrim(Reg.myResult.getString(4));
+				catThreshold = PersFile.getTrim(Reg.myResult.getString(5));
+				int catThresholdInt = Integer.parseInt(catThreshold);
 				//if(action.equals("Request")){
 %>             	<tr>
 					<td width="10%" <%=backcolor%>><%= itemName%></td>
@@ -377,6 +380,10 @@ Log.println("[500] InventoryConfirm.jsp - item ref created: " + newSQL2);
 			//Update item balance finish
 Log.println("[500] InventoryConfirm.jsp - item balance changed: " + newSQL2);
 
+				if(amountNew < catThresholdInt){
+					sStockWarning += "\n\n" + "    Name:				"+ itemName + "\n    Category:			" + itemCat + "\n    Balance: 		    " + amountNew + "\n\n";;
+				}
+
 				newbackcolor = backcolor;
 				backcolor = oldbackcolor; 
 				oldbackcolor = newbackcolor;
@@ -390,8 +397,20 @@ Log.println("[500] InventoryConfirm.jsp - item balance changed: " + newSQL2);
 </html>
 
 <% 
+				if(sStockWarning.equals("Warning:")){
+					Log.println("[500] InventoryConfirm.jsp - no stock wrning email to: " + domain_email);
+				}
+				else{
+					Log.println("[500] InventoryConfirm.jsp - stock warning email to: " + domain_email);
+					sStockWarning += "\n\n  Threshold: " + catThreshold;
+					sStockWarning += "\n\n" + "  Please be aware of the stock balance!";
+					if(!SendAnEmail(domain_email, pal_address, "Stock warning below threshold!", sStockWarning, SendInfo))
+					{
+						Log.println("[500] InventoryConfirm.jsp - stock warning email failure");
+					}
+				}
 
-				String sEmailToDomain = sEmailMsg + "\n\n" + "  Please prepare the requested items and update status at http://services.southeastasia.cloudapp.azure.com/ess/ess/Audit.html";
+				String sEmailToDomain = sEmailMsg + "\n\n" + "  Please prepare the requested items and update status at http://elc.southeastasia.cloudapp.azure.com/ess/ess/Audit.html";
 				String sResult = "NO";
 				if(stockTally.equals("1")){
 					sResult = "YES";
@@ -401,7 +420,7 @@ Log.println("[500] InventoryConfirm.jsp - item balance changed: " + newSQL2);
 					sEmailMsg += "\n\n" + "  Waiting for stock to be ready.";
 				}
 				else if(newType.equals("Return")){
-					sEmailToDomain = sEmailMsg + "\n\n" + "  Please verify the returned items at http://services.southeastasia.cloudapp.azure.com/ess/ess/Audit.html";
+					sEmailToDomain = sEmailMsg + "\n\n" + "  Please verify the returned items at http://elc.southeastasia.cloudapp.azure.com/ess/ess/Audit.html";
 					sEmailMsg += "\n\n" + "  Waiting for return to be verified by Domain Admin.";
 				}
 				else{

@@ -130,10 +130,12 @@ Reg.setSQLTerminator(PersFile.getSQLTerminator());
       <td width="15%" align="right"><em><strong><font face="Arial"><span id="comments">Threshold</span>: </font></strong></em></td>
       <td width="85%" align="left"><input type="text" id="leaveTotal" name="leaveTotal" value="0"></td>
     </tr>
+<!--
 	<tr>
 		<td width="15%" align="right"><em><strong><font face="Arial">Upload Image:</font></strong></em></td>
-		<td  width="85%" align="left"><input type="file" name="filename" size="50"></td>
+		<td  width="85%" align="left"><input type="file" name="filename" size="50">  Only .jpeg format supported!</td>
 	</tr>
+-->
 
 	<tr>
 		<td width="15%"/>
@@ -176,7 +178,9 @@ if (Reg.setResultSet(SQLCommand)) {
              <th width="30%" <%=backcolor%>>Name</th>
              <th width="10%" <%=backcolor%>>Amount</th>
              <th width="10%" <%=backcolor%>>Threshold</th>
+<!--
             <th width="40%" <%=backcolor%>>Image</th>
+-->
              <th width="10%" <%=backcolor%>></th>
          </tr>
      </thead>
@@ -200,7 +204,9 @@ if (Reg.setResultSet(SQLCommand)) {
             <td width="30%" <%=backcolor%>><%= persname%></td>
             <td width="10%" <%=backcolor%>><%= repamt%></td>
             <td width="10%" <%=backcolor%>><%= total%></td>
+<!--
             <td width="40%" <%=backcolor%>><img src="<%= PersFile.getAppServer()%>/<%= PersFile.getAppFolder()%>/inventory/category/<%= image%>.jpeg" height="150"></img></td>
+-->
             <td width="10%" <%=backcolor%>><a href="<%= PersFile.getAppServer() %>/<%= PersFile.getAppFolder() %>/receipts/inventoryCatEdit.jsp?id=<%= reference%>&name=<%= persname%>&threshold=<%= total%>&image=<%= image%>">Edit</a></td>
             </tr>
      <%     xfound = true;

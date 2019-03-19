@@ -121,8 +121,10 @@ Reg.setSQLTerminator(PersFile.getSQLTerminator());
 
 <p><u><em><strong><font face="Arial"><big>Edit category</big></font></strong></em></u></p>
 
-<p><font face="Arial">Edit information about the category and the image to upload.</font></p>
+<p><font face="Arial">Edit information about the category.</font></p>
+<!--
 <p><img src="<%= PersFile.getAppServer()%>/<%= PersFile.getAppFolder()%>/inventory/category/<%= image%>.jpeg" height="150"></img></p>
+-->
 
 <form method="POST" action="" ENCTYPE="multipart/form-data" onSubmit="return checkInput()">
 	<input type="hidden" name="id" value=<%= id %>>
@@ -131,16 +133,18 @@ Reg.setSQLTerminator(PersFile.getSQLTerminator());
   <table border="0" cellpadding="10" cellspacing="10">
     <tr>
       <td width="15%" align="right"><em><strong><font face="Arial"><span id="comments">Category Name</span>: </font></strong></em></td>
-      <td width="85%" align="left"><input type="text" name="leaveReason" value=<%= name %>></td>
+      <td width="85%" align="left"><input type="text" name="leaveReason" readonly value=<%= name %>></td>
     </tr>
     <tr>
       <td width="15%" align="right"><em><strong><font face="Arial"><span id="comments">Threshold</span>: </font></strong></em></td>
       <td width="85%" align="left"><input type="text" id="leaveTotal" name="leaveTotal" value=<%= threshold %>></td>
     </tr>
+<!--
 	<tr>
 		<td width="15%" align="right"><em><strong><font face="Arial">New Image:</font></strong></em></td>
-		<td  width="85%" align="left"><input type="file" name="filename" size="50"></td>
+		<td  width="85%" align="left"><input type="file" name="filename" size="50">  Only .jpeg format supported!</td>
 	</tr>
+-->
 
 	<tr>
 		<td width="15%"/>

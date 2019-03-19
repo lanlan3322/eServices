@@ -25,7 +25,34 @@
 			document.getElementById(num + "select_this_item").value = "";
 		}
       }
-		
+	  
+      function ChangeReturn(num,t,value){
+		  //alert(num);
+		  //alert(t);
+		  //alert(value);
+		  var obj = document.getElementById(num);
+		  var limit = t - value;
+		  if(obj.value > limit){
+			  alert("Requested number is not allowed! max --> "+ limit);
+			  obj.value = limit;
+		  }else if(obj.value < 0){
+			  obj.value = 0;
+			  alert("Requested number is not allowed!");
+		  }
+        if(obj.value != 0)
+		{
+			document.getElementById(num).style.backgroundColor = "red";
+			document.getElementById(num + "select_this_item").checked = true;
+			document.getElementById(num + "select_this_item").value = num + "," + obj.value;
+		}
+		else
+		{
+			document.getElementById(num).style.backgroundColor = "initial";
+			document.getElementById(num + "select_this_item").checked = false;
+			document.getElementById(num + "select_this_item").value = "";
+		}
+      }
+	  
       function ChangeStock(num,t,value){
 		  //alert(num);
 		  //alert(t);

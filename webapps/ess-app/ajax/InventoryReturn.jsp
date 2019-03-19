@@ -299,7 +299,7 @@ if (pFlag && PersFile.getChallengeCode().equals(CCode)) {
             <td width="30%" <%=backcolor%>><%= repamt%></td>
             <td width="10%" <%=backcolor%>><%= repStat%></td>
             <td width="10%" <%=backcolor%>><%= sReturned%></td>
-            <td width="15%" <%=backcolor%>><input id="<%=voucher%>" type="text" name="name" value="0" onChange="Change('<%=voucher%>',<%= repStat%>,this.value);" onfocus="this.select();"></td>
+            <td width="15%" <%=backcolor%>><input id="<%=voucher%>" type="text" name="name" value="0" onChange="ChangeReturn('<%=voucher%>',<%= repStat%>,'<%=sReturned%>');" onfocus="this.select();"></td>
             <td width="5%" <%=backcolor%>></td>
             <td width="5%"  <%=backcolor%>>
 				<input type="checkbox" id="<%=voucher%>select_this_item" style="display: none" value="">

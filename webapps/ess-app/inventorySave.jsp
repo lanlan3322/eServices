@@ -419,7 +419,8 @@ function initTimer() {
 }
 
 function init() {
-  with (document.forms[0]) {
+	parent.contents.PersWithDBase(parent.contents.defaultApps + 'inventoryApproveList.jsp?downlevel=','approvallevel','1');
+  /*with (document.forms[0]) {
     document.forms[0].action = parent.contents.defaultApps + parent.contents.getLastDisplay();
     begdate.value = parent.contents.getDBString(parent.PersDBase, "reportBegDate", document.forms[0].begdate.value);
     enddate.value = parent.contents.getDBString(parent.PersDBase, "reportEndDate", document.forms[0].enddate.value);
@@ -430,7 +431,7 @@ function init() {
     xaction.value = "List";
     reporttype.value = parent.contents.getLastSQL();
     submit();
-  }
+  }*/
 }
 
 </script>

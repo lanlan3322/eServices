@@ -180,14 +180,14 @@ String essDateFormat = SystemDOM.getDOMTableValueFor("configuration","dateformat
 			<p><%= PersFile.getName() %></p>
 			<a href="javascript: void Logout()"><span id="logout">Logout</span></a>
 		</div>
-		<%if(true)//PersFile.depart.equalsIgnoreCase("TEST"))
+		<%if(false)//PersFile.depart.equalsIgnoreCase("TEST"))
 		{
 		%>
-			<%@ include file="Menu_Inventory.jsp" %>
+			<%@ include file="Menu_POWERsup.jsp" %>
 		<%}
 		else
 		{%>
-			<%@ include file="Menu_Leave.jsp" %>
+			<%@ include file="Menu_Main.jsp" %>
 		<%}%>
     </div><br />
     <br />

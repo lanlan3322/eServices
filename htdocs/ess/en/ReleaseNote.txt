@@ -1,4 +1,6 @@
 Update history:
+-	Version 5.2 release: Images added for items  (15/03/2019)
+-	Version 5.1 release: POWERsup changing merged  (11/03/2019)
 -	Version 5.0 release: Release of Ver5.0 with inventory  (01/03/2019)
 -	Version 4.3 bugfix: Cancelled CCL updates Annual balance wrongly  (14/12/2018)
 -	Version 4.2 released: HR guide update to eLC HR Guide_2018_v1.0 (22/11/2018)
@@ -43,7 +45,6 @@ Update history:
 
 Open issues:
 -	Server error when approving many leaves due to mass emails sending
--	Adding Childcare after approval will offset unpaid balance
 -	Send email notification when leaves are deducted after 7 days (Periodical scripts on server)
 -	Add comments in receipts name after attached
 -	Leaves longer than 14 days will include weekends (but not public holidays)

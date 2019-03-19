@@ -63,7 +63,7 @@ String id = request.getParameter("id");
 
 <p><font face="Arial">Edit information about the Stock.</font></p>
 
-<form method="POST" action="" onSubmit="return checkInput()">
+<form method="POST" action="" ENCTYPE="multipart/form-data" onSubmit="return checkInput()">
 	<input type="hidden" name="id" value=<%= id %>>
 	<input type="hidden" name="action" value="update">
 	<input type="hidden" name="cat" value=<%= cat %>>

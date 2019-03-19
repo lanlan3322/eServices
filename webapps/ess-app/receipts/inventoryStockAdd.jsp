@@ -58,7 +58,7 @@ Reg.setSQLTerminator(PersFile.getSQLTerminator());
 
 <p><font face="Arial">Enter information about the new stock.</font></p>
 
-<form method="POST" action="" onSubmit="return checkInput()">
+<form method="POST" action="" ENCTYPE="multipart/form-data" onSubmit="return checkInput()">
 	<input type="hidden" name="action" value="create">
 	<input type="hidden" name="cat" value="create">
 	<input type="hidden" name="store" value="create">
@@ -85,6 +85,10 @@ Reg.setSQLTerminator(PersFile.getSQLTerminator());
       <td width="15%" align="right"><em><strong><font face="Arial"><span id="comments">Storage</span>: </font></strong></em></td>
 		<td class="expenseType"><select name="storage" xref="storage" class="limited-width" onMouseDown="if(document.all) this.className='expanded-width';" onBlur="if(document.all) this.className='limited-width';"></select></td>
     </tr>
+	<tr>
+		<td width="15%" align="right"><em><strong><font face="Arial">Upload Image:</font></strong></em></td>
+		<td  width="85%" align="left"><input type="file" name="filename" size="50">  Only .jpeg format supported!</td>
+	</tr>
 
 	<tr>
 		<td width="15%"/>
@@ -120,14 +124,14 @@ if (Reg.setResultSet(SQLCommand)) {
      <table id="previousTable" border="1" cellspacing="0" cellpadding="0">
      <thead>
          <tr>
+<!--
              <th width="10%" <%=backcolor%>>id</th>
-             <th width="10%" <%=backcolor%>>Name</th>
+-->
+             <th width="25%" <%=backcolor%>>Name</th>
              <th width="10%" <%=backcolor%>>Category</th>
-             <th width="30%" <%=backcolor%>>Description</th>
-             <th width="10%" <%=backcolor%>>Amount</th>
+             <th width="45%" <%=backcolor%>>Description</th>
+             <th width="5%" <%=backcolor%>>Amount</th>
              <th width="10%" <%=backcolor%>>Created</th>
-             <th width="10%" <%=backcolor%>>Delivered</th>
-             <th width="5%" <%=backcolor%>>Status</th>
              <th width="10%" <%=backcolor%>>Holder</th>
              <th width="10%" <%=backcolor%>>Storage</th>
              <th width="5%" <%=backcolor%>></th>
@@ -155,14 +159,18 @@ if (Reg.setResultSet(SQLCommand)) {
      %>          
             <tr>
 
+<!--
             <td width="10%" <%=backcolor%>><%= pvoucher%></td>
-            <td width="10%" <%=backcolor%>><%= name%></td>
+-->
+            <td width="25%" <%=backcolor%>><a href="javascript: void window.open('<%= PersFile.getAppServer()%>/<%= PersFile.getAppFolder()%>/inventory/images/<%= status%>.jpeg','dependent=yes, width=700, height=540, screenX=580, screenY=420, resizable, titlebar=yes, menubar=yes, status=no, scrollbars=yes')"><%= name%></a></td>
             <td width="10%" <%=backcolor%>><%= cat%></td>
-            <td width="30%" <%=backcolor%>><%= desc%></td>
+            <td width="45%" <%=backcolor%>><%= desc%></td>
             <td width="5%" <%=backcolor%>><%= amount%></td>
             <td width="10%" <%=backcolor%>><%= dCreated%></td>
+<!--
             <td width="10%" <%=backcolor%>><%= dDelivered%></td>
             <td width="5%" <%=backcolor%>><%= status%></td>
+-->
             <td width="10%" <%=backcolor%>><%= holder%></td>
             <td width="10%" <%=backcolor%>><%= storage%></td>
             <td width="5%" <%=backcolor%>><a href="<%= PersFile.getAppServer() %>/<%= PersFile.getAppFolder() %>/receipts/inventoryStockEdit.jsp?id=<%=pvoucher%>&cat=<%= cat%>&name=<%= name%>&desc=<%= desc%>&amount=<%= amount%>">Edit</a></td>

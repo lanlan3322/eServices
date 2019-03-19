@@ -500,12 +500,12 @@ if (pFlag && PersFile.getChallengeCode().equals(CCode)) {
 		<table border="0" cellspacing="0" cellpadding="0" id="approveTable">
      	<thead>
      		<tr>
-				<th width="10%" <%=backcolor%>>Name</th>
+				<th width="20%" <%=backcolor%>>Name</th>
 				<th width="10%" <%=backcolor%>>Category</th>
-				<th width="50%" <%=backcolor%>>Description</th>
+				<th width="45%" <%=backcolor%>>Description</th>
 				<th width="10%" <%=backcolor%>>Available</th>
 				<th width="10%" <%=backcolor%>>Requested</th>
-				<th width="10%" <%=backcolor%>></th>
+				<th width="5%" <%=backcolor%>></th>
 			</tr>
 		</thead>
   <!--   <form>  -->
@@ -535,7 +535,7 @@ if (pFlag && PersFile.getChallengeCode().equals(CCode)) {
         adminSigner = "";//PersFile.getTrim(Reg.myResult.getString(11));
         currency = "";//PersFile.getTrim(Reg.myResult.getString(12));
         company = "";//PersFile.getTrim(Reg.myResult.getString(13));
-		xcheck = "";//PersFile.getTrim(Reg.myResult.getString(14));
+		xcheck = PersFile.getTrim(Reg.myResult.getString(6));
 
         subTable = getRoutingRuleName(DepartDOM, depart, PersFile.depart, Log);
         repDBStat = StatXlation(repStat, CompanyName, StatusDOM);
@@ -596,15 +596,14 @@ if (pFlag && PersFile.getChallengeCode().equals(CCode)) {
           if (true)// ifSeemsOK(PersFile, xDup, atLeastOnce, adminSigner, firstSigner, secondSigner, xLimit) )
 		  {
         	  //Dt.getSimpleDate(Dt.getDateFromXBase(curdate))
-        	  
+        	  String image = PersFile.getAppServer() + "/" + PersFile.getAppFolder() + "/inventory/images/" + xcheck + ".jpeg";
 %>       
             <tr>
-            <td width="10%" <%=backcolor%>><%= persname%></td>
+            <td width="20%" <%=backcolor%>><a href="javascript: void window.open('<%= image%>','dependent=yes, width=700, height=540, screenX=580, screenY=420, resizable, titlebar=yes, menubar=yes, status=no, scrollbars=yes')"><u><%= persname%></u></a></td>
             <td width="10%" <%=backcolor%>><%= reference%></td>
-            <td width="50%" <%=backcolor%>><%= repamt%></td>
+            <td width="45%" <%=backcolor%>><%= repamt%></td>
             <td width="10%" <%=backcolor%>><%= repStat%></td>
             <td width="10%" <%=backcolor%>><input id="<%=voucher%>" type="text" name="name" value="0" onChange="Change('<%=voucher%>',<%= repStat%>,this.value);" onfocus="this.select();"></td>
-            <td width="10%" <%=backcolor%>></td>
             <td width="5%"  <%=backcolor%>>
 				<input type="checkbox" id="<%=voucher%>select_this_item" style="display: none" value="">
 			</td>            
