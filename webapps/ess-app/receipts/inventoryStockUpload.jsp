@@ -193,10 +193,12 @@ byte[] picture = null;
 					uploadFile = new java.io.File(parentFolder + "/" + scanName + "." + newExtension.toLowerCase());
 					item.write(uploadFile);
 					
-					limitSQL = "INSERT INTO db_item VALUES ";
-					limitSQL = limitSQL + "('" + pvoucher + "','" + name + "','" + cat + "','" + desc + "','" + amount + "','" + createDate + "','0000-00-00','" + scanName + "','9999','" + store + "')";
-					limitSQL = limitSQL + PersFile.getSQLTerminator();
-					db.doSQLExecute(limitSQL);
+					if(action.equalsIgnoreCase("create")){
+						limitSQL = "INSERT INTO db_item VALUES ";
+						limitSQL = limitSQL + "('" + pvoucher + "','" + name + "','" + cat + "','" + desc + "','" + amount + "','" + createDate + "','0000-00-00','" + scanName + "','9999','" + store + "')";
+						limitSQL = limitSQL + PersFile.getSQLTerminator();
+						db.doSQLExecute(limitSQL);
+					}
 				} 
 				else 
 				{
@@ -289,11 +291,11 @@ byte[] picture = null;
 				db.doSQLExecute(newSQL);
 				Log.println("[500] [eLCventory] inventoryStockUpdate.jsp - item ref created: " + newSQL);
 			//Create item reference finish
-if (fileOK)
+if (true)//fileOK)
 {
 				if(action.equalsIgnoreCase("update")){
 					//limitSQL = "UPDATE db_category SET cat_name='" + name + "', cat_threshold='" + threshold + "', cat_photo='" + scanName + "' WHERE cat_id='" + pvoucher + "'" + PersFile.getSQLTerminator();
-					limitSQL = "UPDATE db_item SET item_name='" + name + "', item_desc='" + desc + "', item_amount='" + amount + "' WHERE item_id='" + pvoucher + "'" + PersFile.getSQLTerminator();
+					limitSQL = "UPDATE db_item SET item_name='" + name + "', item_desc='" + desc + "', item_amount='" + amount + "', item_status='" + scanName + "' WHERE item_id='" + pvoucher + "'" + PersFile.getSQLTerminator();
 					db.doSQLExecute(limitSQL);
 				}
 

@@ -44,6 +44,7 @@ String cat = request.getParameter("cat");
 String desc = request.getParameter("desc");
 String amount = request.getParameter("amount");
 String id = request.getParameter("id");
+String image = request.getParameter("image");
 
 
 
@@ -62,6 +63,8 @@ String id = request.getParameter("id");
 <p><u><em><strong><font face="Arial"><big>Edit Stock</big></font></strong></em></u></p>
 
 <p><font face="Arial">Edit information about the Stock.</font></p>
+
+<p><img src="<%= PersFile.getAppServer()%>/<%= PersFile.getAppFolder()%>/inventory/images/<%= image%>.jpeg" height="150"></img></p>
 
 <form method="POST" action="" ENCTYPE="multipart/form-data" onSubmit="return checkInput()">
 	<input type="hidden" name="id" value=<%= id %>>
@@ -102,6 +105,10 @@ String id = request.getParameter("id");
 			</select>
 		</td>
     </tr>
+	<tr>
+		<td width="15%" align="right"><em><strong><font face="Arial">New Image:</font></strong></em></td>
+		<td  width="85%" align="left"><input type="file" name="filename" size="50">  Only .jpeg format supported!</td>
+	</tr>
 
 	<tr>
 		<td width="15%"/>

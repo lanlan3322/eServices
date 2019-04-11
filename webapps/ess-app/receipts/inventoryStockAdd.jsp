@@ -99,7 +99,7 @@ Reg.setSQLTerminator(PersFile.getSQLTerminator());
 </form>
 <p><u><em><strong><font face="Arial"><big>Stock List:</big></font></strong></em></u></p>
 <%
-String SQLCommand = "SELECT * FROM db_item" + PersFile.getSQLTerminator();
+String SQLCommand = "SELECT * FROM db_item ORDER BY item_category, item_name" + PersFile.getSQLTerminator();
 if (Reg.setResultSet(SQLCommand)) { 
      String E;         //     ditto
      boolean xFlag;
@@ -129,11 +129,12 @@ if (Reg.setResultSet(SQLCommand)) {
 -->
              <th width="25%" <%=backcolor%>>Name</th>
              <th width="10%" <%=backcolor%>>Category</th>
-             <th width="45%" <%=backcolor%>>Description</th>
+             <th width="40%" <%=backcolor%>>Description</th>
              <th width="5%" <%=backcolor%>>Amount</th>
              <th width="10%" <%=backcolor%>>Created</th>
              <th width="10%" <%=backcolor%>>Holder</th>
              <th width="10%" <%=backcolor%>>Storage</th>
+             <th width="5%" <%=backcolor%>></th>
              <th width="5%" <%=backcolor%>></th>
          </tr>
      </thead>
@@ -164,7 +165,7 @@ if (Reg.setResultSet(SQLCommand)) {
 -->
             <td width="25%" <%=backcolor%>><a href="javascript: void window.open('<%= PersFile.getAppServer()%>/<%= PersFile.getAppFolder()%>/inventory/images/<%= status%>.jpeg','dependent=yes, width=700, height=540, screenX=580, screenY=420, resizable, titlebar=yes, menubar=yes, status=no, scrollbars=yes')"><%= name%></a></td>
             <td width="10%" <%=backcolor%>><%= cat%></td>
-            <td width="45%" <%=backcolor%>><%= desc%></td>
+            <td width="40%" <%=backcolor%>><%= desc%></td>
             <td width="5%" <%=backcolor%>><%= amount%></td>
             <td width="10%" <%=backcolor%>><%= dCreated%></td>
 <!--
@@ -173,7 +174,8 @@ if (Reg.setResultSet(SQLCommand)) {
 -->
             <td width="10%" <%=backcolor%>><%= holder%></td>
             <td width="10%" <%=backcolor%>><%= storage%></td>
-            <td width="5%" <%=backcolor%>><a href="<%= PersFile.getAppServer() %>/<%= PersFile.getAppFolder() %>/receipts/inventoryStockEdit.jsp?id=<%=pvoucher%>&cat=<%= cat%>&name=<%= name%>&desc=<%= desc%>&amount=<%= amount%>">Edit</a></td>
+            <td width="5%" <%=backcolor%>><a href="<%= PersFile.getAppServer() %>/<%= PersFile.getAppFolder() %>/receipts/inventoryStockEdit.jsp?id=<%=pvoucher%>&cat=<%= cat%>&name=<%= name%>&desc=<%= desc%>&amount=<%= amount%>&image=<%= status%>">Edit</a></td>
+            <td width="5%" <%=backcolor%>><a href="<%= PersFile.getAppServer() %>/<%= PersFile.getAppFolder() %>/receipts/inventoryStockDelete.jsp?id=<%=pvoucher%>&cat=<%= cat%>&name=<%= name%>&desc=<%= desc%>&amount=<%= amount%>">Delete</a></td>
             </tr>
      <%     xfound = true;
             newbackcolor = backcolor;

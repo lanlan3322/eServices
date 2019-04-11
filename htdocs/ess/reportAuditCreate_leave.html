@@ -166,7 +166,7 @@ function printTotalsLeave() {
 	var daysWorking = dateDifference(new Date(utc1), new Date(utc2));
 	var type = document.forms[0].leavetype;
 	if(type.options[type.selectedIndex].text == "Hospitalisation"){
-		//daysWorking = dateDiff;
+		daysWorking = dateDiff;
 	}
 	var finalDiff = daysWorking + halfDay;
 
